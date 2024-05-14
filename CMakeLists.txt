@@ -222,7 +222,7 @@ endif()
 # 
 add_subdirectory(libstarmathpp)
 add_subdirectory(doc)
-add_subdirectory(deploy)
+#add_subdirectory(deploy)
 
 
 
