@@ -28,6 +28,7 @@
 #include <limits>
 #include <cmath>
 #include <ostream>
+#include <tuple>
 
 template<typename T> class PointT;  // pre-declare the template class itself
 template<typename T> std::ostream& operator<< (std::ostream& os, const PointT <T>& p);
