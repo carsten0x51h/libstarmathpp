@@ -1,4 +1,4 @@
-![cmake workflow](https://github.com/carsten0x51h/focus_finder/actions/workflows/cmake.yml/badge.svg)
+![cmake workflow](https://github.com/carsten0x51h/libstarmathpp/actions/workflows/cmake.yml/badge.svg)
 
 libstarmathpp - A C++ library to process astronomical images which is based on CImg and the range v3 library.
 ===========
