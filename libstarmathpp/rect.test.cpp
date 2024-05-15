@@ -33,6 +33,17 @@
 
 #include <libstarmathpp/rect.hpp>
 
+/**
+ * TODO: Add tests for:
+ *
+ *  contains()
+ *  center()
+ *  expand_to_square()
+ *  grow()
+ *  shrink()
+ *  from_center_point()
+ *  to<>()
+ */
 BOOST_AUTO_TEST_SUITE(rect_tests)
 
 /**
@@ -100,4 +111,134 @@ BOOST_AUTO_TEST_CASE(rect_double_equal_test) {
   BOOST_TEST((r2 != r3) == true);
 }
 
+
+/**
+ * Test if operator<<() works correctly.
+ */
+BOOST_AUTO_TEST_CASE(rect_insertion_operator_test) {
+  Rect<int> r1(4, 5, 10, 15);
+
+  std::stringstream ss;
+  ss << r1;
+
+  BOOST_TEST(ss.str() == "(x=4, y=5, width=10, height=15)");
+}
+
+
+
+/**
+ * Test set and get functions.
+ */
+BOOST_AUTO_TEST_CASE(rect_set_and_get_function_test) {
+  Rect<int> r1(4, 5, 10, 15);
+
+  BOOST_TEST(r1.x() == 4);
+  BOOST_TEST(r1.y() == 5);
+  BOOST_TEST(r1.width() == 10);
+  BOOST_TEST(r1.height() == 15);
+
+  r1.set_x(6);
+  r1.set_y(7);
+  r1.set_width(11);
+  r1.set_height(16);
+
+  BOOST_TEST(r1.x() == 6);
+  BOOST_TEST(r1.y() == 7);
+  BOOST_TEST(r1.width() == 11);
+  BOOST_TEST(r1.height() == 16);
+}
+
+
+/**
+ * Test if the is_set function returns the correct
+ * value under different conditions.
+ */
+BOOST_AUTO_TEST_CASE(rect_is_set_state_test) {
+  Rect<int> r1(4, 5, 10, 15);
+  BOOST_TEST(r1.is_set() == true);
+
+  Rect<int> r2;
+  BOOST_TEST(r2.is_set() == false);
+  r2.set_x(3);
+  BOOST_TEST(r2.is_set() == true);
+
+  Rect<int> r3;
+  BOOST_TEST(r3.is_set() == false);
+  r3.set_y(4);
+  BOOST_TEST(r3.is_set() == true);
+
+  Rect<int> r4;
+  BOOST_TEST(r4.is_set() == false);
+  r4.set_width(10);
+  BOOST_TEST(r4.is_set() == true);
+
+  Rect<int> r5;
+  BOOST_TEST(r5.is_set() == false);
+  r5.set_height(15);
+  BOOST_TEST(r5.is_set() == true);
+}
+
+/**
+ * Test if the clear function works as expected.
+ */
+BOOST_AUTO_TEST_CASE(rect_clear_test) {
+  Rect<int> r1(4, 5, 10, 15);
+  BOOST_TEST(r1.is_set() == true);
+
+  r1.clear();
+
+  BOOST_TEST(r1.is_set() == false);
+  BOOST_TEST(r1.x() == 0);
+  BOOST_TEST(r1.y() == 0);
+  BOOST_TEST(r1.width() == 0);
+  BOOST_TEST(r1.height() == 0);
+}
+
+
+/**
+ * Test the rect inside() function for int.
+ */
+BOOST_AUTO_TEST_CASE(rect_int_inside_test) {
+  Rect<int> r1(4, 5, 10, 15);
+  BOOST_TEST(r1.inside(r1) == true);
+
+  Rect<int> r2(-4, -5, 10, 15);
+  BOOST_TEST(r2.inside(r2) == true);
+
+  Rect<int> r3(4, 5, 0, 0);
+  BOOST_TEST(r3.inside(r3) == true);
+
+  Rect<int> r4;
+  BOOST_TEST(r4.inside(r4) == false);
+
+
+  Rect<int> r5(4, 5, 10, 15);
+  Rect<int> r6(5, 6, 7, 9);
+
+  BOOST_TEST(r6.inside(r5) == true);
+  BOOST_TEST(r5.inside(r6) == false);
+
+  Rect<int> r7(-4, -5, 10, 15);
+  Rect<int> r8(-3, -4, 7, 9);
+
+  BOOST_TEST(r8.inside(r7) == true);
+  BOOST_TEST(r7.inside(r8) == false);
+
+
+  BOOST_TEST(Rect<int>(4, 5, 11, 15).inside(Rect<int>(4, 5, 10, 15)) == false);
+  BOOST_TEST(Rect<int>(4, 5, 10, 16).inside(Rect<int>(4, 5, 10, 15)) == false);
+  BOOST_TEST(Rect<int>(3, 5, 10, 15).inside(Rect<int>(4, 5, 10, 15)) == false);
+  BOOST_TEST(Rect<int>(4, 4, 10, 15).inside(Rect<int>(4, 5, 10, 15)) == false);
+
+  BOOST_TEST(Rect<int>(5, 6, 0, 0).inside(Rect<int>(4, 5, 10, 15)) == true);
+
+  BOOST_TEST(Rect<int>().inside(Rect<int>(4, 5, 10, 15)) == false);
+  BOOST_TEST(Rect<int>(4, 5, 10, 15).inside(Rect<int>()) == false);
+}
+
+
+
+
 BOOST_AUTO_TEST_SUITE_END();
+
+// TODO: namespace!
