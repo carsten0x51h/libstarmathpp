@@ -26,14 +26,28 @@
 #ifndef SOURCE_STARMATHPP_RECT_HPP_
 #define SOURCE_STARMATHPP_RECT_HPP_ SOURCE_STARMATHPP_RECT_HPP_
 
+#include <type_traits>
+
+#include <libstarmathpp/exception.hpp>
 #include <libstarmathpp/point.hpp>
 
 //#include "size.h"
 //#include "logging.h"
-//#include "exception.h"
-//#include "tuple_printer.h"
 
-//DEF_Exception(Rect);
+DEF_Exception(Rect);
+
+// See https://stackoverflow.com/questions/16377736/stdmake-signed-that-accepts-floating-point-types
+template<typename T>
+struct identity { using type = T; };
+
+template<typename T>
+using try_make_unsigned =
+    typename std::conditional<
+        std::is_integral<T>::value,
+        std::make_unsigned<T>,
+        identity<T>
+        >::type;
+
 
 template<typename T> class Rect;
 // pre-declare the template class itself
@@ -44,16 +58,20 @@ template<typename T> std::ostream& operator<<(std::ostream &os,
  * Rect structure (X x Y x W x H).
  * TODO: Put this fully under unit tests for different data types.
  * TODO: Restrict this template to data types which make sense.
- * TODO / IDEA: Make w & h as unsigned for fixed point types and x & y as signed.
  * TODO: is_set_ should be checked in all functions. If not set, and e.g. contains() is called, an exception should be thrown.
+ * TODO: IDEA: Add contains(Point) + inside(Size?) +  contains(Size)?
+ *
  */
 template<class T>
 class Rect {
  private:
+  // Unsigned type, if possible
+  using UT = typename try_make_unsigned<T>::type;
+
   T x_;
   T y_;
-  T width_;
-  T height_;
+  UT width_;
+  UT height_;
   bool is_set_;
 
  public:
@@ -62,7 +80,10 @@ class Rect {
       is_set_(false) {
   }
 
-  Rect(const T &x, const T &y, const T &w, const T &h)
+  /**
+   * TODO: Negative values for width and height make no sense -> exception. What about 0?
+   */
+  Rect(const T &x, const T &y, const UT &w, const UT &h)
       :
       x_(x),
       y_(y),
@@ -71,18 +92,13 @@ class Rect {
       is_set_(true) {
   }
 
-  template<class U>
-  Rect<U> to() const {
-    return Rect<U>(x_, y_, width_, height_);
-  }
-
   const T& x() const {
     return x_;
   }
 
   void set_x(const T &x) {
-    is_set_ = true;
     x_ = x;
+    is_set_ = true;
   }
 
   const T& y() const {
@@ -94,20 +110,26 @@ class Rect {
     is_set_ = true;
   }
 
-  const T& width() const {
+  const UT& width() const {
     return width_;
   }
 
-  void set_width(const T &width) {
+  /**
+   * TODO: Negative values make no sense -> exception. What about 0?
+   */
+  void set_width(const UT &width) {
     width_ = width;
     is_set_ = true;
   }
 
-  const T& height() const {
+  const UT& height() const {
     return height_;
   }
 
-  void set_height(const T &height) {
+  /**
+   * TODO: Negative values make no sense -> exception. What about 0?
+   */
+  void set_height(const UT &height) {
     height_ = height;
     is_set_ = true;
   }
@@ -117,9 +139,14 @@ class Rect {
   }
 
   void clear() {
-    is_set_ = false;  // TODO: Is setting is_set_ to false even required?
     *this = { };
-  }  // TODO:  {} ok??
+  }
+
+
+  template<class U>
+  Rect<U> to() const {
+    return Rect<U>(x_, y_, width_, height_);
+  }
 
   // Is passed rect completely contained inside this rect?
   // Of course both coordinates need to be in the same coordinate system.
@@ -135,6 +162,7 @@ class Rect {
   bool inside(const Rect<T> &rect) {
     return rect1_contains_rect2_internal(rect, *this);
   }
+
 
   Point<T> center() const {
     return calc_center_from_rect_internal(*this);
