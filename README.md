@@ -66,7 +66,7 @@ TODO...
 The project structure follows the approach presented by Boris Kolpackov: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1204r0.html
 Also see https://stackoverflow.com/questions/2360734/whats-a-good-directory-structure-for-larger-c-projects-using-makefile
 
-The project follows the C++ coding style guide from Google: https://google.github.io/styleguide/cppguide.html
+The project mostly follows the C++ coding style guide from Google: https://google.github.io/styleguide/cppguide.html
 Formatting rules e.g. for Eclipse CDT can be found here: https://github.com/google/styleguide/blob/gh-pages/eclipse-cpp-google-style.xml
 
 
