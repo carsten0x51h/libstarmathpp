@@ -26,8 +26,6 @@
 #ifndef SOURCE_STARMATHPP_RECT_HPP_
 #define SOURCE_STARMATHPP_RECT_HPP_ SOURCE_STARMATHPP_RECT_HPP_
 
-#include <tuple>
-
 #include <libstarmathpp/point.hpp>
 
 //#include "size.h"
@@ -37,10 +35,13 @@
 
 //DEF_Exception(Rect);
 
+template<typename T> class Rect;
+// pre-declare the template class itself
+template<typename T> std::ostream& operator<<(std::ostream &os,
+                                              const Rect<T> &rect);
+
 /**
  * Rect structure (X x Y x W x H).
- * TODO: Overload operator== and operator!=
- * TODO: Overload operator<<
  * TODO: Put this fully under unit tests for different data types.
  * TODO: Restrict this template to data types which make sense.
  * TODO / IDEA: Make w & h as unsigned for fixed point types and x & y as signed.
@@ -116,7 +117,7 @@ class Rect {
   }
 
   void clear() {
-    is_set_ = false; // TODO: Is setting is_set_ to false even required?
+    is_set_ = false;  // TODO: Is setting is_set_ to false even required?
     *this = { };
   }  // TODO:  {} ok??
 
@@ -169,8 +170,7 @@ class Rect {
   // 2. RectT::grow(3)
   // 3. RectT::shrink(3)
 
-  static Rect<T> from_center_point(const Point<T> &center, T width,
-                                  T height) {
+  static Rect<T> from_center_point(const Point<T> &center, T width, T height) {
     // TODO: Or should we round here to int? Check if -1 is correct...
     //unsigned int halfWindowWidth = ceil(inWidth / 2.0f) - 1;
     //unsigned int  halfWindowHeight = ceil(inHeight / 2.0f) - 1;
@@ -190,7 +190,7 @@ class Rect {
 //	  return RectT<T>(std::get<0>(inCenter) /*cx*/ - halfWindowWidth, std::get<1>(inCenter) /*cy*/ - halfWindowHeight, inWidth, inHeight);
 
     return Rect<T>((T) ((float) center.x() - delta_w),
-                    (T) ((float) center.y() - delta_h), width, height);
+                   (T) ((float) center.y() - delta_h), width, height);
   }
 
   // TODO: Re-enable?
@@ -200,44 +200,22 @@ class Rect {
   // }
   // TODO: public functions should not call other public functions!
   static Rect<T> from_center_point(const Point<T> &center,
-                                  T window_size_square_edge) {
+                                   T window_size_square_edge) {
     return from_center_point(center, window_size_square_edge,
                              window_size_square_edge);
-  }
-
-  // TODO: For float and double, operator needs to be specialized! See point...
-  bool operator==(const Rect<T> &other) const {
-    return other.x_ == this->x_ && other.y_ == this->y_
-        && other.width_ == this->width_ && other.height_ == this->height_;
-  }
-  bool operator!=(const Rect<T> &other) const {
-    return !this->operator==(other);
-  }
-
-  std::ostream& print(std::ostream &os, size_t indent = 0) const {
-    std::string prefix = std::string(indent, ' ');
-
-    os << prefix << "(x=" << x_ << ", y=" << y_ << ", width=" << width_
-        << ", height=" << height_ << ")";
-
-    return os;
-  }
-
-  friend std::ostream& operator<<(std::ostream &os, const Rect<T> &rect) {
-    return rect.print(os);
   }
 
  private:
   // TODO: If increaseBy is negative, check that overall width & height cannot get negative.
   //        -> Limit values... 0? Or exception...
-  static Rect<T> change_rect_size_internal(Rect<T> rect, T change_by, bool grow) {
+  static Rect<T> change_rect_size_internal(Rect<T> rect, T change_by,
+                                           bool grow) {
     auto center = calc_center_from_rect_internal(rect);
     T border_both_sides = 2 * change_by;
 
     T new_width = (
         grow ?
-            rect.width() + border_both_sides :
-            rect.width() - border_both_sides);
+            rect.width() + border_both_sides : rect.width() - border_both_sides);
     T new_height = (
         grow ?
             rect.height() + border_both_sides :
@@ -260,7 +238,8 @@ class Rect {
 
   // Is rect1 completely contained inside this rect2?
   // Of course both coordinates need to be in the same coordinate system.
-  static bool rect1_contains_rect2_internal(const Rect<T> &rect1, const Rect<T> &rect2) {
+  static bool rect1_contains_rect2_internal(const Rect<T> &rect1,
+                                            const Rect<T> &rect2) {
 
     //LOG(debug) << "rect1ContainsRect2 - rect1=" << rect1 << ", rect2=" << rect2 << std::endl;
 
@@ -274,7 +253,37 @@ class Rect {
 
     return contains;
   }
-
 };
+
+template<class T>
+std::ostream& operator<<(std::ostream &os, const Rect<T> &rect) {
+
+  os << "(x=" << rect.x() << ", y=" << rect.y() << ", width=" << rect.width()
+      << ", height=" << rect.height() << ")";
+
+  return os;
+}
+
+template<class T>
+bool operator==(const Rect<T> &rect1, const Rect<T> &rect2) {
+  return rect1.x() == rect2.x() && rect1.y() == rect2.y()
+      && rect1.width() == rect2.width() && rect1.height() == rect2.height();
+}
+
+// Template specialization for float
+template<>
+bool operator==<float>(const Rect<float> &rect1, const Rect<float> &rect2);
+
+// Template specialization for double
+template<>
+bool operator==<double>(const Rect<double> &rect1, const Rect<double> &rect2);
+
+
+template<class T>
+bool operator!=(const Rect<T> &rect1, const Rect<T> &rect2) {
+  // Use implementation of operator== and negate it.
+  return !(rect1 == rect2);
+}
+
 
 #endif /* SOURCE_STARMATHPP_RECT_HPP_ */

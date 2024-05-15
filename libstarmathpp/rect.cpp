@@ -23,6 +23,34 @@
  *
  ****************************************************************************/
 
+#include <cmath> // std::abs()
+
 #include <libstarmathpp/rect.hpp>
 
-// TODO: Add template specialization for float and double and ... -> see point class...
+/**
+ * Compare function for float and double.
+ */
+template<typename T>
+bool compare(const Rect<T> &rect1, const Rect<T> &rect2) {
+  T delta_x = std::abs(rect1.x() - rect2.x());
+  T delta_y = std::abs(rect1.y() - rect2.y());
+  T delta_width = std::abs(rect1.width() - rect2.width());
+  T delta_height = std::abs(rect1.height() - rect2.height());
+
+  return delta_x <= std::numeric_limits<T>::epsilon()
+      && delta_y <= std::numeric_limits<T>::epsilon()
+      && delta_width <= std::numeric_limits<T>::epsilon()
+      && delta_height <= std::numeric_limits<T>::epsilon();
+}
+
+
+template<>
+bool operator==(const Rect<float> &rect1, const Rect<float> &rect2) {
+  return compare(rect1, rect2);
+}
+
+
+template<>
+bool operator==(const Rect<double> &rect1, const Rect<double> &rect2) {
+  return compare(rect1, rect2);
+}

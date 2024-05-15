@@ -36,15 +36,68 @@
 BOOST_AUTO_TEST_SUITE(rect_tests)
 
 /**
- * TODO: Add short description
+ * Test if operator==() and operator!=() for
+ * Rect<int> works as expected.
  */
 BOOST_AUTO_TEST_CASE(rect_int_equal_test) {
-  Rect<int> r1(10, 15, 100, 120);
-  Rect<int> r2(10, 15, 100, 120);
-  Rect<int> r3(10, 15, 100, 123);
+  Rect<int> r1(-10, 15, 100, 120);
+  Rect<int> r2(-10, 15, 100, 120);
+  Rect<int> r3(-10, 15, 100, 123);
 
   BOOST_TEST((r1 == r2) == true);
   BOOST_TEST((r2 == r3) == false);
+  BOOST_TEST((r1 != r2) == false);
+  BOOST_TEST((r2 != r3) == true);
+}
+
+/**
+ * Test if operator==() and operator!=() for
+ * Rect<unsigned int> works as expected.
+ */
+BOOST_AUTO_TEST_CASE(rect_unsigned_int_equal_test) {
+  Rect<unsigned int> r1(10, 15, 100, 120);
+  Rect<unsigned int> r2(10, 15, 100, 120);
+  Rect<unsigned int> r3(10, 15, 100, 123);
+
+  BOOST_TEST((r1 == r2) == true);
+  BOOST_TEST((r2 == r3) == false);
+  BOOST_TEST((r1 != r2) == false);
+  BOOST_TEST((r2 != r3) == true);
+}
+
+/**
+ * Test if operator==() and operator!=() for
+ * Rect<float> works as expected. This uses
+ * a template specialization to allow for small
+ * tolerances.
+ */
+BOOST_AUTO_TEST_CASE(rect_float_equal_test) {
+  Rect<float> r1(10.2F, 15.1F, 100.01F, 120.05F);
+  Rect<float> r2(10.2F, 15.1F, 100.01F, 120.05F);
+  Rect<float> r3(10.2F, 15.1F, 100.01F, 123.05F);
+
+  BOOST_TEST((r1 == r2) == true);
+  BOOST_TEST((r2 == r3) == false);
+  BOOST_TEST((r1 != r2) == false);
+  BOOST_TEST((r2 != r3) == true);
+}
+
+
+/**
+ * Test if operator==() and operator!=() for
+ * Rect<double> works as expected. This uses
+ * a template specialization to allow for small
+ * tolerances.
+ */
+BOOST_AUTO_TEST_CASE(rect_double_equal_test) {
+  Rect<double> r1(10.2, 15.1, 100.01, 120.05);
+  Rect<double> r2(10.2, 15.1, 100.01, 120.05);
+  Rect<double> r3(10.2, 15.1, 100.01, 123.05);
+
+  BOOST_TEST((r1 == r2) == true);
+  BOOST_TEST((r2 == r3) == false);
+  BOOST_TEST((r1 != r2) == false);
+  BOOST_TEST((r2 != r3) == true);
 }
 
 BOOST_AUTO_TEST_SUITE_END();
