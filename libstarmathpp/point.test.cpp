@@ -35,22 +35,19 @@
 
 #include <libstarmathpp/point.hpp>
 
-/**
- * TODO: Add floating point comparison to unit tests and rewrite the tests using the bllost unit test capabilities...
- */
 BOOST_AUTO_TEST_SUITE(point_tests)
 
 /**
  * Test if the point equal operator works for int type.
  */
 BOOST_AUTO_TEST_CASE(point_int_equal_test) {
-  PointT<int> p1(10, 15);
-  PointT<int> p2(10, 15);
-  PointT<int> p3(11, 15);
-  PointT<int> p4(10, 16);
-  PointT<int> p5(11, 16);
-  PointT<int> p6(11, -16);
-  PointT<int> p7(11, -16);
+  Point<int> p1(10, 15);
+  Point<int> p2(10, 15);
+  Point<int> p3(11, 15);
+  Point<int> p4(10, 16);
+  Point<int> p5(11, 16);
+  Point<int> p6(11, -16);
+  Point<int> p7(11, -16);
 
   BOOST_TEST((p1 == p1) == true);
   BOOST_TEST((p1 == p2) == true);
@@ -68,11 +65,11 @@ BOOST_AUTO_TEST_CASE(point_int_equal_test) {
  * and which is then stored accidentally in an unsigned int.
  */
 BOOST_AUTO_TEST_CASE(point_unsigned_int_equal_test) {
-  PointT<unsigned int> p1(10, 15);
-  PointT<unsigned int> p2(10, 15);
-  PointT<unsigned int> p3(11, 15);
-  PointT<unsigned int> p4(10, 16);
-  PointT<unsigned int> p5(11, 16);
+  Point<unsigned int> p1(10, 15);
+  Point<unsigned int> p2(10, 15);
+  Point<unsigned int> p3(11, 15);
+  Point<unsigned int> p4(10, 16);
+  Point<unsigned int> p5(11, 16);
 
   BOOST_TEST((p1 == p1) == true);
   BOOST_TEST((p1 == p2) == true);
@@ -85,13 +82,13 @@ BOOST_AUTO_TEST_CASE(point_unsigned_int_equal_test) {
  * Test if the less operator works for the int type.
  */
 BOOST_AUTO_TEST_CASE(point_int_less_test) {
-  PointT<int> p1(10, 15);
-  PointT<int> p2(10, 15);
-  PointT<int> p3(11, 16);
-  PointT<int> p4(11, 15);
-  PointT<int> p5(10, 16);
-  PointT<int> p6(11, -16);
-  PointT<int> p7(11, -16);
+  Point<int> p1(10, 15);
+  Point<int> p2(10, 15);
+  Point<int> p3(11, 16);
+  Point<int> p4(11, 15);
+  Point<int> p5(10, 16);
+  Point<int> p6(11, -16);
+  Point<int> p7(11, -16);
 
   BOOST_TEST((p1 < p2) == false);
   BOOST_TEST((p1 < p3) == true);
@@ -108,11 +105,11 @@ BOOST_AUTO_TEST_CASE(point_int_less_test) {
  * and which is then stored accidentally in an unsigned int.
  */
 BOOST_AUTO_TEST_CASE(point_unsigned_int_less_test) {
-  PointT<unsigned int> p1(10, 15);
-  PointT<unsigned int> p2(10, 15);
-  PointT<unsigned int> p3(11, 16);
-  PointT<unsigned int> p4(11, 15);
-  PointT<unsigned int> p5(10, 16);
+  Point<unsigned int> p1(10, 15);
+  Point<unsigned int> p2(10, 15);
+  Point<unsigned int> p3(11, 16);
+  Point<unsigned int> p4(11, 15);
+  Point<unsigned int> p5(10, 16);
 
   BOOST_TEST((p1 < p2) == false);
   BOOST_TEST((p1 < p3) == true);
@@ -125,31 +122,31 @@ BOOST_AUTO_TEST_CASE(point_unsigned_int_less_test) {
  * (verifying the correct functioning of overloaded operators).
  */
 BOOST_AUTO_TEST_CASE(point_fixed_add_to_set_test) {
-  PointT<int> p1(10, 15);
-  PointT<int> p2(11, 15);
-  PointT<int> p3(10, 16);
-  PointT<int> p4(11, 16);
-  PointT<int> p5(10, 15);
+  Point<int> p1(10, 15);
+  Point<int> p2(11, 15);
+  Point<int> p3(10, 16);
+  Point<int> p4(11, 16);
+  Point<int> p5(10, 15);
 
-  std::set<PointT<int>> mySet;
+  std::set<Point<int>> my_set;
 
-  mySet.insert(p1);
-  BOOST_TEST(mySet.size() == 1);
+  my_set.insert(p1);
+  BOOST_TEST(my_set.size() == 1);
 
-  mySet.insert(p2);
-  BOOST_TEST(mySet.size() == 2);
+  my_set.insert(p2);
+  BOOST_TEST(my_set.size() == 2);
 
-  mySet.insert(p3);
-  BOOST_TEST(mySet.size() == 3);
+  my_set.insert(p3);
+  BOOST_TEST(my_set.size() == 3);
 
-  mySet.insert(p4);
-  BOOST_TEST(mySet.size() == 4);
+  my_set.insert(p4);
+  BOOST_TEST(my_set.size() == 4);
 
-  mySet.insert(p5);
-  BOOST_TEST(mySet.size() == 4);
+  my_set.insert(p5);
+  BOOST_TEST(my_set.size() == 4);
 
-  mySet.insert(p1);
-  BOOST_TEST(mySet.size() == 4);
+  my_set.insert(p1);
+  BOOST_TEST(my_set.size() == 4);
 }
 
 /**
@@ -157,31 +154,31 @@ BOOST_AUTO_TEST_CASE(point_fixed_add_to_set_test) {
  * overloaded operators).
  */
 BOOST_AUTO_TEST_CASE(point_fixed_find_in_set_test) {
-  std::set<PointT<int>> pointSet;
+  std::set<Point<int>> point_set;
 
-  PointT<int> p1(10, 15);
-  PointT<int> p2(11, 15);
-  PointT<int> p3(10, 16);
-  PointT<int> p4(17, 18);
+  Point<int> p1(10, 15);
+  Point<int> p2(11, 15);
+  Point<int> p3(10, 16);
+  Point<int> p4(17, 18);
 
-  pointSet.insert(p1);
-  pointSet.insert(p2);
-  pointSet.insert(p3);
+  point_set.insert(p1);
+  point_set.insert(p2);
+  point_set.insert(p3);
 
-  BOOST_TEST(pointSet.size() == 3);
+  BOOST_TEST(point_set.size() == 3);
 
-  bool foundP2 = (pointSet.find(p2) != pointSet.end());
-  BOOST_TEST(foundP2 == true);
+  bool found_p2 = (point_set.find(p2) != point_set.end());
+  BOOST_TEST(found_p2 == true);
 
-  bool foundP4 = (pointSet.find(p4) != pointSet.end());
-  BOOST_TEST(foundP4 == false);
+  bool found_p4 = (point_set.find(p4) != point_set.end());
+  BOOST_TEST(found_p4 == false);
 }
 
 /**
  * Try to set and get x and y values.
  */
 BOOST_AUTO_TEST_CASE(point_setter_getter_test) {
-  PointT<int> p1(10, 15);
+  Point<int> p1(10, 15);
 
   BOOST_TEST(p1.x() == 10);
   BOOST_TEST(p1.y() == 15);
@@ -198,7 +195,7 @@ BOOST_AUTO_TEST_CASE(point_setter_getter_test) {
  * values for x and y should be (0,0).
  */
 BOOST_AUTO_TEST_CASE(point_default_init_test) {
-  PointT<int> p1;
+  Point<int> p1;
 
   BOOST_TEST(p1.x() == 0);
   BOOST_TEST(p1.y() == 0);
@@ -208,30 +205,30 @@ BOOST_AUTO_TEST_CASE(point_default_init_test) {
  * Test specialized (overloaded) comparison operator
  * for float.
  */
-BOOST_AUTO_TEST_CASE(point_compare_float_points_test) {
-  PointT<float> p1(1.00000000F, 2.00000000F);
-  PointT<float> p2(1.00000000F, 2.00000001F);
-  PointT<float> p3(1.00000001F, 2.00000001F);
-  PointT<float> p4(1.00000001F, 2.001F);
+BOOST_AUTO_TEST_CASE(point_compare_float_points_test, * boost::unit_test::tolerance(0.00001)) {
+  Point<float> p1(1.00000000F, 2.00000000F);
+  Point<float> p2(1.00000000F, 2.00000001F);
+  Point<float> p3(1.00000001F, 2.00000001F);
+  Point<float> p4(1.00000001F, 2.001F);
 
-  BOOST_TEST(p1 == p2);
-  BOOST_TEST(p2 == p3);
-  BOOST_TEST(!(p3 == p4));
+  BOOST_TEST((p1 == p2) == true);
+  BOOST_TEST((p2 == p3) == true);
+  BOOST_TEST((p3 == p4) == false);
 }
 
 /**
  * Test specialized (overloaded) comparison operator
  * for double.
  */
-BOOST_AUTO_TEST_CASE(point_compare_double_points_test) {
-  PointT<double> p1(1.0000000000000000, 2.0000000000000000);
-  PointT<double> p2(1.0000000000000000, 2.0000000000000001);
-  PointT<double> p3(1.0000000000000001, 2.0000000000000001);
-  PointT<double> p4(1.0000000000000001, 2.000000000001);
+BOOST_AUTO_TEST_CASE(point_compare_double_points_test, * boost::unit_test::tolerance(0.00001)) {
+  Point<double> p1(1.0000000000000000, 2.0000000000000000);
+  Point<double> p2(1.0000000000000000, 2.0000000000000001);
+  Point<double> p3(1.0000000000000001, 2.0000000000000001);
+  Point<double> p4(1.0000000000000001, 2.000000000001);
 
-  BOOST_TEST(p1 == p2);
-  BOOST_TEST(p2 == p3);
-  BOOST_TEST(!(p3 == p4));
+  BOOST_TEST((p1 == p2) == true);
+  BOOST_TEST((p2 == p3) == true);
+  BOOST_TEST((p3 == p4) == false);
 }
 
 BOOST_AUTO_TEST_SUITE_END();

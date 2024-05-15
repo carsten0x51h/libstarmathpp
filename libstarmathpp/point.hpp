@@ -31,24 +31,24 @@
 #include <ostream>
 #include <tuple>
 
-template<typename T> class PointT;
+template<typename T> class Point;
 // pre-declare the template class itself
 template<typename T> std::ostream& operator<<(std::ostream &os,
-                                              const PointT<T> &p);
+                                              const Point<T> &p);
 
 /**
  * PointT structure (X x Y).
  */
 template<class T>
-class PointT {
+class Point {
  public:
-  PointT()
+  Point()
       :
       mX(0),
       mY(0) {
   }
 
-  PointT(const T &x, const T &y)
+  Point(const T &x, const T &y)
       :
       mX(x),
       mY(y) {
@@ -71,8 +71,8 @@ class PointT {
   }
 
   template<class U>
-  PointT<U> to() const {
-    return PointT<U>(x(), y());
+  Point<U> to() const {
+    return Point<U>(x(), y());
   }
 
  private:
@@ -81,31 +81,32 @@ class PointT {
 };
 
 template<class T>
-std::ostream& operator<<(std::ostream &os, const PointT<T> &p) {
+std::ostream& operator<<(std::ostream &os, const Point<T> &p) {
   os << "(" << p.x() << "," << p.y() << ")";
   return os;
 }
 
 template<class T>
-bool operator==(const PointT<T> &p1, const PointT<T> &p2) {
+bool operator==(const Point<T> &p1, const Point<T> &p2) {
   return (p1.x() == p2.x() && p1.y() == p2.y());
 }
 
 template<class T>
-bool operator!=(const PointT<T> &p1, const PointT<T> &p2) {
+bool operator!=(const Point<T> &p1, const Point<T> &p2) {
   // Use implementation of operator== and negate it.
   return !(p1 == p2);
 }
 
 template<>
-bool operator==<float>(const PointT<float> &p1, const PointT<float> &p2);
+bool operator==<float>(const Point<float> &p1, const Point<float> &p2);
 
 template<>
-bool operator==<double>(const PointT<double> &p1, const PointT<double> &p2);
+bool operator==<double>(const Point<double> &p1, const Point<double> &p2);
 
 /**
  * Definition: One point is "bigger" than another when the distance to (0,0) is bigger.
  * NOTE: This might have a performance impact and may have to be changed...
+ * TODO: Revisit this definition... crosscheck with std::tie below...
  *
  * @tparam T
  * @param p1
@@ -113,9 +114,10 @@ bool operator==<double>(const PointT<double> &p1, const PointT<double> &p2);
  * @return
  */
 template<class T>
-bool operator<(const PointT<T> &p1, const PointT<T> &p2) {
+bool operator<(const Point<T> &p1, const Point<T> &p2) {
   // An idiomatic way to implement strict weak ordering for a structure is to use lexicographical comparison provided by std::tie.
   // See https://en.cppreference.com/w/cpp/language/operators
+  // NOTE: This has a dependency to <tuple>
   return (std::tie(p1.x(), p1.y()) < std::tie(p2.x(), p2.y()));
 }
 

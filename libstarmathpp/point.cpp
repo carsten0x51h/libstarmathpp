@@ -33,7 +33,7 @@
  * @return
  */
 template<>
-bool operator==(const PointT<float> &p1, const PointT<float> &p2) {
+bool operator==(const Point<float> &p1, const Point<float> &p2) {
   float dx = std::fabs(p1.x() - p2.x());
   float dy = std::fabs(p1.y() - p2.y());
 
@@ -49,7 +49,7 @@ bool operator==(const PointT<float> &p1, const PointT<float> &p2) {
  * @return
  */
 template<>
-bool operator==(const PointT<double> &p1, const PointT<double> &p2) {
+bool operator==(const Point<double> &p1, const Point<double> &p2) {
   return (std::fabs(p1.x() - p2.x()) <= std::numeric_limits<double>::epsilon()
       && std::fabs(p1.y() - p2.y()) <= std::numeric_limits<double>::epsilon());
 }
