@@ -38,7 +38,7 @@
 BOOST_AUTO_TEST_SUITE(point_tests)
 
 /**
- * Test if the point equal operator works for int type.
+ * Test if the point equal operators works for int type.
  */
 BOOST_AUTO_TEST_CASE(point_int_equal_test) {
   Point<int> p1(10, 15);
@@ -56,6 +56,14 @@ BOOST_AUTO_TEST_CASE(point_int_equal_test) {
   BOOST_TEST((p1 == p5) == false);
   BOOST_TEST((p1 == p6) == false);
   BOOST_TEST((p6 == p7) == true);
+
+  BOOST_TEST((p1 != p1) == false);
+  BOOST_TEST((p1 != p2) == false);
+  BOOST_TEST((p1 != p3) == true);
+  BOOST_TEST((p1 != p4) == true);
+  BOOST_TEST((p1 != p5) == true);
+  BOOST_TEST((p1 != p6) == true);
+  BOOST_TEST((p6 != p7) == false);
 }
 
 /**
@@ -76,6 +84,12 @@ BOOST_AUTO_TEST_CASE(point_unsigned_int_equal_test) {
   BOOST_TEST((p1 == p3) == false);
   BOOST_TEST((p1 == p4) == false);
   BOOST_TEST((p1 == p5) == false);
+
+  BOOST_TEST((p1 != p1) == false);
+  BOOST_TEST((p1 != p2) == false);
+  BOOST_TEST((p1 != p3) == true);
+  BOOST_TEST((p1 != p4) == true);
+  BOOST_TEST((p1 != p5) == true);
 }
 
 /**
@@ -202,7 +216,7 @@ BOOST_AUTO_TEST_CASE(point_default_init_test) {
 }
 
 /**
- * Test specialized (overloaded) comparison operator
+ * Test specialized (overloaded) comparison operators
  * for float.
  */
 BOOST_AUTO_TEST_CASE(point_compare_float_points_test, * boost::unit_test::tolerance(0.00001)) {
@@ -214,6 +228,10 @@ BOOST_AUTO_TEST_CASE(point_compare_float_points_test, * boost::unit_test::tolera
   BOOST_TEST((p1 == p2) == true);
   BOOST_TEST((p2 == p3) == true);
   BOOST_TEST((p3 == p4) == false);
+
+  BOOST_TEST((p1 != p2) == false);
+  BOOST_TEST((p2 != p3) == false);
+  BOOST_TEST((p3 != p4) == true);
 }
 
 /**
@@ -229,6 +247,11 @@ BOOST_AUTO_TEST_CASE(point_compare_double_points_test, * boost::unit_test::toler
   BOOST_TEST((p1 == p2) == true);
   BOOST_TEST((p2 == p3) == true);
   BOOST_TEST((p3 == p4) == false);
+
+  BOOST_TEST((p1 != p2) == false);
+  BOOST_TEST((p2 != p3) == false);
+  BOOST_TEST((p3 != p4) == true);
 }
+
 
 BOOST_AUTO_TEST_SUITE_END();
