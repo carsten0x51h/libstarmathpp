@@ -18,7 +18,7 @@ configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/${META_PROJECT_N
 # Sources
 #
 set(sources
-	point.cpp
+   point.cpp
 )
 
 
@@ -31,20 +31,31 @@ add_library(${target} ${sources})
 #
 # Unit tests
 #
-add_executable(point_test point.test.cpp)
-target_link_libraries(point_test
+
+# Point tests
+add_executable(point_tests point.test.cpp)
+target_link_libraries(point_tests
 	PRIVATE
 	${target}
-#	${DEFAULT_LIBRARIES}
 	${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
-#	${Boost_LOG_LIBRARY}
-#	${Boost_SYSTEM_LIBRARY}
 	${DEFAULT_LINKER_OPTIONS}
-#	${CMAKE_SOURCE_DIR}/${target}
 )
+add_test(NAME point_tests COMMAND point_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-# now register the executable with CTest
-add_test(NAME point_test COMMAND point_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+# Rect tests
+add_executable(rect_tests rect.test.cpp)
+target_link_libraries(rect_tests
+	PRIVATE
+	${target}
+	${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+	${DEFAULT_LINKER_OPTIONS}
+)
+add_test(NAME rect_tests COMMAND rect_tests WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+
+
+
 
 
 # target_link_libraries(point_test
