@@ -27,6 +27,8 @@
 
 #include <libstarmathpp/rect.hpp>
 
+namespace starmathpp {
+
 /**
  * Compare function for float and double.
  */
@@ -52,3 +54,5 @@ template<>
 bool operator==(const Rect<double> &rect1, const Rect<double> &rect2) {
   return compare(rect1, rect2);
 }
+
+}  // end namespace starmathpp

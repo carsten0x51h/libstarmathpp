@@ -25,6 +25,8 @@
 
 #include <libstarmathpp/point.hpp>
 
+namespace starmathpp {
+
 /**
  * Specialization for floating point values.
  *
@@ -53,3 +55,5 @@ bool operator==(const Point<double> &p1, const Point<double> &p2) {
   return (std::fabs(p1.x() - p2.x()) <= std::numeric_limits<double>::epsilon()
       && std::fabs(p1.y() - p2.y()) <= std::numeric_limits<double>::epsilon());
 }
+
+}  // end namespace starmathpp

@@ -31,6 +31,8 @@
 #include <ostream>
 #include <tuple>
 
+namespace starmathpp {
+
 template<typename T> class Point;
 // pre-declare the template class itself
 template<typename T> std::ostream& operator<<(std::ostream &os,
@@ -120,5 +122,7 @@ bool operator<(const Point<T> &p1, const Point<T> &p2) {
   // NOTE: This has a dependency to <tuple>
   return (std::tie(p1.x(), p1.y()) < std::tie(p2.x(), p2.y()));
 }
+
+}  // end namespace starmathpp
 
 #endif /* SOURCE_STARMATHPP_POINT_HPP_ */

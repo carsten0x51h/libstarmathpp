@@ -34,20 +34,23 @@
 //#include "size.h"
 //#include "logging.h"
 
+namespace starmathpp {
+
 DEF_Exception(Rect);
 
 // See https://stackoverflow.com/questions/16377736/stdmake-signed-that-accepts-floating-point-types
 template<typename T>
-struct identity { using type = T; };
+struct identity {
+  using type = T;
+};
 
 template<typename T>
 using try_make_unsigned =
-    typename std::conditional<
-        std::is_integral<T>::value,
-        std::make_unsigned<T>,
-        identity<T>
-        >::type;
-
+typename std::conditional<
+std::is_integral<T>::value,
+std::make_unsigned<T>,
+identity<T>
+>::type;
 
 template<typename T> class Rect;
 // pre-declare the template class itself
@@ -56,6 +59,8 @@ template<typename T> std::ostream& operator<<(std::ostream &os,
 
 /**
  * Rect structure (X x Y x W x H).
+ *
+ * TODO: Is it a good idea to have an is_set_ state? Or better use std::optional of needed?
  * TODO: Put this fully under unit tests for different data types.
  * TODO: Restrict this template to data types which make sense.
  * TODO: is_set_ should be checked in all functions. If not set, and e.g. contains() is called, an exception should be thrown.
@@ -142,7 +147,6 @@ class Rect {
     *this = { };
   }
 
-
   template<class U>
   Rect<U> to() const {
     return Rect<U>(x_, y_, width_, height_);
@@ -162,7 +166,6 @@ class Rect {
   bool inside(const Rect<T> &rect) {
     return rect1_contains_rect2_internal(rect, *this);
   }
-
 
   Point<T> center() const {
     return calc_center_from_rect_internal(*this);
@@ -252,7 +255,15 @@ class Rect {
     return from_center_point(center, new_width, new_height);
   }
 
+  /**
+   *
+   */
   static Point<T> calc_center_from_rect_internal(const Rect<T> &rect) {
+    if (!rect.is_set_) {
+      throw new RectException(
+          "Cannot perform operation on uninitialized Rect.");
+    }
+
     T x_center = rect.x() + rect.width() / 2.0;
     T y_center = rect.y() + rect.height() / 2.0;
 
@@ -311,5 +322,7 @@ bool operator!=(const Rect<T> &rect1, const Rect<T> &rect2) {
   // Use implementation of operator== and negate it.
   return !(rect1 == rect2);
 }
+
+}  // end namespace starmathpp
 
 #endif /* SOURCE_STARMATHPP_RECT_HPP_ */

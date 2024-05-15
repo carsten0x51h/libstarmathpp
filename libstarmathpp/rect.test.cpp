@@ -33,6 +33,8 @@
 
 #include <libstarmathpp/rect.hpp>
 
+using namespace starmathpp;
+
 /**
  * TODO: Add tests for:
  *

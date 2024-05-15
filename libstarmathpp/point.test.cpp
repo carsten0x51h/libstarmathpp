@@ -35,6 +35,8 @@
 
 #include <libstarmathpp/point.hpp>
 
+using namespace starmathpp;
+
 BOOST_AUTO_TEST_SUITE(point_tests)
 
 /**
