@@ -278,12 +278,10 @@ bool operator==<float>(const Rect<float> &rect1, const Rect<float> &rect2);
 template<>
 bool operator==<double>(const Rect<double> &rect1, const Rect<double> &rect2);
 
-
 template<class T>
 bool operator!=(const Rect<T> &rect1, const Rect<T> &rect2) {
   // Use implementation of operator== and negate it.
   return !(rect1 == rect2);
 }
-
 
 #endif /* SOURCE_STARMATHPP_RECT_HPP_ */

@@ -197,10 +197,10 @@ BOOST_AUTO_TEST_CASE(point_setter_getter_test) {
   BOOST_TEST(p1.x() == 10);
   BOOST_TEST(p1.y() == 15);
 
-  p1.setX(11);
+  p1.set_x(11);
   BOOST_TEST(p1.x() == 11);
 
-  p1.setY(16);
+  p1.set_y(16);
   BOOST_TEST(p1.y() == 16);
 }
 

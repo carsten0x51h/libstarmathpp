@@ -44,30 +44,30 @@ class Point {
  public:
   Point()
       :
-      mX(0),
-      mY(0) {
+      x_(0),
+      y_(0) {
   }
 
   Point(const T &x, const T &y)
       :
-      mX(x),
-      mY(y) {
+      x_(x),
+      y_(y) {
   }
 
   [[nodiscard]] const T& x() const {
-    return mX;
+    return x_;
   }
 
-  void setX(const T &x) {
-    mX = x;
+  void set_x(const T &x) {
+    x_ = x;
   }
 
   [[nodiscard]] const T& y() const {
-    return mY;
+    return y_;
   }
 
-  void setY(const T &y) {
-    mY = y;
+  void set_y(const T &y) {
+    y_ = y;
   }
 
   template<class U>
@@ -76,8 +76,8 @@ class Point {
   }
 
  private:
-  T mX;
-  T mY;
+  T x_;
+  T y_;
 };
 
 template<class T>

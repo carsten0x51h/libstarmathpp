@@ -43,12 +43,10 @@ bool compare(const Rect<T> &rect1, const Rect<T> &rect2) {
       && delta_height <= std::numeric_limits<T>::epsilon();
 }
 
-
 template<>
 bool operator==(const Rect<float> &rect1, const Rect<float> &rect2) {
   return compare(rect1, rect2);
 }
-
 
 template<>
 bool operator==(const Rect<double> &rect1, const Rect<double> &rect2) {
