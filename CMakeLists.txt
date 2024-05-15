@@ -24,7 +24,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 enable_testing()
 
 # This module is only available with CMake >=3.1, so check whether it could be found
-include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDetectionHeaderFound)
+#include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDetectionHeaderFound)
 
 include(cmake/GetGitRevisionDescription.cmake)
 include(cmake/Custom.cmake)
