@@ -1,14 +1,15 @@
 /*****************************************************************************
  *
- *  FoFi - A free, automatic telescope focus finder.
+ *  libstarmathpp - A C++ library to process astronomical images
+ *                  based on CImg and range-v3.
  *
- *  Copyright(C) 2019 Carsten Schmitt <c [at] lost-infinity.com>
+ *  Copyright(C) 2023 Carsten Schmitt <c [at] lost-infinity.com>
  *
  *  More info on https://www.lost-infinity.com
  *
  *  This program is free software ; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation ; either version 2 of the License, or
+ *  the Free Software Foundation ; either version 3 of the License, or
  *  (at your option) any later version.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -22,29 +23,18 @@
  *
  ****************************************************************************/
 
-// Header only
-// #define BOOST_TEST_MODULE "point unit test"
-// #include <boost/test/included/unit_test.hpp>
-
 // Shared lib
 // This is much faster than the header only variant
 #define BOOST_TEST_MODULE "point unit test"
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_DYN_LINK
 
-#include <boost/test/unit_test.hpp>
-#include <cassert>
-
-
-
-
-//#include <boost/test/unit_test.hpp>
-#include <boost/test/test_tools.hpp>
-#include <boost/test/tools/floating_point_comparison.hpp>
-
 #include <set>
 
+#include <boost/test/unit_test.hpp>
+
 #include <libstarmathpp/point.hpp>
+
 
 BOOST_AUTO_TEST_SUITE(point_tests)
 

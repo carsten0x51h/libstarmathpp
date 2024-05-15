@@ -1,14 +1,15 @@
 /*****************************************************************************
  *
- *  FoFi - A free, automatic telescope focus finder.
+ *  libstarmathpp - A C++ library to process astronomical images
+ *                  based on CImg and range-v3.
  *
- *  Copyright(C) 2019 Carsten Schmitt <c [at] lost-infinity.com>
+ *  Copyright(C) 2023 Carsten Schmitt <c [at] lost-infinity.com>
  *
  *  More info on https://www.lost-infinity.com
  *
  *  This program is free software ; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation ; either version 2 of the License, or
+ *  the Free Software Foundation ; either version 3 of the License, or
  *  (at your option) any later version.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -22,8 +23,8 @@
  *
  ****************************************************************************/
 
-#ifndef SOURCE_FOCUS_FINDER_COMMON_INCLUDE_POINT_H_
-#define SOURCE_FOCUS_FINDER_COMMON_INCLUDE_POINT_H_ SOURCE_FOCUS_FINDER_COMMON_INCLUDE_POINT_H_
+#ifndef SOURCE_STARMATHPP_POINT_HPP_
+#define SOURCE_STARMATHPP_POINT_HPP_ SOURCE_STARMATHPP_POINT_HPP_
 
 #include <limits>
 #include <cmath>
@@ -95,8 +96,6 @@ bool operator==<double>(const PointT<double>& p1, const PointT<double>& p2);
  * @param p1
  * @param p2
  * @return
- *
- * NOTE: It is not checked if the pow() overshoots the limit of the respective data type.
  */
 template<class T>
 bool operator<(const PointT<T>& p1, const PointT<T>& p2)
@@ -106,7 +105,4 @@ bool operator<(const PointT<T>& p1, const PointT<T>& p2)
  return (std::tie(p1.x(), p1.y()) < std::tie(p2.x(), p2.y()));
 }
 
-
-using PointFT = PointT<float>;
-
-#endif /* SOURCE_FOCUS_FINDER_COMMON_INCLUDE_POINT_H_ */
+#endif /* SOURCE_STARMATHPP_POINT_HPP_ */
