@@ -38,7 +38,6 @@ using namespace starmathpp;
 /**
  * TODO: Add tests for:
  *
- *  contains()
  *  center()
  *  expand_to_square()
  *  grow()
@@ -239,6 +238,47 @@ BOOST_AUTO_TEST_CASE(rect_int_inside_test) {
 }
 
 
+/**
+ * Test the rect contains() function for int.
+ * NOTE: This is the "opposite" of the inside().
+ */
+BOOST_AUTO_TEST_CASE(rect_int_contains_test) {
+  Rect<int> r1(4, 5, 10, 15);
+  BOOST_TEST(r1.contains(r1) == true);
+
+  Rect<int> r2(-4, -5, 10, 15);
+  BOOST_TEST(r2.contains(r2) == true);
+
+  Rect<int> r3(4, 5, 0, 0);
+  BOOST_TEST(r3.contains(r3) == true);
+
+  Rect<int> r4;
+  BOOST_TEST(r4.inside(r4) == false);
+
+
+  Rect<int> r5(4, 5, 10, 15);
+  Rect<int> r6(5, 6, 7, 9);
+
+  BOOST_TEST(r6.contains(r5) == false);
+  BOOST_TEST(r5.contains(r6) == true);
+
+  Rect<int> r7(-4, -5, 10, 15);
+  Rect<int> r8(-3, -4, 7, 9);
+
+  BOOST_TEST(r8.contains(r7) == false);
+  BOOST_TEST(r7.contains(r8) == true);
+
+
+  BOOST_TEST(Rect<int>(4, 5, 10, 15).contains(Rect<int>(4, 5, 11, 15)) == false);
+  BOOST_TEST(Rect<int>(4, 5, 10, 15).contains(Rect<int>(4, 5, 10, 16)) == false);
+  BOOST_TEST(Rect<int>(4, 5, 10, 15).contains(Rect<int>(3, 5, 10, 15)) == false);
+  BOOST_TEST(Rect<int>(4, 5, 10, 15).contains(Rect<int>(4, 4, 10, 15)) == false);
+
+  BOOST_TEST(Rect<int>(5, 6, 0, 0).contains(Rect<int>(4, 5, 10, 15)) == false);
+
+  BOOST_TEST(Rect<int>().contains(Rect<int>(4, 5, 10, 15)) == false);
+  BOOST_TEST(Rect<int>(4, 5, 10, 15).contains(Rect<int>()) == false);
+}
 
 
 BOOST_AUTO_TEST_SUITE_END();

@@ -82,7 +82,11 @@ class Rect {
  public:
   Rect()
       :
-      x_(), y_(), width_(), height_(), is_set_(false) {
+      x_(),
+      y_(),
+      width_(),
+      height_(),
+      is_set_(false) {
   }
 
   /**
