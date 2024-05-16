@@ -74,7 +74,7 @@ class Point {
 
   template<class U>
   Point<U> to() const {
-    return Point<U>(x(), y());
+    return Point<U>(x_, y_);
   }
 
  private:

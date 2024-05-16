@@ -41,6 +41,8 @@ BOOST_AUTO_TEST_SUITE(point_tests)
 
 /**
  * Test if the point equal operators works for int type.
+ *
+ * TODO: test to<>()
  */
 BOOST_AUTO_TEST_CASE(point_int_equal_test) {
   Point<int> p1(10, 15);

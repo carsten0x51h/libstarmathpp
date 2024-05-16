@@ -31,8 +31,9 @@
 #include <libstarmathpp/exception.hpp>
 #include <libstarmathpp/point.hpp>
 
+#include <iostream> // TODO: Remove
+
 //#include "size.h"
-//#include "logging.h"
 
 namespace starmathpp {
 
@@ -56,6 +57,19 @@ template<typename T> class Rect;
 // pre-declare the template class itself
 template<typename T> std::ostream& operator<<(std::ostream &os,
                                               const Rect<T> &rect);
+
+
+int round(int value) {
+    return (value < 0.0 ?  std::ceil(value - 0.5) : std::floor(value + 0.5));
+}
+
+float round(float value) {
+    return value;
+}
+
+double round(double value) {
+    return value;
+}
 
 /**
  * Rect structure (X x Y x W x H).
@@ -171,25 +185,27 @@ class Rect {
     return rect1_contains_rect2_internal(rect, *this);
   }
 
-  Point<T> center() const {
-    return calc_center_from_rect_internal(*this);
+  template<typename P>
+  Point<P> center() const {
+    return calc_center_from_rect_internal<P>(*this);
   }
 
   /**
    * IDEA: Alternate name: make_square
    */
   Rect<T> expand_to_square() const {
-    auto center = calc_center_from_rect_internal(*this);
+    double center = calc_center_from_rect_internal<float>(*this);
     T sideLength = std::max(width_, height_);
 
-    return from_center_point(center, sideLength);
+    return from_center_point_internal<double, T>(center, sideLength);
   }
 
   /**
    * Grow rectangle by growBy in each direction.
    * TODO: A negative value should throw an exception...
    */
-  Rect<T> grow(T grow_by) const {
+  template<typename S>
+  Rect<S> grow(S grow_by) const {
     return change_rect_size_internal(*this, grow_by, true /*grow*/);
   }
 
@@ -197,15 +213,46 @@ class Rect {
    * Shrink rectangle by shrinkBy in each direction.
    * TODO: A negative value should throw an exception...
    */
-  Rect<T> shrink(T shrink_by) const {
-    return change_rect_size_internal(*this, shrink_by, false /*shrink*/);
+  template<typename S>
+  Rect<S> shrink(S shrink_by) const {
+    return change_rect_size_internal<S>(*this, shrink_by, false /*shrink*/);
   }
 
-  // TODO: Idea: Add
-  // 2. RectT::grow(3)
-  // 3. RectT::shrink(3)
 
-  static Rect<T> from_center_point(const Point<T> &center, T width, T height) {
+  /**
+   * Usage: Rect<>::from_center_point(point, width, height)
+   */
+  template<typename P, typename S>
+  static Rect<T> from_center_point(const Point<P> &center, S width, S height) {
+    return from_center_point_internal<P, S>(center, width, height);
+  }
+
+
+  // TODO: Re-enable?
+  // static RectT<T>
+  // from_center_point(const PointT<T> &inCenter, SizeT<T> inWindowSize) {
+  //     return from_center_point_internal(inCenter, inWindowSize.width(), inWindowSize.height());
+  // }
+
+  /**
+   *
+   */
+  template<typename P, typename S>
+  static Rect<T> from_center_point(const Point<P> &center,
+                                   S window_size_square_edge) {
+    return from_center_point_internal<P, S>(center, window_size_square_edge,
+                                      window_size_square_edge);
+  }
+
+
+
+ private:
+
+  /**
+   *
+   */
+  template<typename P, typename S, typename R>
+  static Rect<R> from_center_point_internal(const Point<P> &center, S width, S height) {
     // TODO: Or should we round here to int? Check if -1 is correct...
     //unsigned int halfWindowWidth = ceil(inWidth / 2.0f) - 1;
     //unsigned int  halfWindowHeight = ceil(inHeight / 2.0f) - 1;
@@ -217,61 +264,50 @@ class Rect {
     //           throw RectExceptionT("Window width and height expected to be odd values.");
     //       }
 
-    float delta_w = ((float) width - 1.0F) / 2.0F;
-    float delta_h = ((float) height - 1.0F) / 2.0F;
+    double delta_w = (double) width / 2.0;
+    double delta_h = (double) height / 2.0;
 
-//	  T halfWindowWidth = inWidth / 2.0f;
-//	  T halfWindowHeight = inHeight / 2.0f;
-//	  return RectT<T>(std::get<0>(inCenter) /*cx*/ - halfWindowWidth, std::get<1>(inCenter) /*cy*/ - halfWindowHeight, inWidth, inHeight);
-
-    return Rect<T>((T) ((float) center.x() - delta_w),
-                   (T) ((float) center.y() - delta_h), width, height);
+    return Rect<R>(round((double) center.x() - delta_w),
+                   round((double) center.y() - delta_h),
+                   width, height);
   }
 
-  // TODO: Re-enable?
-  // static RectT<T>
-  // from_center_point(const PointT<T> &inCenter, SizeT<T> inWindowSize) {
-  //     return from_center_point(inCenter, inWindowSize.width(), inWindowSize.height());
-  // }
-  // TODO: public functions should not call other public functions!
-  static Rect<T> from_center_point(const Point<T> &center,
-                                   T window_size_square_edge) {
-    return from_center_point(center, window_size_square_edge,
-                             window_size_square_edge);
-  }
 
- private:
   // TODO: If increaseBy is negative, check that overall width & height cannot get negative.
   //        -> Limit values... 0? Or exception...
-  static Rect<T> change_rect_size_internal(Rect<T> rect, T change_by,
+  template <typename S>
+  static Rect<S> change_rect_size_internal(Rect<T> rect, S change_by,
                                            bool grow) {
-    auto center = calc_center_from_rect_internal(rect);
-    T border_both_sides = 2 * change_by;
+    auto center = calc_center_from_rect_internal<float>(rect);
 
-    T new_width = (
+    S border_both_sides = 2.0 * change_by;
+
+    S new_width = (
         grow ?
             rect.width() + border_both_sides : rect.width() - border_both_sides);
-    T new_height = (
-        grow ?
-            rect.height() + border_both_sides :
-            rect.height() - border_both_sides);
 
-    return from_center_point(center, new_width, new_height);
+    S new_height = (
+        grow ?
+            (S) rect.height() + border_both_sides :
+            (S) rect.height() - border_both_sides);
+
+    return from_center_point_internal<float, S, S>(center, new_width, new_height);
   }
 
   /**
    *
    */
-  static Point<T> calc_center_from_rect_internal(const Rect<T> &rect) {
-    if (!rect.is_set_) {
+  template<typename P>
+  static Point<P> calc_center_from_rect_internal(const Rect<T> &rect) {
+    if (! rect.is_set_) {
       throw new RectException(
-          "Cannot perform operation on uninitialized Rect.");
+          "Cannot perform operation on empty Rect.");
     }
 
-    T x_center = rect.x() + rect.width() / 2.0;
-    T y_center = rect.y() + rect.height() / 2.0;
+    P x_center = rect.x() + rect.width() / 2.0;
+    P y_center = rect.y() + rect.height() / 2.0;
 
-    return Point<T>(x_center, y_center);
+    return Point<P>(x_center, y_center);
   }
 
   // TODO: Does not work in case of float!!!
@@ -283,8 +319,6 @@ class Rect {
   // Of course both coordinates need to be in the same coordinate system.
   static bool rect1_contains_rect2_internal(const Rect<T> &rect1,
                                             const Rect<T> &rect2) {
-
-    //LOG(debug) << "rect1ContainsRect2 - rect1=" << rect1 << ", rect2=" << rect2 << std::endl;
 
     if (!rect1.is_set_ || !rect2.is_set_) {
       return false;

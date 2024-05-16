@@ -40,8 +40,6 @@ using namespace starmathpp;
  *
  *  center()
  *  expand_to_square()
- *  grow()
- *  shrink()
  *  from_center_point()
  *  to<>()
  */
@@ -279,6 +277,42 @@ BOOST_AUTO_TEST_CASE(rect_int_contains_test) {
   BOOST_TEST(Rect<int>().contains(Rect<int>(4, 5, 10, 15)) == false);
   BOOST_TEST(Rect<int>(4, 5, 10, 15).contains(Rect<int>()) == false);
 }
+
+
+/**
+ * Test the rect grow() function.
+ */
+BOOST_AUTO_TEST_CASE(rect_grow_test) {
+
+  BOOST_TEST(Rect<int>(4, 5, 10, 15).grow(2) == Rect<int>(2, 3, 14, 19));
+  BOOST_TEST(Rect<int>(0, 0, 10, 15).grow(2) == Rect<int>(-2, -2, 14, 19));
+
+  BOOST_TEST(Rect<int>(0, 0, 10, 15).grow(1.4F) == Rect<float>(-1.4F, -1.4F, 12.8F, 17.8F));
+  BOOST_TEST(Rect<int>(0, 0, 10, 15).grow(1.6) == Rect<double>(-1.6, -1.6, 13.2, 18.2));
+
+  BOOST_TEST(Rect<float>(4.0F, 5.0F, 10.0F, 15.0F).grow(1.0F) == Rect<float>(3.0F, 4.0F, 12.0F, 17.0F));
+  BOOST_TEST(Rect<double>(4.0, 5.0, 10.0, 15.0).grow(1.0) == Rect<double>(3.0, 4.0, 12.0, 17.0));
+  BOOST_TEST(Rect<float>(4.0F, 5.0F, 10.0F, 15.0F).grow(1) == Rect<int>(3, 4, 12, 17));
+
+  BOOST_TEST(Rect<unsigned int>(4, 5, 10, 15).grow(2u) == Rect<unsigned int>(2, 3, 14, 19));
+
+  // TODO: grow() on uninitialized Rect should fail with RectException...
+}
+
+
+/**
+ * Test the rect grow() function.
+ */
+BOOST_AUTO_TEST_CASE(rect_shrink_test) {
+  BOOST_TEST(Rect<int>(4, 5, 10, 15).shrink(2) == Rect<int>(6, 7, 6, 11));
+  BOOST_TEST(Rect<int>(-2, -3, 10, 15).shrink(2) == Rect<int>(0, -1, 6, 11));
+
+  BOOST_TEST(Rect<int>(-2, -3, 10, 15).shrink(1.4F) == Rect<float>(-0.6F, -1.6F, 7.2F, 12.2F));
+  BOOST_TEST(Rect<double>(-3.2, -3.2, 10, 15).shrink(1.6) == Rect<double>(-1.6, -1.6, 6.8, 11.8));
+}
+
+//  shrink()
+
 
 
 BOOST_AUTO_TEST_SUITE_END();
