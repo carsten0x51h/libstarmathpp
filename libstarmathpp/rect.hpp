@@ -37,6 +37,7 @@ namespace starmathpp {
 
 DEF_Exception(Rect);
 
+
 /**
  * See https://stackoverflow.com/questions/16377736/stdmake-signed-that-accepts-floating-point-types
  */
@@ -58,11 +59,39 @@ template<typename T> class Rect;
 template<typename T> std::ostream& operator<<(std::ostream &os,
                                               const Rect<T> &rect);
 
+
+
+/**
+ * Round differently depending on the specified return type.
+ *
+ * TODO: This might go to a separate header file.
+ */
+template <typename R>
+typename std::enable_if<std::is_same<R, unsigned int>::value, unsigned int>::type round(double value) {
+  return std::floor(value + 0.5);
+}
+
+template <typename R>
+typename std::enable_if<std::is_same<R, int>::value, int>::type round(double value) {
+  return (value < 0 ? std::ceil(value - 0.5) : std::floor(value + 0.5));
+}
+
+template <typename R>
+typename std::enable_if<std::is_same<R, float>::value, float>::type round(double value) {
+  return value;
+}
+
+template <typename R>
+typename std::enable_if<std::is_same<R, double>::value, double>::type round(double value) {
+  return value;
+}
+
+
+
 /**
  * Rect structure (X x Y x W x H).
  *
  * TODO: Is it a good idea to have an is_set_ state? Or better use std::optional of needed?
- * TODO: Put this fully under unit tests for different data types.
  * TODO: Restrict this template to data types which make sense.
  * TODO: is_set_ should be checked in all functions. If not set, and e.g. contains() is called, an exception should be thrown.
  * TODO: IDEA: Add contains(Point) + inside(Size?) +  contains(Size)?
@@ -91,7 +120,7 @@ class Rect {
   }
 
   /**
-   * TODO: Negative values for width and height make no sense -> exception. What about 0?
+   *
    */
   Rect(const T &x, const T &y, const UT &w, const UT &h)
       :
@@ -125,7 +154,7 @@ class Rect {
   }
 
   /**
-   * TODO: Negative values make no sense -> exception. What about 0?
+   *
    */
   void set_width(const UT &width) {
     width_ = width;
@@ -137,7 +166,7 @@ class Rect {
   }
 
   /**
-   * TODO: Negative values make no sense -> exception. What about 0?
+   *
    */
   void set_height(const UT &height) {
     height_ = height;
@@ -157,7 +186,6 @@ class Rect {
     return Rect<U>(x_, y_, width_, height_);
   }
 
-
   /**
    * Returns true, if the passed rect completely contained inside this rect.
    * Of course both coordinates need to be in the same coordinate system.
@@ -166,11 +194,12 @@ class Rect {
     return rect1_contains_rect2_internal(*this, rect);
   }
 
-//	TODO: operator= to allow assignment from Rect<float> -> Rect<unsigned int> etc. ??
-
-  // Is this rect completely inside the passed rect?
-  // Of course both coordinates need to be in the same coordinate system.
-  // TODO: Maybe rename to isInside()?
+  /**
+   * Returns true, if this rect is completely inside the passed rect.
+   * Of course both coordinates need to be in the same coordinate system.
+   *
+   * IDEA: Rename to is_inside()
+   */
   bool inside(const Rect<T> &rect) {
     return rect1_contains_rect2_internal(rect, *this);
   }
@@ -193,7 +222,7 @@ class Rect {
 
   /**
    * Grow rectangle by growBy in each direction.
-   * TODO: A negative value should throw an exception...
+   * NOTE: A negative value actually shrinks the Rect.
    */
   template<typename S>
   Rect<S> grow(S grow_by) const {
@@ -202,7 +231,7 @@ class Rect {
 
   /**
    * Shrink rectangle by shrinkBy in each direction.
-   * TODO: A negative value should throw an exception...
+   * NOTE: A negative value actually grows the Rect.
    */
   template<typename S>
   Rect<S> shrink(S shrink_by) const {
@@ -234,21 +263,6 @@ class Rect {
   }
 
  private:
-  static int round(unsigned int value) {
-    return std::floor(value + 0.5);
-  }
-
-  static int round(int value) {
-    return (value < 0.0 ? std::ceil(value - 0.5) : std::floor(value + 0.5));
-  }
-
-  static float round(float value) {
-    return value;
-  }
-
-  static double round(double value) {
-    return value;
-  }
 
   /**
    *
@@ -260,12 +274,21 @@ class Rect {
     double delta_w = (double) width / 2.0;
     double delta_h = (double) height / 2.0;
 
-    return Rect<R>(round((double) center.x() - delta_w),
-                   round((double) center.y() - delta_h), width, height);
+    return Rect<R>(round<R>((double) center.x() - delta_w),
+                   round<R>((double) center.y() - delta_h), width, height);
   }
 
-  // TODO: If increaseBy is negative, check that overall width & height cannot get negative.
-  //        -> Limit values... 0? Or exception...
+  /**
+   * Internal helper function to clip a value to 0.
+   */
+  template<typename S>
+  static S clip_to_zero(S value) {
+    return (value < 0 ? 0 : value);
+  }
+
+  /**
+   *
+   */
   template<typename S>
   static Rect<S> change_rect_size_internal(Rect<T> rect, S change_by,
                                            bool grow) {
@@ -275,12 +298,13 @@ class Rect {
 
     S new_width = (
         grow ?
-            rect.width() + border_both_sides : rect.width() - border_both_sides);
+            (S) (rect.width() + border_both_sides) :
+            (S) clip_to_zero((S)rect.width() - border_both_sides));
 
     S new_height = (
         grow ?
-            (S) rect.height() + border_both_sides :
-            (S) rect.height() - border_both_sides);
+            (S) (rect.height() + border_both_sides) :
+            (S) clip_to_zero((S)rect.height() - border_both_sides));
 
     return from_center_point_internal<float, S, S>(center, new_width,
                                                    new_height);
@@ -322,6 +346,7 @@ class Rect {
     return contains;
   }
 };
+
 
 template<class T>
 std::ostream& operator<<(std::ostream &os, const Rect<T> &rect) {

@@ -306,6 +306,9 @@ BOOST_AUTO_TEST_CASE(rect_shrink_test) {
   BOOST_TEST(
       Rect<double>(-3.2, -3.2, 10, 15).shrink(1.6) == Rect<double>(-1.6, -1.6, 6.8, 11.8));
 
+  BOOST_TEST(
+      Rect<int>(2, 2, 10, 15).shrink(20) == Rect<int>(7, 10, 0, 0));
+
   // TODO: Add further unit tests (see grow())
 
   // shrink() on uninitialized Rect should fail with RectException.
@@ -318,12 +321,12 @@ BOOST_AUTO_TEST_CASE(rect_shrink_test) {
  */
 BOOST_AUTO_TEST_CASE(rect_expand_to_square_test) {
   BOOST_TEST(
-      Rect<int>(4, 5, 10, 15).expand_to_square() == Rect<int>(1, 5, 15, 15));
+      Rect<int>(4, 5, 10, 15).expand_to_square() == Rect<int>(2, 5, 15, 15));
   BOOST_TEST(
       Rect<float>(4.0F, 5.0F, 10.0F, 15.0F).expand_to_square() == Rect<float>(1.5F, 5.0F, 15.0F, 15.0F));
 
   BOOST_TEST(
-      Rect<int>(4, 5, 15, 10).expand_to_square() == Rect<int>(4, 2, 15, 15));
+      Rect<int>(4, 5, 15, 10).expand_to_square() == Rect<int>(4, 3, 15, 15));
   BOOST_TEST(
       Rect<float>(4.0F, 5.0F, 15.0F, 10.0F).expand_to_square() == Rect<float>(4.0F, 2.5F, 15.0F, 15.0F));
 
