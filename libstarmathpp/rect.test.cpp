@@ -36,9 +36,7 @@
 using namespace starmathpp;
 
 /**
- * TODO: Add tests for:
  *
- *  to<>()
  */
 BOOST_AUTO_TEST_SUITE(rect_tests)
 
@@ -89,7 +87,6 @@ BOOST_AUTO_TEST_CASE(rect_float_equal_test) {
   BOOST_TEST((r2 != r3) == true);
 }
 
-
 /**
  * Test if operator==() and operator!=() for
  * Rect<double> works as expected. This uses
@@ -107,7 +104,6 @@ BOOST_AUTO_TEST_CASE(rect_double_equal_test) {
   BOOST_TEST((r2 != r3) == true);
 }
 
-
 /**
  * Test if operator<<() works correctly.
  */
@@ -119,8 +115,6 @@ BOOST_AUTO_TEST_CASE(rect_insertion_operator_test) {
 
   BOOST_TEST(ss.str() == "(x=4, y=5, width=10, height=15)");
 }
-
-
 
 /**
  * Test set and get functions.
@@ -143,7 +137,6 @@ BOOST_AUTO_TEST_CASE(rect_set_and_get_function_test) {
   BOOST_TEST(r1.width() == 11);
   BOOST_TEST(r1.height() == 16);
 }
-
 
 /**
  * Test if the is_set function returns the correct
@@ -190,7 +183,6 @@ BOOST_AUTO_TEST_CASE(rect_clear_test) {
   BOOST_TEST(r1.height() == 0);
 }
 
-
 /**
  * Test the rect inside() function for int.
  */
@@ -207,7 +199,6 @@ BOOST_AUTO_TEST_CASE(rect_int_inside_test) {
   Rect<int> r4;
   BOOST_TEST(r4.inside(r4) == false);
 
-
   Rect<int> r5(4, 5, 10, 15);
   Rect<int> r6(5, 6, 7, 9);
 
@@ -220,7 +211,6 @@ BOOST_AUTO_TEST_CASE(rect_int_inside_test) {
   BOOST_TEST(r8.inside(r7) == true);
   BOOST_TEST(r7.inside(r8) == false);
 
-
   BOOST_TEST(Rect<int>(4, 5, 11, 15).inside(Rect<int>(4, 5, 10, 15)) == false);
   BOOST_TEST(Rect<int>(4, 5, 10, 16).inside(Rect<int>(4, 5, 10, 15)) == false);
   BOOST_TEST(Rect<int>(3, 5, 10, 15).inside(Rect<int>(4, 5, 10, 15)) == false);
@@ -231,7 +221,6 @@ BOOST_AUTO_TEST_CASE(rect_int_inside_test) {
   BOOST_TEST(Rect<int>().inside(Rect<int>(4, 5, 10, 15)) == false);
   BOOST_TEST(Rect<int>(4, 5, 10, 15).inside(Rect<int>()) == false);
 }
-
 
 /**
  * Test the rect contains() function for int.
@@ -250,7 +239,6 @@ BOOST_AUTO_TEST_CASE(rect_int_contains_test) {
   Rect<int> r4;
   BOOST_TEST(r4.inside(r4) == false);
 
-
   Rect<int> r5(4, 5, 10, 15);
   Rect<int> r6(5, 6, 7, 9);
 
@@ -263,18 +251,20 @@ BOOST_AUTO_TEST_CASE(rect_int_contains_test) {
   BOOST_TEST(r8.contains(r7) == false);
   BOOST_TEST(r7.contains(r8) == true);
 
-
-  BOOST_TEST(Rect<int>(4, 5, 10, 15).contains(Rect<int>(4, 5, 11, 15)) == false);
-  BOOST_TEST(Rect<int>(4, 5, 10, 15).contains(Rect<int>(4, 5, 10, 16)) == false);
-  BOOST_TEST(Rect<int>(4, 5, 10, 15).contains(Rect<int>(3, 5, 10, 15)) == false);
-  BOOST_TEST(Rect<int>(4, 5, 10, 15).contains(Rect<int>(4, 4, 10, 15)) == false);
+  BOOST_TEST(
+      Rect<int>(4, 5, 10, 15).contains(Rect<int>(4, 5, 11, 15)) == false);
+  BOOST_TEST(
+      Rect<int>(4, 5, 10, 15).contains(Rect<int>(4, 5, 10, 16)) == false);
+  BOOST_TEST(
+      Rect<int>(4, 5, 10, 15).contains(Rect<int>(3, 5, 10, 15)) == false);
+  BOOST_TEST(
+      Rect<int>(4, 5, 10, 15).contains(Rect<int>(4, 4, 10, 15)) == false);
 
   BOOST_TEST(Rect<int>(5, 6, 0, 0).contains(Rect<int>(4, 5, 10, 15)) == false);
 
   BOOST_TEST(Rect<int>().contains(Rect<int>(4, 5, 10, 15)) == false);
   BOOST_TEST(Rect<int>(4, 5, 10, 15).contains(Rect<int>()) == false);
 }
-
 
 /**
  * Test the rect grow() function.
@@ -284,20 +274,25 @@ BOOST_AUTO_TEST_CASE(rect_grow_test) {
   BOOST_TEST(Rect<int>(4, 5, 10, 15).grow(2) == Rect<int>(2, 3, 14, 19));
   BOOST_TEST(Rect<int>(0, 0, 10, 15).grow(2) == Rect<int>(-2, -2, 14, 19));
 
-  BOOST_TEST(Rect<int>(0, 0, 10, 15).grow(1.4F) == Rect<float>(-1.4F, -1.4F, 12.8F, 17.8F));
-  BOOST_TEST(Rect<int>(0, 0, 10, 15).grow(1.6) == Rect<double>(-1.6, -1.6, 13.2, 18.2));
+  BOOST_TEST(
+      Rect<int>(0, 0, 10, 15).grow(1.4F) == Rect<float>(-1.4F, -1.4F, 12.8F, 17.8F));
+  BOOST_TEST(
+      Rect<int>(0, 0, 10, 15).grow(1.6) == Rect<double>(-1.6, -1.6, 13.2, 18.2));
 
-  BOOST_TEST(Rect<float>(4.0F, 5.0F, 10.0F, 15.0F).grow(1.0F) == Rect<float>(3.0F, 4.0F, 12.0F, 17.0F));
-  BOOST_TEST(Rect<double>(4.0, 5.0, 10.0, 15.0).grow(1.0) == Rect<double>(3.0, 4.0, 12.0, 17.0));
-  BOOST_TEST(Rect<float>(4.0F, 5.0F, 10.0F, 15.0F).grow(1) == Rect<int>(3, 4, 12, 17));
+  BOOST_TEST(
+      Rect<float>(4.0F, 5.0F, 10.0F, 15.0F).grow(1.0F) == Rect<float>(3.0F, 4.0F, 12.0F, 17.0F));
+  BOOST_TEST(
+      Rect<double>(4.0, 5.0, 10.0, 15.0).grow(1.0) == Rect<double>(3.0, 4.0, 12.0, 17.0));
+  BOOST_TEST(
+      Rect<float>(4.0F, 5.0F, 10.0F, 15.0F).grow(1) == Rect<int>(3, 4, 12, 17));
 
-  BOOST_TEST(Rect<unsigned int>(4, 5, 10, 15).grow(2u) == Rect<unsigned int>(2, 3, 14, 19));
+  BOOST_TEST(
+      Rect<unsigned int>(4, 5, 10, 15).grow(2u) == Rect<unsigned int>(2, 3, 14, 19));
 
   // grow() on uninitialized Rect should fail with RectException.
   Rect<int> unset_rect;
   BOOST_CHECK_THROW(unset_rect.grow(2), RectException);
 }
-
 
 /**
  * Test the rect shrink() function.
@@ -306,8 +301,10 @@ BOOST_AUTO_TEST_CASE(rect_shrink_test) {
   BOOST_TEST(Rect<int>(4, 5, 10, 15).shrink(2) == Rect<int>(6, 7, 6, 11));
   BOOST_TEST(Rect<int>(-2, -3, 10, 15).shrink(2) == Rect<int>(0, -1, 6, 11));
 
-  BOOST_TEST(Rect<int>(-2, -3, 10, 15).shrink(1.4F) == Rect<float>(-0.6F, -1.6F, 7.2F, 12.2F));
-  BOOST_TEST(Rect<double>(-3.2, -3.2, 10, 15).shrink(1.6) == Rect<double>(-1.6, -1.6, 6.8, 11.8));
+  BOOST_TEST(
+      Rect<int>(-2, -3, 10, 15).shrink(1.4F) == Rect<float>(-0.6F, -1.6F, 7.2F, 12.2F));
+  BOOST_TEST(
+      Rect<double>(-3.2, -3.2, 10, 15).shrink(1.6) == Rect<double>(-1.6, -1.6, 6.8, 11.8));
 
   // TODO: Add further unit tests (see grow())
 
@@ -316,21 +313,22 @@ BOOST_AUTO_TEST_CASE(rect_shrink_test) {
   BOOST_CHECK_THROW(unset_rect.shrink(2), RectException);
 }
 
-
-
 /**
  * Test the rect expand_to_square() function.
  */
 BOOST_AUTO_TEST_CASE(rect_expand_to_square_test) {
-  BOOST_TEST(Rect<int>(4, 5, 10, 15).expand_to_square() == Rect<int>(1, 5, 15, 15));
-  BOOST_TEST(Rect<float>(4.0F, 5.0F, 10.0F, 15.0F).expand_to_square() == Rect<float>(1.5F, 5.0F, 15.0F, 15.0F));
+  BOOST_TEST(
+      Rect<int>(4, 5, 10, 15).expand_to_square() == Rect<int>(1, 5, 15, 15));
+  BOOST_TEST(
+      Rect<float>(4.0F, 5.0F, 10.0F, 15.0F).expand_to_square() == Rect<float>(1.5F, 5.0F, 15.0F, 15.0F));
 
-  BOOST_TEST(Rect<int>(4, 5, 15, 10).expand_to_square() == Rect<int>(4, 2, 15, 15));
-  BOOST_TEST(Rect<float>(4.0F, 5.0F, 15.0F, 10.0F).expand_to_square() == Rect<float>(4.0F, 2.5F, 15.0F, 15.0F));
+  BOOST_TEST(
+      Rect<int>(4, 5, 15, 10).expand_to_square() == Rect<int>(4, 2, 15, 15));
+  BOOST_TEST(
+      Rect<float>(4.0F, 5.0F, 15.0F, 10.0F).expand_to_square() == Rect<float>(4.0F, 2.5F, 15.0F, 15.0F));
 
   // TODO: Add more unit tests
 }
-
 
 /**
  * Test the rect center() function.
@@ -342,16 +340,27 @@ BOOST_AUTO_TEST_CASE(rect_center_test) {
   // TODO: Add more unit tests
 }
 
-
 /**
  * Test the rect from_center_point() function.
  */
 BOOST_AUTO_TEST_CASE(rect_from_center_point_test) {
-  BOOST_TEST(Rect<int>::from_center_point(Point(5, 6), 8, 10) == Rect<int>(1, 1, 8, 10));
+  BOOST_TEST(
+      Rect<int>::from_center_point(Point(5, 6), 8, 10) == Rect<int>(1, 1, 8, 10));
 
   // TODO: Add more unit tests
 }
 
+/**
+ * Test the rect from_center_point() function.
+ */
+BOOST_AUTO_TEST_CASE(rect_to_test) {
+  BOOST_TEST(
+      Rect<int>(4, -5, 10, 15).to<float>() == Rect<float>(4.0F, -5.0F, 10.0F, 15.0F));
+  BOOST_TEST(
+      Rect<float>(4.6F, -5.0F, 10.2F, 15.5F).to<int>() == Rect<int>(4, -5, 10, 15));
+
+  // TODO: Add more unit tests
+}
 
 BOOST_AUTO_TEST_SUITE_END();
 
