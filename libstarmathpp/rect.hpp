@@ -185,7 +185,7 @@ class Rect {
     return rect1_contains_rect2_internal(rect, *this);
   }
 
-  template<typename P>
+  template<typename P = T>
   Point<P> center() const {
     return calc_center_from_rect_internal<P>(*this);
   }
@@ -194,10 +194,10 @@ class Rect {
    * IDEA: Alternate name: make_square
    */
   Rect<T> expand_to_square() const {
-    double center = calc_center_from_rect_internal<float>(*this);
+    auto center = calc_center_from_rect_internal<double>(*this);
     T sideLength = std::max(width_, height_);
 
-    return from_center_point_internal<double, T>(center, sideLength);
+    return from_center_point_internal<double, T, T>(center, sideLength, sideLength);
   }
 
   /**
@@ -224,7 +224,7 @@ class Rect {
    */
   template<typename P, typename S>
   static Rect<T> from_center_point(const Point<P> &center, S width, S height) {
-    return from_center_point_internal<P, S>(center, width, height);
+    return from_center_point_internal<P, S, T>(center, width, height);
   }
 
 
@@ -240,7 +240,7 @@ class Rect {
   template<typename P, typename S>
   static Rect<T> from_center_point(const Point<P> &center,
                                    S window_size_square_edge) {
-    return from_center_point_internal<P, S>(center, window_size_square_edge,
+    return from_center_point_internal<P, S, T>(center, window_size_square_edge,
                                       window_size_square_edge);
   }
 

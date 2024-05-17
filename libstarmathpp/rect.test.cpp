@@ -38,9 +38,6 @@ using namespace starmathpp;
 /**
  * TODO: Add tests for:
  *
- *  center()
- *  expand_to_square()
- *  from_center_point()
  *  to<>()
  */
 BOOST_AUTO_TEST_SUITE(rect_tests)
@@ -312,12 +309,48 @@ BOOST_AUTO_TEST_CASE(rect_shrink_test) {
   BOOST_TEST(Rect<int>(-2, -3, 10, 15).shrink(1.4F) == Rect<float>(-0.6F, -1.6F, 7.2F, 12.2F));
   BOOST_TEST(Rect<double>(-3.2, -3.2, 10, 15).shrink(1.6) == Rect<double>(-1.6, -1.6, 6.8, 11.8));
 
+  // TODO: Add further unit tests (see grow())
+
   // shrink() on uninitialized Rect should fail with RectException.
   Rect<int> unset_rect;
   BOOST_CHECK_THROW(unset_rect.shrink(2), RectException);
 }
 
 
+
+/**
+ * Test the rect expand_to_square() function.
+ */
+BOOST_AUTO_TEST_CASE(rect_expand_to_square_test) {
+  BOOST_TEST(Rect<int>(4, 5, 10, 15).expand_to_square() == Rect<int>(1, 5, 15, 15));
+  BOOST_TEST(Rect<float>(4.0F, 5.0F, 10.0F, 15.0F).expand_to_square() == Rect<float>(1.5F, 5.0F, 15.0F, 15.0F));
+
+  BOOST_TEST(Rect<int>(4, 5, 15, 10).expand_to_square() == Rect<int>(4, 2, 15, 15));
+  BOOST_TEST(Rect<float>(4.0F, 5.0F, 15.0F, 10.0F).expand_to_square() == Rect<float>(4.0F, 2.5F, 15.0F, 15.0F));
+
+  // TODO: Add more unit tests
+}
+
+
+/**
+ * Test the rect center() function.
+ */
+BOOST_AUTO_TEST_CASE(rect_center_test) {
+  BOOST_TEST(Rect<int>(4, 5, 10, 15).center<float>() == Point<float>(9, 12.5));
+  BOOST_TEST(Rect<int>(4, 5, 10, 15).center() == Point<int>(9, 12));
+
+  // TODO: Add more unit tests
+}
+
+
+/**
+ * Test the rect from_center_point() function.
+ */
+BOOST_AUTO_TEST_CASE(rect_from_center_point_test) {
+  BOOST_TEST(Rect<int>::from_center_point(Point(5, 6), 8, 10) == Rect<int>(1, 1, 8, 10));
+
+  // TODO: Add more unit tests
+}
 
 
 BOOST_AUTO_TEST_SUITE_END();
