@@ -30,6 +30,8 @@
 #include <string>
 #include <utility>
 
+namespace starmathpp {
+
 class BaseException : public std::exception {
  public:
   explicit BaseException(std::string name = "", std::string msg = "")
@@ -54,5 +56,7 @@ class BaseException : public std::exception {
   public:                                \
       explicit inline XYZ##Exception(const std::string & inMsg = "") : BaseException(#XYZ"Exception", inMsg) {} \
   }
+
+} // end namespace starmathpp
 
 #endif /* SOURCE_STARMATHPP_EXCEPTION_HPP_ */
