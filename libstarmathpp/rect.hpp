@@ -300,7 +300,7 @@ class Rect {
   template<typename P>
   static Point<P> calc_center_from_rect_internal(const Rect<T> &rect) {
     if (! rect.is_set_) {
-      throw new RectException(
+      throw RectException(
           "Cannot perform operation on empty Rect.");
     }
 

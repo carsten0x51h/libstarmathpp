@@ -296,12 +296,14 @@ BOOST_AUTO_TEST_CASE(rect_grow_test) {
 
   BOOST_TEST(Rect<unsigned int>(4, 5, 10, 15).grow(2u) == Rect<unsigned int>(2, 3, 14, 19));
 
-  // TODO: grow() on uninitialized Rect should fail with RectException...
+  // grow() on uninitialized Rect should fail with RectException.
+  Rect<int> unset_rect;
+  BOOST_CHECK_THROW(unset_rect.grow(2), RectException);
 }
 
 
 /**
- * Test the rect grow() function.
+ * Test the rect shrink() function.
  */
 BOOST_AUTO_TEST_CASE(rect_shrink_test) {
   BOOST_TEST(Rect<int>(4, 5, 10, 15).shrink(2) == Rect<int>(6, 7, 6, 11));
@@ -309,9 +311,12 @@ BOOST_AUTO_TEST_CASE(rect_shrink_test) {
 
   BOOST_TEST(Rect<int>(-2, -3, 10, 15).shrink(1.4F) == Rect<float>(-0.6F, -1.6F, 7.2F, 12.2F));
   BOOST_TEST(Rect<double>(-3.2, -3.2, 10, 15).shrink(1.6) == Rect<double>(-1.6, -1.6, 6.8, 11.8));
+
+  // shrink() on uninitialized Rect should fail with RectException.
+  Rect<int> unset_rect;
+  BOOST_CHECK_THROW(unset_rect.shrink(2), RectException);
 }
 
-//  shrink()
 
 
 
