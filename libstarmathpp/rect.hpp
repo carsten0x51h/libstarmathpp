@@ -31,15 +31,15 @@
 #include <libstarmathpp/exception.hpp>
 #include <libstarmathpp/point.hpp>
 
-#include <iostream> // TODO: Remove
-
 //#include "size.h"
 
 namespace starmathpp {
 
 DEF_Exception(Rect);
 
-// See https://stackoverflow.com/questions/16377736/stdmake-signed-that-accepts-floating-point-types
+/**
+ * See https://stackoverflow.com/questions/16377736/stdmake-signed-that-accepts-floating-point-types
+ */
 template<typename T>
 struct identity {
   using type = T;
@@ -57,19 +57,6 @@ template<typename T> class Rect;
 // pre-declare the template class itself
 template<typename T> std::ostream& operator<<(std::ostream &os,
                                               const Rect<T> &rect);
-
-
-int round(int value) {
-    return (value < 0.0 ?  std::ceil(value - 0.5) : std::floor(value + 0.5));
-}
-
-float round(float value) {
-    return value;
-}
-
-double round(double value) {
-    return value;
-}
 
 /**
  * Rect structure (X x Y x W x H).
@@ -170,8 +157,11 @@ class Rect {
     return Rect<U>(x_, y_, width_, height_);
   }
 
-  // Is passed rect completely contained inside this rect?
-  // Of course both coordinates need to be in the same coordinate system.
+
+  /**
+   * Returns true, if the passed rect completely contained inside this rect.
+   * Of course both coordinates need to be in the same coordinate system.
+   */
   bool contains(const Rect<T> &rect) {
     return rect1_contains_rect2_internal(*this, rect);
   }
@@ -197,7 +187,8 @@ class Rect {
     auto center = calc_center_from_rect_internal<double>(*this);
     T sideLength = std::max(width_, height_);
 
-    return from_center_point_internal<double, T, T>(center, sideLength, sideLength);
+    return from_center_point_internal<double, T, T>(center, sideLength,
+                                                    sideLength);
   }
 
   /**
@@ -218,7 +209,6 @@ class Rect {
     return change_rect_size_internal<S>(*this, shrink_by, false /*shrink*/);
   }
 
-
   /**
    * Usage: Rect<>::from_center_point(point, width, height)
    */
@@ -226,7 +216,6 @@ class Rect {
   static Rect<T> from_center_point(const Point<P> &center, S width, S height) {
     return from_center_point_internal<P, S, T>(center, width, height);
   }
-
 
   // TODO: Re-enable?
   // static RectT<T>
@@ -241,41 +230,43 @@ class Rect {
   static Rect<T> from_center_point(const Point<P> &center,
                                    S window_size_square_edge) {
     return from_center_point_internal<P, S, T>(center, window_size_square_edge,
-                                      window_size_square_edge);
+                                               window_size_square_edge);
   }
 
-
-
  private:
+  static int round(unsigned int value) {
+    return std::floor(value + 0.5);
+  }
+
+  static int round(int value) {
+    return (value < 0.0 ? std::ceil(value - 0.5) : std::floor(value + 0.5));
+  }
+
+  static float round(float value) {
+    return value;
+  }
+
+  static double round(double value) {
+    return value;
+  }
 
   /**
    *
    */
   template<typename P, typename S, typename R>
-  static Rect<R> from_center_point_internal(const Point<P> &center, S width, S height) {
-    // TODO: Or should we round here to int? Check if -1 is correct...
-    //unsigned int halfWindowWidth = ceil(inWidth / 2.0f) - 1;
-    //unsigned int  halfWindowHeight = ceil(inHeight / 2.0f) - 1;
-
-    // TODO: Does not work in case of float!!!
-    //            -> Implement for RectT and not for RectF... or tmpl specialization!
-    //            -> Easiest: Only permit odd value!
-//        if (isEven(inWidth) || isEven(inHeight)) {
-    //           throw RectExceptionT("Window width and height expected to be odd values.");
-    //       }
+  static Rect<R> from_center_point_internal(const Point<P> &center, S width,
+                                            S height) {
 
     double delta_w = (double) width / 2.0;
     double delta_h = (double) height / 2.0;
 
     return Rect<R>(round((double) center.x() - delta_w),
-                   round((double) center.y() - delta_h),
-                   width, height);
+                   round((double) center.y() - delta_h), width, height);
   }
-
 
   // TODO: If increaseBy is negative, check that overall width & height cannot get negative.
   //        -> Limit values... 0? Or exception...
-  template <typename S>
+  template<typename S>
   static Rect<S> change_rect_size_internal(Rect<T> rect, S change_by,
                                            bool grow) {
     auto center = calc_center_from_rect_internal<float>(rect);
@@ -291,7 +282,8 @@ class Rect {
             (S) rect.height() + border_both_sides :
             (S) rect.height() - border_both_sides);
 
-    return from_center_point_internal<float, S, S>(center, new_width, new_height);
+    return from_center_point_internal<float, S, S>(center, new_width,
+                                                   new_height);
   }
 
   /**
@@ -299,9 +291,8 @@ class Rect {
    */
   template<typename P>
   static Point<P> calc_center_from_rect_internal(const Rect<T> &rect) {
-    if (! rect.is_set_) {
-      throw RectException(
-          "Cannot perform operation on empty Rect.");
+    if (!rect.is_set_) {
+      throw RectException("Cannot perform operation on empty Rect.");
     }
 
     P x_center = rect.x() + rect.width() / 2.0;
