@@ -1,3 +1,5 @@
+include (AddUnitTest)
+
 #
 # Target name
 #
@@ -41,39 +43,10 @@ target_link_libraries(${target}
 #
 # Unit tests
 #
-
-# Point tests
-add_executable(point_tests point.test.cpp)
-target_link_libraries(point_tests
-	PRIVATE
-	${target}
-	${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
-	${DEFAULT_LINKER_OPTIONS}
-)
-add_test(NAME point_tests COMMAND point_tests WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-
-
-# Rect tests
-add_executable(rect_tests rect.test.cpp)
-target_link_libraries(rect_tests
-	PRIVATE
-	${target}
-	${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
-	${DEFAULT_LINKER_OPTIONS}
-)
-add_test(NAME rect_tests COMMAND rect_tests WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-
-
-
-# Pipeline image read
-add_executable(pipeline_views_read_tests pipeline/views/read.test.cpp)
-target_link_libraries(pipeline_views_read_tests
-	PRIVATE
-	${target}
-	${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
-	${DEFAULT_LINKER_OPTIONS}
-)
-add_test(NAME pipeline_views_read_tests COMMAND pipeline_views_read_tests WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+add_test_module(point_tests point.test.cpp)
+add_test_module(rect_tests rect.test.cpp)
+add_test_module(image_reader_tests io/image_reader.test.cpp)
+add_test_module(pipeline_views_read_tests pipeline/views/read.test.cpp)
 
 
 
