@@ -21,6 +21,7 @@ set(sources
    rect.cpp
    io/cimg_fits_io.cpp
    io/image_reader.cpp
+   io/image_writer.cpp
 )
 
 
@@ -38,8 +39,6 @@ target_link_libraries(${target}
 	${DEFAULT_LINKER_OPTIONS}
 )
 
-
-
 #
 # Unit tests
 #
@@ -47,7 +46,7 @@ add_test_module(point_tests point.test.cpp)
 add_test_module(rect_tests rect.test.cpp)
 add_test_module(image_reader_tests io/image_reader.test.cpp)
 add_test_module(pipeline_views_read_tests pipeline/views/read.test.cpp)
-
+add_test_module(image_writer_tests io/image_writer.test.cpp)
 
 
 
