@@ -33,17 +33,16 @@ namespace starmathpp {
  * Compare function for float and double.
  */
 template<typename T>
-bool compare(const Rect<T> &rect1, const Rect<T> &rect2, double tolerance = std::numeric_limits<T>::epsilon()) {
+bool compare(const Rect<T> &rect1, const Rect<T> &rect2, double tolerance =
+                 std::numeric_limits<T>::epsilon()) {
 
   T delta_x = std::abs(rect1.x() - rect2.x());
   T delta_y = std::abs(rect1.y() - rect2.y());
-  T delta_width = std::abs(rect1.width() - rect2.width());
-  T delta_height = std::abs(rect1.height() - rect2.height());
+  T delta_width = std::abs((T) rect1.width() - (T) rect2.width());
+  T delta_height = std::abs((T) rect1.height() - (T) rect2.height());
 
-  return delta_x <= tolerance
-      && delta_y <= tolerance
-      && delta_width <= tolerance
-      && delta_height <= tolerance;
+  return delta_x <= tolerance && delta_y <= tolerance
+      && delta_width <= tolerance && delta_height <= tolerance;
 }
 
 template<>
