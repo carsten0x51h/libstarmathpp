@@ -306,8 +306,7 @@ BOOST_AUTO_TEST_CASE(rect_shrink_test) {
   BOOST_TEST(
       Rect<double>(-3.2, -3.2, 10, 15).shrink(1.6) == Rect<double>(-1.6, -1.6, 6.8, 11.8));
 
-  BOOST_TEST(
-      Rect<int>(2, 2, 10, 15).shrink(20) == Rect<int>(7, 10, 0, 0));
+  BOOST_TEST(Rect<int>(2, 2, 10, 15).shrink(20) == Rect<int>(7, 10, 0, 0));
 
   // TODO: Add further unit tests (see grow())
 
