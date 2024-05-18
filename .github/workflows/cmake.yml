@@ -40,7 +40,7 @@ jobs:
 
     - name: DirTest
       working-directory: ${{github.workspace}}/build
-      run: ls -la test_data
+      run: echo ${{github.workspace}}
 
     - name: Test
       working-directory: ${{github.workspace}}/build
