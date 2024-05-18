@@ -29,76 +29,74 @@
 #include <libstarmathpp/io/image_writer.hpp>
 #include <libstarmathpp/io/cimg_fits_io.hpp>
 
-
 namespace starmathpp::io {
 
+/**
+ * Check that the specified path is not an existing directory, that the
+ * specified name has an extension, and that an exception is thrown in case
+ * the file already exists and override is set to false.
+ *
+ * @param filepath  File path where the image should be stored to.
+ * @param override  Set to true allows overriding an existing file.
+ */
+void check_filepath(const std::filesystem::path &filepath, bool override) {
 
-    /**
-     * Check that the specified path is not an existing directory, that the
-     * specified name has an extension, and that an exception is thrown in case
-     * the file already exists and override is set to false.
-     *
-     * @param filepath  File path where the image should be stored to.
-     * @param override  Set to true allows overriding an existing file.
-     */
-    void check_filepath(const std::filesystem::path & filepath, bool override) {
-
-    	if (is_directory(filepath)) {
-    		throw ImageWriterException("Specified file path is a directory.");
-    	}
-    	else if (! filepath.has_extension()) {
-    		throw ImageWriterException("Unable to determine file extension.");
-    	}
+  if (is_directory(filepath)) {
+    throw ImageWriterException("Specified file path is a directory.");
+  } else if (!filepath.has_extension()) {
+    throw ImageWriterException("Unable to determine file extension.");
+  }
 //    	else if (! std::filesystem::exists(filepath.parent_path())) {
 //    		// TODO: Maybe sub-folders are automatically created and this check is not required.
 //    	    std::stringstream ss;
 //    	    ss << "Specified directory '" << filepath.parent_path() << "' does not exist.";
 //    		throw ImageWriterException(ss.str());
 //    	}
-    	else if (is_regular_file(filepath) && ! override) {
-    		std::stringstream ss;
-    		ss << "File '" << filepath << "' already exists and override is disabled.";
-    		throw ImageWriterException(ss.str());
-    	}
-    }
+  else if (is_regular_file(filepath) && !override) {
+    std::stringstream ss;
+    ss << "File '" << filepath << "' already exists and override is disabled.";
+    throw ImageWriterException(ss.str());
+  }
+}
 
+/**
+ *
+ * @param filepath
+ * @param image
+ */
+void write_fits(const std::string &filepath, const Image &img, bool override) {
 
-    /**
-     *
-     * @param filepath
-     * @param image
-     */
-    void write_fits(const std::string & filepath, const Image & img, bool override) {
+  std::stringstream debugSs;
 
-        std::stringstream debugSs;
+  try {
+    // NOTE: Throws FitsIOException
+    starmathpp::io::fits::write(img, filepath, override, &debugSs);
+  } catch (starmathpp::io::fits::FitsIOException &exc) {
+    std::stringstream ss;
+    ss << "Error writing image to '" << filepath
+       << "'. FitsIO exception occurred: " << exc.what() << ", ";
+    ss << "Details: " << debugSs.str();
 
-        try {
-        	// NOTE: Throws FitsIOException
-          starmathpp::io::fits::write(img, filepath, override, & debugSs);
-        } catch (starmathpp::io::fits::FitsIOException &exc) {
-            std::stringstream ss;
-            ss << "Error writing image to '" << filepath << "'. FitsIO exception occurred: " << exc.what() << ", ";
-            ss << "Details: " << debugSs.str();
+    throw ImageWriterException(ss.str());
+  }
+}
 
-            throw ImageWriterException(ss.str());
-        }
-    }
+/**
+ *
+ */
+void write(const Image &img, const std::filesystem::path &filepath,
+           bool override) {
+  check_filepath(filepath, override);
 
+  const std::string filepath_lower = boost::algorithm::to_lower_copy(
+      filepath.string());
 
-    /**
-     *
-     */
-    void write(const Image & img, const std::filesystem::path & filepath, bool override) {
-		check_filepath(filepath, override);
-
-        const std::string filepath_lower = boost::algorithm::to_lower_copy(filepath.string());
-
-        if (starmathpp::io::fits::is_fits(filepath_lower) || starmathpp::io::fits::is_fits_gz(filepath_lower)) {
-            write_fits(filepath.string(), img, override);
-        }
-        else {
-        	img.save(filepath.string().c_str());
-        }
-	}
+  if (starmathpp::io::fits::is_fits(filepath_lower)
+      || starmathpp::io::fits::is_fits_gz(filepath_lower)) {
+    write_fits(filepath.string(), img, override);
+  } else {
+    img.save(filepath.string().c_str());
+  }
+}
 
 }

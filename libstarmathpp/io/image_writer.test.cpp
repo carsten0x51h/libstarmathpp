@@ -44,9 +44,9 @@ namespace bdata = boost::unit_test::data;
 BOOST_DATA_TEST_CASE(fits_image_writer_test,
     bdata::make(
         std::vector<std::tuple<starmathpp::Image,std::string, std::uintmax_t>> {
-          { starmathpp::Image(20 /*width*/, 20 /*height*/, 1, 3, 0), "image_20x20.tiff", 5047 },
-          { starmathpp::Image(20 /*width*/, 20 /*height*/, 1, 3, 0), "image_20x20.fits", 5760 },
-          { starmathpp::Image(20 /*width*/, 20 /*height*/, 1, 3, 0), "image_20x20.fits.gz", 432 }
+          { starmathpp::Image(20 /*width*/, 20 /*height*/, 1, 3, 0), "image_20x20.tiff", 5047},
+          { starmathpp::Image(20 /*width*/, 20 /*height*/, 1, 3, 0), "image_20x20.fits", 5760},
+          { starmathpp::Image(20 /*width*/, 20 /*height*/, 1, 3, 0), "image_20x20.fits.gz", 432}
         }),
     image, image_filename, expected_file_size)
 {

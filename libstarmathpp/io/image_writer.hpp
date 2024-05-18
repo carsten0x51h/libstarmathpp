@@ -26,25 +26,22 @@
 #ifndef STARMATHPP_IMAGE_WRITER_H
 #define STARMATHPP_IMAGE_WRITER_H STARMATHPP_IMAGE_WRITER_H
 
-
 #include <libstarmathpp/io/filesystem_wrapper.hpp>
 #include <libstarmathpp/image.hpp>
 #include <libstarmathpp/exception.hpp>
 
-
 namespace starmathpp::io {
 
-	/**
-	 * Define ImageWriterException
-	 */
-	DEF_Exception(ImageWriter);
+/**
+ * Define ImageWriterException
+ */
+DEF_Exception(ImageWriter);
 
-
-	/**
-	 * TODO: Document...
-	 */
-    void write(const Image & img, const std::filesystem::path & filepath, bool override = true);
+/**
+ * TODO: Document...
+ */
+void write(const Image &img, const std::filesystem::path &filepath,
+           bool override = true);
 }
-
 
 #endif // STARMATHPP_IMAGE_WRITER_H
