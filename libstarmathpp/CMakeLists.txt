@@ -1,6 +1,3 @@
-message(STATUS "CMAKE_BINARY_DIR: ${CMAKE_SOURCE_DIR}")
-
-
 #
 # Target name
 #
@@ -53,7 +50,7 @@ target_link_libraries(point_tests
 	${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
 	${DEFAULT_LINKER_OPTIONS}
 )
-add_test(NAME point_tests COMMAND point_tests WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+add_test(NAME point_tests COMMAND point_tests WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 
 # Rect tests
@@ -64,7 +61,7 @@ target_link_libraries(rect_tests
 	${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
 	${DEFAULT_LINKER_OPTIONS}
 )
-add_test(NAME rect_tests COMMAND rect_tests WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+add_test(NAME rect_tests COMMAND rect_tests WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 
 # Image reader tests
@@ -75,7 +72,7 @@ target_link_libraries(image_reader_tests
 	${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
 	${DEFAULT_LINKER_OPTIONS}
 )
-add_test(NAME image_reader_tests COMMAND image_reader_tests WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+add_test(NAME image_reader_tests COMMAND image_reader_tests WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 
 # # 
