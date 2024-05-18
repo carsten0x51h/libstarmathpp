@@ -67,12 +67,13 @@ std::shared_ptr<Image> read(const std::string &inFilename,
 
     auto img = std::make_shared < Image
         > ((int) fitsImg.axis(0), (int) fitsImg.axis(1));
-    //TODO: img->setBitDepth(fitsImg.bitpix());
 
     // TODO: Put a check here:   fitsImg.bitpix() <= sizeof(ImageT)
-    std::cerr << "fitsImg.bitpix(): " << fitsImg.bitpix() << std::endl;
-    std::cerr << "sizeof(ImageT): " << 8 * sizeof(typename Image::value_type)
-        << std::endl;
+    // -> When provided image type does not fit, an exception is thrown? Or a warning logged?
+    // Maybe exception is optional i.e. can be configured?
+    //std::cerr << "fitsImg.bitpix(): " << fitsImg.bitpix() << std::endl;
+    //std::cerr << "sizeof(ImageT): " << 8 * sizeof(typename Image::value_type)
+    //        << std::endl;
 
     // HACK / FIXME: At this point we assume that there is only 1 layer!
     std::valarray<typename Image::value_type> imgData;

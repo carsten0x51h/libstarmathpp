@@ -85,6 +85,7 @@ namespace starmathpp {
  * Boost variant: https://www.boost.org/doc/libs/1_54_0/doc/html/variant.html
  */
 using Image = cimg_library::CImg<float>;
+using ImagePtr = std::shared_ptr<Image>;
 
 }  // end namespace starmathpp
 

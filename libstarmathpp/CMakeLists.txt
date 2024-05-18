@@ -64,15 +64,18 @@ target_link_libraries(rect_tests
 add_test(NAME rect_tests COMMAND rect_tests WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 
-# Image reader tests
-add_executable(image_reader_tests io/image_reader.test.cpp)
-target_link_libraries(image_reader_tests
+
+# Pipeline image read
+add_executable(pipeline_views_read_tests pipeline/views/read.test.cpp)
+target_link_libraries(pipeline_views_read_tests
 	PRIVATE
 	${target}
 	${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
 	${DEFAULT_LINKER_OPTIONS}
 )
-add_test(NAME image_reader_tests COMMAND image_reader_tests WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+add_test(NAME pipeline_views_read_tests COMMAND pipeline_views_read_tests WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+
+
 
 
 # # 
