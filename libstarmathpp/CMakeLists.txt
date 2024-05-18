@@ -20,6 +20,8 @@ configure_file(version.hpp.in ${CMAKE_CURRENT_BINARY_DIR}/include/${META_PROJECT
 set(sources
    point.cpp
    rect.cpp
+   io/cimg_fits_io.cpp
+   io/image_reader.cpp
 )
 
 
@@ -27,6 +29,16 @@ set(sources
 # Build library
 #
 add_library(${target} ${sources})
+
+# Other libraries the starmathpp library depends on
+target_link_libraries(${target}
+	PRIVATE
+	${CFITSIO_LIBRARY}
+	${CCFITS_LIBRARY}
+	${TIFF_LIBRARIES}
+	${DEFAULT_LINKER_OPTIONS}
+)
+
 
 
 #
@@ -54,6 +66,16 @@ target_link_libraries(rect_tests
 )
 add_test(NAME rect_tests COMMAND rect_tests WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
+
+# Image reader tests
+add_executable(image_reader_tests io/image_reader.test.cpp)
+target_link_libraries(image_reader_tests
+	PRIVATE
+	${target}
+	${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+	${DEFAULT_LINKER_OPTIONS}
+)
+add_test(NAME image_reader_tests COMMAND image_reader_tests WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 
 # # 
