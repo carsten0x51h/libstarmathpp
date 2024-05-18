@@ -157,6 +157,11 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 # https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1204r0.html
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
+#
+# Copy test data folder to binary/build folder
+#
+file(COPY test_data DESTINATION  ${CMAKE_CURRENT_BINARY_DIR})
+
 
 # 
 # Deployment/installation setup
