@@ -35,6 +35,8 @@
 
 #include <libstarmathpp/io/image_reader.hpp>
 
+#include <filesystem> // TODO: Remove
+
 namespace bdata = boost::unit_test::data;
 
 /**
@@ -76,6 +78,8 @@ BOOST_DATA_TEST_CASE(fits_image_reader_test,
             }),
         image_filename, image_width, image_height, pos_x, pos_y, pixel_value)
 {
+  std::cerr << " std::filesystem::current_path(): " <<  std::filesystem::current_path() << std::endl;
+
     auto img_ptr = starmathpp::io::read(image_filename);
 
     DEBUG_IMAGE_DISPLAY(*img_ptr, "image_reader_test", 0);
