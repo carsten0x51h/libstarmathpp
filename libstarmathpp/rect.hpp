@@ -37,7 +37,6 @@ namespace starmathpp {
 
 DEF_Exception(Rect);
 
-
 /**
  * See https://stackoverflow.com/questions/16377736/stdmake-signed-that-accepts-floating-point-types
  */
@@ -59,34 +58,34 @@ template<typename T> class Rect;
 template<typename T> std::ostream& operator<<(std::ostream &os,
                                               const Rect<T> &rect);
 
-
-
 /**
  * Round differently depending on the specified return type.
  *
  * TODO: This might go to a separate header file.
  */
-template <typename R>
-typename std::enable_if<std::is_same<R, unsigned int>::value, unsigned int>::type round(double value) {
+template<typename R>
+typename std::enable_if<std::is_same<R, unsigned int>::value, unsigned int>::type round(
+    double value) {
   return std::floor(value + 0.5);
 }
 
-template <typename R>
-typename std::enable_if<std::is_same<R, int>::value, int>::type round(double value) {
+template<typename R>
+typename std::enable_if<std::is_same<R, int>::value, int>::type round(
+    double value) {
   return (value < 0 ? std::ceil(value - 0.5) : std::floor(value + 0.5));
 }
 
-template <typename R>
-typename std::enable_if<std::is_same<R, float>::value, float>::type round(double value) {
+template<typename R>
+typename std::enable_if<std::is_same<R, float>::value, float>::type round(
+    double value) {
   return value;
 }
 
-template <typename R>
-typename std::enable_if<std::is_same<R, double>::value, double>::type round(double value) {
+template<typename R>
+typename std::enable_if<std::is_same<R, double>::value, double>::type round(
+    double value) {
   return value;
 }
-
-
 
 /**
  * Rect structure (X x Y x W x H).
@@ -299,12 +298,12 @@ class Rect {
     S new_width = (
         grow ?
             (S) (rect.width() + border_both_sides) :
-            (S) clip_to_zero((S)rect.width() - border_both_sides));
+            (S) clip_to_zero((S) rect.width() - border_both_sides));
 
     S new_height = (
         grow ?
             (S) (rect.height() + border_both_sides) :
-            (S) clip_to_zero((S)rect.height() - border_both_sides));
+            (S) clip_to_zero((S) rect.height() - border_both_sides));
 
     return from_center_point_internal<float, S, S>(center, new_width,
                                                    new_height);
@@ -346,7 +345,6 @@ class Rect {
     return contains;
   }
 };
-
 
 template<class T>
 std::ostream& operator<<(std::ostream &os, const Rect<T> &rect) {
