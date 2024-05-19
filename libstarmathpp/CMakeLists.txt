@@ -51,6 +51,7 @@ add_test_module(pipeline_views_write_tests pipeline/views/write.test.cpp)
 add_test_module(pipeline_views_add_tests pipeline/views/add.test.cpp)
 add_test_module(pipeline_views_subtract_tests pipeline/views/subtract.test.cpp)
 add_test_module(pipeline_views_divide_by_tests pipeline/views/divide_by.test.cpp)
+add_test_module(pipeline_views_multiply_by_tests pipeline/views/multiply_by.test.cpp)
 
 
 
