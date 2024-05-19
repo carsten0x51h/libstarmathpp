@@ -47,16 +47,15 @@ using namespace ranges;
  */
 BOOST_AUTO_TEST_CASE(pipeline_add_image_test)
 {
-  // TODO: Test overflow?
-
-  // TODO: Test adding a negative image
   std::vector<ImagePtr> input_images = {
     std::make_shared<Image>(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
-    std::make_shared<Image>(5, 5, 1, 1, 10)// 5x5 - All pixels have value 10
+    std::make_shared<Image>(5, 5, 1, 1, 10),// 5x5 - All pixels have value 10
+    std::make_shared<Image>(5, 5, 1, 1, -10)// 5x5 - All pixels have value -10
   };
 
   std::vector<Image> expected_result_images = { Image(5, 5, 1, 1, 22),  // 5x5 - All pixels have value 22
-  Image(5, 5, 1, 1, 19)  // 5x5 - All pixels have value 19
+  Image(5, 5, 1, 1, 19),  // 5x5 - All pixels have value 19
+  Image(5, 5, 1, 1, -1)  // 5x5 - All pixels have value -1
       };
 
   auto image_to_add_5x5_value9_ptr1 = std::make_shared < Image
@@ -69,7 +68,7 @@ BOOST_AUTO_TEST_CASE(pipeline_add_image_test)
         return *img_ptr;
       }) | to<std::vector>();
 
-  BOOST_TEST(result_images.size() == 2);
+  BOOST_TEST(result_images.size() == 3);
   BOOST_CHECK_EQUAL_COLLECTIONS(result_images.begin(), result_images.end(),
       expected_result_images.begin(), expected_result_images.end());
 }
@@ -79,14 +78,15 @@ BOOST_AUTO_TEST_CASE(pipeline_add_image_test)
  */
 BOOST_AUTO_TEST_CASE(pipeline_add_scalar_test)
 {
-  // TODO: Test adding a negative image
   std::vector<ImagePtr> input_images = {
     std::make_shared<Image>(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
-    std::make_shared<Image>(5, 5, 1, 1, 10)// 5x5 - All pixels have value 10
+    std::make_shared<Image>(5, 5, 1, 1, 10),// 5x5 - All pixels have value 10
+    std::make_shared<Image>(5, 5, 1, 1, -10)// 5x5 - All pixels have value -10
   };
 
   std::vector<Image> expected_result_images = { Image(5, 5, 1, 1, 513),  // 5x5 - All pixels have value 513
-  Image(5, 5, 1, 1, 510)  // 5x5 - All pixels have value 510
+  Image(5, 5, 1, 1, 510),  // 5x5 - All pixels have value 510
+  Image(5, 5, 1, 1, 490)  // 5x5 - All pixels have value 510
       };
 
   auto result_images = input_images | pipeline::views::add(500.0F)
@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE(pipeline_add_scalar_test)
         return *img_ptr;
       }) | to<std::vector>();
 
-  BOOST_TEST(result_images.size() == 2);
+  BOOST_TEST(result_images.size() == 3);
   BOOST_CHECK_EQUAL_COLLECTIONS(result_images.begin(), result_images.end(),
       expected_result_images.begin(), expected_result_images.end());
 }

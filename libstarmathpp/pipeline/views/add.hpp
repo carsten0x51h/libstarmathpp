@@ -26,10 +26,6 @@
 #ifndef STARMATHPP_PIPELINE_VIEW_ADD_H_
 #define STARMATHPP_PIPELINE_VIEW_ADD_H_ STARMATHPP_PIPELINE_VIEW_ADD_H_
 
-#include <string>
-
-#include <range/v3/view/transform.hpp>
-
 #include <libstarmathpp/pipeline/views/arithmetic_function_template.hpp>
 
 #define STARMATHPP_PIPELINE_ADD_DEBUG 0
@@ -58,31 +54,6 @@ auto add(ImageType scalar_value_to_add) {
   return arithmetic_function_tmpl<AddTraits, ImageType>(scalar_value_to_add);
 }
 
-/**
- *
- * @tparam ImageType
- * @param scalarValueToAdd
- * @return
- */
-//template<typename ImageType = float>
-//auto add(ImageType scalarValueToAdd) {
-//  return ranges::views::transform(
-//      [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
-//        const cimg_library::CImg<ImageType> &inputImageRef = *image;
-//
-//        DEBUG_IMAGE_DISPLAY(inputImageRef, "add_scalar_in",
-//                            STARMATHPP_PIPELINE_ADD_DEBUG);
-//
-//        auto result_image = std::make_shared < cimg_library::CImg
-//            < ImageType >> (inputImageRef + scalarValueToAdd);
-//
-//        DEBUG_IMAGE_DISPLAY(*result_image, "add_scalar_out",
-//                            STARMATHPP_PIPELINE_ADD_DEBUG);
-//
-//        return result_image;
-//      }
-//  );
-//}
-}
+} // namespace starmathpp::pipeline::views
 
 #endif // STARMATHPP_PIPELINE_VIEW_ADD_H_
