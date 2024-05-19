@@ -105,11 +105,11 @@ BOOST_AUTO_TEST_CASE(pipeline_add_scalar_test)
 BOOST_AUTO_TEST_CASE(pipeline_add_different_image_sizes_test)
 {
   auto image_to_add_5x5_value9_ptr1 = std::make_shared<Image>(5, 5, 1, 1, 9);
-  auto image_to_add_4x4_value9_ptr1 = std::make_shared < Image
+  auto image_to_add_4x4_value9_ptr2 = std::make_shared < Image
       > (4, 4, 1, 1, 9);
 
   BOOST_CHECK_THROW(ranges::views::single(image_to_add_5x5_value9_ptr1)
-      | pipeline::views::add(image_to_add_4x4_value9_ptr1)
+      | pipeline::views::add(image_to_add_4x4_value9_ptr2)
       | to<std::vector>(),
       starmathpp::pipeline::views::ArithmeticImageOpException);
 }

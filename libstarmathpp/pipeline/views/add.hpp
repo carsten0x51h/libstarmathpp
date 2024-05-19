@@ -32,7 +32,6 @@
 
 namespace starmathpp::pipeline::views {
 
-
 template<typename ImageType>
 struct AddTraits {
   static std::string operation_name() { return "add"; }
