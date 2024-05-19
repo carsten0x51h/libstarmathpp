@@ -39,6 +39,7 @@ namespace starmathpp::pipeline::views {
 
 template<typename ImageType>
 struct AddTraits {
+  static std::string operation_name() { return "add"; }
   static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(const std::shared_ptr<cimg_library::CImg<ImageType>> & img_ptr1, const std::shared_ptr<cimg_library::CImg<ImageType>> & img_ptr2) {
      return std::make_shared < cimg_library::CImg<ImageType>> (*img_ptr1 + *img_ptr2);
   }

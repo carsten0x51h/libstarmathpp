@@ -35,6 +35,24 @@ namespace starmathpp::pipeline::views {
 
 DEF_Exception(ArithmeticImageOp);
 
+namespace detail {
+template<typename ImageType = float>
+void check_same_dimension_or_throw(const std::string &operation_name,
+                             const std::shared_ptr<cimg_library::CImg<ImageType> > &img_ptr1,
+                             const std::shared_ptr<cimg_library::CImg<ImageType> > &img_ptr2) {
+  if (img_ptr1->width() != img_ptr2->width()
+      || img_ptr1->height() != img_ptr2->height()) {
+    std::stringstream ss;
+    ss << "Cannot perform '" << operation_name
+        << "' operation on images with different dimensions [("
+        << img_ptr1->width() << ", " << img_ptr1->height() << ") != ("
+        << img_ptr2->width() << ", " << img_ptr2->height() << ")]";
+
+    throw ArithmeticImageOpException(ss.str());
+  }
+}
+}  // namespace detail
+
 /**
  * Template for image on image operation.
  */
@@ -44,16 +62,9 @@ auto arithmetic_function_tmpl(const std::shared_ptr<Image> &image_to_add_ptr) {
   return ranges::views::transform(
       [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
 
-        if (image->width() != image_to_add_ptr->width()
-            || image->height() != image_to_add_ptr->height()) {
-          std::stringstream ss;
-          ss << "Cannot add images of different dimensions [(" << image->width()
-              << ", " << image->height() << ") != ("
-              << image_to_add_ptr->width() << ", " << image_to_add_ptr->height()
-              << ")]";
-
-          throw ArithmeticImageOpException(ss.str());
-        }
+        detail::check_same_dimension_or_throw<ImageType>(
+            ArithmeticFunctionTraits<ImageType>::operation_name(), image,
+            image_to_add_ptr);
 
         DEBUG_IMAGE_DISPLAY(*image, "add_image_in",
                             STARMATHPP_PIPELINE_ADD_DEBUG);
@@ -69,7 +80,6 @@ auto arithmetic_function_tmpl(const std::shared_ptr<Image> &image_to_add_ptr) {
   );
 }
 
-
 /**
  * Template for scalar operations on an image.
  */
@@ -83,7 +93,7 @@ auto arithmetic_function_tmpl(ImageType scalar_value_to_add) {
                             STARMATHPP_PIPELINE_ADD_DEBUG);
 
         auto result_image = ArithmeticFunctionTraits<ImageType>::calculate(
-                    image, scalar_value_to_add);
+            image, scalar_value_to_add);
 
         DEBUG_IMAGE_DISPLAY(*result_image, "add_scalar_out",
                             STARMATHPP_PIPELINE_ADD_DEBUG);
@@ -92,7 +102,6 @@ auto arithmetic_function_tmpl(ImageType scalar_value_to_add) {
       }
   );
 }
-
 
 }  // namespace starmathpp::pipeline::views
 
