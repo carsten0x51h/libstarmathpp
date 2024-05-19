@@ -29,11 +29,18 @@
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_DYN_LINK
 
+#include <vector>
+
 #include <boost/test/unit_test.hpp>
+#include <boost/test/data/test_case.hpp>
 
 #include <range/v3/range/conversion.hpp>
 
 #include <libstarmathpp/pipeline/views/write.hpp>
+
+#include <libstarmathpp/image.hpp>
+
+namespace bdata = boost::unit_test::data;
 
 BOOST_AUTO_TEST_SUITE (pipeline_write_tests)
 
@@ -42,29 +49,31 @@ using namespace ranges;
 
 BOOST_AUTO_TEST_CASE(pipeline_write_images_test)
 {
-//    const std::vector<std::string> image_filenames {
-//        "test_data/image_processing_pipeline/read/test_image_tiff_1_65x85.tiff",
-//        "test_data/image_processing_pipeline/read/test_image_tiff_2_65x85.tiff",
-//        "test_data/image_processing_pipeline/read/test_image_fits_1_45x47.fits",
-//        "test_data/image_processing_pipeline/read/test_image_fits_2_45x47.fits"
-//    };
-//
-//    const std::vector< std::pair<int, int> > expected_image_dimensions {
-//            std::make_pair(65, 85),
-//            std::make_pair(65, 85),
-//            std::make_pair(45, 47),
-//            std::make_pair(45, 47)
-//    };
-//
-//    auto img_dimensions = image_filenames
-//                            | pipeline::views::read()
-//                            | views::transform(
-//                                    [](const auto & img_ptr) {
-//                                        return std::make_pair(img_ptr->width(), img_ptr->height());
-//                                    })
-//                            | to<std::vector>();
-//
-//    BOOST_TEST(img_dimensions == expected_image_dimensions);
+  std::vector<starmathpp::ImagePtr> images_to_write {
+    std::make_shared<starmathpp::Image>(20 /*width*/, 20 /*height*/, 1, 3, 0),
+    std::make_shared<starmathpp::Image>(400 /*width*/, 400 /*height*/, 1, 3, 0),
+    std::make_shared<starmathpp::Image>(200 /*width*/, 450 /*height*/, 1, 3, 0)
+  };
+
+  std::vector<std::tuple<std::string, std::uintmax_t>> expected_results = { {
+      "img_000.fit", 5760 }, { "img_001.fit", 325440 },
+      { "img_002.fit", 184320 }, };
+
+  auto written_images = images_to_write
+      | pipeline::views::write(".", "img_%03d.fit", true /*allowOverride*/)
+      | to<std::vector>();
+
+  // TODO: Test allowOverride...
+
+  BOOST_TEST(written_images.size() == images_to_write.size());
+
+  for (const auto & result : expected_results) {
+    std::string filename = get<0>(result);
+    std::uintmax_t file_size = get<1>(result);
+
+    BOOST_TEST(std::filesystem::exists(filename) == true);
+    BOOST_TEST(fs::file_size(filename) == file_size);
+  }
 }
 
 BOOST_AUTO_TEST_SUITE_END();

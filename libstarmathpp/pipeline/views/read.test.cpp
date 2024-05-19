@@ -35,7 +35,7 @@
 
 #include <libstarmathpp/pipeline/views/read.hpp>
 
-BOOST_AUTO_TEST_SUITE(pipeline_images_tests)
+BOOST_AUTO_TEST_SUITE(pipeline_read_tests)
 
 using namespace starmathpp;
 using namespace ranges;

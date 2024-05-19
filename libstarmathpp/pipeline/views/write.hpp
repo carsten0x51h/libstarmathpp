@@ -48,7 +48,7 @@
 //       However, if it is for example supposed to be the last step of a
 //       pipeline, then it should be an action which actively queries
 //       all elements of the pipeline.
-namespace starmathpp::pipeline::io {
+namespace starmathpp::pipeline::views {
 
 /**
  * NOTE: With C++20, the filename can be easily composed like:

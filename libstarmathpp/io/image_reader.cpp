@@ -84,7 +84,7 @@ std::shared_ptr<Image> read(const std::filesystem::path &filepath) {
     return read_fits(filepath.string());
   } else {
     // TODO: Catch CImg exception and convert to ImageReaderException... -> Unit tests
-    return std::make_shared < Image > (filepath.string().c_str());
+    return std::make_shared<Image>(filepath.string().c_str());
   }
 }
 }  // namespace starmathpp

@@ -47,6 +47,7 @@ add_test_module(rect_tests rect.test.cpp)
 add_test_module(image_reader_tests io/image_reader.test.cpp)
 add_test_module(pipeline_views_read_tests pipeline/views/read.test.cpp)
 add_test_module(image_writer_tests io/image_writer.test.cpp)
+add_test_module(pipeline_views_write_tests pipeline/views/write.test.cpp)
 
 
 
