@@ -30,56 +30,31 @@
 
 #include <range/v3/view/transform.hpp>
 
-#include <libstarmathpp/image.hpp>
-#include <libstarmathpp/exception.hpp>
+#include <libstarmathpp/pipeline/views/arithmetic_function_template.hpp>
 
 #define STARMATHPP_PIPELINE_ADD_DEBUG 0
 
-
 namespace starmathpp::pipeline::views {
 
-  DEF_Exception(ArithmeticImageOp);
 
-// TODO: Required for all arithmetic operations... -> move to separate file or create a generic template to manage all the arithmetic operations
+template<typename ImageType>
+struct AddTraits {
+  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(const std::shared_ptr<cimg_library::CImg<ImageType>> & img_ptr1, const std::shared_ptr<cimg_library::CImg<ImageType>> & img_ptr2) {
+     return std::make_shared < cimg_library::CImg<ImageType>> (*img_ptr1 + *img_ptr2);
+  }
+  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(const std::shared_ptr<cimg_library::CImg<ImageType>> & img_ptr1, ImageType scalar_value) {
+     return std::make_shared < cimg_library::CImg<ImageType>> (*img_ptr1 + scalar_value);
+  }
+};
 
-/**
- *
- * @tparam ImageType
- * @param image_to_add_ptr
- * @return
- *
- * TODO: Check that all images have the same dimension? Could be configured by parameter...
- * TODO / IDEA: -> to basic_arithmetic template?
- */
 template<typename ImageType = float>
 auto add(const std::shared_ptr<Image> &image_to_add_ptr) {
-  return ranges::views::transform(
-      [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
-        const cimg_library::CImg<ImageType> &input_image_ref = *image;
+  return arithmetic_function_tmpl<AddTraits, ImageType>(image_to_add_ptr);
+}
 
-        if (input_image_ref.width() != image_to_add_ptr->width()
-            || input_image_ref.height() != image_to_add_ptr->height()) {
-          std::stringstream ss;
-          ss << "Cannot add images of different dimensions [("
-              << input_image_ref.width() << ", " << input_image_ref.height()
-              << ") != (" << image_to_add_ptr->width() << ", "
-              << image_to_add_ptr->height() << ")]";
-
-          throw ArithmeticImageOpException(ss.str());
-        }
-
-        DEBUG_IMAGE_DISPLAY(input_image_ref, "add_image_in",
-                            STARMATHPP_PIPELINE_ADD_DEBUG);
-
-        auto result_image = std::make_shared<cimg_library::CImg<ImageType>>(
-            input_image_ref + *image_to_add_ptr);
-
-        DEBUG_IMAGE_DISPLAY(*result_image, "add_image_out",
-                            STARMATHPP_PIPELINE_ADD_DEBUG);
-
-        return result_image;
-      }
-  );
+template<typename ImageType = float>
+auto add(ImageType scalar_value_to_add) {
+  return arithmetic_function_tmpl<AddTraits, ImageType>(scalar_value_to_add);
 }
 
 /**
@@ -88,25 +63,25 @@ auto add(const std::shared_ptr<Image> &image_to_add_ptr) {
  * @param scalarValueToAdd
  * @return
  */
-template<typename ImageType = float>
-auto add(ImageType scalarValueToAdd) {
-  return ranges::views::transform(
-      [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
-        const cimg_library::CImg<ImageType> &inputImageRef = *image;
-
-        DEBUG_IMAGE_DISPLAY(inputImageRef, "add_scalar_in",
-                            STARMATHPP_PIPELINE_ADD_DEBUG);
-
-        auto result_image = std::make_shared<cimg_library::CImg<ImageType>>(
-            inputImageRef + scalarValueToAdd);
-
-        DEBUG_IMAGE_DISPLAY(*result_image, "add_scalar_out",
-                            STARMATHPP_PIPELINE_ADD_DEBUG);
-
-        return result_image;
-      }
-  );
-}
+//template<typename ImageType = float>
+//auto add(ImageType scalarValueToAdd) {
+//  return ranges::views::transform(
+//      [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
+//        const cimg_library::CImg<ImageType> &inputImageRef = *image;
+//
+//        DEBUG_IMAGE_DISPLAY(inputImageRef, "add_scalar_in",
+//                            STARMATHPP_PIPELINE_ADD_DEBUG);
+//
+//        auto result_image = std::make_shared < cimg_library::CImg
+//            < ImageType >> (inputImageRef + scalarValueToAdd);
+//
+//        DEBUG_IMAGE_DISPLAY(*result_image, "add_scalar_out",
+//                            STARMATHPP_PIPELINE_ADD_DEBUG);
+//
+//        return result_image;
+//      }
+//  );
+//}
 }
 
 #endif // STARMATHPP_PIPELINE_VIEW_ADD_H_
