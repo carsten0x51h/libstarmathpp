@@ -30,7 +30,7 @@
 
 #include <libstarmathpp/io/image_reader.hpp>
 
-#define FOFI_IMAGES_DEBUG 0
+#define STARMATHPP_PIPELINE_READ_DEBUG 0
 
 namespace starmathpp::pipeline::views {
 
@@ -43,7 +43,7 @@ namespace starmathpp::pipeline::views {
 
           auto loadedImage = starmathpp::io::read(imageFilename);
 
-          DEBUG_IMAGE_DISPLAY(*loadedImage, "images_out", FOFI_IMAGES_DEBUG);
+          DEBUG_IMAGE_DISPLAY(*loadedImage, "images_out", STARMATHPP_PIPELINE_READ_DEBUG);
 
           return loadedImage;
         }

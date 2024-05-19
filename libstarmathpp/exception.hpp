@@ -52,9 +52,9 @@ class BaseException : public std::exception {
 };
 
 #define DEF_Exception(XYZ) \
-  class XYZ##Exception : public BaseException {            \
+  class XYZ##Exception : public ::starmathpp::BaseException {            \
   public:                                \
-      explicit inline XYZ##Exception(const std::string & inMsg = "") : BaseException(#XYZ"Exception", inMsg) {} \
+      explicit inline XYZ##Exception(const std::string & inMsg = "") : ::starmathpp::BaseException(#XYZ"Exception", inMsg) {} \
   }
 
 } // end namespace starmathpp

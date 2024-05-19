@@ -41,7 +41,7 @@
 #include <libstarmathpp/image.hpp>
 #include <libstarmathpp/io/image_writer.hpp>
 
-#define STARMATH_PIPELINE_WRITE_DEBUG 0
+#define STARMATHPP_PIPELINE_WRITE_DEBUG 0
 
 // TODO: Question: This can be an action or a view... If a view, it just stores
 //       the image "along the way" as one more step in the pipeline.
@@ -85,7 +85,7 @@ auto write(const std::filesystem::path &directory,
       [=](const std::shared_ptr<Image> &image) {
 
         DEBUG_IMAGE_DISPLAY(*image, "pipeline_write_in",
-                            STARMATH_PIPELINE_WRITE_DEBUG);
+                            STARMATHPP_PIPELINE_WRITE_DEBUG);
 
         std::filesystem::path filepath = directory
             / compose_filename_from_pattern(imageFilenamePattern);
