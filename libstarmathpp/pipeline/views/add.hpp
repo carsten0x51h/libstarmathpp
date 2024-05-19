@@ -28,31 +28,48 @@
 
 #include <libstarmathpp/pipeline/views/arithmetic_function_template.hpp>
 
-#define STARMATHPP_PIPELINE_ADD_DEBUG 0
-
 namespace starmathpp::pipeline::views {
 
+/**
+ *
+ */
 template<typename ImageType>
 struct AddTraits {
-  static std::string operation_name() { return "add"; }
-  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(const std::shared_ptr<cimg_library::CImg<ImageType>> & img_ptr1, const std::shared_ptr<cimg_library::CImg<ImageType>> & img_ptr2) {
-     return std::make_shared < cimg_library::CImg<ImageType>> (*img_ptr1 + *img_ptr2);
+  static std::string operation_name() {
+    return "add";
   }
-  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(const std::shared_ptr<cimg_library::CImg<ImageType>> & img_ptr1, ImageType scalar_value) {
-     return std::make_shared < cimg_library::CImg<ImageType>> (*img_ptr1 + scalar_value);
+
+  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
+      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
+      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr2) {
+    return std::make_shared < cimg_library::CImg
+        < ImageType >> (*img_ptr1 + *img_ptr2);
+  }
+
+  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
+      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
+      ImageType scalar_value) {
+    return std::make_shared < cimg_library::CImg
+        < ImageType >> (*img_ptr1 + scalar_value);
   }
 };
 
+/**
+ *
+ */
 template<typename ImageType = float>
 auto add(const std::shared_ptr<Image> &image_to_add_ptr) {
   return arithmetic_function_tmpl<AddTraits, ImageType>(image_to_add_ptr);
 }
 
+/**
+ *
+ */
 template<typename ImageType = float>
 auto add(ImageType scalar_value_to_add) {
   return arithmetic_function_tmpl<AddTraits, ImageType>(scalar_value_to_add);
 }
 
-} // namespace starmathpp::pipeline::views
+}  // namespace starmathpp::pipeline::views
 
 #endif // STARMATHPP_PIPELINE_VIEW_ADD_H_

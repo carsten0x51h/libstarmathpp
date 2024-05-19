@@ -31,6 +31,8 @@
 #include <libstarmathpp/image.hpp>
 #include <libstarmathpp/exception.hpp>
 
+#define STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG 0
+
 namespace starmathpp::pipeline::views {
 
 DEF_Exception(ArithmeticImageOp);
@@ -67,13 +69,13 @@ auto arithmetic_function_tmpl(const std::shared_ptr<Image> &image_to_add_ptr) {
             image_to_add_ptr);
 
         DEBUG_IMAGE_DISPLAY(*image, "add_image_in",
-                            STARMATHPP_PIPELINE_ADD_DEBUG);
+                            STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG);
 
         auto result_image = ArithmeticFunctionTraits<ImageType>::calculate(
             image, image_to_add_ptr);
 
         DEBUG_IMAGE_DISPLAY(*result_image, "add_image_out",
-                            STARMATHPP_PIPELINE_ADD_DEBUG);
+                            STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG);
 
         return result_image;
       }

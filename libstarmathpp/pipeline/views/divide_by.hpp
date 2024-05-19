@@ -23,8 +23,8 @@
  *
  ****************************************************************************/
 
-#ifndef STARMATHPP_PIPELINE_VIEW_SUBTRACT_H_
-#define STARMATHPP_PIPELINE_VIEW_SUBTRACT_H_ STARMATHPP_PIPELINE_VIEW_SUBTRACT_H_
+#ifndef STARMATHPP_PIPELINE_VIEW_DIVIDE_BY_H_
+#define STARMATHPP_PIPELINE_VIEW_DIVIDE_BY_H_ STARMATHPP_PIPELINE_VIEW_DIVIDE_BY_H_
 
 #include <libstarmathpp/pipeline/views/arithmetic_function_template.hpp>
 
@@ -34,23 +34,24 @@ namespace starmathpp::pipeline::views {
  *
  */
 template<typename ImageType>
-struct SubtractTraits {
+struct DivideByTraits {
   static std::string operation_name() {
-    return "subtract";
+    return "divide";
   }
 
   static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
       const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
       const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr2) {
+
     return std::make_shared < cimg_library::CImg
-        < ImageType >> (*img_ptr1 - *img_ptr2);
+        < ImageType >> (img_ptr1->get_div(*img_ptr2));
   }
 
   static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
       const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
       ImageType scalar_value) {
     return std::make_shared < cimg_library::CImg
-        < ImageType >> (*img_ptr1 - scalar_value);
+        < ImageType >> (*img_ptr1 / scalar_value);
   }
 };
 
@@ -58,20 +59,18 @@ struct SubtractTraits {
  *
  */
 template<typename ImageType = float>
-auto subtract(const std::shared_ptr<Image> &image_to_subtract_ptr) {
-  return arithmetic_function_tmpl<SubtractTraits, ImageType>(
-      image_to_subtract_ptr);
+auto divide_by(const std::shared_ptr<Image> &image_divisor_ptr) {
+  return arithmetic_function_tmpl<DivideByTraits, ImageType>(image_divisor_ptr);
 }
 
 /**
  *
  */
 template<typename ImageType = float>
-auto subtract(ImageType scalar_value_to_subtract) {
-  return arithmetic_function_tmpl<SubtractTraits, ImageType>(
-      scalar_value_to_subtract);
+auto divide_by(ImageType scalar_divisor) {
+  return arithmetic_function_tmpl<DivideByTraits, ImageType>(scalar_divisor);
 }
 
 }  // namespace starmathpp::pipeline::views
 
-#endif // STARMATHPP_PIPELINE_VIEW_SUBTRACT_H_
+#endif // STARMATHPP_PIPELINE_VIEW_DIVIDE_BY_H_
