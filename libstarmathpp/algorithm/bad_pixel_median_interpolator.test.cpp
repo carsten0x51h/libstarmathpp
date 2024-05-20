@@ -29,6 +29,9 @@
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_DYN_LINK
 
+#include <vector>
+#include <tuple>
+
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/view/single.hpp>
 
@@ -40,6 +43,7 @@
 BOOST_AUTO_TEST_SUITE (algorithm_bad_pixel_median_interpolator_tests)
 
 using namespace starmathpp;
+using namespace starmathpp::algorithm;
 using namespace ranges;
 
 namespace bdata = boost::unit_test::data;
@@ -62,40 +66,95 @@ static std::shared_ptr<Image> generate_bad_pixel_image(
 /**
  *
  */
-BOOST_DATA_TEST_CASE(absolute_threshold_both_directions_3x3_test,
+BOOST_DATA_TEST_CASE(absolute_threshold_test,
     bdata::make(
-        std::vector< std::tuple<unsigned int /*width*/, unsigned int /*height*/, unsigned int /*bad_pixel_pos_x*/, unsigned int /*bad_pixel_pos_y*/, float /*bg_pixel_value*/, float /*bad_pixel_value*/> > {
-          { 25, 25, 10, 10, 100, 10000}, // Check if the hot pixel is interpolation correctly
-          { 25, 25, 10, 10, 10000, 100}, // Check if the cold pixel is interpolation correctly
-          { 25, 25, 0, 3, 10000, 100},   // Check if a bad pixel is interpolation correctly at the border
-          { 25, 25, 24, 24, 10000, 100}  // Check if a bad pixel is interpolation correctly at the corner
+        // bad_pixel_pos_x, bad_pixel_pos_y, bg_pixel_value, bad_pixel_value, absolute_detection_threshold, expected_pixel_value, threshold_direction
+        std::vector< std::tuple<unsigned int, unsigned int, float, float, float, float, typename BadPixelMedianInterpolator::ThresholdDirection::TypeE> > {
+          // Check if the hot pixel is interpolation correctly
+          { 10, 10, 100, 10000, 500.0F, 100, BadPixelMedianInterpolator::ThresholdDirection::BOTH},
+
+          // Check if the cold pixel is interpolation correctly
+          { 10, 10, 10000, 100, 500.0F, 10000, BadPixelMedianInterpolator::ThresholdDirection::BOTH},
+
+          // Check if a bad pixel is interpolation correctly at the border
+          { 0, 3, 10000, 100, 500.0F, 10000, BadPixelMedianInterpolator::ThresholdDirection::BOTH},
+
+          // Check if a bad pixel is interpolation correctly at the corner
+          { 24, 24, 10000, 100, 500.0F, 10000, BadPixelMedianInterpolator::ThresholdDirection::BOTH},
+
+          // Check if the interpolator includes values >= threshold
+          { 10, 10, 100, 600, 500.0F, 100, BadPixelMedianInterpolator::ThresholdDirection::BOTH},
+
+          // Check if bad pixel remains untouched if threshold is not reached
+          { 10, 10, 100, 599, 500.0F, 599, BadPixelMedianInterpolator::ThresholdDirection::BOTH},
+
+          // Check that bad pixel interpolator with positive threshold direction corrects hot pixels
+          { 10, 10, 100, 10000, 500.0F, 100, BadPixelMedianInterpolator::ThresholdDirection::POSITIVE},
+
+          // Check that bad pixel interpolator with positive threshold direction does not correct cold pixels
+          { 10, 10, 10000, 100, 500.0F, 100, BadPixelMedianInterpolator::ThresholdDirection::POSITIVE},
+
+          // Check that bad pixel interpolator with negative threshold direction corrects cold pixels
+          { 10, 10, 10000, 100, 500.0F, 10000, BadPixelMedianInterpolator::ThresholdDirection::NEGATIVE},
+
+          // Check that bad pixel interpolator with negative threshold direction does not correct hot pixels
+          { 10, 10, 100, 10000, 500.0F, 10000, BadPixelMedianInterpolator::ThresholdDirection::NEGATIVE}
+        }) *
+    bdata::make(
+        std::vector<unsigned int> {
+          3,5,7,9
         }),
-    width, height, bad_pixel_pos_x, bad_pixel_pos_y, bg_pixel_value, bad_pixel_value)
+    bad_pixel_pos_x, bad_pixel_pos_y, bg_pixel_value, bad_pixel_value, absolute_detection_threshold, expected_pixel_value, threshold_direction, filter_core_size)
 {
-  using namespace starmathpp::algorithm;
-
   BadPixelMedianInterpolator bad_pixel_median_interpolator(
-      500 /*absolute_detection_threshold*/,
-      3 /*filter_core_size*/,
-      BadPixelMedianInterpolator::ThresholdDirection::BOTH /*threshold_direction*/);
-
-  generate_bad_pixel_image(
-      width, height, bad_pixel_pos_x, bad_pixel_pos_y, bg_pixel_value, bad_pixel_value);
+      absolute_detection_threshold,
+      filter_core_size,
+      threshold_direction);
 
   // Check, if the bad pixel was correctly interpolated with the median background value.
   BOOST_TEST(
       (*bad_pixel_median_interpolator.interpolate(
               generate_bad_pixel_image(
-                  width, height, bad_pixel_pos_x, bad_pixel_pos_y, bg_pixel_value, bad_pixel_value)
+                  25, 25, bad_pixel_pos_x, bad_pixel_pos_y, bg_pixel_value, bad_pixel_value)
           )
-      )(bad_pixel_pos_x, bad_pixel_pos_y) == bg_pixel_value
+      )(bad_pixel_pos_x, bad_pixel_pos_y) == expected_pixel_value
   );
 
 }
 
-// TODO: dead/cold _only_ pixel
-// TODO: Test different thresholds, negative ones?
-// TODO: Negative threshold?
-// TODO: Negative core size? -> exception
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(invalid_parameters_exception_test)
+{
+  // Check if BadPixelMedianInterpolator throws if invalid
+  // absolute threshold value is passed as parameter.
+  BOOST_CHECK_THROW(
+    BadPixelMedianInterpolator(
+        -500 /*invalid*/,
+        3,
+        BadPixelMedianInterpolator::ThresholdDirection::BOTH),
+    BadPixelMedianInterpolatorException);
+
+
+  // Check if BadPixelMedianInterpolator throws if unsupported filter
+  // core size is passed as parameter.
+  BOOST_CHECK_THROW(
+    BadPixelMedianInterpolator(
+        500,
+        4 /*invalid*/,
+        BadPixelMedianInterpolator::ThresholdDirection::BOTH),
+    BadPixelMedianInterpolatorException);
+
+
+  // Check if BadPixelMedianInterpolator throws if an invalid
+  // threshold direction is passed as parameter.
+  BOOST_CHECK_THROW(
+    BadPixelMedianInterpolator(
+        500,
+        3,
+        BadPixelMedianInterpolator::ThresholdDirection::_Count /*invalid*/),
+    BadPixelMedianInterpolatorException);
+}
 
 BOOST_AUTO_TEST_SUITE_END();
