@@ -56,8 +56,8 @@ namespace starmathpp::pipeline::views {
 template<typename ImageType = float>
 auto interpolate_bad_pixels(
     float absolute_detection_threshold = 500, unsigned int filter_core_size = 3,
-    BadPixelMedianInterpolator::ThresholdDirection::TypeE threshold_direction =
-        BadPixelMedianInterpolator::ThresholdDirection::BOTH) {
+    starmathpp::algorithm::BadPixelMedianInterpolator::ThresholdDirection::TypeE threshold_direction =
+        starmathpp::algorithm::BadPixelMedianInterpolator::ThresholdDirection::BOTH) {
   return ranges::views::transform(
       [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
         const cimg_library::CImg<ImageType> &input_image_ref = *image;
@@ -65,7 +65,7 @@ auto interpolate_bad_pixels(
         DEBUG_IMAGE_DISPLAY(input_image_ref, "interpolate_bad_pixels_in",
                             STARMATHPP_INTERPOLATE_BAD_PIXELS_DEBUG);
 
-        BadPixelMedianInterpolator bad_pixel_median_interpolator(
+        starmathpp::algorithm::BadPixelMedianInterpolator bad_pixel_median_interpolator(
             absolute_detection_threshold, filter_core_size, threshold_direction);
 
         auto result_image = bad_pixel_median_interpolator.interpolate(
