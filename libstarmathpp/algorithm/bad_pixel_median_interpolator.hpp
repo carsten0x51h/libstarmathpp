@@ -30,13 +30,13 @@
 #include <libstarmathpp/image.hpp>
 
 
-namespace starmathpp {
+namespace starmathpp::algorithm {
 
 /**
  * Usage:
  *
- * BadPixelMedianInterpolatorT badPixelMedianInterpolator();
- * auto outputImage = badPixelMedianInterpolator.interpolate(inputImage);
+ * BadPixelMedianInterpolator bad_pixel_median_interpolator();
+ * auto output_image = bad_pixel_median_interpolator.interpolate(input_image);
  *
  */
 class BadPixelMedianInterpolator {
@@ -86,7 +86,9 @@ class BadPixelMedianInterpolator {
    */
   template<typename ImageType>
   std::shared_ptr<cimg_library::CImg<ImageType>> interpolate(
-      const cimg_library::CImg<ImageType> &input_image_ref) {
+      const std::shared_ptr<cimg_library::CImg<ImageType> > &input_image_ptr) {
+
+    const auto input_image_ref = *input_image_ptr;
 
     // See https://cimg.eu/reference/loops_Using.html
     cimg_library::CImg<ImageType> neighbourhood(filter_core_size_,

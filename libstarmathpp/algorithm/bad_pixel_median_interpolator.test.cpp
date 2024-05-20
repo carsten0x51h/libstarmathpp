@@ -30,8 +30,10 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <range/v3/range/conversion.hpp>
+#include <range/v3/view/single.hpp>
 
 #include <boost/test/unit_test.hpp>
+#include <boost/test/data/test_case.hpp>
 
 #include <libstarmathpp/algorithm/bad_pixel_median_interpolator.hpp>
 
@@ -40,41 +42,60 @@ BOOST_AUTO_TEST_SUITE (algorithm_bad_pixel_median_interpolator_tests)
 using namespace starmathpp;
 using namespace ranges;
 
+namespace bdata = boost::unit_test::data;
+
 /**
- * Test if adding an image to another image results in the
- * expected pixel values.
+ * This function generates a CImg
  */
-BOOST_AUTO_TEST_CASE(bad_pixel_median_interpolator_hotpixel_test)
-{
-//  std::vector<ImagePtr> input_images = {
-//    std::make_shared<Image>(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
-//    std::make_shared<Image>(5, 5, 1, 1, 10),// 5x5 - All pixels have value 10
-//    std::make_shared<Image>(5, 5, 1, 1, -10)// 5x5 - All pixels have value -10
-//  };
-//
-//  std::vector<Image> expected_result_images = { Image(5, 5, 1, 1, 22),  // 5x5 - All pixels have value 22
-//  Image(5, 5, 1, 1, 19),  // 5x5 - All pixels have value 19
-//  Image(5, 5, 1, 1, -1)  // 5x5 - All pixels have value -1
-//      };
-//
-//  auto image_to_add_5x5_value9_ptr1 = std::make_shared < Image
-//      > (5, 5, 1, 1, 9);
-//
-//  // NOTE: | views::indirect causes a segmentation fault
-//  auto result_images = input_images
-//      | pipeline::views::add(image_to_add_5x5_value9_ptr1)
-//      | views::transform([](const auto &img_ptr) {
-//        return *img_ptr;
-//      }) | to<std::vector>();
-//
-//  BOOST_TEST(result_images.size() == 3);
-//  BOOST_CHECK_EQUAL_COLLECTIONS(result_images.begin(), result_images.end(),
-//      expected_result_images.begin(), expected_result_images.end());
+static std::shared_ptr<Image> generate_bad_pixel_image(
+    unsigned int width, unsigned int height, unsigned int bad_pixel_pos_x,
+    unsigned int bad_pixel_pos_y, float bg_pixel_value, float bad_pixel_value) {
+
+  auto bad_pixel_image_ptr = std::make_shared < Image
+      > (width, height, 1, 1, bg_pixel_value);
+
+  (*bad_pixel_image_ptr)(bad_pixel_pos_x, bad_pixel_pos_y) = bad_pixel_value;
+
+  return bad_pixel_image_ptr;
 }
 
-// TODO: dead/cold pixel
-// TODO: both
+/**
+ *
+ */
+BOOST_DATA_TEST_CASE(absolute_threshold_both_directions_3x3_test,
+    bdata::make(
+        std::vector< std::tuple<unsigned int /*width*/, unsigned int /*height*/, unsigned int /*bad_pixel_pos_x*/, unsigned int /*bad_pixel_pos_y*/, float /*bg_pixel_value*/, float /*bad_pixel_value*/> > {
+          { 25, 25, 10, 10, 100, 10000}, // Check if the hot pixel is interpolation correctly
+          { 25, 25, 10, 10, 10000, 100}, // Check if the cold pixel is interpolation correctly
+          { 25, 25, 0, 3, 10000, 100},   // Check if a bad pixel is interpolation correctly at the border
+          { 25, 25, 24, 24, 10000, 100}  // Check if a bad pixel is interpolation correctly at the corner
+        }),
+    width, height, bad_pixel_pos_x, bad_pixel_pos_y, bg_pixel_value, bad_pixel_value)
+{
+  using namespace starmathpp::algorithm;
+
+  BadPixelMedianInterpolator bad_pixel_median_interpolator(
+      500 /*absolute_detection_threshold*/,
+      3 /*filter_core_size*/,
+      BadPixelMedianInterpolator::ThresholdDirection::BOTH /*threshold_direction*/);
+
+  generate_bad_pixel_image(
+      width, height, bad_pixel_pos_x, bad_pixel_pos_y, bg_pixel_value, bad_pixel_value);
+
+  // Check, if the bad pixel was correctly interpolated with the median background value.
+  BOOST_TEST(
+      (*bad_pixel_median_interpolator.interpolate(
+              generate_bad_pixel_image(
+                  width, height, bad_pixel_pos_x, bad_pixel_pos_y, bg_pixel_value, bad_pixel_value)
+          )
+      )(bad_pixel_pos_x, bad_pixel_pos_y) == bg_pixel_value
+  );
+
+}
+
+// TODO: dead/cold _only_ pixel
 // TODO: Test different thresholds, negative ones?
-// ...
+// TODO: Negative threshold?
+// TODO: Negative core size? -> exception
 
 BOOST_AUTO_TEST_SUITE_END();
