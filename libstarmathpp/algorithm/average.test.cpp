@@ -30,8 +30,10 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <boost/test/unit_test.hpp>
+#include <boost/test/tools/floating_point_comparison.hpp>
 
 #include <libstarmathpp/algorithm/average.hpp>
+#include <libstarmathpp/floating_point_equality.hpp>
 
 
 BOOST_AUTO_TEST_SUITE (algorithm_average_tests)
@@ -45,8 +47,18 @@ using namespace ranges;
  */
 BOOST_AUTO_TEST_CASE(algorithm_average_image_calculation_test)
 {
-  // TODO
+  std::vector<ImagePtr> input_images = {
+    std::make_shared<Image>(5, 5, 1, 1, 13), // 5x5 - All pixels have value 13
+    std::make_shared<Image>(5, 5, 1, 1, 10), // 5x5 - All pixels have value 10
+    std::make_shared<Image>(5, 5, 1, 1, -5)  // 5x5 - All pixels have value -5
+  };
+
+  auto expected_image_ptr = std::make_shared<Image>(5, 5, 1, 1, (13+10-5) / 3);  // 5x5 - All pixels have value 6
+  auto average_image_ptr = starmathpp::algorithm::average(input_images);
+
+  BOOST_TEST(is_almost_equal(*average_image_ptr, *expected_image_ptr, 0.00001));
 }
+
 
 
 /**
