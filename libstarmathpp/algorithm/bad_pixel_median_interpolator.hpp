@@ -46,7 +46,7 @@ DEF_Exception(BadPixelMedianInterpolator);
 class BadPixelMedianInterpolator {
  public:
   /**
-   * TODO: Should this be here?
+   *
    */
   struct ThresholdDirection {
     enum TypeE {
