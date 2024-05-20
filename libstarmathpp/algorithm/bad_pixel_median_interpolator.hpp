@@ -26,11 +26,15 @@
 #ifndef STARMATHPP_BAD_PIXEL_MEDIAN_INTERPOLATOR_HPP_
 #define STARMATHPP_BAD_PIXEL_MEDIAN_INTERPOLATOR_HPP_ STARMATHPP_BAD_PIXEL_MEDIAN_INTERPOLATOR_HPP_
 
+#include <set>
+
 #include <libstarmathpp/enum_helper.hpp>
+#include <libstarmathpp/exception.hpp>
 #include <libstarmathpp/image.hpp>
 
-
 namespace starmathpp::algorithm {
+
+DEF_Exception(BadPixelMedianInterpolator);
 
 /**
  * Usage:
@@ -65,7 +69,8 @@ class BadPixelMedianInterpolator {
       }
     }
 
-    MAC_AS_TYPE(Type, E, _Count);
+    MAC_AS_TYPE(Type, E, _Count)
+    ;
   };
 
   /**
@@ -79,6 +84,27 @@ class BadPixelMedianInterpolator {
       absolute_detection_threshold_(absolute_detection_threshold),
       filter_core_size_(filter_core_size),
       threshold_direction_(threshold_direction) {
+
+
+    if (absolute_detection_threshold < 0) {
+      std::stringstream ss;
+      ss << "A negative absolute detection threshold ("
+          << absolute_detection_threshold_ << ") does not make sense.";
+      throw BadPixelMedianInterpolatorException(ss.str());
+    }
+
+
+    // NOTE: The supported filter core sizes listed here must
+    //       match the ones in the switch-case statement below.
+    //       This code can potentially be improved.
+    if (! std::set<unsigned int>{3, 5, 7, 9}.count(filter_core_size_)) {
+      throw_unsupported_filter_core_size(filter_core_size_);
+    }
+
+
+    if (threshold_direction_ >= ThresholdDirection::_Count) {
+      throw_unsupported_threshold_direction(threshold_direction_);
+    }
   }
 
   /**
@@ -134,9 +160,9 @@ class BadPixelMedianInterpolator {
         }
         break;
       }
-        //default:
-        // TODO: throw...
-
+      default: {
+        throw_unsupported_filter_core_size(filter_core_size_);
+      }
     }
     return result_image;
   }
@@ -146,8 +172,29 @@ class BadPixelMedianInterpolator {
   unsigned int filter_core_size_;
   ThresholdDirection::TypeE threshold_direction_;
 
+
   /**
-   * TODO: Move to .cpp file? Or solve it via a #define?
+   *
+   */
+  void throw_unsupported_filter_core_size(unsigned int filter_core_size) {
+    std::stringstream ss;
+    ss << "Unsupported filter core size '" << filter_core_size << "x"
+        << filter_core_size << "'.";
+    throw BadPixelMedianInterpolatorException(ss.str());
+  }
+
+  /**
+   *
+   */
+  void throw_unsupported_threshold_direction(ThresholdDirection::TypeE thresholdDirection) {
+    std::stringstream ss;
+    ss << "Unsupported threshold direction '"
+       << ThresholdDirection::asStr(thresholdDirection) << "'.";
+    throw BadPixelMedianInterpolatorException(ss.str());
+  }
+
+  /**
+   *
    */
   template<typename ImageType>
   ImageType interpolate_internal(
@@ -159,19 +206,20 @@ class BadPixelMedianInterpolator {
 
     switch (thresholdDirection) {
       case ThresholdDirection::POSITIVE:
-        want_interpolation = ((pixel_value - med) > threshold);
+        want_interpolation = ((pixel_value - med) >= threshold);
         break;
 
       case ThresholdDirection::NEGATIVE:
-        want_interpolation = ((med - pixel_value) > threshold);
+        want_interpolation = ((med - pixel_value) >= threshold);
         break;
 
       case ThresholdDirection::BOTH:
-        want_interpolation = (std::abs(pixel_value - med) > threshold);
+        want_interpolation = (std::abs(pixel_value - med) >= threshold);
         break;
 
-        //default:
-        // TODO: throw...
+      default: {
+        throw_unsupported_threshold_direction(thresholdDirection);
+      }
     }
     return (want_interpolation ? med : pixel_value);
   }
