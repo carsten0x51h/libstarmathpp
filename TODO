@@ -1,5 +1,6 @@
 TODO
 ----
+-Rename SizeT to Dimension
 -Remove deprecated cmake message
 -Fix github build
 -Replace "star recognizer" test images -> instead of one big, multiple small ones with only 2-5 stars.

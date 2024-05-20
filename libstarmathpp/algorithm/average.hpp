@@ -27,12 +27,43 @@
 #define STARMATHPP_BAD_PIXEL_MEDIAN_INTERPOLATOR_HPP_ STARMATHPP_BAD_PIXEL_MEDIAN_INTERPOLATOR_HPP_
 
 #include <memory>
+#include <string>
+
+#include <range/v3/empty.hpp>
 
 #include <libstarmathpp/image.hpp>
-#include <range/v3/empty.hpp>
+#include <libstarmathpp/inconsistent_image_dimensions_exception.hpp>
 
 namespace starmathpp::algorithm {
 
+/**
+ *
+ */
+namespace detail {
+void throw_if_inconsistent_image_dimensions(unsigned int current_width,
+                                            unsigned int current_height,
+                                            unsigned int first_width,
+                                            unsigned int first_height) {
+
+  if (current_width != first_width || current_height != first_height) {
+    std::stringstream ss;
+
+    ss << "Inconsistent images dimensions. Initial image dimension: " << "("
+        << first_width << ", " << first_height << "), "
+        << "new image dimension: (" << current_width << ", " << current_height
+        << ").";
+
+    throw InconsistentImageDimensionsException(ss.str());
+  }
+}
+}
+
+/**
+ * TODO: Document ...
+ *
+ * Throws ... if image sizes are different.
+ * First image in range defines expected image size.
+ */
 template<class Rng>
 std::shared_ptr<Image> average(const Rng &rng) {
 
@@ -40,10 +71,15 @@ std::shared_ptr<Image> average(const Rng &rng) {
     return nullptr;
   }
 
-  auto sum_image_ptr = std::make_shared < Image > (**ranges::begin(rng), "xy", 0);
+  auto sum_image_ptr = std::make_shared < Image
+      > (**ranges::begin(rng), "xy", 0);
+
   size_t image_count = 0;
 
   for (const auto &img : rng) {
+    detail::throw_if_inconsistent_image_dimensions(img->width(), img->height(),
+                                                   sum_image_ptr->width(),
+                                                   sum_image_ptr->height());
     (*sum_image_ptr) += *img;
     ++image_count;
   }

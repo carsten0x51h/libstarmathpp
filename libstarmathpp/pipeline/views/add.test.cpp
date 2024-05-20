@@ -35,6 +35,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <libstarmathpp/pipeline/views/add.hpp>
+#include <libstarmathpp/inconsistent_image_dimensions_exception.hpp>
 
 BOOST_AUTO_TEST_SUITE (pipeline_add_tests)
 
@@ -111,7 +112,7 @@ BOOST_AUTO_TEST_CASE(pipeline_add_different_image_sizes_test)
   BOOST_CHECK_THROW(ranges::views::single(image_to_add_5x5_value9_ptr1)
       | pipeline::views::add(image_to_add_4x4_value9_ptr2)
       | to<std::vector>(),
-      starmathpp::pipeline::views::ArithmeticImageOpException);
+      starmathpp::InconsistentImageDimensionsException);
 }
 
 BOOST_AUTO_TEST_SUITE_END();

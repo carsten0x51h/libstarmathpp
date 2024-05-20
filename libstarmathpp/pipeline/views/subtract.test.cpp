@@ -35,6 +35,8 @@
 #include <boost/test/unit_test.hpp>
 
 #include <libstarmathpp/pipeline/views/subtract.hpp>
+#include <libstarmathpp/inconsistent_image_dimensions_exception.hpp>
+
 
 BOOST_AUTO_TEST_SUITE (pipeline_subtract_tests)
 
@@ -111,7 +113,7 @@ BOOST_AUTO_TEST_CASE(pipeline_subtract_different_image_sizes_test)
   BOOST_CHECK_THROW(ranges::views::single(image_to_subtract_5x5_value9_ptr1)
       | pipeline::views::subtract(image_to_subtract_4x4_value9_ptr2)
       | to<std::vector>(),
-      starmathpp::pipeline::views::ArithmeticImageOpException);
+      starmathpp::InconsistentImageDimensionsException);
 }
 
 BOOST_AUTO_TEST_SUITE_END();

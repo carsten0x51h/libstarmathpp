@@ -29,30 +29,35 @@
 #include <range/v3/view/transform.hpp>
 
 #include <libstarmathpp/image.hpp>
-#include <libstarmathpp/exception.hpp>
+#include <libstarmathpp/inconsistent_image_dimensions_exception.hpp>
 
 #define STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG 0
 
 namespace starmathpp::pipeline::views {
 
-DEF_Exception(ArithmeticImageOp);
+//  TODO: Idea -> Rename this to ImagePipelineException... - use it in all pipeline functions!
+//DEF_Exception(ArithmeticImageOp);
 
 namespace detail {
+
 template<typename ImageType = float>
-void check_same_dimension_or_throw(const std::string &operation_name,
-                             const std::shared_ptr<cimg_library::CImg<ImageType> > &img_ptr1,
-                             const std::shared_ptr<cimg_library::CImg<ImageType> > &img_ptr2) {
+void throw_if_inconsistent_image_dimensions(
+    const std::shared_ptr<cimg_library::CImg<ImageType> > &img_ptr1,
+    const std::shared_ptr<cimg_library::CImg<ImageType> > &img_ptr2) {
+
   if (img_ptr1->width() != img_ptr2->width()
       || img_ptr1->height() != img_ptr2->height()) {
     std::stringstream ss;
-    ss << "Cannot perform '" << operation_name
-        << "' operation on images with different dimensions [("
-        << img_ptr1->width() << ", " << img_ptr1->height() << ") != ("
-        << img_ptr2->width() << ", " << img_ptr2->height() << ")]";
 
-    throw ArithmeticImageOpException(ss.str());
+    ss << "Inconsistent images dimensions. Initial image dimension: " << "("
+        << img_ptr1->width() << ", " << img_ptr1->height() << "), "
+        << "new image dimension: (" << img_ptr2->width() << ", "
+        << img_ptr2->height() << ").";
+
+    throw InconsistentImageDimensionsException(ss.str());
   }
 }
+
 }  // namespace detail
 
 /**
@@ -64,9 +69,8 @@ auto arithmetic_function_tmpl(const std::shared_ptr<Image> &image_to_add_ptr) {
   return ranges::views::transform(
       [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
 
-        detail::check_same_dimension_or_throw<ImageType>(
-            ArithmeticFunctionTraits<ImageType>::operation_name(), image,
-            image_to_add_ptr);
+        detail::throw_if_inconsistent_image_dimensions<ImageType>(
+            image, image_to_add_ptr);
 
         DEBUG_IMAGE_DISPLAY(*image, "add_image_in",
                             STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG);
