@@ -23,8 +23,8 @@
  *
  ****************************************************************************/
 
-#ifndef STARMATHPP_BAD_PIXEL_MEDIAN_INTERPOLATOR_HPP_
-#define STARMATHPP_BAD_PIXEL_MEDIAN_INTERPOLATOR_HPP_ STARMATHPP_BAD_PIXEL_MEDIAN_INTERPOLATOR_HPP_
+#ifndef STARMATHPP_ALGORITHM_AVERAGE_HPP_
+#define STARMATHPP_ALGORITHM_AVERAGE_HPP_ STARMATHPP_ALGORITHM_AVERAGE_HPP_
 
 #include <memory>
 #include <string>
@@ -91,4 +91,4 @@ std::shared_ptr<Image> average(const Rng &rng) {
 
 }  // namespace starmathpp::algorithm
 
-#endif //FOFI_AVERAGE_H
+#endif // STARMATHPP_ALGORITHM_AVERAGE_HPP_

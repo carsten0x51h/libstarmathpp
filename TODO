@@ -1,5 +1,6 @@
 TODO
 ----
+-Fix storing of images as FITS files...
 -Rename SizeT to Dimension
 -Remove deprecated cmake message
 -Fix github build

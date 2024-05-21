@@ -30,14 +30,19 @@ set(sources
 #
 add_library(${target} ${sources})
 
+message("* TIFF LIBS : ${TIFF_LIBRARIES}")
+
+
 # Other libraries the starmathpp library depends on
 target_link_libraries(${target}
+	INTERFACE
+	${TIFF_LIBRARIES}
 	PRIVATE
 	${CFITSIO_LIBRARY}
 	${CCFITS_LIBRARY}
-	${TIFF_LIBRARIES}
 	${DEFAULT_LINKER_OPTIONS}
 )
+
 
 #
 # Unit tests
