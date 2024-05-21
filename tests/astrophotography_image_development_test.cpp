@@ -29,7 +29,6 @@
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_DYN_LINK
 
-
 #include <boost/test/unit_test.hpp>
 
 #include <range/v3/range/conversion.hpp>
@@ -52,7 +51,6 @@
 #include <libstarmathpp/algorithm/average.hpp>
 
 #include <libstarmathpp/floating_point_equality.hpp>
-
 
 BOOST_AUTO_TEST_SUITE (pipeline_astrophotography_image_development_integration_tests)
 
@@ -92,12 +90,12 @@ BOOST_AUTO_TEST_CASE(pipeline_standard_image_development_test, * boost::unit_tes
   auto light_frame_files = view::single(base_path + "light")
   | files("(.*\\.fit\\.gz)") | view::join | to<std::vector>();
 
-  // NOTE: If just one pixel has a NAN value (e.g. div by 0), BOOST_TEST() fails when comparing two
-  // images, even if both images have a "NAN value" at the same pixel position. The reason is that
-  // NAN == NAN is false. Therefore, remove_nans() is the last step which uses a median blur filter
-  // to interpolate all NAN values using their surrounding neighbours.
-  //
-  // TODO: Should fail if e.g. dimension of dark files is different from dimension of light frames!
+  /**
+   * NOTE: If just one pixel has a NAN value (e.g. div by 0), BOOST_TEST() fails when comparing two
+   * images, even if both images have a "NAN value" at the same pixel position. The reason is that
+   * NAN == NAN is false. Therefore, remove_nans() is the last step which uses a median blur filter
+   * to interpolate all NAN values using their surrounding neighbours.
+   */
   auto light_average_no_nans_range =
   view::single(
       average(
