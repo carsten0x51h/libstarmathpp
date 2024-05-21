@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE(pipeline_files_filenames_with_no_spaces_test)
     auto results =
           filePaths
             | starmathpp::pipeline::views::files("(.*\\.tiff)")
-            | view::join
+            | ranges::views::join
             | to<std::set>();
 
     // NOTE: The order of the contained elements does not matter (the order of elements
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE(pipeline_files_filenames_with_spaces_test)
     auto results =
           filePaths
             | starmathpp::pipeline::views::files("(.*\\.fits)")
-            | view::join
+            | ranges::views::join
             | to<std::set>();
 
     // NOTE: The order of the contained elements does not matter (the order of elements
@@ -101,6 +101,10 @@ BOOST_AUTO_TEST_CASE(pipeline_files_filenames_with_spaces_test)
     BOOST_TEST(diff.empty());
 }
 
+
+/**
+ *
+ */
 BOOST_AUTO_TEST_CASE(pipeline_files_non_exising_extension_test)
 {
     const std::vector<std::string> filePaths { "test_data/image_processing_pipeline/files" };
@@ -109,7 +113,7 @@ BOOST_AUTO_TEST_CASE(pipeline_files_non_exising_extension_test)
     auto results =
             filePaths
               | starmathpp::pipeline::views::files("(.*\\.xyz)")
-              | view::join
+              | ranges::views::join
               | to<std::set>();
 
     // NOTE: The order of the contained elements does not matter (the order of elements
@@ -143,7 +147,7 @@ BOOST_AUTO_TEST_CASE(pipeline_files_no_extension_filter_test)
     auto results =
             filePaths
               | starmathpp::pipeline::views::files()
-              | view::join
+              | ranges::views::join
               | to<std::set>();
 
     // NOTE: The order of the contained elements does not matter (the order of elements
