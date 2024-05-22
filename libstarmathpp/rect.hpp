@@ -375,6 +375,6 @@ bool operator!=(const Rect<T> &rect1, const Rect<T> &rect2) {
   return !(rect1 == rect2);
 }
 
-}  // end namespace starmathpp
+}  // namespace starmathpp
 
-#endif /* SOURCE_STARMATHPP_RECT_HPP_ */
+#endif // SOURCE_STARMATHPP_RECT_HPP_
