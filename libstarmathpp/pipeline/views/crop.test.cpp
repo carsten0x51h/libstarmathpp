@@ -95,29 +95,32 @@ BOOST_AUTO_TEST_CASE(pipeline_crop_from_center_full_image_test)
   BOOST_TEST(result_images.size() == 1);
   BOOST_TEST(is_almost_equal(*(result_images.at(0)), *input_image, 0.00001));
 }
-//
-///**
-// * range<image>   -->  crop(rects)  --> range < range <image> >
-// *       ^                                          ^
-// *       |                                          |
-// *  input image                         range of cropped images
-// *
-// *  Per input image, N cropped images (one per rect).
-// */
-//BOOST_AUTO_TEST_CASE(pipeline_multi_crop_on_image_test)
-//{
-//	std::vector<Rect<int>> rects = { Rect<int>(0,0,10,10), Rect<int>(11,11,10,10) };
-//
-//	// TODO: Choose an input image from the crop test folder!
-//    auto croppedImages =
-//	  view::single("test_data/image_processing_pipeline/real_world/star_recognizer/test_image_star_recognizer_1.fit.gz")
-//	  | read()
-//	  | crop(rects)
-//	  | to<std::vector>();
-//
-//    BOOST_TEST(croppedImages.size() == 1);       // One image goes in, one result is produced (which wraps a vector)
-////    BOOST_TEST(croppedImages.at(0).size() == 2); // Two rects as input produce two output images
-//}
+
+/**
+ * range<image>   -->  crop(rects)  --> range < range <image> >
+ *       ^                                          ^
+ *       |                                          |
+ *  input image                         range of cropped images
+ *
+ *  Per input image, N cropped images (one per rect).
+ */
+BOOST_AUTO_TEST_CASE(pipeline_multi_crop_on_image_test)
+{
+  auto input_image = generate_test_image(25, 25, 5, 5, 250, 65535.0F);
+
+  std::vector<Rect<int>> rects = { Rect<int>(0, 0, 9, 9), Rect<int>(11, 11, 9,
+                                                                    9) };
+  auto expected_result_image_1 = generate_test_image(9, 9, 5, 5, 250, 65535.0F);
+  auto expected_result_image_2 = generate_test_image(9, 9, 5, 5, 250, 250);
+
+  auto cropped_images = view::single(input_image) | crop(rects)
+      | to<std::vector>();
+
+  BOOST_TEST(cropped_images.size() == 1);  // One image goes in, one result is produced (which wraps a vector)
+  BOOST_TEST(cropped_images.at(0).size() == 2);// Two rects as input produce two output images
+  BOOST_TEST(is_almost_equal(*(cropped_images.at(0).at(0)), *expected_result_image_1, 0.00001));
+  BOOST_TEST(is_almost_equal(*(cropped_images.at(0).at(1)), *expected_result_image_2, 0.00001));
+}
 //
 ///**
 // * range<image>   -->  crop(rect)  --> range <image>
