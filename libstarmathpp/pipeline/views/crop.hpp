@@ -29,6 +29,7 @@
 #include <range/v3/view/transform.hpp>
 #include <range/v3/view/single.hpp>
 #include <range/v3/view/join.hpp>
+//#include <range/v3/action/join.hpp>
 
 //#include <libstarmathpp/logging.hpp>
 #include <libstarmathpp/image.hpp>
@@ -54,10 +55,10 @@ crop_internal(const CropRegionRng crop_regions,
 //  std::cerr << "Inside cropInternal!..." << std::endl;
 //  std::cerr << "Calling size: " << ranges::size(crop_regions) << std::endl;
 
-  auto vec = crop_regions | ranges::to<std::vector>();
+  //auto vec = crop_regions | ranges::to<std::vector>();
 //  std::cerr << "Calling size vec: " << vec.size() << std::endl;
 
-  return vec
+  return crop_regions
       | ranges::view::transform(
           [=](const auto &crop_region) {
 
@@ -124,8 +125,8 @@ template<typename ImageType = float>
 auto crop(const Rect<int> &crop_region) {
   return ranges::view::transform(
       [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
-        return detail::crop_internal(ranges::view::single(crop_region), image);
-      });
+        return detail::crop_internal(ranges::view::single(crop_region), image).at(0);
+  });
 }
 
 /**
@@ -160,15 +161,15 @@ auto crop_from_center(const Size<int> &crop_region) {
         // - Mirror means "Mirrored image outside".
         //
         // See https://github.com/GreycLab/CImg/issues/110
-        auto croppedImg = std::make_shared<cimg_library::CImg<ImageType>>(
+        auto cropped_img = std::make_shared<cimg_library::CImg<ImageType>>(
             input_image_ref.get_crop(rect.x() /*x0*/, rect.y() /*y0*/,
                                    rect.x() + rect.width() - 1/*x1*/,
                                    rect.y() + rect.height() - 1/*y1*/));
 
-        DEBUG_IMAGE_DISPLAY(*croppedImg, "crop_from_center_out",
+        DEBUG_IMAGE_DISPLAY(*cropped_img, "crop_from_center_out",
                             STARMATHPP_PIPELINE_CROP_DEBUG);
 
-        return croppedImg;
+        return cropped_img;
       }
   );
 }
