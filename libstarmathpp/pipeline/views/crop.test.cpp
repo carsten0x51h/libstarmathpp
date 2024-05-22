@@ -37,6 +37,7 @@
 
 #include <libstarmathpp/pipeline/views/crop.hpp>
 #include <libstarmathpp/image.hpp>
+#include <libstarmathpp/floating_point_equality.hpp>
 
 BOOST_AUTO_TEST_SUITE (pipeline_crop_tests)
 
@@ -55,57 +56,45 @@ static ImagePtr generate_test_image(unsigned int width, unsigned int height,
                                     float test_pixel_value) {
 
   auto test_pixel_image_ptr = std::make_shared<Image>(width, height, 1, 1,
-                                                     bg_pixel_value);
+                                                      bg_pixel_value);
 
-  (*test_pixel_image_ptr)(test_pixel_pos_x, test_pixel_pos_y) = test_pixel_value;
+  (*test_pixel_image_ptr)(test_pixel_pos_x, test_pixel_pos_y) =
+      test_pixel_value;
 
   return test_pixel_image_ptr;
 }
 
 /**
- * Test cropping a 3x3 rectangle from a 5x5 image with a
- * brihgt bixel in the center.
+ * Test cropping a 3x3 rectangle from a 25x25 image with a
+ * bright pixel in the center.
  */
 BOOST_AUTO_TEST_CASE(pipeline_crop_from_center_sub_region_test)
 {
-
-  auto input_image = generate_test_image(25, 25,
-      12, 12,
-      250, 65535.0F);
-
-  Image expected_result_image(3, 3, 1, 1, 250);   // 3x3 - bg value 250
-  expected_result_image(1,1) = 65535.0F;       // Bright pixel at the center
+  auto input_image = generate_test_image(25, 25, 12, 12, 250, 65535.0F);
+  auto expected_result_image = generate_test_image(3, 3, 1, 1, 250, 65535.0F);
 
   auto result_images = view::single(input_image)
       | crop_from_center(Size<int>(3, 3)) | to<std::vector>();
 
   // NOTE: Exactly one image is expected
   BOOST_TEST(result_images.size() == 1);
-  BOOST_TEST(*(result_images.at(0)) == expected_result_image);
+  BOOST_TEST(is_almost_equal(*(result_images.at(0)),*expected_result_image, 0.00001));
 }
 
-///**
-// * Test cropping a 5x5 rectangle from a 5x5 image with a
-// * bright pixel in the center.
-// */
-//BOOST_AUTO_TEST_CASE(pipeline_crop_from_center_full_image_test)
-//{
-//    ImageT expectedResultImage(5,5,1,1,250); // 5x5 - bg value 250
-//    expectedResultImage(2,2) = 65535.0F;   // Bright pixel at the center
-//
-//    const std::vector<std::string> imageFilenames {
-//            "test_data/image_processing_pipeline/crop/test_image_crop_from_center_5x5.tiff",
-//    };
-//
-//    auto resultImagePtr = imageFilenames
-//                          | read()
-//                          | crop_from_center(Size<int>(5,5))
-//                          | to<std::vector>();
-//
-//    // NOTE: Exactly one image is expected
-//    BOOST_TEST(*(resultImagePtr.at(0)) == expectedResultImage);
-//}
-//
+/**
+ * Test cropping a 5x5 rectangle from a 5x5 image with a
+ * bright pixel in the center.
+ */
+BOOST_AUTO_TEST_CASE(pipeline_crop_from_center_full_image_test)
+{
+  auto input_image = generate_test_image(5, 5, 2, 2, 250, 65535.0F);
+  auto result_images = view::single(input_image)
+      | crop_from_center(Size<int>(5, 5)) | to<std::vector>();
+
+  // NOTE: Exactly one image is expected
+  BOOST_TEST(result_images.size() == 1);
+  BOOST_TEST(is_almost_equal(*(result_images.at(0)), *input_image, 0.00001));
+}
 //
 ///**
 // * range<image>   -->  crop(rects)  --> range < range <image> >
@@ -159,5 +148,4 @@ BOOST_AUTO_TEST_CASE(pipeline_crop_from_center_sub_region_test)
 //// TODO: Test specified region exceeding the image dimensions.
 //
 //// TODO: Add "crop()" test
-
 BOOST_AUTO_TEST_SUITE_END();
