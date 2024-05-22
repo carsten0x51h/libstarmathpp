@@ -71,8 +71,8 @@ crop_internal(const CropRegionRng crop_regions,
                                 crop_region.y() + crop_region.height() - 1/*y1*/
                                 ));
           }
-      );
-//	  | ranges::to<std::vector>();
+      )
+	  | ranges::to<std::vector>();
 }
 }  // namespace detail
 
