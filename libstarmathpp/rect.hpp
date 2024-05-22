@@ -30,8 +30,8 @@
 
 #include <libstarmathpp/exception.hpp>
 #include <libstarmathpp/point.hpp>
+#include <libstarmathpp/size.hpp>
 
-//#include "size.h"
 
 namespace starmathpp {
 
@@ -245,11 +245,13 @@ class Rect {
     return from_center_point_internal<P, S, T>(center, width, height);
   }
 
-  // TODO: Re-enable?
-  // static RectT<T>
-  // from_center_point(const PointT<T> &inCenter, SizeT<T> inWindowSize) {
-  //     return from_center_point_internal(inCenter, inWindowSize.width(), inWindowSize.height());
-  // }
+  /**
+   *
+   */
+  template<typename P, typename S>
+  static Rect<T> from_center_point(const Point<P> &center, Size<S> region) {
+    return from_center_point_internal<P, S, T>(center, region.width(), region.height());
+  }
 
   /**
    *
