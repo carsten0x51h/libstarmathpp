@@ -48,6 +48,9 @@ using namespace ranges;
 
 /**
  * This function generates a test-image.
+ *
+ * TODO: Add crop_from_center test for even sized regions.
+ * TODO: Test specified region exceeding the image dimensions.
  */
 static ImagePtr generate_test_image(unsigned int width, unsigned int height,
                                     unsigned int test_pixel_pos_x,
@@ -132,33 +135,26 @@ BOOST_AUTO_TEST_CASE(pipeline_multi_crop_on_image_test)
  */
 BOOST_AUTO_TEST_CASE(pipeline_crop_on_image_test)
 {
-	auto rect = Rect<int>(5, 5, 10, 10);
+  auto rect = Rect<int>(5, 5, 10, 10);
 
-	std::vector<ImagePtr> input_images = {
-	    generate_test_image(25, 25, 8, 8, 250, 65535.0F),
-      generate_test_image(25, 25, 10, 10, 250, 65535.0F),
-      generate_test_image(25, 25, 12, 12, 250, 65535.0F)
-	};
+  std::vector<ImagePtr> input_images = { generate_test_image(25, 25, 8, 8, 250,
+                                                             65535.0F),
+      generate_test_image(25, 25, 10, 10, 250, 65535.0F), generate_test_image(
+          25, 25, 12, 12, 250, 65535.0F) };
 
-	auto expected_result_image_1 = generate_test_image(10, 10, 3, 3, 250, 65535.0F);
-	auto expected_result_image_2 = generate_test_image(10, 10, 5, 5, 250, 65535.0F);
-	auto expected_result_image_3 = generate_test_image(10, 10, 7, 7, 250, 65535.0F);
+  auto expected_result_image_1 = generate_test_image(10, 10, 3, 3, 250,
+                                                     65535.0F);
+  auto expected_result_image_2 = generate_test_image(10, 10, 5, 5, 250,
+                                                     65535.0F);
+  auto expected_result_image_3 = generate_test_image(10, 10, 7, 7, 250,
+                                                     65535.0F);
 
-	// TODO: Choose an input image from the crop test folder! Choose 2 images ... at least...
-    auto cropped_images =
-            input_images
-              | crop(rect)
-              | to<std::vector>();
+  auto cropped_images = input_images | crop(rect) | to<std::vector>();
 
-	BOOST_TEST(cropped_images.size() == 3);
+  BOOST_TEST(cropped_images.size() == 3);
   BOOST_TEST(is_almost_equal(*(cropped_images.at(0)), *expected_result_image_1, 0.00001));
   BOOST_TEST(is_almost_equal(*(cropped_images.at(1)), *expected_result_image_2, 0.00001));
   BOOST_TEST(is_almost_equal(*(cropped_images.at(2)), *expected_result_image_3, 0.00001));
 }
-
-
-//// TODO: Add crop_from_center test for even sized regions.
-//// TODO: Test specified region exceeding the image dimensions.
-//// TODO: Add "crop()" test
 
 BOOST_AUTO_TEST_SUITE_END();
