@@ -8,8 +8,7 @@ set(target starmathpp)
 #
 # Integration tests
 #
-add_test_module(astrophotography_image_development_tests astrophotography_image_development_test.cpp)
-
+add_test_module(image_development_tests image_development_test.cpp)
 
 
 # # 

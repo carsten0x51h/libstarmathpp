@@ -47,12 +47,11 @@
 
 #include <libstarmathpp/io/filesystem_wrapper.hpp>
 
-// TODO: Use the average() from the pipeline::action?
 #include <libstarmathpp/algorithm/average.hpp>
 
 #include <libstarmathpp/floating_point_equality.hpp>
 
-BOOST_AUTO_TEST_SUITE (pipeline_astrophotography_image_development_integration_tests)
+BOOST_AUTO_TEST_SUITE (pipeline_image_development_integration_tests)
 
 using namespace ranges;
 using namespace starmathpp;
@@ -70,7 +69,7 @@ using namespace starmathpp::pipeline::views;
  *              .stretch(StretcherT::-...)                                                  -> img
  *              .store/save("my-filename.png")
  *
- * NOTE: This does no alignment!
+ * NOTE: This does no align the images.
  *
  * TODO: Add     | value_clip(ClippingAlgorithmT) after subtract?
  */
