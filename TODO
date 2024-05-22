@@ -2,7 +2,7 @@ TODO
 ----
 -Finalize average.test.cpp
 -Fix storing of images as FITS files...
--Rename SizeT to Dimension
+-IDEA: Extract test image generator function from unit tests - generate_test_image()
 -Remove deprecated cmake message
 -Replace "star recognizer" test images -> instead of one big, multiple small ones with only 2-5 stars.
 -Make fits writer create specified directories if they do not exist
