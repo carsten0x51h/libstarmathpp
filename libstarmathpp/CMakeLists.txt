@@ -49,6 +49,7 @@ target_link_libraries(${target}
 #
 add_test_module(point_tests point.test.cpp)
 add_test_module(rect_tests rect.test.cpp)
+add_test_module(size_tests size.test.cpp)
 add_test_module(image_reader_tests io/image_reader.test.cpp)
 add_test_module(image_writer_tests io/image_writer.test.cpp)
 add_test_module(pipeline_views_files_tests pipeline/views/files.test.cpp)
