@@ -23,8 +23,8 @@
  *
  ****************************************************************************/
 
-#ifndef STARMATHPP_PIPELINE_VIEW_SUBTRACT_H_
-#define STARMATHPP_PIPELINE_VIEW_SUBTRACT_H_ STARMATHPP_PIPELINE_VIEW_SUBTRACT_H_
+#ifndef STARMATHPP_PIPELINE_VIEW_SUBTRACT_HPP_
+#define STARMATHPP_PIPELINE_VIEW_SUBTRACT_HPP_ STARMATHPP_PIPELINE_VIEW_SUBTRACT_HPP_
 
 #include <libstarmathpp/pipeline/views/arithmetic_function_template.hpp>
 
@@ -74,4 +74,4 @@ auto subtract(ImageType scalar_value_to_subtract) {
 
 }  // namespace starmathpp::pipeline::views
 
-#endif // STARMATHPP_PIPELINE_VIEW_SUBTRACT_H_
+#endif // STARMATHPP_PIPELINE_VIEW_SUBTRACT_HPP_
