@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(histogram_black_image_test) {
 /**
  *
  */
-BOOST_AUTO_TEST_CASE(histogram1_test) {
+BOOST_AUTO_TEST_CASE(histogram_5_values_test) {
   Image input_image(5, 5, 1, 1, 0);  // 5x5 - bg value 0
   input_image(0,0) = 10;
   input_image(0,1) = 20;
@@ -77,6 +77,28 @@ BOOST_AUTO_TEST_CASE(histogram1_test) {
   BOOST_TEST(h1.get_value(1) == 1);
   BOOST_TEST(h1.get_value(2) == 1);
   BOOST_TEST(h1.get_value(3) == 2);
+}
+
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_float_test) {
+  Image input_image(5, 5, 1, 1, 0.0F);  // 5x5 - bg value 0
+  input_image(0,0) = 10.1F;
+  input_image(0,1) = 20.2F;
+  input_image(0,2) = 30.3F;
+  input_image(0,3) = 70000.0F;
+
+
+  Histogram h1(input_image, 4);
+
+  BOOST_TEST(h1.get_num_bins() == 4);
+  BOOST_TEST(h1.get_lower_boundary() == 0);
+  BOOST_TEST(h1.get_upper_boundary() == 70000);
+
+  BOOST_TEST(h1.get_value(0) == 24);
+  BOOST_TEST(h1.get_value(3) == 1);
 }
 
 // TODO: Add further tests...
