@@ -1,5 +1,6 @@
 TODO
 ----
+-Think about use of shared_ptrs...
 -Finalize average.test.cpp
 -Fix storing of images as FITS files...
 -IDEA: Extract test image generator function from unit tests - generate_test_image()
