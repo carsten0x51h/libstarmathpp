@@ -1,0 +1,84 @@
+/*****************************************************************************
+ *
+ *  libstarmathpp - A C++ library to process astronomical images
+ *                  based on CImg and range-v3.
+ *
+ *  Copyright(C) 2023 Carsten Schmitt <c [at] lost-infinity.com>
+ *
+ *  More info on https://www.lost-infinity.com
+ *
+ *  This program is free software ; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation ; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY ; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program ; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *
+ ****************************************************************************/
+
+// Shared lib
+// This is much faster than the header only variant
+#define BOOST_TEST_MODULE "histogram unit test"
+#define BOOST_TEST_MAIN
+#define BOOST_TEST_DYN_LINK
+
+#include <boost/test/unit_test.hpp>
+
+#include <libstarmathpp/image.hpp>
+#include <libstarmathpp/histogram.hpp>
+
+using namespace starmathpp;
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_SUITE (histogram_tests)
+
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_black_image_test) {
+  Image input_image(5, 5, 1, 1, 0);  // 5x5 - bg value 0
+
+  Histogram h1(input_image, 4);
+
+  BOOST_TEST(h1.get_num_bins() == 4);
+  BOOST_TEST(h1.get_lower_boundary() == 0);
+  BOOST_TEST(h1.get_upper_boundary() == 0);
+  BOOST_TEST(h1.get_value(0) == 25);
+}
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram1_test) {
+  Image input_image(5, 5, 1, 1, 0);  // 5x5 - bg value 0
+  input_image(0,0) = 10;
+  input_image(0,1) = 20;
+  input_image(0,2) = 30;
+  input_image(0,3) = 30;
+
+
+  Histogram h1(input_image, 4);
+
+  BOOST_TEST(h1.get_num_bins() == 4);
+  BOOST_TEST(h1.get_lower_boundary() == 0);
+  BOOST_TEST(h1.get_upper_boundary() == 30);
+
+  BOOST_TEST(h1.get_value(0) == 21);
+  BOOST_TEST(h1.get_value(1) == 1);
+  BOOST_TEST(h1.get_value(2) == 1);
+  BOOST_TEST(h1.get_value(3) == 2);
+}
+
+// TODO: Add further tests...
+
+BOOST_AUTO_TEST_SUITE_END();
