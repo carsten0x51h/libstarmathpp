@@ -101,6 +101,29 @@ BOOST_AUTO_TEST_CASE(histogram_float_test) {
   BOOST_TEST(h1.get_value(3) == 1);
 }
 
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_lower_upper_bounds_test) {
+  Image input_image(5, 5, 1, 1, 0);  // 5x5 - bg value 0
+  input_image(0,0) = 10;
+  input_image(0,1) = 50;
+  input_image(0,2) = 70;
+  input_image(0,3) = 100;
+
+  Histogram h1(input_image, 0.0F /*min pixel*/, 100.0F /*max pixel*/, 4);
+
+  BOOST_TEST(h1.get_num_bins() == 4);
+  BOOST_TEST(h1.get_lower_boundary() == 0);
+  BOOST_TEST(h1.get_upper_boundary() == 100);
+
+  BOOST_TEST(h1.get_value(0) == 22);
+  BOOST_TEST(h1.get_value(1) == 1);  // 50
+  BOOST_TEST(h1.get_value(2) == 1);  // 70
+  BOOST_TEST(h1.get_value(3) == 1);  // 100
+}
+
 // TODO: Add further tests...
 
 BOOST_AUTO_TEST_SUITE_END();
