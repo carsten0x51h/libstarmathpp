@@ -57,6 +57,8 @@ namespace starmathpp::algorithm {
  *
  * See https://rndayala.wordpress.com/2019/11/13/image-processing-thresholding/
  * See http://www.labbookpages.co.uk/software/imgProc/otsuThreshold.html
+ *
+ * IDEA / TODO: int BitDepth as second template parameter?
  */
 template<typename ImageType>
 class OtsuThresholder : public Thresholder<ImageType> {
@@ -80,12 +82,14 @@ class OtsuThresholder : public Thresholder<ImageType> {
       throw ThresholderException("No image supplied.");
     }
 
-    auto num_buckets = (size_t) std::pow(2.0F, 16);  // TODO: bitDepth should ot be hardcoded...
+
+    // TODO: The histogram calculation should be extracted to a sep. operation
+    auto num_buckets = (size_t) std::pow(2.0F, 16);  // TODO: bitDepth should not be hardcoded...
     std::vector<ImageType> hist(num_buckets, 0.0F);
 
     float num_pixels = input_image.width() * input_image.height();
-    float sumB = 0.0F;
-    float wB = 0.0F;
+    float sum_b = 0.0F;
+    float wb = 0.0F;
     float max = 0.0F;
     float threshold1 = 0.0F;
     float threshold2 = 0.0F;
@@ -106,24 +110,24 @@ class OtsuThresholder : public Thresholder<ImageType> {
     }
 
     for (size_t i = 0; i < num_buckets; ++i) {
-      wB += hist[i];
+      wb += hist[i];
 
-      if (is_almost_equal(wB, 0.0F)) {
+      if (is_almost_equal(wb, 0.0F)) {
         continue;
       }
 
-      float wF = num_pixels - wB;
+      float wf = num_pixels - wb;
 
-      if (is_almost_equal(wF, 0.0F)) {
+      if (is_almost_equal(wf, 0.0F)) {
         break;
       }
 
-      sumB += (float) i * hist[i];
+      sum_b += (float) i * hist[i];
 
-      float mF = (sum - sumB) / wF;
-      float mB = sumB / wB;
+      float mF = (sum - sum_b) / wf;
+      float mB = sum_b / wb;
       float diff = mB - mF;
-      float bw = wB * wF * std::pow(diff, 2.0F);
+      float bw = wb * wf * std::pow(diff, 2.0F);
 
       if (bw >= max) {
         threshold1 = (float) i;
