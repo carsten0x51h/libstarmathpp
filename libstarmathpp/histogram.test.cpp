@@ -110,18 +110,18 @@ BOOST_AUTO_TEST_CASE(histogram_lower_upper_bounds_test) {
   input_image(0,0) = 10;
   input_image(0,1) = 50;
   input_image(0,2) = 70;
-  input_image(0,3) = 100;
+  input_image(0,3) = 99;
 
-  Histogram h1(input_image, 0.0F /*min pixel*/, 100.0F /*max pixel*/, 4);
+  Histogram h1(input_image, 0.0F /*min pixel*/, 99.0F /*max pixel*/, 4);
 
   BOOST_TEST(h1.get_num_bins() == 4);
   BOOST_TEST(h1.get_lower_boundary() == 0);
-  BOOST_TEST(h1.get_upper_boundary() == 100);
+  BOOST_TEST(h1.get_upper_boundary() == 99);
 
-  BOOST_TEST(h1.get_value(0) == 22);
-  BOOST_TEST(h1.get_value(1) == 1);  // 50
-  BOOST_TEST(h1.get_value(2) == 1);  // 70
-  BOOST_TEST(h1.get_value(3) == 1);  // 100
+  BOOST_TEST(h1.get_value(0) == 22); // 0, 10
+  BOOST_TEST(h1.get_value(1) == 0);
+  BOOST_TEST(h1.get_value(2) == 2);  // 50, 70
+  BOOST_TEST(h1.get_value(3) == 1);  // 99
 }
 
 // TODO: Add further tests...

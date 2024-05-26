@@ -71,13 +71,31 @@ class Histogram {
      * threshold for the initial float image, this transformation needs
      * to be reverted later (see comment below).
      */
-    const ImageType delta_max_min = upper_boundary_ - lower_boundary_;
+
+    /**
+     * Example
+     *
+     * num_bins = 4
+     * lower_boundary = 0, upper_boundary = 99  -> delta_max_min = 100
+     *
+     * rel_pos = value / delta_max_min
+     * idx = num_bins * rel_pos
+     *
+     * value =  0 -> rel_pos =  0 / 100 = 0.0     -> idx = 4 * 0.00 = 0.00 ->   0
+     * value = 10 -> rel_pos = 10 / 100 = 0.1     -> idx = 4 * 0.10 = 0.40 ->   0
+     * value = 25 -> rel_pos = 25 / 100 = 0.25    -> idx = 4 * 0.25 = 1.00 ->   1
+     * value = 30 -> rel_pos = 30 / 100 = 0.3     -> idx = 4 * 0.30 = 1.20 ->   1
+     * value = 60 -> rel_pos = 60 / 100 = 0.6     -> idx = 4 * 0.60 = 2.40 ->   2
+     * value = 99 -> rel_pos = 99 / 100 = 0.99    -> idx = 4 * 0.99 = 3.96 ->   3
+     */
+    const ImageType delta_max_min = upper_boundary_ - lower_boundary_ + 1;
+
 
     cimg_forXY(input_image, x, y)
     {
-      ImageType pixel_value_minus_min = input_image(x, y) - lower_boundary_;
-      float factor = (float) pixel_value_minus_min / (float) delta_max_min;
-      size_t idx = (size_t) ((float) (num_bins - 1) * factor);
+      ImageType pixel_value_minus_min = input_image(x, y) - lower_boundary_; // 100 - 0 = 100
+      float factor = (float) pixel_value_minus_min / (float) delta_max_min; // 100 / 100 = 1.0
+      size_t idx = (size_t) ((float) num_bins * factor);
 
       ++histogram_[idx];
     }
