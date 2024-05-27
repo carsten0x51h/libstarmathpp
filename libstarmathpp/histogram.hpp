@@ -106,15 +106,46 @@ class Histogram {
   }
 
   /**
+   * Calculate histogram idx from pixel value.
+   *
+   * Example:
+   *
+   * num_bins = 4
+   * lower_boundary = 0, upper_boundary = 99  -> delta_max_min = 100
+   *
+   * rel_pos = value / delta_max_min
+   * idx = num_bins * rel_pos
+   *
+   * value =  0 -> rel_pos =  0 / 100 = 0.0     -> idx = 4 * 0.00 = 0.00 ->   0
+   * value = 10 -> rel_pos = 10 / 100 = 0.1     -> idx = 4 * 0.10 = 0.40 ->   0
+   * value = 25 -> rel_pos = 25 / 100 = 0.25    -> idx = 4 * 0.25 = 1.00 ->   1
+   * value = 30 -> rel_pos = 30 / 100 = 0.3     -> idx = 4 * 0.30 = 1.20 ->   1
+   * value = 60 -> rel_pos = 60 / 100 = 0.6     -> idx = 4 * 0.60 = 2.40 ->   2
+   * value = 99 -> rel_pos = 99 / 100 = 0.99    -> idx = 4 * 0.99 = 3.96 ->   3
+   */
+  size_t calculate_histogram_idx_from_pixel_value_internal(ImageType pixel_value) {
+
+    throw_if_lower_boundary_is_less_or_equal_upper_boundary_value();
+    throw_if_lower_boundary_is_greater_than_min_image_pixel();
+    throw_if_upper_boundary_is_less_than_max_image_pixel();
+
+    const ImageType delta_max_min = upper_boundary_ - lower_boundary_ + 1;
+    ImageType pixel_value_minus_min = pixel_value - lower_boundary_;
+    float factor = (float) pixel_value_minus_min / (float) delta_max_min;
+    size_t num_bins = histogram_.size();
+
+    return (size_t) ((float) num_bins * factor);
+  }
+
+
+  /**
    *
    */
   void calculate_histogram_internal(
       const cimg_library::CImg<ImageType> &input_image, size_t num_bins) {
 
     throw_if_num_bins_not_valid(num_bins);
-    throw_if_lower_boundary_is_less_or_equal_upper_boundary_value();
-    throw_if_lower_boundary_is_greater_than_min_image_pixel();
-    throw_if_upper_boundary_is_less_than_max_image_pixel();
+
     histogram_.resize(num_bins, 0);
 
     // TODO: Check that input_image(x, y) - min_pixel_value does not get smaller than image.min()
@@ -131,33 +162,41 @@ class Histogram {
      * to be reverted later (see comment below).
      */
 
-    /**
-     * Example
-     *
-     * num_bins = 4
-     * lower_boundary = 0, upper_boundary = 99  -> delta_max_min = 100
-     *
-     * rel_pos = value / delta_max_min
-     * idx = num_bins * rel_pos
-     *
-     * value =  0 -> rel_pos =  0 / 100 = 0.0     -> idx = 4 * 0.00 = 0.00 ->   0
-     * value = 10 -> rel_pos = 10 / 100 = 0.1     -> idx = 4 * 0.10 = 0.40 ->   0
-     * value = 25 -> rel_pos = 25 / 100 = 0.25    -> idx = 4 * 0.25 = 1.00 ->   1
-     * value = 30 -> rel_pos = 30 / 100 = 0.3     -> idx = 4 * 0.30 = 1.20 ->   1
-     * value = 60 -> rel_pos = 60 / 100 = 0.6     -> idx = 4 * 0.60 = 2.40 ->   2
-     * value = 99 -> rel_pos = 99 / 100 = 0.99    -> idx = 4 * 0.99 = 3.96 ->   3
-     */
-    const ImageType delta_max_min = upper_boundary_ - lower_boundary_ + 1;
-
     cimg_forXY(input_image, x, y)
     {
-      ImageType pixel_value_minus_min = input_image(x, y) - lower_boundary_;  // 100 - 0 = 100
-      float factor = (float) pixel_value_minus_min / (float) delta_max_min;  // 100 / 100 = 1.0
-      size_t idx = (size_t) ((float) num_bins * factor);
+      size_t idx = calculate_histogram_idx_from_pixel_value_internal(input_image(x, y));
 
       ++histogram_[idx];
     }
   }
+
+
+  /**
+   *
+   */
+  double accumulate_idx_internal(size_t from_idx, size_t to_idx) const {
+
+    double sum = 0;
+
+    for (size_t idx = from_idx; idx <= to_idx; idx++) {
+      sum += histogram_[idx];
+    }
+
+    return sum;
+  }
+
+
+  /**
+   *
+   */
+  double accumulate_internal(ImageType from_pixel_value, ImageType to_pixel_value) const {
+
+    size_t from_idx = calculate_histogram_idx_from_pixel_value_internal(from_pixel_value);
+    size_t to_idx = calculate_histogram_idx_from_pixel_value_internal(to_pixel_value);
+
+    return accumulate_idx_internal(from_idx, to_idx);
+  }
+
 
  public:
   /**
@@ -211,6 +250,23 @@ class Histogram {
 
   [[nodiscard]] ImageType get_value(size_t idx) const {
     return histogram_[idx];
+  }
+
+  [[nodiscard]] double accumulate_idx(size_t from_idx, size_t to_idx) const {
+    return accumulate_idx_internal(from_idx, to_idx);
+  }
+  [[nodiscard]] double accumulate_idx(size_t to_idx) const {
+    return accumulate_idx_internal(0, to_idx);
+  }
+
+  [[nodiscard]] double accumulate(ImageType from_pixel_value, ImageType to_pixel_value) const {
+    return accumulate_internal(from_pixel_value, to_pixel_value);
+  }
+  [[nodiscard]] double accumulate(ImageType to_pixel_value) const {
+    return accumulate_internal(min_pixel_value_, to_pixel_value);
+  }
+  [[nodiscard]] double accumulate() const {
+    return accumulate_internal(min_pixel_value_, max_pixel_value_);
   }
 
 };
