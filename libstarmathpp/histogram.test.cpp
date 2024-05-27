@@ -141,6 +141,22 @@ BOOST_AUTO_TEST_CASE(histogram_lower_boundary_greater_upper_boundary_exception_t
   BOOST_CHECK_THROW(Histogram h1(input_image, 10.0F, 5.0F, 100), HistogramException);
 }
 
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_lower_boundary_greater_than_min_pixel_value_exception_test) {
+  Image input_image(5, 5, 1, 1, 10);  // 5x5 - bg value 10
+  BOOST_CHECK_THROW(Histogram h1(input_image, 11.0F, 20.0F, 100), HistogramException);
+}
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_upper_boundary_less_than_max_pixel_value_exception_test) {
+  Image input_image(5, 5, 1, 1, 10);  // 5x5 - bg value 10
+  BOOST_CHECK_THROW(Histogram h1(input_image, 5.0F, 9.0F, 100), HistogramException);
+}
+
 // TODO: Add further tests...
 
 BOOST_AUTO_TEST_SUITE_END();
