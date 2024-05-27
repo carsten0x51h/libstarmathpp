@@ -133,6 +133,14 @@ BOOST_AUTO_TEST_CASE(histogram_invalid_number_of_bins_exception_test) {
   BOOST_CHECK_THROW(Histogram h1(input_image, 0), HistogramException);
 }
 
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_lower_boundary_greater_upper_boundary_exception_test) {
+  Image input_image(5, 5, 1, 1, 0);  // 5x5 - bg value 0
+  BOOST_CHECK_THROW(Histogram h1(input_image, 10.0F, 5.0F, 100), HistogramException);
+}
+
 // TODO: Add further tests...
 
 BOOST_AUTO_TEST_SUITE_END();
