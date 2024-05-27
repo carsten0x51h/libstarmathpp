@@ -35,6 +35,8 @@
 
 namespace starmathpp {
 
+DEF_Exception(Histogram);
+
 /**
  * TODO: Document ...
  *
@@ -44,8 +46,64 @@ template<typename ImageType>
 class Histogram {
  private:
   std::vector<uint32_t> histogram_;
+  ImageType min_pixel_value_;
+  ImageType max_pixel_value_;
   ImageType lower_boundary_;
   ImageType upper_boundary_;
+
+  /**
+   *
+   */
+  void throw_if_num_bins_not_valid(size_t num_bins) {
+    if (num_bins < 1) {
+      std::stringstream ss;
+      ss << "Number of bins must be at least 1." << std::endl;
+
+      throw HistogramException(ss.str());
+    }
+  }
+
+  /**
+   *
+   */
+  void throw_if_lower_boundary_is_less_or_equal_upper_boundary_value() {
+    if (lower_boundary_ > upper_boundary_) {
+      std::stringstream ss;
+      ss << "Lower boundary (" << lower_boundary_
+          << ") must be lower or equal than upper boundary (" << upper_boundary_
+          << "." << std::endl;
+
+      throw HistogramException(ss.str());
+    }
+  }
+
+  /**
+   *
+   */
+  void throw_if_lower_boundary_is_greater_than_min_image_pixel() {
+    if (lower_boundary_ > min_pixel_value_) {
+      std::stringstream ss;
+      ss << "Lower boundary (" << lower_boundary_
+          << ") must be lower or equal than minimum pixel (" << min_pixel_value_
+          << ") value ." << std::endl;
+
+      throw HistogramException(ss.str());
+    }
+  }
+
+  /**
+   *
+   */
+  void throw_if_upper_boundary_is_less_than_max_image_pixel() {
+    if (upper_boundary_ < max_pixel_value_) {
+      std::stringstream ss;
+      ss << "Upper boundary (" << upper_boundary_
+          << ") must be higher or equal than maximum pixel (" << max_pixel_value_
+          << ") value ." << std::endl;
+
+      throw HistogramException(ss.str());
+    }
+  }
 
   /**
    *
@@ -53,12 +111,13 @@ class Histogram {
   void calculate_histogram_internal(
       const cimg_library::CImg<ImageType> &input_image, size_t num_bins) {
 
+    throw_if_num_bins_not_valid(num_bins);
+    throw_if_lower_boundary_is_less_or_equal_upper_boundary_value();
+    throw_if_lower_boundary_is_greater_than_min_image_pixel();
+    throw_if_upper_boundary_is_less_than_max_image_pixel();
     histogram_.resize(num_bins, 0);
 
-    // TODO: Check that num_bins > 0
     // TODO: Check that input_image(x, y) - min_pixel_value does not get smaller than image.min()
-    // TODO: Check that max_pixel_value > min_pixel_value
-    // TODO: Check that max_pixel_value >= image.max()
     // TODO: Limit image dimensions (i.e. number of pixels)? < e.g. uint32_t (2^32)
 
     /**
@@ -90,11 +149,10 @@ class Histogram {
      */
     const ImageType delta_max_min = upper_boundary_ - lower_boundary_ + 1;
 
-
     cimg_forXY(input_image, x, y)
     {
-      ImageType pixel_value_minus_min = input_image(x, y) - lower_boundary_; // 100 - 0 = 100
-      float factor = (float) pixel_value_minus_min / (float) delta_max_min; // 100 / 100 = 1.0
+      ImageType pixel_value_minus_min = input_image(x, y) - lower_boundary_;  // 100 - 0 = 100
+      float factor = (float) pixel_value_minus_min / (float) delta_max_min;  // 100 / 100 = 1.0
       size_t idx = (size_t) ((float) num_bins * factor);
 
       ++histogram_[idx];
@@ -108,9 +166,13 @@ class Histogram {
   Histogram(const cimg_library::CImg<ImageType> &input_image, size_t num_bins =
                 256) {
 
-    // Gain min- and max values from image and use them as lower- and upper
+    // Gain min- and max values from image. They are used for checking
+    // and in this ctor they are used as lower- and upper
     // boundary for the histogram.
-    lower_boundary_ = input_image.min_max(upper_boundary_);
+    min_pixel_value_ = input_image.min_max(max_pixel_value_);
+
+    lower_boundary_ = min_pixel_value_;
+    upper_boundary_ = max_pixel_value_;
 
     calculate_histogram_internal(input_image, num_bins);
   }
@@ -119,11 +181,14 @@ class Histogram {
    *
    */
   Histogram(const cimg_library::CImg<ImageType> &input_image,
-            ImageType min_pixel_value, ImageType max_pixel_value,
+            ImageType lower_boundary, ImageType upper_boundary,
             size_t num_bins = 256)
       :
-      lower_boundary_(min_pixel_value),
-      upper_boundary_(max_pixel_value) {
+      lower_boundary_(lower_boundary),
+      upper_boundary_(upper_boundary) {
+
+    // Gain min- and max values from image. They are used for checking.
+    min_pixel_value_ = input_image.min_max(max_pixel_value_);
 
     calculate_histogram_internal(input_image, num_bins);
   }
