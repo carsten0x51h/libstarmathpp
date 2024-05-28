@@ -35,7 +35,6 @@
 #include <libstarmathpp/algorithm/threshold/otsu_thresholder.hpp>
 #include <libstarmathpp/floating_point_equality.hpp>
 
-
 BOOST_AUTO_TEST_SUITE (algorithm_otsu_thresholder_tests)
 
 using namespace starmathpp;
@@ -44,12 +43,14 @@ using namespace starmathpp::algorithm;
 /**
  *
  */
-BOOST_AUTO_TEST_CASE(algorithm_otsu_thresholder_test)
-{
-  // TODO...
+BOOST_AUTO_TEST_CASE(algorithm_otsu_thresholder_test) {
+  Image input_image(5, 5, 1, 1, 5);  // 5x5 - bg value 5
+  input_image(3, 3) = 25;
 
-  //BOOST_TEST(is_almost_equal(*average_image_ptr, *expected_image_ptr, 0.00001));
+  OtsuThresholder<float> otsuThresholder(16);
+  float threshold = otsuThresholder.calculate_threshold(input_image);
+
+  BOOST_TEST(is_almost_equal(threshold, 14.5F));
 }
-
 
 BOOST_AUTO_TEST_SUITE_END();

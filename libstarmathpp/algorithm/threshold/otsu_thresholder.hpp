@@ -62,7 +62,18 @@ namespace starmathpp::algorithm {
  */
 template<typename ImageType>
 class OtsuThresholder : public Thresholder<ImageType> {
+ private:
+  size_t bit_depth_;
+
  public:
+  /**
+   *
+   */
+  OtsuThresholder(size_t bit_depth)
+      :
+      bit_depth_(bit_depth) {
+  }
+
   /**
    *
    */
@@ -82,10 +93,9 @@ class OtsuThresholder : public Thresholder<ImageType> {
       throw ThresholderException("No image supplied.");
     }
 
-
     // TODO: The histogram calculation should be extracted to a sep. operation
-    auto num_buckets = (size_t) std::pow(2.0F, 16);  // TODO: bitDepth should not be hardcoded...
-    std::vector<ImageType> hist(num_buckets, 0.0F);
+    auto num_buckets = (size_t) std::pow(2.0F, bit_depth_);
+    std::vector < ImageType > hist(num_buckets, 0.0F);
 
     float num_pixels = input_image.width() * input_image.height();
     float sum_b = 0.0F;
