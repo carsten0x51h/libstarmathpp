@@ -88,7 +88,6 @@ class OtsuThresholder : public Thresholder<ImageType> {
   [[nodiscard]] float calculate_threshold(
       const cimg_library::CImg<ImageType> &input_image) const override {
 
-
     if (input_image.width() <= 0 || input_image.height() <= 0) {
       throw ThresholderException("No image supplied.");
     }

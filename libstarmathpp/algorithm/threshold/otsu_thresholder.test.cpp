@@ -47,8 +47,8 @@ BOOST_AUTO_TEST_CASE(algorithm_otsu_thresholder_test) {
   Image input_image(5, 5, 1, 1, 5);  // 5x5 - bg value 5
   input_image(3, 3) = 25;
 
-  OtsuThresholder<float> otsuThresholder(16);
-  float threshold = otsuThresholder.calculate_threshold(input_image);
+  OtsuThresholder<float> otsu_thresholder(16);
+  float threshold = otsu_thresholder.calculate_threshold(input_image);
 
   BOOST_TEST(is_almost_equal(threshold, 14.5F));
 }
