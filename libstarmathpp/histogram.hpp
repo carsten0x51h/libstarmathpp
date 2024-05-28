@@ -111,8 +111,9 @@ class Histogram {
    */
   void throw_if_idx_exceeds_num_bins(size_t idx) const {
     if (idx >= histogram_.size()) {
+      std::stringstream ss;
       ss << "Index exceeds histogram bin size ("
-          << idx << " >= " << histogram.size() << ")." << std::endl;
+          << idx << " >= " << histogram_.size() << ")." << std::endl;
 
       throw HistogramException(ss.str());
     }

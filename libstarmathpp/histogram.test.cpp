@@ -149,7 +149,7 @@ BOOST_AUTO_TEST_CASE(histogram_lower_boundary_greater_than_min_pixel_value_excep
 BOOST_AUTO_TEST_CASE(histogram_idx_exceeds_histogram_num_bins_exception_test) {
   Image input_image(5, 5, 1, 1, 10);  // 5x5 - bg value 10
   Histogram h1(input_image, 0.0F, 99.0F, 100);
-  BOOST_CHECK_THROW(h1.accumulate_idx(0, 102), HistogramException);
+  BOOST_CHECK_THROW(double sum = h1.accumulate_idx(0, 102), HistogramException);
 }
 
 /**
