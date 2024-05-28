@@ -66,6 +66,7 @@ add_test_module(pipeline_interpolate_bad_pixels_tests pipeline/views/interpolate
 add_test_module(algorithm_bad_pixel_median_interpolator_tests algorithm/bad_pixel_median_interpolator.test.cpp)
 add_test_module(algorithm_average_tests algorithm/average.test.cpp)
 add_test_module(algorithm_otsu_thresholder_tests algorithm/threshold/otsu_thresholder.test.cpp)
+add_test_module(algorithm_mean_thresholder_tests algorithm/threshold/mean_thresholder.test.cpp)
 
 
 
