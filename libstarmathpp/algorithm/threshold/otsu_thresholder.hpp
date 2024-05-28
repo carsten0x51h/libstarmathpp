@@ -59,6 +59,7 @@ namespace starmathpp::algorithm {
  * See http://www.labbookpages.co.uk/software/imgProc/otsuThreshold.html
  *
  * IDEA / TODO: int BitDepth as second template parameter?
+ * TODO: Use Histogram class?
  */
 template<typename ImageType>
 class OtsuThresholder : public Thresholder<ImageType> {
@@ -87,13 +88,11 @@ class OtsuThresholder : public Thresholder<ImageType> {
   [[nodiscard]] float calculate_threshold(
       const cimg_library::CImg<ImageType> &input_image) const override {
 
-//    LOG(debug) << "OtsuThresholdingAlgorithmT::calc..." << std::endl;
 
     if (input_image.width() <= 0 || input_image.height() <= 0) {
       throw ThresholderException("No image supplied.");
     }
 
-    // TODO: The histogram calculation should be extracted to a sep. operation
     auto num_buckets = (size_t) std::pow(2.0F, bit_depth_);
     std::vector < ImageType > hist(num_buckets, 0.0F);
 
@@ -103,9 +102,6 @@ class OtsuThresholder : public Thresholder<ImageType> {
     float max = 0.0F;
     float threshold1 = 0.0F;
     float threshold2 = 0.0F;
-
-    //    LOG(debug) << "OtsuThresholdingAlgorithmT::calc - numBuckets: "
-    //    << numBuckets << ", numPixels: " << numPixels << std::endl;
 
     // Calculate histogram - for some reason inImg.get_histogram() behaves unexpectedly.
     cimg_forXY(input_image, x, y)
@@ -147,9 +143,6 @@ class OtsuThresholder : public Thresholder<ImageType> {
         max = bw;
       }
     }  // end loop
-
-    //LOG(debug) << "OtsuThresholdingAlgorithmT::calc - threshold1: "
-    //    << threshold1 << ", threshold2: " << threshold2 << std::endl;
 
     return (threshold1 + threshold2) / 2.0F;
   }
