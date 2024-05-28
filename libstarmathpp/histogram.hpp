@@ -41,6 +41,7 @@ DEF_Exception(Histogram);
  * TODO: Document ...
  *
  * TODO: operator==, operator !=
+ * TODO: Add further constructors
  */
 template<typename ImageType>
 class Histogram {
@@ -106,6 +107,18 @@ class Histogram {
   }
 
   /**
+   *
+   */
+  void throw_if_idx_exceeds_num_bins(size_t idx) const {
+    if (idx >= histogram_.size()) {
+      ss << "Index exceeds histogram bin size ("
+          << idx << " >= " << histogram.size() << ")." << std::endl;
+
+      throw HistogramException(ss.str());
+    }
+  }
+
+  /**
    * Calculate histogram idx from pixel value.
    *
    * Example:
@@ -137,12 +150,14 @@ class Histogram {
     return (size_t) ((float) num_bins * factor);
   }
 
-
+  /**
+   *
+   */
   ImageType calculate_pixel_value_from_histogram_idx_internal(size_t idx) const {
-
-    //throw_if_lower_boundary_is_less_or_equal_upper_boundary_value();
-    //throw_if_lower_boundary_is_greater_than_min_image_pixel();
-    //throw_if_upper_boundary_is_less_than_max_image_pixel();
+    throw_if_idx_exceeds_num_bins(idx);
+    throw_if_lower_boundary_is_less_or_equal_upper_boundary_value();
+    throw_if_lower_boundary_is_greater_than_min_image_pixel();
+    throw_if_upper_boundary_is_less_than_max_image_pixel();
 
     const ImageType delta_max_min = upper_boundary_ - lower_boundary_ + 1;
     size_t num_bins = histogram_.size();

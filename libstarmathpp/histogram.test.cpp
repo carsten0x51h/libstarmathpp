@@ -41,7 +41,6 @@ using namespace starmathpp;
  */
 BOOST_AUTO_TEST_SUITE (histogram_tests)
 
-
 /**
  *
  */
@@ -56,7 +55,6 @@ BOOST_AUTO_TEST_CASE(histogram_black_image_test) {
   BOOST_TEST(h1.get_value(0) == 25);
 }
 
-
 /**
  *
  */
@@ -66,7 +64,6 @@ BOOST_AUTO_TEST_CASE(histogram_5_values_test) {
   input_image(0,1) = 20;
   input_image(0,2) = 30;
   input_image(0,3) = 30;
-
 
   Histogram h1(input_image, 4);
 
@@ -80,7 +77,6 @@ BOOST_AUTO_TEST_CASE(histogram_5_values_test) {
   BOOST_TEST(h1.get_value(3) == 2);
 }
 
-
 /**
  *
  */
@@ -91,7 +87,6 @@ BOOST_AUTO_TEST_CASE(histogram_float_test) {
   input_image(0,2) = 30.3F;
   input_image(0,3) = 70000.0F;
 
-
   Histogram h1(input_image, 4);
 
   BOOST_TEST(h1.get_num_bins() == 4);
@@ -101,7 +96,6 @@ BOOST_AUTO_TEST_CASE(histogram_float_test) {
   BOOST_TEST(h1.get_value(0) == 24);
   BOOST_TEST(h1.get_value(3) == 1);
 }
-
 
 /**
  *
@@ -119,12 +113,11 @@ BOOST_AUTO_TEST_CASE(histogram_lower_upper_bounds_test) {
   BOOST_TEST(h1.get_lower_boundary() == 0);
   BOOST_TEST(h1.get_upper_boundary() == 99);
 
-  BOOST_TEST(h1.get_value(0) == 22); // 0, 10
+  BOOST_TEST(h1.get_value(0) == 22);  // 0, 10
   BOOST_TEST(h1.get_value(1) == 0);
-  BOOST_TEST(h1.get_value(2) == 2);  // 50, 70
-  BOOST_TEST(h1.get_value(3) == 1);  // 99
+  BOOST_TEST(h1.get_value(2) == 2);// 50, 70
+  BOOST_TEST(h1.get_value(3) == 1);// 99
 }
-
 
 /**
  *
@@ -133,7 +126,6 @@ BOOST_AUTO_TEST_CASE(histogram_invalid_number_of_bins_exception_test) {
   Image input_image(5, 5, 1, 1, 0);  // 5x5 - bg value 0
   BOOST_CHECK_THROW(Histogram h1(input_image, 0), HistogramException);
 }
-
 
 /**
  *
@@ -151,6 +143,14 @@ BOOST_AUTO_TEST_CASE(histogram_lower_boundary_greater_than_min_pixel_value_excep
   BOOST_CHECK_THROW(Histogram h1(input_image, 11.0F, 20.0F, 100), HistogramException);
 }
 
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_idx_exceeds_histogram_num_bins_exception_test) {
+  Image input_image(5, 5, 1, 1, 10);  // 5x5 - bg value 10
+  Histogram h1(input_image, 0.0F, 99.0F, 100);
+  BOOST_CHECK_THROW(h1.accumulate_idx(0, 102), HistogramException);
+}
 
 /**
  *
@@ -159,7 +159,6 @@ BOOST_AUTO_TEST_CASE(histogram_upper_boundary_less_than_max_pixel_value_exceptio
   Image input_image(5, 5, 1, 1, 10);  // 5x5 - bg value 10
   BOOST_CHECK_THROW(Histogram h1(input_image, 5.0F, 9.0F, 100), HistogramException);
 }
-
 
 /**
  *
@@ -173,7 +172,6 @@ BOOST_AUTO_TEST_CASE(histogram_accumulate_idx_lower_to_upper_test) {
   BOOST_TEST(h1.accumulate_idx(9, 11) == 10*24);
 }
 
-
 /**
  *
  */
@@ -184,7 +182,6 @@ BOOST_AUTO_TEST_CASE(histogram_accumulate_idx_zero_to_upper_test) {
   BOOST_TEST(h1.accumulate_idx(99) == 250);
 
 }
-
 
 /**
  *
@@ -198,7 +195,6 @@ BOOST_AUTO_TEST_CASE(histogram_accumulate_lower_to_upper_test) {
   BOOST_TEST(h1.accumulate(0, 19) == 24*10);
 }
 
-
 /**
  *
  */
@@ -210,7 +206,6 @@ BOOST_AUTO_TEST_CASE(histogram_accumulate_0_to_upper_test) {
 
   BOOST_TEST(h1.accumulate(19) == 24*10);
 }
-
 
 /**
  *
