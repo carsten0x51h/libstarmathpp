@@ -157,6 +157,18 @@ BOOST_AUTO_TEST_CASE(histogram_upper_boundary_less_than_max_pixel_value_exceptio
   BOOST_CHECK_THROW(Histogram h1(input_image, 5.0F, 9.0F, 100), HistogramException);
 }
 
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_accumulate_idx_test) {
+  Image input_image(5, 5, 1, 1, 10);  // 5x5 - bg value 10
+  Histogram h1(input_image, 0.0F /*min pixel*/, 99.0F /*max pixel*/, 100);
+
+  BOOST_TEST(h1.accumulate_idx(99) == 250);
+
+}
+
 // TODO: Add further tests...
 
 BOOST_AUTO_TEST_SUITE_END();

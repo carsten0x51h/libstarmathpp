@@ -138,6 +138,21 @@ class Histogram {
   }
 
 
+  ImageType calculate_pixel_value_from_histogram_idx_internal(size_t idx) const {
+
+    //throw_if_lower_boundary_is_less_or_equal_upper_boundary_value();
+    //throw_if_lower_boundary_is_greater_than_min_image_pixel();
+    //throw_if_upper_boundary_is_less_than_max_image_pixel();
+
+    const ImageType delta_max_min = upper_boundary_ - lower_boundary_ + 1;
+    size_t num_bins = histogram_.size();
+    float factor = (float) idx / (float) num_bins;
+    float pixel_value_minus_min = factor * (float) delta_max_min;
+
+    return pixel_value_minus_min + lower_boundary_;
+  }
+
+
   /**
    *
    */
@@ -171,6 +186,7 @@ class Histogram {
   }
 
 
+
   /**
    *
    */
@@ -179,12 +195,12 @@ class Histogram {
     double sum = 0;
 
     for (size_t idx = from_idx; idx <= to_idx; idx++) {
-      sum += histogram_[idx];
+      ImageType v = calculate_pixel_value_from_histogram_idx_internal(idx);
+      sum += v * histogram_[idx];
     }
 
     return sum;
   }
-
 
   /**
    *
@@ -194,7 +210,14 @@ class Histogram {
     size_t from_idx = calculate_histogram_idx_from_pixel_value_internal(from_pixel_value);
     size_t to_idx = calculate_histogram_idx_from_pixel_value_internal(to_pixel_value);
 
-    return accumulate_idx_internal(from_idx, to_idx);
+    double sum = 0;
+
+    for (size_t idx = from_idx; idx <= to_idx; idx++) {
+      ImageType v = calculate_pixel_value_from_histogram_idx_internal(idx);
+      sum += v * histogram_[idx];
+    }
+
+    return sum;
   }
 
 
