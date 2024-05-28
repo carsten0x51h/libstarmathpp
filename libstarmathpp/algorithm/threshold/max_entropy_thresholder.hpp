@@ -35,6 +35,11 @@
 
 namespace starmathpp::algorithm {
 
+
+  /**
+   * TODO: Document...
+   * TODO: IDEA: Replace parts of the code by the Histogram class.
+   */
 template<typename ImageType>
 class MaxEntropyThresholder : public Thresholder<ImageType> {
 

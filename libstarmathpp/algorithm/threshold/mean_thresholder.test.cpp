@@ -52,4 +52,6 @@ BOOST_AUTO_TEST_CASE(algorithm_mean_thresholder_test) {
   BOOST_TEST(is_almost_equal(threshold, 5.0F));
 }
 
+// TODO: Add further tests
+
 BOOST_AUTO_TEST_SUITE_END();

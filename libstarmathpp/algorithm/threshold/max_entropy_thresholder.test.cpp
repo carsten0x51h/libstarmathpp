@@ -49,8 +49,9 @@ BOOST_AUTO_TEST_CASE(algorithm_max_entropy_thresholder_test) {
   MaxEntropyThresholder<float> max_entropy_thresholder;
   float threshold = max_entropy_thresholder.calculate_threshold(input_image);
 
-  // TODO...
   BOOST_TEST(is_almost_equal(threshold, 5.0F));
 }
+
+// TODO: Add further tests
 
 BOOST_AUTO_TEST_SUITE_END();
