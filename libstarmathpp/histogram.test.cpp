@@ -56,6 +56,7 @@ BOOST_AUTO_TEST_CASE(histogram_black_image_test) {
   BOOST_TEST(h1.get_value(0) == 25);
 }
 
+
 /**
  *
  */
@@ -133,6 +134,7 @@ BOOST_AUTO_TEST_CASE(histogram_invalid_number_of_bins_exception_test) {
   BOOST_CHECK_THROW(Histogram h1(input_image, 0), HistogramException);
 }
 
+
 /**
  *
  */
@@ -149,6 +151,7 @@ BOOST_AUTO_TEST_CASE(histogram_lower_boundary_greater_than_min_pixel_value_excep
   BOOST_CHECK_THROW(Histogram h1(input_image, 11.0F, 20.0F, 100), HistogramException);
 }
 
+
 /**
  *
  */
@@ -161,12 +164,63 @@ BOOST_AUTO_TEST_CASE(histogram_upper_boundary_less_than_max_pixel_value_exceptio
 /**
  *
  */
-BOOST_AUTO_TEST_CASE(histogram_accumulate_idx_test) {
+BOOST_AUTO_TEST_CASE(histogram_accumulate_idx_lower_to_upper_test) {
+  Image input_image(5, 5, 1, 1, 10);  // 5x5 - bg value 10
+  input_image(0,0) = 20;
+
+  Histogram h1(input_image, 0.0F /*min pixel*/, 99.0F /*max pixel*/, 100);
+
+  BOOST_TEST(h1.accumulate_idx(9, 11) == 10*24);
+}
+
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_accumulate_idx_zero_to_upper_test) {
   Image input_image(5, 5, 1, 1, 10);  // 5x5 - bg value 10
   Histogram h1(input_image, 0.0F /*min pixel*/, 99.0F /*max pixel*/, 100);
 
   BOOST_TEST(h1.accumulate_idx(99) == 250);
 
+}
+
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_accumulate_lower_to_upper_test) {
+  Image input_image(5, 5, 1, 1, 10);  // 5x5 - bg value 10
+  input_image(0,0) = 20;
+
+  Histogram h1(input_image, 0.0F /*min pixel*/, 99.0F /*max pixel*/, 100);
+
+  BOOST_TEST(h1.accumulate(0, 19) == 24*10);
+}
+
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_accumulate_0_to_upper_test) {
+  Image input_image(5, 5, 1, 1, 10);  // 5x5 - bg value 10
+  input_image(0,0) = 20;
+
+  Histogram h1(input_image, 0.0F /*min pixel*/, 99.0F /*max pixel*/, 100);
+
+  BOOST_TEST(h1.accumulate(19) == 24*10);
+}
+
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(histogram_accumulate_test) {
+  Image input_image(5, 5, 1, 1, 10);  // 5x5 - bg value 10
+
+  Histogram h1(input_image, 0.0F /*min pixel*/, 99.0F /*max pixel*/, 100);
+
+  BOOST_TEST(h1.accumulate() == 25*10);
 }
 
 // TODO: Add further tests...

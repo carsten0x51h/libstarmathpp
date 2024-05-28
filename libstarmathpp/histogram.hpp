@@ -54,7 +54,7 @@ class Histogram {
   /**
    *
    */
-  void throw_if_num_bins_not_valid(size_t num_bins) {
+  void throw_if_num_bins_not_valid(size_t num_bins) const {
     if (num_bins < 1) {
       std::stringstream ss;
       ss << "Number of bins must be at least 1." << std::endl;
@@ -66,7 +66,7 @@ class Histogram {
   /**
    *
    */
-  void throw_if_lower_boundary_is_less_or_equal_upper_boundary_value() {
+  void throw_if_lower_boundary_is_less_or_equal_upper_boundary_value() const {
     if (lower_boundary_ > upper_boundary_) {
       std::stringstream ss;
       ss << "Lower boundary (" << lower_boundary_
@@ -80,7 +80,7 @@ class Histogram {
   /**
    *
    */
-  void throw_if_lower_boundary_is_greater_than_min_image_pixel() {
+  void throw_if_lower_boundary_is_greater_than_min_image_pixel() const {
     if (lower_boundary_ > min_pixel_value_) {
       std::stringstream ss;
       ss << "Lower boundary (" << lower_boundary_
@@ -94,7 +94,7 @@ class Histogram {
   /**
    *
    */
-  void throw_if_upper_boundary_is_less_than_max_image_pixel() {
+  void throw_if_upper_boundary_is_less_than_max_image_pixel() const {
     if (upper_boundary_ < max_pixel_value_) {
       std::stringstream ss;
       ss << "Upper boundary (" << upper_boundary_
@@ -123,7 +123,7 @@ class Histogram {
    * value = 60 -> rel_pos = 60 / 100 = 0.6     -> idx = 4 * 0.60 = 2.40 ->   2
    * value = 99 -> rel_pos = 99 / 100 = 0.99    -> idx = 4 * 0.99 = 3.96 ->   3
    */
-  size_t calculate_histogram_idx_from_pixel_value_internal(ImageType pixel_value) {
+  size_t calculate_histogram_idx_from_pixel_value_internal(ImageType pixel_value) const {
 
     throw_if_lower_boundary_is_less_or_equal_upper_boundary_value();
     throw_if_lower_boundary_is_greater_than_min_image_pixel();
