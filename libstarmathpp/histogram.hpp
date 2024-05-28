@@ -99,8 +99,8 @@ class Histogram {
     if (upper_boundary_ < max_pixel_value_) {
       std::stringstream ss;
       ss << "Upper boundary (" << upper_boundary_
-          << ") must be higher or equal than maximum pixel (" << max_pixel_value_
-          << ") value ." << std::endl;
+          << ") must be higher or equal than maximum pixel ("
+          << max_pixel_value_ << ") value ." << std::endl;
 
       throw HistogramException(ss.str());
     }
@@ -112,8 +112,8 @@ class Histogram {
   void throw_if_idx_exceeds_num_bins(size_t idx) const {
     if (idx >= histogram_.size()) {
       std::stringstream ss;
-      ss << "Index exceeds histogram bin size ("
-          << idx << " >= " << histogram_.size() << ")." << std::endl;
+      ss << "Index exceeds histogram bin size (" << idx << " >= "
+          << histogram_.size() << ")." << std::endl;
 
       throw HistogramException(ss.str());
     }
@@ -137,7 +137,8 @@ class Histogram {
    * value = 60 -> rel_pos = 60 / 100 = 0.6     -> idx = 4 * 0.60 = 2.40 ->   2
    * value = 99 -> rel_pos = 99 / 100 = 0.99    -> idx = 4 * 0.99 = 3.96 ->   3
    */
-  size_t calculate_histogram_idx_from_pixel_value_internal(ImageType pixel_value) const {
+  size_t calculate_histogram_idx_from_pixel_value_internal(
+      ImageType pixel_value) const {
 
     throw_if_lower_boundary_is_less_or_equal_upper_boundary_value();
     throw_if_lower_boundary_is_greater_than_min_image_pixel();
@@ -154,7 +155,8 @@ class Histogram {
   /**
    *
    */
-  ImageType calculate_pixel_value_from_histogram_idx_internal(size_t idx) const {
+  ImageType calculate_pixel_value_from_histogram_idx_internal(
+      size_t idx) const {
     throw_if_idx_exceeds_num_bins(idx);
     throw_if_lower_boundary_is_less_or_equal_upper_boundary_value();
     throw_if_lower_boundary_is_greater_than_min_image_pixel();
@@ -167,7 +169,6 @@ class Histogram {
 
     return pixel_value_minus_min + lower_boundary_;
   }
-
 
   /**
    *
@@ -195,13 +196,12 @@ class Histogram {
 
     cimg_forXY(input_image, x, y)
     {
-      size_t idx = calculate_histogram_idx_from_pixel_value_internal(input_image(x, y));
+      size_t idx = calculate_histogram_idx_from_pixel_value_internal(
+          input_image(x, y));
 
       ++histogram_[idx];
     }
   }
-
-
 
   /**
    *
@@ -221,10 +221,13 @@ class Histogram {
   /**
    *
    */
-  double accumulate_internal(ImageType from_pixel_value, ImageType to_pixel_value) const {
+  double accumulate_internal(ImageType from_pixel_value,
+                             ImageType to_pixel_value) const {
 
-    size_t from_idx = calculate_histogram_idx_from_pixel_value_internal(from_pixel_value);
-    size_t to_idx = calculate_histogram_idx_from_pixel_value_internal(to_pixel_value);
+    size_t from_idx = calculate_histogram_idx_from_pixel_value_internal(
+        from_pixel_value);
+    size_t to_idx = calculate_histogram_idx_from_pixel_value_internal(
+        to_pixel_value);
 
     double sum = 0;
 
@@ -235,7 +238,6 @@ class Histogram {
 
     return sum;
   }
-
 
  public:
   /**
@@ -298,7 +300,8 @@ class Histogram {
     return accumulate_idx_internal(0, to_idx);
   }
 
-  [[nodiscard]] double accumulate(ImageType from_pixel_value, ImageType to_pixel_value) const {
+  [[nodiscard]] double accumulate(ImageType from_pixel_value,
+                                  ImageType to_pixel_value) const {
     return accumulate_internal(from_pixel_value, to_pixel_value);
   }
   [[nodiscard]] double accumulate(ImageType to_pixel_value) const {
