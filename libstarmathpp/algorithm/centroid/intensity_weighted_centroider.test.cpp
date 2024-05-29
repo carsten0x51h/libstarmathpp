@@ -25,7 +25,7 @@
 
 // Shared lib
 // This is much faster than the header only variant
-#define BOOST_TEST_MODULE "algorithm center of gravity centroider unit test"
+#define BOOST_TEST_MODULE "algorithm intensity weighted centroider unit test"
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_DYN_LINK
 
