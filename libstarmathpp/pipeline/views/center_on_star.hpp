@@ -23,9 +23,8 @@
  *
  ****************************************************************************/
 
-#ifndef STARMATHPP_PIPELINE_VIEW_CROP_HPP_
-#define STARMATHPP_PIPELINE_VIEW_CROP_HPP_ STARMATHPP_PIPELINE_VIEW_CROP_HPP_
-
+#ifndef STARMATHPP_PIPELINE_VIEW_CENTER_ON_STAR_HPP_
+#define STARMATHPP_PIPELINE_VIEW_CENTER_ON_STAR_HPP_ STARMATHPP_PIPELINE_VIEW_CENTER_ON_STAR_HPP_
 #include <range/v3/view/transform.hpp>
 
 #include <libstarmathpp/algorithm/centroid/centroider.hpp>
@@ -88,4 +87,4 @@ auto center_on_star(const starmathpp::algorithm::Centroider<ImageType> & centroi
 }
 }
 
-#endif //STARMATHPP_PIPELINE_VIEW_CROP_HPP_
+#endif // STARMATHPP_PIPELINE_VIEW_CENTER_ON_STAR_HPP_
