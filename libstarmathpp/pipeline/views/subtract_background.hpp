@@ -39,16 +39,18 @@
  */
 namespace starmathpp::pipeline::views {
 
+  /**
+   * TODO: Change shared_ptrs to unique_ptrs...?!! Because ownership is not shared.
+   */
 template<typename ImageType = float>
 auto subtract_background(const starmathpp::algorithm::Thresholder<ImageType> &thresholder) {
   return ranges::views::transform(
-      [=](const std::unique_ptr<const cimg_library::CImg<ImageType>> &image) {
+      [&](const std::shared_ptr<const cimg_library::CImg<ImageType>> &image) {
         const auto &input_image_ref = *image;
 
         DEBUG_IMAGE_DISPLAY(input_image_ref, "subtract_background_in",
                             STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG);
 
-        // TODO: Handle bit depth... do not hardcode here...
         float threshold = thresholder.calculate_threshold(input_image_ref);
 
         auto sub_image = std::make_shared < cimg_library::CImg<ImageType>

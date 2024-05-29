@@ -35,11 +35,10 @@
 
 namespace starmathpp::algorithm {
 
-
-  /**
-   * TODO: Document...
-   * TODO: IDEA: Replace parts of the code by the Histogram class.
-   */
+/**
+ * TODO: Document...
+ * TODO: IDEA: Replace parts of the code by the Histogram class.
+ */
 template<typename ImageType>
 class MaxEntropyThresholder : public Thresholder<ImageType> {
 
@@ -61,17 +60,12 @@ class MaxEntropyThresholder : public Thresholder<ImageType> {
       throw ThresholderException("No image supplied.");
     }
 
-    const size_t NUM_BINS = 256; // TODO: Do not hardcode ...
+    const size_t NUM_BINS = 256;  // TODO: Do not hardcode ...
     size_t num_bins = NUM_BINS;
     std::vector<float> hist(num_bins, 0);
 
     float max;
     float min = input_image.min_max(max);
-
-//    LOG(debug) << "MaxEntropyThresholdingAlgorithmT::calc... bitDepth="
-//        << bitDepth << ", numBins=" << numBins << ", min=" << min << ", max="
-//        << max << ", img-dim (w x h)=" << input_image.width() << " x "
-//        << input_image.height() << std::endl;
 
     /**
      * IMPORTANT / IDEA: "Shrink" /map the float image pixel values to 256 possible brightness levels (i.e. 256 histogram bins).
@@ -80,12 +74,10 @@ class MaxEntropyThresholder : public Thresholder<ImageType> {
      * histogram. In order to get the threshold for the initial float image, this transformation needs to be reverted
      * later (see comment below).
      */
-    //std::cerr << "min: " << min << ", max: " << max << std::endl;
     cimg_forXY(input_image, x, y)
     {
-      int idx =
-          (int) ((float) (num_bins - 1) * (input_image(x, y) - min) / (max - min + 1));
-      //std::cerr << "idx: " << idx << std::endl;
+      int idx = (int) ((float) (num_bins - 1) * (input_image(x, y) - min)
+          / (max - min + 1));
       ++hist[idx];
     }
 
@@ -122,18 +114,12 @@ class MaxEntropyThresholder : public Thresholder<ImageType> {
     // Find last index of element not 0 in white distribution
     size_t last_bin_idx = num_bins;
 
-    std::cerr << "first_bin_idx: " << first_bin_idx << std::endl;
-
     for (size_t idx = num_bins - 1; idx > first_bin_idx; --idx) {
-      std::cerr << "idx: " << idx << std::endl;
       if (!is_almost_equal(accumulated_hist_white[idx], 0.0F)) {
         last_bin_idx = idx;
         break;
       }
     }
-
-//    LOG(debug) << "MaxEntropyThresholdingAlgorithmT::calc... first_bin_idx: "
-//        << first_bin_idx << ", last_bin_idx: " << last_bin_idx << std::endl;
 
     float threshold = 0;
     float max_ent = 0;
@@ -176,9 +162,6 @@ class MaxEntropyThresholder : public Thresholder<ImageType> {
      * This "shrinking" step needs to be reverted so that the calculated threshold matches the original float image.
      */
     float th2 = min + (threshold / (float) num_bins) * (max - min);
-
-//    LOG(debug) << "MaxEntropyThresholdingAlgorithmT::calc...threshold: "
-//        << threshold << ", th2: " << th2 << std::endl;
 
     return th2;
   }
