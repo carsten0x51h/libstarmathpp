@@ -28,6 +28,7 @@
 
 #include <string>
 
+#include <libstarmathpp/point.hpp>
 #include <libstarmathpp/image.hpp>
 #include <libstarmathpp/exception.hpp>
 
@@ -39,11 +40,9 @@ template<typename ImageType>
 class Centroider {
  public:
   virtual ~Centroider() = default;
-  [[nodiscard]] virtual std::string get_name() const {
-    return "CenterOfGravityCentroider";
-  }
+  [[nodiscard]] virtual std::string get_name() const = 0;
 
-  [[nodiscard]] virtual float calculate_centroid(
+  [[nodiscard]] virtual std::optional<Point<float>> calculate_centroid(
       const cimg_library::CImg<ImageType> &input_image) const = 0;
 };
 

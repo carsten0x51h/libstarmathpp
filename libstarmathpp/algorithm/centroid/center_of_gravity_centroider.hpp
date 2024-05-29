@@ -49,7 +49,9 @@ namespace starmathpp::algorithm {
 template<typename ImageType>
 class CenterOfGravityCentroider : public Centroider<ImageType> {
  public:
-  [[nodiscard]] std::string get_name() const override;
+  [[nodiscard]] std::string get_name() const override {
+    return "CenterOfGravityCentroider";
+  }
 
   /**
    * TODO: auto as return value?
