@@ -78,7 +78,7 @@ BOOST_DATA_TEST_CASE(algorithm_center_of_gravity_centroider_test, bdata::make(
   CenterOfGravityCentroider<float> centroider;
 
   Image test_image(image_filename.c_str());
-  std::optional<Point<float>> centroid_opt = centroider.calculate_centroid(test_image);
+  auto centroid_opt = centroider.calculate_centroid(test_image);
 
   BOOST_CHECK(centroid_opt.has_value());
   BOOST_CHECK_CLOSE(centroid_opt.value().x(), expected_centroid_point.x(), 0.001F);
