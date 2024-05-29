@@ -9,6 +9,8 @@ set(target starmathpp)
 # Integration tests
 #
 add_test_module(image_development_tests image_development_test.cpp)
+#add_test_module(star_metrics_integration_tests star_metrics_test.cpp)
+
 
 
 # # 

@@ -25,7 +25,7 @@
 
 // Shared lib
 // This is much faster than the header only variant
-#define BOOST_TEST_MODULE "astrophotography image development unit test"
+#define BOOST_TEST_MODULE "image development integration test"
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_DYN_LINK
 
@@ -51,7 +51,7 @@
 
 #include <libstarmathpp/floating_point_equality.hpp>
 
-BOOST_AUTO_TEST_SUITE (pipeline_image_development_integration_tests)
+BOOST_AUTO_TEST_SUITE (image_development_integration_tests)
 
 using namespace ranges;
 using namespace starmathpp;
@@ -75,7 +75,7 @@ using namespace starmathpp::pipeline::views;
  */
 BOOST_AUTO_TEST_CASE(pipeline_standard_image_development_test, * boost::unit_test::tolerance(0.1))
 {
-  const std::string base_path = "test_data/image_processing_pipeline/real_world/astrophotography/image_development/";
+  const std::string base_path = "test_data/integration/image_development/";
 
   auto dark_files = view::single(base_path + "dark")
   | files("(.*\\.fit\\.gz)") | view::join | to<std::vector>();

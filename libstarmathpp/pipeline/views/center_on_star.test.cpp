@@ -56,7 +56,7 @@ using namespace ranges;
  */
 BOOST_AUTO_TEST_CASE(pipeline_center_on_star_test)
 {
-  auto test_image_ptr = std::make_shared<Image>("test_data/image_processing_pipeline/center_on_star/test_image_ideal_star_73x65.tiff");
+  auto test_image_ptr = std::make_shared<Image>("test_data/pipeline/center_on_star/test_image_ideal_star_73x65.tiff");
 
   auto result_images = ranges::views::single(test_image_ptr)
       | center_on_star(IntensityWeightedCentroider<float>())

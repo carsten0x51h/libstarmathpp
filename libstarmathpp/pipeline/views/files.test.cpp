@@ -55,10 +55,10 @@ using namespace ranges;
  */
 BOOST_AUTO_TEST_CASE(pipeline_files_filenames_with_no_spaces_test)
 {
-    const std::vector<std::string> filePaths { "test_data/image_processing_pipeline/files" };
+    const std::vector<std::string> filePaths { "test_data/pipeline/files" };
     const std::set<std::string> expectedFilenames {
-                    "test_data/image_processing_pipeline/files/tiff_file_2.tiff",
-                    "test_data/image_processing_pipeline/files/tiff_file_1.tiff",
+                    "test_data/pipeline/files/tiff_file_2.tiff",
+                    "test_data/pipeline/files/tiff_file_1.tiff",
     };
 
     auto results =
@@ -81,11 +81,11 @@ BOOST_AUTO_TEST_CASE(pipeline_files_filenames_with_no_spaces_test)
  */
 BOOST_AUTO_TEST_CASE(pipeline_files_filenames_with_spaces_test)
 {
-    const std::vector<std::string> filePaths { "test_data/image_processing_pipeline/files" };
-    const std::set<std::string> expectedFilenames { "test_data/image_processing_pipeline/files/fits file with spaces 1.fits",
-                                                    "test_data/image_processing_pipeline/files/fits file with spaces 2.fits",
-                                                    "test_data/image_processing_pipeline/files/fits_file_1.fits",
-                                                    "test_data/image_processing_pipeline/files/fits_file_2.fits" };
+    const std::vector<std::string> filePaths { "test_data/pipeline/files" };
+    const std::set<std::string> expectedFilenames { "test_data/pipeline/files/fits file with spaces 1.fits",
+                                                    "test_data/pipeline/files/fits file with spaces 2.fits",
+                                                    "test_data/pipeline/files/fits_file_1.fits",
+                                                    "test_data/pipeline/files/fits_file_2.fits" };
 
     auto results =
           filePaths
@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE(pipeline_files_filenames_with_spaces_test)
  */
 BOOST_AUTO_TEST_CASE(pipeline_files_non_exising_extension_test)
 {
-    const std::vector<std::string> filePaths { "test_data/image_processing_pipeline/files" };
+    const std::vector<std::string> filePaths { "test_data/pipeline/files" };
     const std::set<std::string> expectedFilenames { };
 
     auto results =
@@ -130,18 +130,18 @@ BOOST_AUTO_TEST_CASE(pipeline_files_non_exising_extension_test)
  */
 BOOST_AUTO_TEST_CASE(pipeline_files_no_extension_filter_test)
 {
-    const std::vector<std::string> filePaths { "test_data/image_processing_pipeline/files" };
+    const std::vector<std::string> filePaths { "test_data/pipeline/files" };
     const std::set<std::string> expectedFilenames {
-            "test_data/image_processing_pipeline/files/fits file with spaces 1.fits",
-            "test_data/image_processing_pipeline/files/fits file with spaces 2.fits",
-            "test_data/image_processing_pipeline/files/fits_file_1.fits",
-            "test_data/image_processing_pipeline/files/fits_file_2.fits",
-            "test_data/image_processing_pipeline/files/noext_file_1",
-            "test_data/image_processing_pipeline/files/noext_file_2",
-            "test_data/image_processing_pipeline/files/tiff_file_1.tiff",
-            "test_data/image_processing_pipeline/files/tiff_file_2.tiff",
-            "test_data/image_processing_pipeline/files/txt_file_1.txt",
-            "test_data/image_processing_pipeline/files/txt_file_2.txt"
+            "test_data/pipeline/files/fits file with spaces 1.fits",
+            "test_data/pipeline/files/fits file with spaces 2.fits",
+            "test_data/pipeline/files/fits_file_1.fits",
+            "test_data/pipeline/files/fits_file_2.fits",
+            "test_data/pipeline/files/noext_file_1",
+            "test_data/pipeline/files/noext_file_2",
+            "test_data/pipeline/files/tiff_file_1.tiff",
+            "test_data/pipeline/files/tiff_file_2.tiff",
+            "test_data/pipeline/files/txt_file_1.txt",
+            "test_data/pipeline/files/txt_file_2.txt"
     };
 
     auto results =

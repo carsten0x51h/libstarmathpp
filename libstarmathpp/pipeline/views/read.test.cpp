@@ -45,10 +45,10 @@ using namespace ranges;
 BOOST_AUTO_TEST_CASE(pipeline_read_images_test)
 {
     const std::vector<std::string> image_filenames {
-        "test_data/image_processing_pipeline/read/test_image_tiff_1_65x85.tiff",
-        "test_data/image_processing_pipeline/read/test_image_tiff_2_65x85.tiff",
-        "test_data/image_processing_pipeline/read/test_image_fits_1_45x47.fits",
-        "test_data/image_processing_pipeline/read/test_image_fits_2_45x47.fits"
+        "test_data/pipeline/read/test_image_tiff_1_65x85.tiff",
+        "test_data/pipeline/read/test_image_tiff_2_65x85.tiff",
+        "test_data/pipeline/read/test_image_fits_1_45x47.fits",
+        "test_data/pipeline/read/test_image_fits_2_45x47.fits"
     };
 
     const std::vector< std::pair<int, int> > expected_image_dimensions {
