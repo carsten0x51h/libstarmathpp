@@ -29,9 +29,7 @@
 #include <range/v3/view/transform.hpp>
 #include <range/v3/view/single.hpp>
 #include <range/v3/view/join.hpp>
-//#include <range/v3/action/join.hpp>
 
-//#include <libstarmathpp/logging.hpp>
 #include <libstarmathpp/image.hpp>
 #include <libstarmathpp/point.hpp>
 #include <libstarmathpp/rect.hpp>
@@ -52,18 +50,9 @@ static auto
 crop_internal(const CropRegionRng crop_regions,
              const std::shared_ptr<cimg_library::CImg<ImageType>> &image) {
 
-//  std::cerr << "Inside cropInternal!..." << std::endl;
-//  std::cerr << "Calling size: " << ranges::size(crop_regions) << std::endl;
-
-  //auto vec = crop_regions | ranges::to<std::vector>();
-//  std::cerr << "Calling size vec: " << vec.size() << std::endl;
-
   return crop_regions
       | ranges::view::transform(
           [=](const auto &crop_region) {
-
-//    std::cerr << "Cropping region ..." << std::endl;
-            //std::cerr << "Cropping region " << crop_region << std::endl;
 
             // See https://github.com/GreycLab/CImg/issues/110
             return std::make_shared<cimg_library::CImg<ImageType>>(
@@ -86,6 +75,7 @@ crop() {
         auto img = imageRectsPair->first;
         //const std::vector<RectT<int>> & cropRects = imageRectsPair->second;
 
+        // TODO: Fix below...
 //	      				return cropInternal(cropRects, img); // std::vector<std::shared_ptr<cimg_library::CImg<ImageType>>>
 
         return imageRectsPair->second
