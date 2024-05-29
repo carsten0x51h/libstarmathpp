@@ -29,7 +29,6 @@
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_DYN_LINK
 
-
 #include <boost/test/unit_test.hpp>
 
 #include <vector>
@@ -37,40 +36,40 @@
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/view/single.hpp>
 
+#include <libstarmathpp/algorithm/centroid/intensity_weighted_centroider.hpp>
 #include <libstarmathpp/pipeline/views/center_on_star.hpp>
 #include <libstarmathpp/floating_point_equality.hpp>
 
 BOOST_AUTO_TEST_SUITE (pipeline_center_on_star_tests)
 
 using namespace starmathpp;
+using namespace starmathpp::algorithm;
 using namespace starmathpp::pipeline::views;
 using namespace ranges;
 
 /**
- *
+ * This test applies the center_on_star() pipeline functionality on a test image
+ * with one single star in the upper left corner. The expected result is an new
+ * image where the center of the star is in the center of the image. Furthermore,
+ * the expected image size is exactly the same. The "newly" created pixels are
+ * expected to have the value 0 (e.g. top, left corner).
  */
 BOOST_AUTO_TEST_CASE(pipeline_center_on_star_test)
 {
-//  Image expected_result_image(10,10,1,1,250);  // 10x10 - bg value 250
-//  expected_result_image(4,4) = 65535.0F;// Bright pixel at the center
-//  expected_result_image(4,5) = 65535.0F;// Bright pixel at the center
-//  expected_result_image(5,4) = 65535.0F;// Bright pixel at the center
-//  expected_result_image(5,5) = 65535.0F;// Bright pixel at the center
-//
-//  auto input_image = generate_test_image(5, 5, 2, 2, 250, 65535.0F);
-//
-//  auto scaled_images = ranges::view::single(input_image) | scale_up(2.0F)
-//      | to<std::vector>();
-//
-//  // NOTE: Exactly one image is expected
-//  BOOST_TEST(scaled_images.size() == 1);
-//
-//  const Image &result_image = *(scaled_images.at(0));
-//
-//  BOOST_TEST(result_image.width() == 10);
-//  BOOST_TEST(result_image.height() == 10);
-//  BOOST_TEST(is_almost_equal(result_image, expected_result_image, 0.00001));
-}
+  auto test_image_ptr = std::make_shared<Image>("test_data/image_processing_pipeline/center_on_star/test_image_ideal_star_73x65.tiff");
 
+  auto result_images = ranges::views::single(test_image_ptr)
+      | center_on_star(IntensityWeightedCentroider<float>())
+      | to<std::vector>();
+
+  BOOST_TEST(result_images.size() == 1);
+
+  const Image &result_image = *(result_images.at(0));
+
+  BOOST_TEST(result_image.width() == 73);
+  BOOST_TEST(result_image.height() == 65);
+  BOOST_TEST(result_image(36, 32) == 65535);
+  BOOST_TEST(result_image(0, 0) == 0);
+}
 
 BOOST_AUTO_TEST_SUITE_END();

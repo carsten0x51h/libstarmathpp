@@ -41,9 +41,9 @@ namespace starmathpp::pipeline::views {
  *       -> For the moment an exception is thrown.
  */
 template<typename ImageType = float>
-auto center_on_star(const starmathpp::algorithm::Centroider<ImageType> centroider) {
+auto center_on_star(const starmathpp::algorithm::Centroider<ImageType> & centroider) {
   return ranges::views::transform(
-      [=](const std::shared_ptr<cimg_library::CImg<ImageType>> &image) {
+      [&](const std::shared_ptr<cimg_library::CImg<ImageType>> &image) {
 
         const cimg_library::CImg<ImageType> &input_image_ref = *image;
 
