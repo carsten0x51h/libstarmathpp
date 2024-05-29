@@ -27,6 +27,7 @@
 #define STARMATHPP_ALGORITHM_CENTROIDER_HPP_ STARMATHPP_ALGORITHM_CENTROIDER_HPP_
 
 #include <string>
+#include <optional>
 
 #include <libstarmathpp/point.hpp>
 #include <libstarmathpp/image.hpp>
@@ -36,6 +37,9 @@ namespace starmathpp::algorithm {
 
 DEF_Exception(Centroider);
 
+/**
+ * TODO: Maybe optional<> result of calculate_centroid() is not a good idea...
+ */
 template<typename ImageType>
 class Centroider {
  public:
