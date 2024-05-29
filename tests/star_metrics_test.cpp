@@ -53,6 +53,7 @@
 
 #include <libstarmathpp/algorithm/threshold/otsu_thresholder.hpp>
 #include <libstarmathpp/algorithm/centroid/intensity_weighted_centroider.hpp>
+#include <libstarmathpp/algorithm/snr.hpp>
 
 #include <libstarmathpp/floating_point_equality.hpp>
 #include <libstarmathpp/size.hpp>
@@ -117,10 +118,10 @@ BOOST_AUTO_TEST_CASE(pipeline_star_metrics_test, * boost::unit_test::tolerance(0
   | center_on_star(IntensityWeightedCentroider<float>())
   | scale_down(3.0F)
   | starmathpp::pipeline::views::crop_from_center(Size<int>(61,61))
-//  | view::transform(
-//      [](const auto & imgPtr) {
-//        return std::make_tuple(SnrT::calculate(*imgPtr), HfdT(*imgPtr).getValue());
-//      })
+  | view::transform(
+      [](const auto & imgPtr) {
+        return std::make_tuple(starmathpp::algorithm::snr(*imgPtr), 1.0/*, HfdT(*imgPtr).getValue()*/);
+      })
   | to<std::vector>();
 
 // TODO: Use test close?
