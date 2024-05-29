@@ -70,6 +70,9 @@ add_test_module(algorithm_otsu_thresholder_tests algorithm/threshold/otsu_thresh
 add_test_module(algorithm_mean_thresholder_tests algorithm/threshold/mean_thresholder.test.cpp)
 add_test_module(algorithm_max_entropy_thresholder_tests algorithm/threshold/max_entropy_thresholder.test.cpp)
 add_test_module(algorithm_center_of_gravity_centroider_tests algorithm/centroid/center_of_gravity_centroider.test.cpp)
+add_test_module(algorithm_intensity_weighted_centroider_tests algorithm/centroid/intensity_weighted_centroider.test.cpp)
+
+
 
 
 
