@@ -44,10 +44,12 @@ using namespace starmathpp::algorithm;
 
 namespace bdata = boost::unit_test::data;
 
-
 /**
  * Check Centroid of empty image. Expectation is that valid()
  * returns false and the optional return value has no value.
+ *
+ * TODO: Test case where centroider was not able to calculate
+ *       a centroid, i.e. returns an "empty" optional...
  */
 BOOST_AUTO_TEST_CASE(algorithm_center_of_gravity_centroider_empty_image_test)
 {
@@ -57,7 +59,6 @@ BOOST_AUTO_TEST_CASE(algorithm_center_of_gravity_centroider_empty_image_test)
 
   BOOST_CHECK_THROW(auto centroid = centroider.calculate_centroid(null_image), CentroiderException);
 }
-
 
 /**
  * Calculate centroids using the center of gravity (COG) method.
@@ -83,6 +84,5 @@ BOOST_DATA_TEST_CASE(algorithm_center_of_gravity_centroider_test, bdata::make(
   BOOST_CHECK_CLOSE(centroid_opt.value().x(), expected_centroid_point.x(), 0.001F);
   BOOST_CHECK_CLOSE(centroid_opt.value().y(), expected_centroid_point.y(), 0.001F);
 }
-
 
 BOOST_AUTO_TEST_SUITE_END();
