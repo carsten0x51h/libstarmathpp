@@ -95,12 +95,12 @@ namespace bdata = boost::unit_test::data;
  */
 BOOST_DATA_TEST_CASE(intensity_weighted_centroider_test, bdata::make(
         std::vector< std::tuple<std::string, Point<float> > > {
-          { "test_data/algorithm/centroid/test_image_all_pixels_value_1_5x5.tif", Point<float>(2.0F,2.0F)},
-          { "test_data/algorithm/centroid/test_image_one_pixel_bottom_right_5x5.tif", Point<float>(3.0F,3.0F)},
-          { "test_data/algorithm/centroid/test_image_one_pixel_top_left_10x10.tif", Point<float>(1.0F,1.0F)},
-          { "test_data/algorithm/centroid/test_image_two_opposite_pixels_5x5.tif", Point<float>(2.0F,2.0F)},
-          { "test_data/algorithm/centroid/test_image_ideal_star_73x65.tif", Point<float>(22.0F,14.0F)},
-          { "test_data/algorithm/centroid/test_image_noise_on_the_left_and_one_center_pixel_5x5.tif", Point<float>(1.998034F,2.0F)}
+          { "test_data/algorithm/centroid/test_image_all_pixels_value_1_5x5.tiff", Point<float>(2.0F,2.0F)},
+          { "test_data/algorithm/centroid/test_image_one_pixel_bottom_right_5x5.tiff", Point<float>(3.0F,3.0F)},
+          { "test_data/algorithm/centroid/test_image_one_pixel_top_left_10x10.tiff", Point<float>(1.0F,1.0F)},
+          { "test_data/algorithm/centroid/test_image_two_opposite_pixels_5x5.tiff", Point<float>(2.0F,2.0F)},
+          { "test_data/algorithm/centroid/test_image_ideal_star_73x65.tiff", Point<float>(22.0F,14.0F)},
+          { "test_data/algorithm/centroid/test_image_noise_on_the_left_and_one_center_pixel_5x5.tiff", Point<float>(1.998034F,2.0F)}
         }),
     image_filename, expected_centroid_point)
 {
