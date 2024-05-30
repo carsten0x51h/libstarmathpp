@@ -31,13 +31,11 @@
  * Use DEFINE_IMAGE_DEBUG to enable CImg debug.
  */
 #ifdef DEBUG_IMAGE_DISPLAY_SWITCH
-
   #define cimg_display 1
-
-  #define DEBUG_IMAGE_DISPLAY(imageRef, title, enable)              \
+  #define DEBUG_IMAGE_DISPLAY(image, title, enable)                 \
     if (enable) {                                                   \
-       cimg_library::CImgDisplay debugImageDisp((imageRef).width(),(imageRef).height(),title, 1); \
-       debugImageDisp.display(imageRef);                            \
+       cimg_library::CImgDisplay debugImageDisp((image).width(),(image).height(),title, 1); \
+       debugImageDisp.display(image);                               \
        while (! debugImageDisp.is_closed()) {                       \
          debugImageDisp.wait();                                     \
        }                                                            \
@@ -47,10 +45,9 @@
    * Enable CImg debug output
    */
   #define cimg_verbosity 3
-
 #else
 #define cimg_display 0
-#define DEBUG_IMAGE_DISPLAY(Name, ImageRef, Title)  {}
+  #define DEBUG_IMAGE_DISPLAY(imageRef, title, enable)  {}
 #endif
 
 /**
@@ -68,6 +65,12 @@
 #define cimg_use_tiff
 
 #include <CImg.h>
+
+// The following undef is needed due to the following compiler problem:
+// range/v3/view/transform.hpp:428:23: error: expected ‘>’ before numeric constant
+//  428 |         template(bool True = true)(
+// The reason is that the CImg library introduces a constant "True".
+#undef True
 
 namespace starmathpp {
 
