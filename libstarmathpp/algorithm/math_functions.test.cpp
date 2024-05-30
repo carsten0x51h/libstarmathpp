@@ -65,4 +65,46 @@ BOOST_DATA_TEST_CASE(algorithm_math_function_gaussian_test,
   BOOST_CHECK_CLOSE(starmathpp::algorithm::gaussian(x, b, p, c, w), expected_result, 0.0001);
 }
 
+
+/**
+ *
+ */
+BOOST_DATA_TEST_CASE(algorithm_math_function_hyperbolic_test,
+    bdata::make(
+        std::vector< std::tuple<double, double, double, double, double> > {
+          { 1.0, 1.0, 1.0, 1.0, 0.0},
+          { 1.0, 1.0, 1.0, 1.0, 1.0},
+          { 1.0, 1.0, 3.0, 1.0, 1.0}
+        }) ^
+    bdata::make(
+        std::vector< double > {
+          1.0,
+          2.0,
+          4.0
+        }),
+    x, a, b, c, d, expected_result)
+{
+  BOOST_CHECK_CLOSE(starmathpp::algorithm::hyperbolic(x, a, b, c, d), expected_result, 0.0001);
+}
+
+
+/**
+ *
+ */
+BOOST_DATA_TEST_CASE(algorithm_math_function_parabolic_test,
+    bdata::make(
+        std::vector< std::tuple<double, double, double, double> > {
+          { 1.0, 1.0, 1.0, 1.0 },
+          { -1.0, 1.0, 1.0, 1.0 },
+        }) ^
+    bdata::make(
+        std::vector< double > {
+          3.0,
+          1.0
+        }),
+    x, a, b, c, expected_result)
+{
+  BOOST_CHECK_CLOSE(starmathpp::algorithm::parabolic(x, a, b, c), expected_result, 0.0001);
+}
+
 BOOST_AUTO_TEST_SUITE_END();
