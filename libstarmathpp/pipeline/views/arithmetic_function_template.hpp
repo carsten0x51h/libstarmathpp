@@ -96,13 +96,13 @@ auto arithmetic_function_tmpl(ImageType scalar_value_to_add) {
       [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
 
         DEBUG_IMAGE_DISPLAY(*image, "add_scalar_in",
-                            STARMATHPP_PIPELINE_ADD_DEBUG);
+                            STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG);
 
         auto result_image = ArithmeticFunctionTraits<ImageType>::calculate(
             image, scalar_value_to_add);
 
         DEBUG_IMAGE_DISPLAY(*result_image, "add_scalar_out",
-                            STARMATHPP_PIPELINE_ADD_DEBUG);
+                            STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG);
 
         return result_image;
       }
