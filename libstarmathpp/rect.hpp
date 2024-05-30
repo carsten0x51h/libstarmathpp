@@ -26,12 +26,13 @@
 #ifndef SOURCE_STARMATHPP_RECT_HPP_
 #define SOURCE_STARMATHPP_RECT_HPP_ SOURCE_STARMATHPP_RECT_HPP_
 
+#include <iostream> // TODO: Remove
+
 #include <type_traits>
 
 #include <libstarmathpp/exception.hpp>
 #include <libstarmathpp/point.hpp>
 #include <libstarmathpp/size.hpp>
-
 
 namespace starmathpp {
 
@@ -250,7 +251,8 @@ class Rect {
    */
   template<typename P, typename S>
   static Rect<T> from_center_point(const Point<P> &center, Size<S> region) {
-    return from_center_point_internal<P, S, T>(center, region.width(), region.height());
+    return from_center_point_internal<P, S, T>(center, region.width(),
+                                               region.height());
   }
 
   /**
@@ -271,7 +273,6 @@ class Rect {
   template<typename P, typename S, typename R>
   static Rect<R> from_center_point_internal(const Point<P> &center, S width,
                                             S height) {
-
     double delta_w = (double) width / 2.0;
     double delta_h = (double) height / 2.0;
 

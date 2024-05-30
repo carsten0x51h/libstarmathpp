@@ -92,7 +92,7 @@ namespace detail {
  */
 template<typename ImageType>
 double hfd_internal(const cimg_library::CImg<ImageType> &input_image,
-                    const Point<unsigned int> &star_center_px,
+                    const Point<float> &star_center,
                     unsigned int outer_hfd_diameter_px, float scale_factor) {
 
   if (input_image.is_empty()) {
@@ -106,15 +106,16 @@ double hfd_internal(const cimg_library::CImg<ImageType> &input_image,
                                     outer_hfd_diameter_px);
 
   // NOTE: Needs to be int because sub_image_rect x and/or y may be negative
-  Rect<int> sub_image_rect = Rect<int>::from_center_point(
-      star_center_px.to<int>(), sub_image_size.to<int>());
+  // The rounding to discrete pixel coordinates takes place here.
+  Rect<int> sub_image_rect = Rect<int>::from_center_point(star_center,
+                                                          sub_image_size);
 
   bool sub_image_rect_inside_bounds = image_bounds.contains(sub_image_rect);
 
   if (!sub_image_rect_inside_bounds) {
     std::stringstream ss;
     ss << "Cannot calculate HFD. Rect '" << sub_image_rect
-       << "' defined by given star center '" << star_center_px
+       << "' defined by given star center '" << star_center
        << "' is outside image bounds '" << image_bounds << "'." << std::endl;
 
     throw HfdException(ss.str());
@@ -178,10 +179,10 @@ double hfd_internal(const cimg_library::CImg<ImageType> &input_image,
  */
 template<typename ImageType>
 double hfd(const cimg_library::CImg<ImageType> &input_image,
-           const Point<unsigned int> &star_center_px,
-           unsigned int outer_hfd_diameter_px, float scale_factor = 1.0F) {
-  return detail::hfd_internal(input_image, star_center_px,
-                              outer_hfd_diameter_px, scale_factor);
+           const Point<float> &star_center, unsigned int outer_hfd_diameter_px,
+           float scale_factor = 1.0F) {
+  return detail::hfd_internal(input_image, star_center, outer_hfd_diameter_px,
+                              scale_factor);
 }
 
 /**
@@ -191,14 +192,17 @@ template<typename ImageType>
 double hfd(const cimg_library::CImg<ImageType> &input_image,
            unsigned int outer_hfd_diameter_px, float scale_factor = 1.0F) {
 
-  Point<unsigned int> star_center_px(
-      (input_image.width() % 2 != 0 ?
-          (input_image.width() - 1) : input_image.width()) / 2,
-      (input_image.height() % 2 != 0 ?
-          (input_image.height() - 1) : input_image.height()) / 2);
+//  Point<unsigned int> star_center_px(
+//      (input_image.width() % 2 != 0 ?
+//          (input_image.width() - 1) : input_image.width()) / 2,
+//      (input_image.height() % 2 != 0 ?
+//          (input_image.height() - 1) : input_image.height()) / 2);
 
-  return detail::hfd_internal(input_image, star_center_px,
-                              outer_hfd_diameter_px, scale_factor);
+  Point<float> star_center((float) input_image.width() / 2.0F,
+                           (float) input_image.height() / 2.0F);
+
+  return detail::hfd_internal(input_image, star_center, outer_hfd_diameter_px,
+                              scale_factor);
 }
 
 }  // namespace starmathpp::algorithm
