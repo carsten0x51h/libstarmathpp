@@ -23,8 +23,8 @@
  *
  ****************************************************************************/
 
-#ifndef SOURCE_STARMATHPP_SIZE_HPP_
-#define SOURCE_STARMATHPP_SIZE_HPP_ SOURCE_STARMATHPP_SIZE_HPP_
+#ifndef STARMATHPP_SIZE_HPP_
+#define STARMATHPP_SIZE_HPP_ STARMATHPP_SIZE_HPP_
 
 #include <libstarmathpp/exception.hpp>
 #include <libstarmathpp/point.hpp>
@@ -117,4 +117,4 @@ bool operator!=(const Size<T> &size1, const Size<T> &size2) {
 
 }  // namespace starmathpp
 
-#endif // SOURCE_STARMATHPP_SIZE_HPP_
+#endif // STARMATHPP_SIZE_HPP_

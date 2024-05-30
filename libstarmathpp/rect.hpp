@@ -23,8 +23,8 @@
  *
  ****************************************************************************/
 
-#ifndef SOURCE_STARMATHPP_RECT_HPP_
-#define SOURCE_STARMATHPP_RECT_HPP_ SOURCE_STARMATHPP_RECT_HPP_
+#ifndef STARMATHPP_RECT_HPP_
+#define STARMATHPP_RECT_HPP_ STARMATHPP_RECT_HPP_
 
 #include <iostream> // TODO: Remove
 
@@ -380,4 +380,4 @@ bool operator!=(const Rect<T> &rect1, const Rect<T> &rect2) {
 
 }  // namespace starmathpp
 
-#endif // SOURCE_STARMATHPP_RECT_HPP_
+#endif // STARMATHPP_RECT_HPP_
