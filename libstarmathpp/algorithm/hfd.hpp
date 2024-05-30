@@ -30,6 +30,7 @@
 #include <string>
 #include <utility>
 #include <functional>
+#include <algorithm>
 
 #include <range/v3/empty.hpp>
 
@@ -191,6 +192,22 @@ double hfd(const cimg_library::CImg<ImageType> &input_image,
 template<typename ImageType>
 double hfd(const cimg_library::CImg<ImageType> &input_image,
            unsigned int outer_hfd_diameter_px, float scale_factor = 1.0F) {
+
+  Point<float> star_center((float) input_image.width() / 2.0F,
+                           (float) input_image.height() / 2.0F);
+
+  return detail::hfd_internal(input_image, star_center, outer_hfd_diameter_px,
+                              scale_factor);
+}
+
+/**
+ *
+ */
+template<typename ImageType>
+double hfd(const cimg_library::CImg<ImageType> &input_image,
+           float scale_factor = 1.0F) {
+
+  unsigned int outer_hfd_diameter_px = std::min(input_image.width(), input_image.height());
 
   Point<float> star_center((float) input_image.width() / 2.0F,
                            (float) input_image.height() / 2.0F);
