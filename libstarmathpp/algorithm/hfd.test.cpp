@@ -194,33 +194,38 @@ BOOST_DATA_TEST_CASE(algorithm_hfd_out_of_bounds_test,
           scale_factor),
       starmathpp::algorithm::HfdException);
 }
-//
-//
-///**
-// * Specify invalid "star center" and/or outer diameters.
-// */
-//BOOST_DATA_TEST_CASE(hfd_out_star_center_and_outer_diameter_corner_cases_test,
-//                     bdata::make(
-//                             std::vector< Point<unsigned int> > {
-//                                     Point<unsigned int>(1,1),     // Star center position and outer diameter at the border but still valid - top left corner
-//                                     Point<unsigned int>(1,50),    // left border
-//                                     Point<unsigned int>(118,50),  // right border
-//                                     Point<unsigned int>(118,118)  // bottom right corner
-//                             }) *
-//                     bdata::make(
-//                             std::vector< float > {
-//                                     1.0F, 10.0F
-//                             }),
-//                     starCenter, scaleFactor)
-//{
-//        ImageT image120x120("test_data/algorithm/hfd/test_image_all_pixels_65535_120x120.tiff"); // 120x120
-//
-//        BOOST_CHECK_NO_THROW(HfdT::calculate(
-//                image120x120 /* pixel index 0..119 */,
-//                starCenter,
-//                3,
-//                scaleFactor,
-//                nullptr));
-//}
+
+/**
+ * Specify valid "star center" and/or outer diameters (corner case).
+ */
+BOOST_DATA_TEST_CASE(algorithm_hfd_out_star_center_and_outer_diameter_corner_cases_test,
+    bdata::make(
+        std::vector< Point<float> > {
+          Point<float>(1.5F,1.5F),  // Star center position and outer diameter at the border but still valid - top left corner
+          Point<float>(1.5F,50),// left border
+          Point<float>(118.5F,50),// right border
+          Point<float>(118.5F,118.5F)// bottom right corner
+        }) *
+    bdata::make(
+        std::vector< float > {
+          1.0F, 10.0F
+        }),
+    star_center, scale_factor)
+{
+  Image image_120x120("test_data/algorithm/hfd/test_image_all_pixels_65535_120x120.tiff");  // 120x120
+
+  starmathpp::algorithm::hfd(
+      image_120x120 /* pixel index 0..119 */,
+      star_center,
+      3,
+      scale_factor);
+
+  BOOST_CHECK_NO_THROW(starmathpp::algorithm::hfd(
+          image_120x120 /* pixel index 0..119 */,
+          star_center,
+          3,
+          scale_factor)
+  );
+}
 
 BOOST_AUTO_TEST_SUITE_END();
