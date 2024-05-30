@@ -41,7 +41,7 @@
 #include <libstarmathpp/image.hpp>
 #include <libstarmathpp/io/image_writer.hpp>
 
-#define STARMATHPP_PIPELINE_WRITE_DEBUG 0
+#define STARMATHPP_PIPELINE_WRITE_DEBUG 1
 
 // TODO: Question: This can be an action or a view... If a view, it just stores
 //       the image "along the way" as one more step in the pipeline.
@@ -79,8 +79,8 @@ static std::string compose_filename_from_pattern(const std::string &pattern) {
  */
 template<typename ImageType = float>
 auto write(const std::filesystem::path &directory,
-           const std::string &imageFilenamePattern = "img_%03d.fit",
-           bool allowOverride = true) {
+           const std::string &image_filename_pattern = "img_%03d.fit",
+           bool allow_override = true) {
   return ranges::views::transform(
       [=](const std::shared_ptr<Image> &image) {
 
@@ -88,9 +88,9 @@ auto write(const std::filesystem::path &directory,
                             STARMATHPP_PIPELINE_WRITE_DEBUG);
 
         std::filesystem::path filepath = directory
-            / compose_filename_from_pattern(imageFilenamePattern);
+            / compose_filename_from_pattern(image_filename_pattern);
 
-        starmathpp::io::write(*image, filepath, allowOverride);
+        starmathpp::io::write(*image, filepath, allow_override);
 
         return image;
       }
