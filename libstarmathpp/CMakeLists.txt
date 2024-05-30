@@ -44,6 +44,17 @@ target_link_libraries(${target}
 )
 
 
+if(DEBUG_IMAGE_DISPLAY_SWITCH)
+   message("* Pipeline debug is ENABLED. Adding X11 dependency.")
+   find_package (X11 REQUIRED)
+   target_link_libraries(${target}
+	INTERFACE
+	X11
+   )
+else()
+   message("* Pipeline debug is DISABLED.")
+endif()
+
 #
 # Unit tests
 #

@@ -144,8 +144,12 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 # Comment the following lines to disable CImg image debug display
 # NOTE: Enabling this makes github build fail due to X11 deps.
 # TODO: Make this dependent on general debug switch?
-#find_package (X11 REQUIRED)
-#add_compile_definitions(DEBUG_IMAGE_DISPLAY_SWITCH)
+option(DEBUG_IMAGE_DISPLAY_SWITCH "Enable pipeline debug mode" OFF)
+
+if(DEBUG_IMAGE_DISPLAY_SWITCH)
+   add_compile_definitions(DEBUG_IMAGE_DISPLAY_SWITCH)
+endif()
+
 
 #find_package(Boost COMPONENTS  program_options REQUIRED)
 
