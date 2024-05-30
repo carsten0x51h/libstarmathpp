@@ -60,7 +60,7 @@ bool is_fits_gz(const std::string &filepath_lower);
  * TODO: Improve error handling?
  */
 std::shared_ptr<Image>
-read(const std::string &inFilename, std::stringstream *ss = nullptr);
+read(const std::string &filename, std::stringstream *ss = nullptr);
 
 /**
  * CCfits helper function
@@ -72,7 +72,7 @@ read(const std::string &inFilename, std::stringstream *ss = nullptr);
  *
  */
 void
-write(const Image &inImg, const std::string &inFilename, bool override = false,
+write(const cimg_library::CImg<uint16_t> &input_image, const std::string &filename, bool override = false,
       std::stringstream *ss = nullptr);
 
 }

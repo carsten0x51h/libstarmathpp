@@ -47,7 +47,7 @@ bool is_fits_gz(const std::string &filepath_lower) {
       || boost::algorithm::ends_with(filepath_lower, "fits.gz"));
 }
 
-std::shared_ptr<Image> read(const std::string &inFilename,
+std::shared_ptr<Image> read(const std::string &filename,
                             std::stringstream *ss) {
 
   CCfits::FITS::setVerboseMode(ss != nullptr);
@@ -55,18 +55,18 @@ std::shared_ptr<Image> read(const std::string &inFilename,
   try {
     // TODO: Memory leak? new....
     std::unique_ptr < CCfits::FITS
-        > pInfile(new CCfits::FITS(inFilename, CCfits::Read, true));
-    CCfits::PHDU &fitsImg = pInfile->pHDU();
+        > pInfile(new CCfits::FITS(filename, CCfits::Read, true));
+    CCfits::PHDU &fits_img = pInfile->pHDU();
 
     // read all user-specific, coordinate, and checksum keys in the image
-    fitsImg.readAllKeys();
+    fits_img.readAllKeys();
 
     if (ss != nullptr) {
-      *ss << fitsImg << std::endl;
+      *ss << fits_img << std::endl;
     }
 
     auto img = std::make_shared < Image
-        > ((int) fitsImg.axis(0), (int) fitsImg.axis(1));
+        > ((int) fits_img.axis(0), (int) fits_img.axis(1));
 
     // TODO: Put a check here:   fitsImg.bitpix() <= sizeof(ImageT)
     // -> When provided image type does not fit, an exception is thrown? Or a warning logged?
@@ -76,8 +76,8 @@ std::shared_ptr<Image> read(const std::string &inFilename,
     //        << std::endl;
 
     // HACK / FIXME: At this point we assume that there is only 1 layer!
-    std::valarray<typename Image::value_type> imgData;
-    fitsImg.read(imgData);
+    std::valarray<typename Image::value_type> img_data;
+    fits_img.read(img_data);
 
     // For now we create a copy... maybe there is a better way to directly read data into CImg, later...
     cimg_forXY(*img, x, y)
@@ -86,7 +86,7 @@ std::shared_ptr<Image> read(const std::string &inFilename,
       // Correct, when reading old, existing FITS files
       // NOTE: ImageJ and Gimp both work this way for normal files.
       //       -> For INDI/BLOB there must be a different solution.
-      (*img)(x, img->height() - 1 - y) = imgData[img->offset(x, y)];
+      (*img)(x, img->height() - 1 - y) = img_data[img->offset(x, y)];
 
       // Correct when reading the image directly after storing the BLOB file with INDI.
       //(*outImg)(x, y) = imgData[outImg->offset(x, y)];
@@ -104,20 +104,20 @@ std::shared_ptr<Image> read(const std::string &inFilename,
 /**
  *
  */
-void write(const Image &inImg, const std::string &inFilename, bool override,
+void write(const cimg_library::CImg<uint16_t> &input_image, const std::string &filename, bool override,
            std::stringstream *ss) {
   // TODO: Is it possible to pass a stream?
   CCfits::FITS::setVerboseMode(ss != nullptr);
 
   try {
     long naxis = 2;
-    long naxes[2] = { inImg.width(), inImg.height() };
+    long naxes[2] = { input_image.width(), input_image.height() };
 
     std::unique_ptr < CCfits::FITS > pFits;
 
     // NOTE: The "!" should automatically override an existing file...
     //       See https://heasarc.gsfc.nasa.gov/fitsio/ccfits/html/writeimage.html
-    std::string filepath = (override ? "!" : "") + inFilename;
+    std::string filepath = (override ? "!" : "") + filename;
 
     if (ss != nullptr) {
       *ss << "starmath::io::fits::write() writes to file '" << filepath << "'."
@@ -133,9 +133,9 @@ void write(const Image &inImg, const std::string &inFilename, bool override,
 
     std::valarray<typename Image::value_type> array(nelements);
 
-    cimg_forXY(inImg, x, y)
+    cimg_forXY(input_image, x, y)
     {
-      array[inImg.offset(x, y)] = inImg(x, inImg.height() - y - 1);
+      array[input_image.offset(x, y)] = input_image(x, input_image.height() - y - 1);
     }
 
     long fpixel(1);
