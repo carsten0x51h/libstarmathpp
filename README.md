@@ -42,6 +42,11 @@ To build from command line, simply do the following steps:
 This will generate the build environment for your operating system. It will fail
 if at least one dependency to an external library could not be resolved.
 
+#### Enable X11 display for debug
+
+	cmake .. -DDEBUG_IMAGE_DISPLAY_SWITCH=1
+
+
 ### Build the code
 Run the following command to build the project: 
 
@@ -50,7 +55,6 @@ Run the following command to build the project:
 or to build parallel on e.g. 12 cores, run
 
 	cmake --build . -j12 -- all
-
 
 ### Run the unit tests
 
