@@ -50,6 +50,7 @@ static double getMaxHfdLimit(unsigned int inOuterHfdDiameter) {
   return 0.353553390593 * inOuterHfdDiameter;
 }
 
+namespace detail {
 /**
  * HDF calculation
  * https://www.lost-infinity.com/night-sky-image-processing-part-6-measuring-the-half-flux-diameter-hfd-of-a-star-a-simple-c-implementation/
@@ -89,14 +90,10 @@ static double getMaxHfdLimit(unsigned int inOuterHfdDiameter) {
  * @param inSubBgLevel
  * @return
  */
-// TODO: Need one variant where center of star is center of supplied image...
 template<typename ImageType>
-double hfd(const cimg_library::CImg<ImageType> &input_image,
-           const Point<unsigned int> &star_center_px) {
-
-  // TODO: Do not hardcode...
-  const unsigned int outer_hfd_diameter_px = 55;  // TODO: Calc?! - depends on pixel size and focal length (and seeing...) WAS 21!!! TODO: At least make this configurable - set from the outside!
-  const double scale_factor = 1.0;
+double hfd_internal(const cimg_library::CImg<ImageType> &input_image,
+                    const Point<unsigned int> &star_center_px,
+                    unsigned int outer_hfd_diameter_px, float scale_factor) {
 
   if (input_image.is_empty()) {
     throw HfdException("Empty image supplied.");
@@ -105,9 +102,10 @@ double hfd(const cimg_library::CImg<ImageType> &input_image,
   // Crop the part from the supplied image which is needed to calculate the HFD value.
   // A boundary check is performed.
   Rect<int> image_bounds(0, 0, input_image.width(), input_image.height());
-  Size<unsigned int> sub_image_size(outer_hfd_diameter_px, outer_hfd_diameter_px);
+  Size<unsigned int> sub_image_size(outer_hfd_diameter_px,
+                                    outer_hfd_diameter_px);
 
-  // NOTE: Needs to be int because subImageRect x and/or y may be negative
+  // NOTE: Needs to be int because sub_image_rect x and/or y may be negative
   Rect<int> sub_image_rect = Rect<int>::from_center_point(
       star_center_px.to<int>(), sub_image_size.to<int>());
 
@@ -116,8 +114,8 @@ double hfd(const cimg_library::CImg<ImageType> &input_image,
   if (!sub_image_rect_inside_bounds) {
     std::stringstream ss;
     ss << "Cannot calculate HFD. Rect '" << sub_image_rect
-        << "' defined by given star center '" << star_center_px
-        << "' is outside image bounds '" << image_bounds << "'." << std::endl;
+       << "' defined by given star center '" << star_center_px
+       << "' is outside image bounds '" << image_bounds << "'." << std::endl;
 
     throw HfdException(ss.str());
   }
@@ -172,6 +170,35 @@ double hfd(const cimg_library::CImg<ImageType> &input_image,
   return (
       sum_pixel_values > 0.0 ?
           (2.0 * sum_weighted_dist / sum_pixel_values) / scale_factor : NAN);
+}
+}  // namespace detail
+
+/*+
+ *
+ */
+template<typename ImageType>
+double hfd(const cimg_library::CImg<ImageType> &input_image,
+           const Point<unsigned int> &star_center_px,
+           unsigned int outer_hfd_diameter_px, float scale_factor = 1.0F) {
+  return detail::hfd_internal(input_image, star_center_px,
+                              outer_hfd_diameter_px, scale_factor);
+}
+
+/**
+ *
+ */
+template<typename ImageType>
+double hfd(const cimg_library::CImg<ImageType> &input_image,
+           unsigned int outer_hfd_diameter_px, float scale_factor = 1.0F) {
+
+  Point<unsigned int> star_center_px(
+      (input_image.width() % 2 != 0 ?
+          (input_image.width() - 1) : input_image.width()) / 2,
+      (input_image.height() % 2 != 0 ?
+          (input_image.height() - 1) : input_image.height()) / 2);
+
+  return detail::hfd_internal(input_image, star_center_px,
+                              outer_hfd_diameter_px, scale_factor);
 }
 
 }  // namespace starmathpp::algorithm

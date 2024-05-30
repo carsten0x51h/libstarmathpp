@@ -49,68 +49,67 @@ namespace bdata = boost::unit_test::data;
  * Check HFD of empty image.
  * Expect a HfdExceptionT.
  */
-BOOST_AUTO_TEST_CASE(hfd_test_empty_image)
+BOOST_AUTO_TEST_CASE(algorithm_hfd_test_empty_image)
 {
   Image null_image;
-  BOOST_CHECK_THROW(double hfd = starmathpp::algorithm::hfd(null_image, Point<unsigned int>(5,5)), starmathpp::algorithm::HfdException);
+  BOOST_CHECK_THROW(double hfd = starmathpp::algorithm::hfd(null_image, Point<unsigned int>(5,5), 51), starmathpp::algorithm::HfdException);
 }
 
-//
-///**
-// * Check HFD of completely dark image
-// *
-// * What should be expected as an HFD value?
-// *
-// * One exception is the case when there is no flux at all (i.e. a totally black image).
-// * In that case the HFD actually does not exist since there would be a division by 0.
-// * Therefore, NaN is expected.
-// *
-// * Also see https://www.lost-infinity.com/night-sky-image-processing-part-6-measuring-the-half-flux-diameter-hfd-of-a-star-a-simple-c-implementation/
-// */
-//BOOST_AUTO_TEST_CASE(hfd_dark_image_test)
-//{
-//    ImageT darkImage("test_data/algorithm/hfd/test_image_all_values_0_100x100.tiff");
-//
-//    const float outerDiameter = 21;
-//    BOOST_CHECK_EQUAL(std::isnan(HfdT::calculate(darkImage, outerDiameter)), true);
-//}
-//
-//
-///**
-// * Same as hfd_test_all_pixel_values_equal_1_test, expectation is
-// * that pixel value does not make a difference in calculated HFD value.
-// *
-// * A detailed explanation why the expected HFD equals (2.0F / 3.0F) * outerDiameter
-// * can be found here:
-// *
-// * https://www.lost-infinity.com/the-half-flux-diameter-hfd-of-a-plain-image/
-// */
-//BOOST_DATA_TEST_CASE(hfd_test_all_pixel_values_equal_1_test,
-//                     bdata::make(
-//                        std::vector< std::string > {
-//                            "test_data/algorithm/hfd/test_image_all_pixels_1_120x120.tiff",
-//                            "test_data/algorithm/hfd/test_image_all_pixels_65535_120x120.tiff"
-//                     }) *
-//                     bdata::make(
-//                        std::vector< std::tuple<float, float> > {
-//                            { 1.0F, 0.1F },
-//                            { 10.0F, 0.01F },
-//                            { 100.0F, 0.0001F }
-//                     }),
-//                     imageFilename, scaleFactor, acceptedError)
-//{
-//    ImageT image(imageFilename.c_str());
-//
-//    const float outerDiameter = 99;
-//    const float expectedHfd = (2.0F / 3.0F) * outerDiameter;
-//
-//    BOOST_CHECK_CLOSE(HfdT::calculate(image,
-//                                      outerDiameter,
-//                                      scaleFactor,
-//                                      nullptr),
-//                      expectedHfd,
-//                      acceptedError);
-//}
+
+/**
+ * Check HFD of completely dark image
+ *
+ * What should be expected as an HFD value?
+ *
+ * One exception is the case when there is no flux at all (i.e. a totally black image).
+ * In that case the HFD actually does not exist since there would be a division by 0.
+ * Therefore, NaN is expected.
+ *
+ * Also see https://www.lost-infinity.com/night-sky-image-processing-part-6-measuring-the-half-flux-diameter-hfd-of-a-star-a-simple-c-implementation/
+ */
+BOOST_AUTO_TEST_CASE(algorithm_hfd_dark_image_test)
+{
+    Image dark_image("test_data/algorithm/hfd/test_image_all_values_0_100x100.tiff");
+
+    const float outerDiameter = 21;
+    BOOST_CHECK_EQUAL(std::isnan(starmathpp::algorithm::hfd(dark_image, outerDiameter)), true);
+}
+
+
+/**
+ * Same as hfd_test_all_pixel_values_equal_1_test, expectation is
+ * that pixel value does not make a difference in calculated HFD value.
+ *
+ * A detailed explanation why the expected HFD equals (2.0F / 3.0F) * outerDiameter
+ * can be found here:
+ *
+ * https://www.lost-infinity.com/the-half-flux-diameter-hfd-of-a-plain-image/
+ */
+BOOST_DATA_TEST_CASE(hfd_test_all_pixel_values_equal_1_test,
+                     bdata::make(
+                        std::vector< std::string > {
+                            "test_data/algorithm/hfd/test_image_all_pixels_1_120x120.tiff",
+                            "test_data/algorithm/hfd/test_image_all_pixels_65535_120x120.tiff"
+                     }) *
+                     bdata::make(
+                        std::vector< std::tuple<float, float> > {
+                            { 1.0F, 0.1F },
+                            { 10.0F, 0.01F },
+                            { 100.0F, 0.0001F }
+                     }),
+                     image_filename, scale_factor, accepted_error)
+{
+    Image image(image_filename.c_str());
+
+    const float outer_diameter = 99;
+    const float expected_hfd = (2.0F / 3.0F) * outer_diameter;
+
+    BOOST_CHECK_CLOSE(starmathpp::algorithm::hfd(image,
+                                      outer_diameter,
+                                      scale_factor),
+                      expected_hfd,
+                      accepted_error);
+}
 //
 //
 ///**
