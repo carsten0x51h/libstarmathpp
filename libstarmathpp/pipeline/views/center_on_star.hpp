@@ -25,11 +25,13 @@
 
 #ifndef STARMATHPP_PIPELINE_VIEW_CENTER_ON_STAR_HPP_
 #define STARMATHPP_PIPELINE_VIEW_CENTER_ON_STAR_HPP_ STARMATHPP_PIPELINE_VIEW_CENTER_ON_STAR_HPP_
-#include <range/v3/view/transform.hpp>
 
-#include <libstarmathpp/algorithm/centroid/centroider.hpp>
 #include <libstarmathpp/image.hpp>
 #include <libstarmathpp/rect.hpp>
+
+#include <libstarmathpp/algorithm/centroid/centroider.hpp>
+
+#include <range/v3/view/transform.hpp>
 
 #define STARMATHPP_PIPELINE_CENTER_ON_STAR_DEBUG 0
 
@@ -40,7 +42,8 @@ namespace starmathpp::pipeline::views {
  *       -> For the moment an exception is thrown.
  */
 template<typename ImageType = float>
-auto center_on_star(const starmathpp::algorithm::Centroider<ImageType> & centroider) {
+auto center_on_star(
+    const starmathpp::algorithm::Centroider<ImageType> &centroider) {
   return ranges::views::transform(
       [&](const std::shared_ptr<cimg_library::CImg<ImageType>> &image) {
 
@@ -80,7 +83,8 @@ auto center_on_star(const starmathpp::algorithm::Centroider<ImageType> & centroi
 
           return centroid_sub_img;
         } else {
-          throw starmathpp::algorithm::CentroiderException("Unable to determine centroid.");
+          throw starmathpp::algorithm::CentroiderException(
+              "Unable to determine centroid.");
         }
       }
   );
