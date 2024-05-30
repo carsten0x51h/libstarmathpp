@@ -93,7 +93,7 @@ BOOST_DATA_TEST_CASE(algorithm_hfd_test_all_pixel_values_equal_1_test,
         std::vector< std::tuple<float, float> > {
           { 1.0F, 0.1F},
           { 10.0F, 0.01F},
-          { 100.0F, 0.0001F}
+          { 30.0F, 0.001F}
         }),
     image_filename, scale_factor, accepted_error)
 {

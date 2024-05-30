@@ -192,12 +192,6 @@ template<typename ImageType>
 double hfd(const cimg_library::CImg<ImageType> &input_image,
            unsigned int outer_hfd_diameter_px, float scale_factor = 1.0F) {
 
-//  Point<unsigned int> star_center_px(
-//      (input_image.width() % 2 != 0 ?
-//          (input_image.width() - 1) : input_image.width()) / 2,
-//      (input_image.height() % 2 != 0 ?
-//          (input_image.height() - 1) : input_image.height()) / 2);
-
   Point<float> star_center((float) input_image.width() / 2.0F,
                            (float) input_image.height() / 2.0F);
 
