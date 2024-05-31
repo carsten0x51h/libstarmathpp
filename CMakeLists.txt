@@ -102,7 +102,6 @@ file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
 # 
 # Compiler settings and options
 # 
-
 include(cmake/CompileOptions.cmake)
 
 #
@@ -121,7 +120,8 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 # Glog library (needed by Ceres library)
 # See https://github.com/google/glog
 #
-find_package(glog REQUIRED)
+#find_package(glog REQUIRED)
+include(cmake/FindGlog.cmake)
 
 #
 # Ceres library
