@@ -38,26 +38,26 @@
 namespace starmathpp::algorithm {
 
 // TODO: Should this be here?
-typedef Point<int> PixelPosT;
-typedef std::list<PixelPosT> PixelPosListT;
-typedef std::set<PixelPosT> PixelPosSetT;
+typedef Point<int> PixelPos;
+typedef std::list<PixelPos> PixelPosList;
+typedef std::set<PixelPos> PixelPosSet;
 
 /**
  *
  */
-class PixelClusterT {
+class PixelCluster {
  private:
-  PixelPosListT mPixelPositions;
+  PixelPosList pixel_positions_;
 
  public:
-  PixelClusterT(const PixelPosListT &pixelPositions)
+  PixelCluster(const PixelPosList &pixel_positions)
       :
-      mPixelPositions(pixelPositions) {
+      pixel_positions_(pixel_positions) {
   }
-  const PixelPosListT& getPixelPositions() const {
-    return mPixelPositions;
+  const PixelPosList& get_pixel_positions() const {
+    return pixel_positions_;
   }
-  Rect<int> getBounds() const;
+  Rect<int> get_bounds() const;
 };
 
 /**
@@ -67,14 +67,14 @@ class PixelClusterT {
  * StarClusterAlgorithmT starClusterAlgorithm(2);
  * std::list<PixelClusterT> clusters = starClusterAlgorithm.cluster(binaryImg);
  */
-class StarClusterAlgorithmT {
+class StarClusterAlgorithm {
  private:
-  std::vector<PixelPosT> mOffsets;
+  std::vector<PixelPos> offsets_;
 
   /**
    *
    */
-  void initOffsetPattern(int n);
+  void init_offset_pattern(int n);
 
   /**
    * Removes all white neighbours around pixel from whitePixels
@@ -82,15 +82,15 @@ class StarClusterAlgorithmT {
    * pixelsinCluster.
    */
   void
-  getAndRemoveNeighbours(const PixelPosT &inCurPixelPos,
-                         PixelPosSetT *inoutWhitePixels,
-                         PixelPosListT *inoutPixelsToBeProcessed,
-                         PixelPosListT *outPixelCluster);
+  get_and_remove_neighbours(const PixelPos &cur_pixel_pos,
+                            PixelPosSet *white_pixels,
+                            PixelPosList *pixels_to_be_processed,
+                            PixelPosList *pixel_cluster);
 
  public:
-  explicit StarClusterAlgorithmT(size_t clusterRadius);
+  explicit StarClusterAlgorithm(size_t cluster_radius);
 
-  std::list<PixelClusterT> cluster(const Image &inImg);
+  std::list<PixelCluster> cluster(const Image &img);
 };
 
 }  // namespace starmathpp::algorithm

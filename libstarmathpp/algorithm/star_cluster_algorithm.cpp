@@ -33,20 +33,20 @@ namespace starmathpp::algorithm {
 /**
  *
  */
-Rect<int> PixelClusterT::getBounds() const {
+Rect<int> PixelCluster::get_bounds() const {
 
-  auto xCoordinateRange = mPixelPositions
-      | ranges::views::transform([](auto const pixelPos) {
-        return pixelPos.x();
+  auto x_coordinate_range = pixel_positions_
+      | ranges::views::transform([](auto const pixel_pos) {
+        return pixel_pos.x();
       });
-  auto yCoordinateRange = mPixelPositions
-      | ranges::views::transform([](auto const pixelPos) {
-        return pixelPos.y();
+  auto y_coordinate_range = pixel_positions_
+      | ranges::views::transform([](auto const pixel_pos) {
+        return pixel_pos.y();
       });
 
   // Find top-left and bottom right pixel...
-  auto [xmin, xmax] = ranges::minmax(xCoordinateRange);
-  auto [ymin, ymax] = ranges::minmax(yCoordinateRange);
+  auto [xmin, xmax] = ranges::minmax(x_coordinate_range);
+  auto [ymin, ymax] = ranges::minmax(y_coordinate_range);
 
   int w = xmax - xmin + 1;
   int h = ymax - ymin + 1;
@@ -57,20 +57,20 @@ Rect<int> PixelClusterT::getBounds() const {
 /**
  *
  */
-StarClusterAlgorithmT::StarClusterAlgorithmT(size_t clusterRadius) {
-  initOffsetPattern((int) clusterRadius);
+StarClusterAlgorithm::StarClusterAlgorithm(size_t cluster_radius) {
+  init_offset_pattern((int) cluster_radius);
 }
 
 /**
  *
  */
-void StarClusterAlgorithmT::initOffsetPattern(int n) {
+void StarClusterAlgorithm::init_offset_pattern(int n) {
 
-  mOffsets.reserve(n * n - 1);
+  offsets_.reserve(n * n - 1);
 
   for (int i = -n; i <= n; ++i) {
     for (int j = -n; j <= n; ++j) {
-      mOffsets.emplace_back(i, j);
+      offsets_.emplace_back(i, j);
     }
   }
 }
@@ -78,21 +78,21 @@ void StarClusterAlgorithmT::initOffsetPattern(int n) {
 /**
  *
  */
-void StarClusterAlgorithmT::getAndRemoveNeighbours(
-    const PixelPosT &inCurPixelPos, PixelPosSetT *inoutWhitePixels,
-    PixelPosListT *inoutPixelsToBeProcessed, PixelPosListT *outPixelCluster) {
+void StarClusterAlgorithm::get_and_remove_neighbours(
+    const PixelPos &cur_pixel_pos, PixelPosSet *white_pixels,
+    PixelPosList *pixels_to_be_processed, PixelPosList *pixel_cluster) {
 
-  for (const PixelPosT &offset : mOffsets) {
-    PixelPosT curPixPos(inCurPixelPos.x() + offset.x(),
-                        inCurPixelPos.y() + offset.y());
+  for (const PixelPos &offset : offsets_) {
+    PixelPos cur_pix_pos(cur_pixel_pos.x() + offset.x(),
+                         cur_pixel_pos.y() + offset.y());
 
-    auto itPixPos = inoutWhitePixels->find(curPixPos);
+    auto it_pix_pos = white_pixels->find(cur_pix_pos);
 
-    if (itPixPos != inoutWhitePixels->end()) {
-      const PixelPosT &curWhitePixPos = *itPixPos;
-      inoutPixelsToBeProcessed->push_back(curWhitePixPos);
-      outPixelCluster->push_back(curWhitePixPos);
-      inoutWhitePixels->erase(itPixPos);  // Remove white pixel from "white set" since it has been processed, now
+    if (it_pix_pos != white_pixels->end()) {
+      const PixelPos &cur_white_pix_pos = *it_pix_pos;
+      pixels_to_be_processed->push_back(cur_white_pix_pos);
+      pixel_cluster->push_back(cur_white_pix_pos);
+      white_pixels->erase(it_pix_pos);  // Remove white pixel from "white set" since it has been processed, now
     }
   }
 }
@@ -100,42 +100,42 @@ void StarClusterAlgorithmT::getAndRemoveNeighbours(
 /**
  *
  */
-std::list<PixelClusterT> StarClusterAlgorithmT::cluster(const Image &inImg) {
+std::list<PixelCluster> StarClusterAlgorithm::cluster(const Image &img) {
 
-  std::list<PixelClusterT> recognizedClusters;
-  PixelPosSetT whitePixels;
+  std::list<PixelCluster> recognized_clusters;
+  PixelPosSet white_pixels;
 
-  cimg_forXY(inImg, x, y)
+  cimg_forXY(img, x, y)
   {
-    if (inImg(x, y) != 0) {
-      whitePixels.insert(whitePixels.end(), PixelPosT(x, y));
+    if (img(x, y) != 0) {
+      white_pixels.insert(white_pixels.end(), PixelPos(x, y));
     }
   }
 
   // Iterate over white pixels as long as set is not empty
-  while (!whitePixels.empty()) {
-    PixelPosListT pixelPosList;
-    PixelPosListT pixelsToBeProcessed;
+  while (!white_pixels.empty()) {
+    PixelPosList pixel_pos_list;
+    PixelPosList pixels_to_be_processed;
 
-    auto itWhitePixPos = whitePixels.begin();
+    auto it_white_pix_pos = white_pixels.begin();
 
-    pixelsToBeProcessed.push_back(*itWhitePixPos);
+    pixels_to_be_processed.push_back(*it_white_pix_pos);
 
-    while (!pixelsToBeProcessed.empty()) {
-      PixelPosT curPixelPos = pixelsToBeProcessed.front();
+    while (!pixels_to_be_processed.empty()) {
+      PixelPos cur_pixel_pos = pixels_to_be_processed.front();
 
-      getAndRemoveNeighbours(curPixelPos, &whitePixels, &pixelsToBeProcessed,
-                             &pixelPosList);
-      pixelsToBeProcessed.pop_front();
+      get_and_remove_neighbours(cur_pixel_pos, &white_pixels,
+                                &pixels_to_be_processed, &pixel_pos_list);
+      pixels_to_be_processed.pop_front();
     }
 
     // Finally, append the cluster
-    if (!pixelPosList.empty()) {
-      recognizedClusters.push_back(PixelClusterT(pixelPosList));
+    if (!pixel_pos_list.empty()) {
+      recognized_clusters.push_back(PixelCluster(pixel_pos_list));
     }
   }
 
-  return recognizedClusters;
+  return recognized_clusters;
 }
 
 }  // namespace starmathpp::algorithm
