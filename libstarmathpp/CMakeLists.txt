@@ -36,9 +36,9 @@ message("* TIFF LIBS : ${TIFF_LIBRARIES}")
 target_link_libraries(${target}
 	INTERFACE
 	${TIFF_LIBRARIES}
-	glog::glog
-    ${CERES_LIBRARIES}
+	${CERES_LIBRARIES}
 	PRIVATE
+	glog::glog
 	${CFITSIO_LIBRARY}
 	${CCFITS_LIBRARY}
 	${DEFAULT_LINKER_OPTIONS}
@@ -100,24 +100,5 @@ add_test_module(pipeline_center_on_star_tests pipeline/views/center_on_star.test
 
 # # Deploy generated headers
 # install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/${META_PROJECT_NAME} DESTINATION include COMPONENT dev)
-
-
-
-
-
-#
-# TODO: Remove list of lib names when no longer needed...
-#
-#
-# ${CFITSIO_LIBRARY}
-# ${CCFITS_LIBRARY}
-# ${GSL_LIBRARY}
-# ${GSL_CBLAS_LIBRARY}
-# ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
-# ${Boost_LOG_LIBRARY}
-# ${Boost_SYSTEM_LIBRARY}
-# ${DEFAULT_LINKER_OPTIONS}
-# ${TIFF_LIBRARIES}
-# X11
 
 
