@@ -125,18 +125,19 @@ std::vector<double> make_guess(const std::vector<ImageType> &input_values) {
 }
 
 /**
+ * TODO: For bad start values (e.g. { 5.0, 3.0, 1.0 }),
+ *       the solver still returns CONVERGENCE, but the result
+ *       appears to be wrong -> check! Converged criteria?
+ *       -> rel/abs. error?
+ *       -> Add unit tests to test error cases!
  *
+ * TODO: AddResidualBlock allows passing std::vector<double*>...
+ *       -> avoid copy below?
  */
 template<typename RNG, typename ImageType>
-double fwhm_1d_internal(RNG x_data,
-                        const std::vector<ImageType> &y_data) {
+double fwhm_1d_internal(RNG x_data, const std::vector<ImageType> &y_data) {
+
   // Initial guess for parameters A, mu, sigma
-  // TODO: Check start values of old gsl impl.
-  // TODO: For bad start values (e.g. { 5.0, 3.0, 1.0 }),
-  //       the solver still returns CONVERGENCE, but the result
-  //       appears to be wrong -> check! Converged criteria? -> rel/abs error?
-  //       -> Add unit tests to test error cases!
-  // TODO: AddResidualBlock allows passing std::vector<double*>... -> avoid copy below?
   auto params_vec = make_guess(y_data);  //{ 5.0, 3.0, 1.0 };
   double params[3];
   std::copy(params_vec.begin(), params_vec.end(), params);
@@ -196,12 +197,12 @@ double fwhm_internal(const cimg_library::CImg<ImageType> &input_image,
   double fwhm_horizontal = fwhm_1d_internal(
       ranges::view::ints(0, input_image.width()),
       extract_row(input_image, star_center.y())  // horizontal_slice
-  );
+                  );
 
   double fwhm_vertical = fwhm_1d_internal(
       ranges::view::ints(0, input_image.height()),
       extract_col(input_image, star_center.x())  // vertical_slice
-  );
+                  );
 
   return (fwhm_horizontal + fwhm_vertical) / 2.0;
 }
