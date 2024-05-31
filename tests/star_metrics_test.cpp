@@ -57,6 +57,7 @@
 #include <libstarmathpp/algorithm/centroid/intensity_weighted_centroider.hpp>
 #include <libstarmathpp/algorithm/snr.hpp>
 #include <libstarmathpp/algorithm/hfd.hpp>
+#include <libstarmathpp/algorithm/fwhm.hpp>
 
 #include <libstarmathpp/floating_point_equality.hpp>
 #include <libstarmathpp/size.hpp>
@@ -72,10 +73,11 @@ using namespace starmathpp::pipeline::views;
 /**
  *
  */
-bool are_tuples_equal(const std::tuple<float, float> &t1,
-                      const std::tuple<float, float> &t2, float tolerance) {
+bool are_tuples_equal(const std::tuple<float, float, float> &t1,
+                      const std::tuple<float, float, float> &t2, float tolerance) {
   return std::fabs(std::get<0>(t1) - std::get<0>(t2)) < tolerance
-      && std::fabs(std::get<1>(t1) - std::get<1>(t2)) < tolerance;
+      && std::fabs(std::get<1>(t1) - std::get<1>(t2)) < tolerance
+      && std::fabs(std::get<2>(t1) - std::get<2>(t2)) < tolerance;
 }
 
 /**
@@ -107,18 +109,18 @@ BOOST_AUTO_TEST_CASE(pipeline_star_metrics_test, * boost::unit_test::tolerance(0
     "test_data/integration/star_metrics/newton_focus_star11.tiff"
   };
 
-  std::vector<std::tuple<double, double>> expected_star_metrics = {
-    { 3.4248103734966566, 27.295144884427497},
-    { 4.0168380799027004, 25.431775505128925},
-    { 4.2398086088788904, 23.906962737212321},
-    { 4.5106426505897472, 21.797925759551219},
-    { 5.9366687230635415, 18.646887642682195},
-    { 5.9214817393646637, 15.900437967399453},
-    { 7.2058655558692744, 12.081075787803762},
-    { 6.7269579863995439, 9.182079739644923},
-    { 7.4242741594713344, 6.2974607834559153},
-    { 5.278791273812149, 3.8438485006311049},
-    { 4.1407320775829746, 3.4434783057891602}
+  std::vector<std::tuple<double, double, double>> expected_star_metrics = {
+    { 3.4248103734966566, 27.295144884427497, 7.0224903119455284 },
+    { 4.0168380799027004, 25.431775505128925, 3.2577025906038513 },
+    { 4.2398086088788904, 23.906962737212321, 4.9519681972932634 },
+    { 4.5106426505897472, 21.797925759551219, 3.2653476572926494 },
+    { 5.9366687230635415, 18.646887642682195, 5.1113245564233942 },
+    { 5.9214817393646637, 15.900437967399453, 9.7376782809402265 },
+    { 7.2058655558692744, 12.081075787803762, 3.7265062056625 },
+    { 6.7269579863995439, 9.182079739644923, 4.978652931246689 },
+    { 7.4242741594713344, 6.2974607834559153, 3.842207327064898 },
+    { 5.278791273812149, 3.8438485006311049, 2.4601451100132845 },
+    { 4.1407320775829746, 3.4434783057891602, 1.8549140611311068 }
   };
 
   auto star_metrics =
@@ -134,7 +136,8 @@ BOOST_AUTO_TEST_CASE(pipeline_star_metrics_test, * boost::unit_test::tolerance(0
       [](const auto & img_ptr) {
         return std::make_tuple(
             starmathpp::algorithm::snr(*img_ptr),
-            starmathpp::algorithm::hfd(*img_ptr)
+            starmathpp::algorithm::hfd(*img_ptr),
+            starmathpp::algorithm::fwhm(*img_ptr).value()
         );
       })
   | to<std::vector>();

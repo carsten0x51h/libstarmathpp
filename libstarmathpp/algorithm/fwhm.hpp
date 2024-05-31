@@ -30,6 +30,14 @@
 #include <algorithm>
 #include <optional>
 
+/**
+ * The following undef is needed before including ceres.h de to the
+ * following compile error:
+ *
+ * eigen3/Eigen/src/Core/util/Constants.h: error: #error The preprocessor symbol 'Success' is
+ * defined, possibly by the X11 header file X.h
+ */
+#undef Success
 #include <ceres/ceres.h>
 
 #include <range/v3/view/iota.hpp>
@@ -108,7 +116,6 @@ std::vector<ImageType> extract_col(
  * See http://mathworld.wolfram.com/GaussianFunction
  *
  * NOTE: std::log() is ln()
- * TODO: --> Needs F?! --> Move out of here?!--> Diff class?!
  * TODO: We want to have this value in PX and ".... depending on the purpose...
  */
 static inline double sigma_to_fwhm(double sigma) {
