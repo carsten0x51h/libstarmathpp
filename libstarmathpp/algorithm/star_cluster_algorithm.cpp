@@ -1,0 +1,141 @@
+/*****************************************************************************
+ *
+ *  libstarmathpp - A C++ library to process astronomical images
+ *                  based on CImg and range-v3.
+ *
+ *  Copyright(C) 2023 Carsten Schmitt <c [at] lost-infinity.com>
+ *
+ *  More info on https://www.lost-infinity.com
+ *
+ *  This program is free software ; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation ; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY ; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program ; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *
+ ****************************************************************************/
+
+#include <range/v3/view/transform.hpp>
+#include <range/v3/algorithm/minmax.hpp>
+
+#include <libstarmathpp/algorithm/star_cluster_algorithm.hpp>
+
+namespace starmathpp::algorithm {
+
+/**
+ *
+ */
+Rect<int> PixelClusterT::getBounds() const {
+
+  auto xCoordinateRange = mPixelPositions
+      | ranges::views::transform([](auto const pixelPos) {
+        return pixelPos.x();
+      });
+  auto yCoordinateRange = mPixelPositions
+      | ranges::views::transform([](auto const pixelPos) {
+        return pixelPos.y();
+      });
+
+  // Find top-left and bottom right pixel...
+  auto [xmin, xmax] = ranges::minmax(xCoordinateRange);
+  auto [ymin, ymax] = ranges::minmax(yCoordinateRange);
+
+  int w = xmax - xmin + 1;
+  int h = ymax - ymin + 1;
+
+  return Rect<int>(xmin, ymin, w, h);
+}
+
+/**
+ *
+ */
+StarClusterAlgorithmT::StarClusterAlgorithmT(size_t clusterRadius) {
+  initOffsetPattern((int) clusterRadius);
+}
+
+/**
+ *
+ */
+void StarClusterAlgorithmT::initOffsetPattern(int n) {
+
+  mOffsets.reserve(n * n - 1);
+
+  for (int i = -n; i <= n; ++i) {
+    for (int j = -n; j <= n; ++j) {
+      mOffsets.emplace_back(i, j);
+    }
+  }
+}
+
+/**
+ *
+ */
+void StarClusterAlgorithmT::getAndRemoveNeighbours(
+    const PixelPosT &inCurPixelPos, PixelPosSetT *inoutWhitePixels,
+    PixelPosListT *inoutPixelsToBeProcessed, PixelPosListT *outPixelCluster) {
+
+  for (const PixelPosT &offset : mOffsets) {
+    PixelPosT curPixPos(inCurPixelPos.x() + offset.x(),
+                        inCurPixelPos.y() + offset.y());
+
+    auto itPixPos = inoutWhitePixels->find(curPixPos);
+
+    if (itPixPos != inoutWhitePixels->end()) {
+      const PixelPosT &curWhitePixPos = *itPixPos;
+      inoutPixelsToBeProcessed->push_back(curWhitePixPos);
+      outPixelCluster->push_back(curWhitePixPos);
+      inoutWhitePixels->erase(itPixPos);  // Remove white pixel from "white set" since it has been processed, now
+    }
+  }
+}
+
+/**
+ *
+ */
+std::list<PixelClusterT> StarClusterAlgorithmT::cluster(const Image &inImg) {
+
+  std::list<PixelClusterT> recognizedClusters;
+  PixelPosSetT whitePixels;
+
+  cimg_forXY(inImg, x, y)
+  {
+    if (inImg(x, y) != 0) {
+      whitePixels.insert(whitePixels.end(), PixelPosT(x, y));
+    }
+  }
+
+  // Iterate over white pixels as long as set is not empty
+  while (!whitePixels.empty()) {
+    PixelPosListT pixelPosList;
+    PixelPosListT pixelsToBeProcessed;
+
+    auto itWhitePixPos = whitePixels.begin();
+
+    pixelsToBeProcessed.push_back(*itWhitePixPos);
+
+    while (!pixelsToBeProcessed.empty()) {
+      PixelPosT curPixelPos = pixelsToBeProcessed.front();
+
+      getAndRemoveNeighbours(curPixelPos, &whitePixels, &pixelsToBeProcessed,
+                             &pixelPosList);
+      pixelsToBeProcessed.pop_front();
+    }
+
+    // Finally, append the cluster
+    if (!pixelPosList.empty()) {
+      recognizedClusters.push_back(PixelClusterT(pixelPosList));
+    }
+  }
+
+  return recognizedClusters;
+}
+
+}  // namespace starmathpp::algorithm

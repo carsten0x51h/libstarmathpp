@@ -22,6 +22,7 @@ set(sources
    io/cimg_fits_io.cpp
    io/image_reader.cpp
    io/image_writer.cpp
+   algorithm/star_cluster_algorithm.cpp
 )
 
 
@@ -76,6 +77,7 @@ add_test_module(algorithm_intensity_weighted_centroider_tests algorithm/centroid
 add_test_module(algorithm_snr_tests algorithm/snr.test.cpp)
 add_test_module(algorithm_hfd_tests algorithm/hfd.test.cpp)
 add_test_module(algorithm_fwhm_tests algorithm/fwhm.test.cpp)
+add_test_module(algorithm_star_cluster_algorithm_tests algorithm/star_cluster_algorithm.test.cpp)
 
 add_test_module(pipeline_views_files_tests pipeline/views/files.test.cpp)
 add_test_module(pipeline_views_read_tests pipeline/views/read.test.cpp)
