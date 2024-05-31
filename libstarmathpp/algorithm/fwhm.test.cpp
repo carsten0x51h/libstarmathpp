@@ -76,4 +76,48 @@ BOOST_DATA_TEST_CASE(algorithm_fwhm_test_ideal_gaussian_sigmaX_test,
   BOOST_CHECK_CLOSE(calculated_fwhm_opt.value(), expected_fwhm, 0.01);
 }
 
+
+/**
+ * Fails...
+ *
+ * TODO: Currently, the gaussian curve matching is successful for the dark
+ *       image. sigma is big, and A and mu are 0.
+ *       Question is, if this is the desired behaviour...
+ */
+//BOOST_AUTO_TEST_CASE(algorithm_fwhm_dark_image_test)
+//{
+//  Image dark_image(100, 100, 1, 1, 0); // 100 x 100, bg=0
+//
+//  BOOST_TEST(starmathpp::algorithm::fwhm(dark_image).has_value() == false);
+//}
+
+
+/**
+ * Fails...
+ *
+ * TODO: Currently, the gaussian curve matching is successful for the noise
+ *       image. sigma, A and mu are big.
+ *       Question is, if this is the desired behaviour...
+ */
+//BOOST_AUTO_TEST_CASE(algorithm_fwhm_noise_image_test)
+//{
+//  Image noise_image(100, 100, 1, 1, 100); // 100 x 100, bg=0
+//
+//  BOOST_TEST(starmathpp::algorithm::fwhm(noise_image).has_value() == false);
+//}
+
+
+/**
+ * An image which is 50 white and 50 black rows should fail the gaussian
+ * curve fit.
+ */
+BOOST_AUTO_TEST_CASE(algorithm_fwhm_half_white_half_back_image_test)
+{
+  Image half_black_half_white_image(100, 100, 1, 1, 0); // 100 x 100, bg=0
+  half_black_half_white_image.draw_rectangle(0, 0, 0,0, 99, 99, 0,0, 1000);
+
+  BOOST_TEST(starmathpp::algorithm::fwhm(half_black_half_white_image).has_value() == false);
+}
+
+
 BOOST_AUTO_TEST_SUITE_END();

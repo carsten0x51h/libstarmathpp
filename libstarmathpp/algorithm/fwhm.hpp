@@ -78,14 +78,13 @@ struct GaussianResidual {
 };
 
 /**
- *
+ * TODO: The current code assumes that the input image only has one channel.
  */
 template<typename ImageType>
 std::vector<ImageType> extract_row(
     const cimg_library::CImg<ImageType> &input_image, size_t row_idx) {
 
   // TODO: Check if row_idx is valid...
-
   std::vector<float> row_values(input_image.width());
   auto row_img = input_image.get_row(row_idx);
 
@@ -94,7 +93,7 @@ std::vector<ImageType> extract_row(
 }
 
 /**
- *
+ * TODO: The current code assumes that the input image only has one channel.
  */
 template<typename ImageType>
 std::vector<ImageType> extract_col(
@@ -181,13 +180,13 @@ std::optional<double> fwhm_1d_internal(Rng x_data,
   ceres::Solve(options, &problem, &summary);
 
   // Output the results
-  //  std::cout << summary.FullReport() << "\n";
-  //  std::cout << "Success? " << (summary.termination_type == ceres::CONVERGENCE)
-  //      << std::endl;
+//  std::cout << summary.FullReport() << "\n";
+//  std::cout << "Success? " << (summary.termination_type == ceres::CONVERGENCE)
+//       << std::endl;
 
   // TODO: Only do the stuff below if fitting was a success...
-  //  std::cout << "Estimated parameters: A = " << params[0] << ", mu = "
-  //      << params[1] << ", sigma = " << sigma << "   -> ";
+//  std::cout << "Estimated parameters: A = " << params[0] << ", mu = "
+//       << params[1] << ", sigma = " << params[2] << "   -> ";
 
   // See https://stackoverflow.com/questions/47773178/gaussian-fit-returning-negative-sigma
   // TODO: Other success criteria? e.g. USER_SUCCESS?
