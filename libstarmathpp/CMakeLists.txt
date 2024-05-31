@@ -32,11 +32,12 @@ add_library(${target} ${sources})
 
 message("* TIFF LIBS : ${TIFF_LIBRARIES}")
 
-
 # Other libraries the starmathpp library depends on
 target_link_libraries(${target}
 	INTERFACE
 	${TIFF_LIBRARIES}
+	glog::glog
+    ${CERES_LIBRARIES}
 	PRIVATE
 	${CFITSIO_LIBRARY}
 	${CCFITS_LIBRARY}

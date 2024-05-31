@@ -44,6 +44,10 @@ using namespace starmathpp::algorithm;
  */
 BOOST_AUTO_TEST_CASE(algorithm_fwhm_test)
 {
+  Image image(5, 5, 1, 1, 13);  // 5x5 - All pixels have value 13
+
+  double fwhm = starmathpp::algorithm::fwhm(image);
+
 //  std::vector<ImagePtr> input_images = {
 //    std::make_shared<Image>(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
 //    std::make_shared<Image>(5, 5, 1, 1, 10),// 5x5 - All pixels have value 10

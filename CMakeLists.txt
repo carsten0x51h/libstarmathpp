@@ -116,6 +116,30 @@ include(cmake/FindCCFits.cmake)
 include(cmake/FindGSL.cmake)
 
 #
+# Eigen3 lirary (need include path to satisfy Ceres library)
+# See https://gitlab.com/libeigen/eigen
+#
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+
+#
+# Glog library (needed by Ceres library)
+# See https://github.com/google/glog
+#
+find_package(glog REQUIRED)
+
+#
+# Ceres library
+# See https://github.com/ceres-solver/ceres-solver
+# See http://ceres-solver.org
+# See https://github.com/nasa/astrobee/blob/master/cmake/FindCeres.cmake
+#
+find_package(Ceres REQUIRED)
+include_directories(${CERES_INCLUDE_DIRS})
+
+
+
+#
 # Look for FindTIFF script which is part of the cmake-modules.
 #
 include(FindTIFF)
@@ -149,10 +173,6 @@ option(DEBUG_IMAGE_DISPLAY_SWITCH "Enable pipeline debug mode" OFF)
 if(DEBUG_IMAGE_DISPLAY_SWITCH)
    add_compile_definitions(DEBUG_IMAGE_DISPLAY_SWITCH)
 endif()
-
-
-#find_package(Boost COMPONENTS  program_options REQUIRED)
-
 
 
 # Set project source directory as include dir to allow specifying
