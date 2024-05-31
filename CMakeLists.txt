@@ -111,11 +111,6 @@ include(cmake/CompileOptions.cmake)
 include(cmake/FindCCFits.cmake)
 
 #
-# Look for GSL
-#
-include(cmake/FindGSL.cmake)
-
-#
 # Eigen3 lirary (need include path to satisfy Ceres library)
 # See https://gitlab.com/libeigen/eigen
 #
