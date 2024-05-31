@@ -28,6 +28,7 @@
 
 #include <cmath>
 #include <algorithm>
+#include <optional>
 
 #include <ceres/ceres.h>
 
@@ -45,7 +46,9 @@ namespace detail {
 
 /**
  * Define a cost functor for Gaussian curve fitting.
- * TODO: Use Point? -> No. Supplying vectors of data is more flexible - e.g. x, y and z data...
+ * NOTE: Supplying vectors of data is more flexible
+ * - e.g. x, y and z data... Therefore, Point is not
+ * used here.
  */
 struct GaussianResidual {
   GaussianResidual(double x, double y)
@@ -72,7 +75,9 @@ struct GaussianResidual {
 template<typename ImageType>
 std::vector<ImageType> extract_row(
     const cimg_library::CImg<ImageType> &input_image, size_t row_idx) {
-  // TODO: Checks...
+
+  // TODO: Check if row_idx is valid...
+
   std::vector<float> row_values(input_image.width());
   auto row_img = input_image.get_row(row_idx);
 
@@ -86,7 +91,9 @@ std::vector<ImageType> extract_row(
 template<typename ImageType>
 std::vector<ImageType> extract_col(
     const cimg_library::CImg<ImageType> &input_image, size_t col_idx) {
-  // TODO: Checks...
+
+  // TODO: Check if col_idx is valid...
+
   std::vector<float> col_values(input_image.height());
   auto col_img = input_image.get_column(col_idx);
 
@@ -134,8 +141,9 @@ std::vector<double> make_guess(const std::vector<ImageType> &input_values) {
  * TODO: AddResidualBlock allows passing std::vector<double*>...
  *       -> avoid copy below?
  */
-template<typename RNG, typename ImageType>
-double fwhm_1d_internal(RNG x_data, const std::vector<ImageType> &y_data) {
+template<typename Rng, typename ImageType>
+std::optional<double> fwhm_1d_internal(Rng x_data,
+                                       const std::vector<ImageType> &y_data) {
 
   // Initial guess for parameters A, mu, sigma
   auto params_vec = make_guess(y_data);  //{ 5.0, 3.0, 1.0 };
@@ -166,18 +174,21 @@ double fwhm_1d_internal(RNG x_data, const std::vector<ImageType> &y_data) {
   ceres::Solve(options, &problem, &summary);
 
   // Output the results
-//  std::cout << summary.FullReport() << "\n";
-  std::cout << "Success? " << (summary.termination_type == ceres::CONVERGENCE)
-      << std::endl;
+  //  std::cout << summary.FullReport() << "\n";
+  //  std::cout << "Success? " << (summary.termination_type == ceres::CONVERGENCE)
+  //      << std::endl;
 
   // TODO: Only do the stuff below if fitting was a success...
-  double sigma = std::abs(params[2]);
-
-  std::cout << "Estimated parameters: A = " << params[0] << ", mu = "
-      << params[1] << ", sigma = " << sigma << "   -> ";
+  //  std::cout << "Estimated parameters: A = " << params[0] << ", mu = "
+  //      << params[1] << ", sigma = " << sigma << "   -> ";
 
   // See https://stackoverflow.com/questions/47773178/gaussian-fit-returning-negative-sigma
-  return sigma_to_fwhm(sigma);
+  // TODO: Other success criteria? e.g. USER_SUCCESS?
+
+  return (
+      summary.termination_type == ceres::CONVERGENCE ?
+          std::optional<double> { sigma_to_fwhm(std::abs(params[2])) } :
+          std::nullopt);
 }
 
 /**
@@ -187,33 +198,43 @@ double fwhm_1d_internal(RNG x_data, const std::vector<ImageType> &y_data) {
  * TODO: Conversion from star_center.y() to pixel/idx coordinates...
  */
 template<typename ImageType>
-double fwhm_internal(const cimg_library::CImg<ImageType> &input_image,
-                     const Point<float> &star_center, float scale_factor) {
+std::optional<double> fwhm_internal(
+    const cimg_library::CImg<ImageType> &input_image,
+    const Point<float> &star_center, float scale_factor) {
 
   if (input_image.is_empty()) {
     throw FwhmException("Empty image supplied.");
   }
 
-  double fwhm_horizontal = fwhm_1d_internal(
+  auto fwhm_horizontal_opt = fwhm_1d_internal(
       ranges::view::ints(0, input_image.width()),
       extract_row(input_image, star_center.y())  // horizontal_slice
                   );
 
-  double fwhm_vertical = fwhm_1d_internal(
+  auto fwhm_vertical_opt = fwhm_1d_internal(
       ranges::view::ints(0, input_image.height()),
       extract_col(input_image, star_center.x())  // vertical_slice
                   );
 
-  return (fwhm_horizontal + fwhm_vertical) / 2.0;
+  bool valid_fwhm = (fwhm_horizontal_opt.has_value()
+      && fwhm_vertical_opt.has_value());
+
+  return
+      valid_fwhm ?
+          std::optional<double>(
+              (fwhm_horizontal_opt.value() + fwhm_vertical_opt.value()) / 2.0) :
+          std::nullopt;
 }
+
 }  // namespace detail
 
 /*+
  *
  */
 template<typename ImageType>
-double fwhm(const cimg_library::CImg<ImageType> &input_image,
-            const Point<float> &star_center, float scale_factor = 1.0F) {
+std::optional<double> fwhm(const cimg_library::CImg<ImageType> &input_image,
+                           const Point<float> &star_center, float scale_factor =
+                               1.0F) {
 
   return detail::fwhm_internal(input_image, star_center, scale_factor);
 }
@@ -222,8 +243,8 @@ double fwhm(const cimg_library::CImg<ImageType> &input_image,
  *
  */
 template<typename ImageType>
-double fwhm(const cimg_library::CImg<ImageType> &input_image,
-            float scale_factor = 1.0F) {
+std::optional<double> fwhm(const cimg_library::CImg<ImageType> &input_image,
+                           float scale_factor = 1.0F) {
 
   Point<float> star_center((float) input_image.width() / 2,
                            (float) input_image.height() / 2);

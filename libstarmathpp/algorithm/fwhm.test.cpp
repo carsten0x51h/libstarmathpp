@@ -70,10 +70,10 @@ BOOST_DATA_TEST_CASE(algorithm_fwhm_test_ideal_gaussian_sigmaX_test,
 
   Image input_image(filename_ss.str().c_str());
 
-  double calculated_fwhm = starmathpp::algorithm::fwhm(input_image);
+  auto calculated_fwhm_opt = starmathpp::algorithm::fwhm(input_image);
   double expected_fwhm = 2.0 * std::sqrt(std::log(2.0)) * sigma;
 
-  BOOST_CHECK_CLOSE(calculated_fwhm, expected_fwhm, 0.01);
+  BOOST_CHECK_CLOSE(calculated_fwhm_opt.value(), expected_fwhm, 0.01);
 }
 
 BOOST_AUTO_TEST_SUITE_END();
