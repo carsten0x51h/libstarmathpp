@@ -186,13 +186,21 @@ std::optional<double> fwhm_1d_internal(Rng x_data,
 
   // TODO: Only do the stuff below if fitting was a success...
 //  std::cout << "Estimated parameters: A = " << params[0] << ", mu = "
-//       << params[1] << ", sigma = " << params[2] << "   -> ";
+//       << params[1] << ", sigma = " << params[2] << std::endl;
 
   // See https://stackoverflow.com/questions/47773178/gaussian-fit-returning-negative-sigma
   // TODO: Other success criteria? e.g. USER_SUCCESS?
 
+  // https://en.wikipedia.org/wiki/Short-circuit_evaluation
+  // See https://stackoverflow.com/questions/23107162/do-the-and-operators-for-bool-short-circuit
+  bool valid_fwhm = true;
+  valid_fwhm = valid_fwhm && (summary.termination_type == ceres::CONVERGENCE);
+  valid_fwhm = valid_fwhm && (params[0] > 0.0);
+  valid_fwhm = valid_fwhm && (params[1] > 0.0);
+  valid_fwhm = valid_fwhm && (params[2] < 8.0);  // TODO: Do not hardcode...
+
   return (
-      summary.termination_type == ceres::CONVERGENCE ?
+      valid_fwhm ?
           std::optional<double> { sigma_to_fwhm(std::abs(params[2])) } :
           std::nullopt);
 }
