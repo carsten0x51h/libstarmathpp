@@ -197,7 +197,7 @@ std::optional<double> fwhm_1d_internal(Rng x_data,
   valid_fwhm = valid_fwhm && (summary.termination_type == ceres::CONVERGENCE);
   valid_fwhm = valid_fwhm && (params[0] > 0.0);
   valid_fwhm = valid_fwhm && (params[1] > 0.0);
-  valid_fwhm = valid_fwhm && (params[2] < 8.0);  // TODO: Do not hardcode...
+  valid_fwhm = valid_fwhm && (params[2] < 10.0);  // TODO: Do not hardcode...
 
   return (
       valid_fwhm ?
