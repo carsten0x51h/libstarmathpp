@@ -30,6 +30,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <boost/test/unit_test.hpp>
+#include <boost/test/data/test_case.hpp>
 #include <boost/test/tools/floating_point_comparison.hpp>
 
 #include <libstarmathpp/algorithm/fwhm.hpp>
@@ -39,26 +40,40 @@ BOOST_AUTO_TEST_SUITE (algorithm_fwhm_tests)
 using namespace starmathpp;
 using namespace starmathpp::algorithm;
 
+namespace bdata = boost::unit_test::data;
+
 /**
- *
+ * Calculation of the FWHM for different ideal gaussian shaped
+ * 2D distribution.
  */
-BOOST_AUTO_TEST_CASE(algorithm_fwhm_test)
+BOOST_DATA_TEST_CASE(algorithm_fwhm_test_ideal_gaussian_sigmaX_test,
+    bdata::make(
+        std::vector<float> {1.0F, 2.0F, 3.0F, 4.0F, 5.0F}
+    )*
+    bdata::make(
+        std::vector< int > {
+          51, 101
+        }) *
+    bdata::make(
+        std::vector< std::string > {
+          "normalized",
+          "factor_32767",
+          "factor_65535"
+        }),
+    sigma, image_dimension, norm_factor_str)
 {
-  Image image(5, 5, 1, 1, 13);  // 5x5 - All pixels have value 13
+  std::stringstream filename_ss;
 
-  double fwhm = starmathpp::algorithm::fwhm(image);
+  filename_ss << "test_data/algorithm/fwhm/gaussian_normal_distribution_2d/gaussian_2d_sigma"
+  << (int) sigma << "_" << norm_factor_str << "_odd_"
+  << image_dimension << "x" << image_dimension << ".tiff";
 
-//  std::vector<ImagePtr> input_images = {
-//    std::make_shared<Image>(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
-//    std::make_shared<Image>(5, 5, 1, 1, 10),// 5x5 - All pixels have value 10
-//    std::make_shared<Image>(5, 5, 1, 1, -5)// 5x5 - All pixels have value -5
-//  };
-//
-//  auto average_image_ptr = starmathpp::algorithm::average(input_images);
-//  auto expected_image_ptr = std::make_shared < Image
-//      > (5, 5, 1, 1, (13 + 10 - 5) / 3);  // 5x5 - All pixels have value 6
-//
-//  BOOST_TEST(is_almost_equal(*average_image_ptr, *expected_image_ptr, 0.00001));
+  Image input_image(filename_ss.str().c_str());
+
+  double calculated_fwhm = starmathpp::algorithm::fwhm(input_image);
+  double expected_fwhm = 2.0 * std::sqrt(std::log(2.0)) * sigma;
+
+  BOOST_CHECK_CLOSE(calculated_fwhm, expected_fwhm, 0.01);
 }
 
 BOOST_AUTO_TEST_SUITE_END();
