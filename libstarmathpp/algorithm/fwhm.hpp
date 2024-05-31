@@ -88,7 +88,7 @@ std::vector<ImageType> extract_col(
     const cimg_library::CImg<ImageType> &input_image, size_t col_idx) {
   // TODO: Checks...
   std::vector<float> col_values(input_image.height());
-  auto col_img = input_image.get_col(col_idx);
+  auto col_img = input_image.get_column(col_idx);
 
   std::copy(col_img.begin(), col_img.end(), col_values.begin());
   return col_values;
@@ -118,35 +118,18 @@ std::vector<double> make_guess(const std::vector<ImageType> &input_values) {
 
   auto max_element_iter = std::max_element(input_values.begin(),
                                            input_values.end());
-  return std::vector<double> {
-      *max_element_iter, /* max. y value -> A*/
-      (double) std::distance(input_values.begin(), max_element_iter), /*x value of max. y value -> mu */
-      input_values.size() / 10.0 /* "x-range" of values divided by 10 */
+  return std::vector<double> { *max_element_iter, /* max. y value -> A*/
+  (double) std::distance(input_values.begin(), max_element_iter), /*x value of max. y value -> mu */
+  input_values.size() / 10.0 /* "x-range" of values divided by 10 */
   };
 }
 
 /**
  *
  */
-template<typename ImageType>
-double fwhm_internal(const cimg_library::CImg<ImageType> &input_image,
-                     const Point<float> &star_center, float scale_factor) {
-
-  if (input_image.is_empty()) {
-    throw FwhmException("Empty image supplied.");
-  }
-
-  // TODO: Conversion from star_center.y() to pixel/idx coordinates...
-  auto x_data = ranges::views::ints(0, input_image.width());
-  auto y_data = extract_row(input_image, star_center.y());  // horizontal_slice
-
-//  auto x_data = ranges::views::ints(0, input_image.height());
-//  auto y_data = extract_col(input_image, star_center.x()); // vertical_slice
-
-  // Sample data points (x, y)
-//  std::vector<double> x_data = { 1, 2, 3, 4, 5 };
-//  std::vector<double> y_data { 2.5, 3.5, 5.0, 3.5, 2.5 };
-
+template<typename RNG, typename ImageType>
+double fwhm_1d_internal(RNG x_data,
+                        const std::vector<ImageType> &y_data) {
   // Initial guess for parameters A, mu, sigma
   // TODO: Check start values of old gsl impl.
   // TODO: For bad start values (e.g. { 5.0, 3.0, 1.0 }),
@@ -181,7 +164,6 @@ double fwhm_internal(const cimg_library::CImg<ImageType> &input_image,
   ceres::Solver::Summary summary;
   ceres::Solve(options, &problem, &summary);
 
-
   // Output the results
 //  std::cout << summary.FullReport() << "\n";
   std::cout << "Success? " << (summary.termination_type == ceres::CONVERGENCE)
@@ -193,9 +175,35 @@ double fwhm_internal(const cimg_library::CImg<ImageType> &input_image,
   std::cout << "Estimated parameters: A = " << params[0] << ", mu = "
       << params[1] << ", sigma = " << sigma << "   -> ";
 
-
   // See https://stackoverflow.com/questions/47773178/gaussian-fit-returning-negative-sigma
   return sigma_to_fwhm(sigma);
+}
+
+/**
+ * TODO: Extract calculation of FWHM value for (x_data, y_data)
+ *       and then call it twice for each "direction"...
+ *
+ * TODO: Conversion from star_center.y() to pixel/idx coordinates...
+ */
+template<typename ImageType>
+double fwhm_internal(const cimg_library::CImg<ImageType> &input_image,
+                     const Point<float> &star_center, float scale_factor) {
+
+  if (input_image.is_empty()) {
+    throw FwhmException("Empty image supplied.");
+  }
+
+  double fwhm_horizontal = fwhm_1d_internal(
+      ranges::view::ints(0, input_image.width()),
+      extract_row(input_image, star_center.y())  // horizontal_slice
+  );
+
+  double fwhm_vertical = fwhm_1d_internal(
+      ranges::view::ints(0, input_image.height()),
+      extract_col(input_image, star_center.x())  // vertical_slice
+  );
+
+  return (fwhm_horizontal + fwhm_vertical) / 2.0;
 }
 }  // namespace detail
 
