@@ -1,14 +1,13 @@
 TODO
 ----
--Think about use of shared_ptrs...
--Finalize average.test.cpp
--Fix storing of images as FITS files...
+-Add "detect stars" integration test 
+-IDEA: Add pipeline stretch(curve) function
+-IDEA: Add pipeline denoiser operation
+-Add "filter" to remove saturated / non-saturated images to pipeline
+-Add remove_nans() as pipeline operation (add unit tests + add parameter to allow specifying size of filter matrix?)
+-Add running coverage into build-pipeline and show it in Readme.md page
+-Think about use of shared_ptrs... -> Use const referenes where possible or unique_ptrs 
 -IDEA: Extract test image generator function from unit tests - generate_test_image()
--Remove deprecated cmake message
 -Replace "star recognizer" test images -> instead of one big, multiple small ones with only 2-5 stars.
 -Make fits writer create specified directories if they do not exist
--Add unit test for remove_nans() - add parameter to allow specifying size of filter matrix
--Add hfd() to "actions"
--Add fwhm() to "actions" 
--IDEA: stretch(curve) function
--IDEA: Add histogram() function wich takes image and creates a hostogram
+-Introduce template concept to restrict types of Rect, Size and Point to integral types
