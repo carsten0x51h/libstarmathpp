@@ -5,6 +5,7 @@ TODO
 -IDEA: Add pipeline denoiser operation
 -Add "filter" to remove saturated / non-saturated images to pipeline
 -Add remove_nans() as pipeline operation (add unit tests + add parameter to allow specifying size of filter matrix?)
+-Add find_cimg() to cmake file
 -Add running coverage into build-pipeline and show it in Readme.md page
 -Think about use of shared_ptrs... -> Use const referenes where possible or unique_ptrs 
 -IDEA: Extract test image generator function from unit tests - generate_test_image()
