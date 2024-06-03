@@ -120,7 +120,7 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 # Glog library (needed by Ceres library)
 # See https://github.com/google/glog
 #
-include(cmake/FindGlog.cmake)
+#include(cmake/FindGlog.cmake)
 
 #
 # Ceres library
