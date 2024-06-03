@@ -15,6 +15,13 @@ include(GenerateExportHeader)
 include(ExternalProject)
 
 
+#
+# Glog library (needed by Ceres library)
+# See https://github.com/google/glog
+#
+include(cmake/FindGlog.cmake)
+
+
 # Set compiler standard
 # See https://stackoverflow.com/questions/40452287/let-cmake-with-clang-use-c11-c14
 #set(CMAKE_CXX_STANDARD 20)
@@ -115,12 +122,6 @@ include(cmake/FindCCFits.cmake)
 #
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
-
-#
-# Glog library (needed by Ceres library)
-# See https://github.com/google/glog
-#
-#include(cmake/FindGlog.cmake)
 
 #
 # Ceres library
