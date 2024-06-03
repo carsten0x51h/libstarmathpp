@@ -11,15 +11,9 @@ cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(WriterCompilerDetectionHeaderFound NOTFOUND)
 
+
 include(GenerateExportHeader)
 include(ExternalProject)
-
-
-#
-# Glog library (needed by Ceres library)
-# See https://github.com/google/glog
-#
-include(cmake/FindGlog.cmake)
 
 
 # Set compiler standard
@@ -106,6 +100,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
 
 
+
 # 
 # Compiler settings and options
 # 
@@ -131,6 +126,13 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 #
 find_package(Ceres REQUIRED)
 include_directories(${CERES_INCLUDE_DIRS})
+
+
+#
+# Glog library (needed by Ceres library)
+# See https://github.com/google/glog
+#
+include(cmake/FindGlog.cmake)
 
 
 
