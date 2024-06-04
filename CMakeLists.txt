@@ -119,6 +119,12 @@ find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
 #
+# Glog library (needed by Ceres library)
+# See https://github.com/google/glog
+#
+include(cmake/FindGlog.cmake)
+
+#
 # Ceres library
 # See https://github.com/ceres-solver/ceres-solver
 # See http://ceres-solver.org
@@ -126,14 +132,6 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 #
 find_package(Ceres REQUIRED)
 include_directories(${CERES_INCLUDE_DIRS})
-
-
-#
-# Glog library (needed by Ceres library)
-# See https://github.com/google/glog
-#
-include(cmake/FindGlog.cmake)
-
 
 
 #
