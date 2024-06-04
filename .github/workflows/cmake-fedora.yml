@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [fedora:40]
+        os: [fedora-40]
         compiler: [gcc]
 
     steps:
