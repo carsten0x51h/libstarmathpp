@@ -78,6 +78,7 @@ add_test_module(algorithm_snr_tests algorithm/snr.test.cpp)
 add_test_module(algorithm_hfd_tests algorithm/hfd.test.cpp)
 add_test_module(algorithm_fwhm_tests algorithm/fwhm.test.cpp)
 add_test_module(algorithm_star_cluster_algorithm_tests algorithm/star_cluster_algorithm.test.cpp)
+add_test_module(algorithm_midtone_balance_stretcher_tests algorithm/stretch/midtone_balance_stretcher.test.cpp)
 
 add_test_module(pipeline_views_files_tests pipeline/views/files.test.cpp)
 add_test_module(pipeline_views_read_tests pipeline/views/read.test.cpp)
@@ -92,8 +93,7 @@ add_test_module(pipeline_scale_tests pipeline/views/scale.test.cpp)
 add_test_module(pipeline_interpolate_bad_pixels_tests pipeline/views/interpolate_bad_pixels.test.cpp)
 add_test_module(pipeline_subtract_background_tests pipeline/views/subtract_background.test.cpp)
 add_test_module(pipeline_center_on_star_tests pipeline/views/center_on_star.test.cpp)
-
-
+add_test_module(pipeline_view_stretch_tests pipeline/views/stretch.test.cpp)
 
 
 
