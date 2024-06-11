@@ -152,9 +152,9 @@ include(cmake/FindFilesystem.cmake)
 set(Boost_NO_BOOST_CMAKE ON) #  Don't do a find_package in config mode before searching for a regular boost install.
 
 find_package (ZLIB REQUIRED)
-find_package(Boost COMPONENTS unit_test_framework log system regex thread REQUIRED)
+find_package(Boost COMPONENTS unit_test_framework regex thread REQUIRED)
 
-ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
+#ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 
 
