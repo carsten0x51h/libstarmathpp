@@ -12,6 +12,9 @@ easy to understand image processing pipelines.
 ## Usage examples
 
 ### Calculation of star metrics
+In this example all files with extension "*.fit.gz" from directory "my/image/directory" are processed by the pipeline. The processing takes place one by one. Each image is opened and pushed through the processing pipeline. For each image the pipeline suntracts the background, scales the image, performs a centroiding algorithm, again scales down the image, crops the image from the center toa dimension of 61x61 pixels and then calculates the SNR (Signal-to-noise ratio), the HFD (Half-flux diameter) and the FWHM (Full-width half maximum) for each star.
+
+TODO/IDEA: Introduce filter: "has_star" / "has_single_star"...
 
 #### Input images
 TODO:...
@@ -46,6 +49,8 @@ TODO:...
                     << ", FWHM: " << std::get<2>(m)
                     << std::endl;
       }
+	  
+	  ...
 ```
 
 #### Output
