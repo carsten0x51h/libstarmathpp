@@ -39,48 +39,65 @@ namespace starmathpp::pipeline::views {
 
 namespace fs = std::filesystem;
 
+namespace detail {
+
+/**
+ *
+ */
+auto files_internal(const std::string &root_path,
+                    const std::string &extension_regex = "") {
+
+  const std::regex regex(extension_regex);
+  const fs::path root(root_path);
+
+  // See https://en.cppreference.com/w/cpp/filesystem/directory_iterator
+  // ... These specializations for directory_iterator make it a borrowed_range and a view.
+  //
+  // NOTE: https://github.com/ericniebler/range-v3/issues/1400
+  // See https://godbolt.org/z/-Vu-Md.
+  // std::filesystem::iterator is not a std::safe_range, so you must
+  // first make it an object to prevent dangling.
+  // However, ranges::make_iterator_range() works for now, but is it a good idea?
+
+  return ranges::make_iterator_range(begin(fs::directory_iterator(root)),
+                                     end(fs::directory_iterator(root)))
+      | ranges::views::filter([](const auto &entry) {
+        return fs::is_regular_file(entry);
+      })
+      | ranges::views::filter(
+          [=](const auto &entry) {
+            return (extension_regex.empty()
+                || std::regex_match(entry.path().string(), regex));
+          }) | ranges::views::transform([](const auto &entry) {
+        return entry.path().string();
+      });
+}
+
+}
+
 /**
  * Return the filenames of all files that have the specified extension
  * in the specified directory and all sub-directories.
  *
  * See https://stackoverflow.com/questions/11140483/how-to-get-list-of-files-with-a-specific-extension-in-a-given-folder
- *
- * TODO / FIXME / HACK! Template is actually not needed here...
- *                      it only helps to remove "multiple definition" errors..,
- *                      ranges::any_view<int> ???
  */
-
-template<typename MyType = std::string>
-auto files(const std::string &extensionRegex = "") {
-  return ranges::views::transform(
-      [=](const std::string &rootPath) {
-        const std::regex e(extensionRegex);
-        const fs::path root(rootPath);
-
-        // See https://en.cppreference.com/w/cpp/filesystem/directory_iterator
-        // ... These specializations for directory_iterator make it a borrowed_range and a view.
-        //
-        // NOTE: https://github.com/ericniebler/range-v3/issues/1400
-        // See https://godbolt.org/z/-Vu-Md.
-        // std::filesystem::iterator is not a std::safe_range, so you must
-        // first make it an object to prevent dangling.
-        // However, ranges::make_iterator_range() works for now, but is it a good idea?
-
-        return ranges::make_iterator_range(begin(fs::directory_iterator(root)),
-                                           end(fs::directory_iterator(root)))
-            | ranges::views::filter([](const auto &entry) {
-              return fs::is_regular_file(entry);
-            })
-            | ranges::views::filter(
-                [=](const auto &entry) {
-                  return (extensionRegex.empty()
-                      || std::regex_match(entry.path().string(), e));
-                }) | ranges::views::transform([](const auto &entry) {
-              return entry.path().string();
-            });
-      }
-  );
+auto files(const std::string &extension_regex = "") {
+  return ranges::views::transform([=](const std::string &root_path) {
+    return detail::files_internal(root_path, extension_regex);
+  });
 }
+
+/**
+ * Return the filenames of all files that have the specified extension
+ * in the rootPath directory and all sub-directories.
+ *
+ * See https://stackoverflow.com/questions/11140483/how-to-get-list-of-files-with-a-specific-extension-in-a-given-folder
+ */
+auto files(const std::string &root_path,
+           const std::string &extension_regex) {
+  return detail::files_internal(root_path, extension_regex);
+}
+
 }  // namespace starmathpp::pipeline::views
 
 #endif // STARMATHPP_PIPELINE_VIEW_FILES_HPP_

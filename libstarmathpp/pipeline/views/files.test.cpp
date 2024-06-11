@@ -158,4 +158,29 @@ BOOST_AUTO_TEST_CASE(pipeline_files_no_extension_filter_test)
     BOOST_TEST(diff.empty());
 }
 
+
+/**
+ *
+ */
+BOOST_AUTO_TEST_CASE(pipeline_files_rootpath_and_extension_test)
+{
+    const std::set<std::string> expectedFilenames {
+            "test_data/pipeline/files/fits file with spaces 1.fits",
+            "test_data/pipeline/files/fits file with spaces 2.fits",
+            "test_data/pipeline/files/fits_file_1.fits",
+            "test_data/pipeline/files/fits_file_2.fits"
+    };
+
+    auto results =
+              starmathpp::pipeline::views::files("test_data/pipeline/files", "(.*\\.fits)")
+              | to<std::set>();
+
+    // NOTE: The order of the contained elements does not matter (the order of elements
+    //       returned by files() is undefined).
+    std::vector<std::string> diff;
+    ranges::set_difference(expectedFilenames, results, diff.begin());
+
+    BOOST_TEST(diff.empty());
+}
+
 BOOST_AUTO_TEST_SUITE_END();

@@ -32,6 +32,7 @@
 #include <tuple>
 #include <vector>
 #include <cmath>
+#include <iostream>
 
 #include <boost/test/unit_test.hpp>
 
@@ -74,7 +75,8 @@ using namespace starmathpp::pipeline::views;
  *
  */
 bool are_tuples_equal(const std::tuple<float, float, float> &t1,
-                      const std::tuple<float, float, float> &t2, float tolerance) {
+                      const std::tuple<float, float, float> &t2,
+                      float tolerance) {
   return std::fabs(std::get<0>(t1) - std::get<0>(t2)) < tolerance
       && std::fabs(std::get<1>(t1) - std::get<1>(t2)) < tolerance
       && std::fabs(std::get<2>(t1) - std::get<2>(t2)) < tolerance;
@@ -93,61 +95,60 @@ bool are_tuples_equal(const std::tuple<float, float, float> &t1,
  *       FwhmT fwhmObj(ImageSlicerT::slice<SliceDirectionT::VERT>(*result, result->width()/2));
  * TODO: Change: pass in entire image -> calculate mean of VERT + HORZ Fwhm and return this as value. FwhmT should provide functions to get both separately.
  */
-BOOST_AUTO_TEST_CASE(pipeline_star_metrics_test, * boost::unit_test::tolerance(0.5))
-{
+BOOST_AUTO_TEST_CASE(pipeline_star_metrics_test, * boost::unit_test::tolerance(0.5)) {
   std::vector<std::string> image_paths {
-    "test_data/integration/star_metrics/newton_focus_star1.tiff",
-    "test_data/integration/star_metrics/newton_focus_star2.tiff",
-    "test_data/integration/star_metrics/newton_focus_star3.tiff",
-    "test_data/integration/star_metrics/newton_focus_star4.tiff",
-    "test_data/integration/star_metrics/newton_focus_star5.tiff",
-    "test_data/integration/star_metrics/newton_focus_star6.tiff",
-    "test_data/integration/star_metrics/newton_focus_star7.tiff",
-    "test_data/integration/star_metrics/newton_focus_star8.tiff",
-    "test_data/integration/star_metrics/newton_focus_star9.tiff",
-    "test_data/integration/star_metrics/newton_focus_star10.tiff",
-    "test_data/integration/star_metrics/newton_focus_star11.tiff"
-  };
+      "test_data/integration/star_metrics/newton_focus_star1.tiff",
+      "test_data/integration/star_metrics/newton_focus_star2.tiff",
+      "test_data/integration/star_metrics/newton_focus_star3.tiff",
+      "test_data/integration/star_metrics/newton_focus_star4.tiff",
+      "test_data/integration/star_metrics/newton_focus_star5.tiff",
+      "test_data/integration/star_metrics/newton_focus_star6.tiff",
+      "test_data/integration/star_metrics/newton_focus_star7.tiff",
+      "test_data/integration/star_metrics/newton_focus_star8.tiff",
+      "test_data/integration/star_metrics/newton_focus_star9.tiff",
+      "test_data/integration/star_metrics/newton_focus_star10.tiff",
+      "test_data/integration/star_metrics/newton_focus_star11.tiff" };
 
-  std::vector<std::tuple<double, double, double>> expected_star_metrics = {
-    { 3.4248103734966566, 27.295144884427497, 7.0224903119455284 },
-    { 4.0168380799027004, 25.431775505128925, 3.2577025906038513 },
-    { 4.2398086088788904, 23.906962737212321, 4.9519681972932634 },
-    { 4.5106426505897472, 21.797925759551219, 3.2653476572926494 },
-    { 5.9366687230635415, 18.646887642682195, 5.1113245564233942 },
-    { 5.9214817393646637, 15.900437967399453, 9.7376782809402265 },
-    { 7.2058655558692744, 12.081075787803762, 3.7265062056625 },
-    { 6.7269579863995439, 9.182079739644923, 4.978652931246689 },
-    { 7.4242741594713344, 6.2974607834559153, 3.842207327064898 },
-    { 5.278791273812149, 3.8438485006311049, 2.4601451100132845 },
-    { 4.1407320775829746, 3.4434783057891602, 1.8549140611311068 }
-  };
+  std::vector<std::tuple<double, double, double>> expected_star_metrics = { {
+      3.4248103734966566, 27.295144884427497, 7.0224903119455284 }, {
+      4.0168380799027004, 25.431775505128925, 3.2577025906038513 }, {
+      4.2398086088788904, 23.906962737212321, 4.9519681972932634 }, {
+      4.5106426505897472, 21.797925759551219, 3.2653476572926494 }, {
+      5.9366687230635415, 18.646887642682195, 5.1113245564233942 }, {
+      5.9214817393646637, 15.900437967399453, 9.7376782809402265 }, {
+      7.2058655558692744, 12.081075787803762, 3.7265062056625 }, {
+      6.7269579863995439, 9.182079739644923, 4.978652931246689 }, {
+      7.4242741594713344, 6.2974607834559153, 3.842207327064898 }, {
+      5.278791273812149, 3.8438485006311049, 2.4601451100132845 }, {
+      4.1407320775829746, 3.4434783057891602, 1.8549140611311068 } };
 
-  auto star_metrics =
-  image_paths
-  | read()
+  auto star_metrics = image_paths | read()
 //  | view::filter(& metrics::is_not_saturated)
-  | subtract_background(OtsuThresholder<float>(16))
-  | scale_up(3.0F)
-  | center_on_star(IntensityWeightedCentroider<float>())
-  | scale_down(3.0F)
-  | starmathpp::pipeline::views::crop_from_center(Size<int>(61,61))
-  | view::transform(
-      [](const auto & img_ptr) {
-        return std::make_tuple(
-            starmathpp::algorithm::snr(*img_ptr),
-            starmathpp::algorithm::hfd(*img_ptr),
-            starmathpp::algorithm::fwhm(*img_ptr).value()
-        );
-      })
-  | to<std::vector>();
+      | subtract_background(OtsuThresholder<float>(16)) | scale_up(3.0F)
+      | center_on_star(IntensityWeightedCentroider<float>()) | scale_down(3.0F)
+      | crop_from_center(Size<int>(61, 61))
+      | view::transform(
+          [](const auto &img_ptr) {
+            return std::make_tuple(
+                starmathpp::algorithm::snr(*img_ptr),
+                starmathpp::algorithm::hfd(*img_ptr),
+                starmathpp::algorithm::fwhm(*img_ptr).value());
+          }) | to<std::vector>();
+
+  for (const auto &m : star_metrics) {
+    std::cout << "SNR: " << std::get<0>(m)
+              << ", HFD: " << std::get<1>(m)
+              << ", FWHM: " << std::get<2>(m)
+              << std::endl;
+  }
 
   float tolerance = 0.001F;
 
   BOOST_REQUIRE_EQUAL(star_metrics.size(), expected_star_metrics.size());
 
   for (size_t i = 0; i < star_metrics.size(); ++i) {
-    BOOST_CHECK(are_tuples_equal(star_metrics[i], expected_star_metrics[i], tolerance));
+    BOOST_CHECK(
+        are_tuples_equal(star_metrics[i], expected_star_metrics[i], tolerance));
   }
 }
 

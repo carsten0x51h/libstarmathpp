@@ -4,21 +4,75 @@ libstarmathpp - A C++ library to process astronomical images based on CImg and r
 ===========
 
 ## Summary
-TODO: This project is about ...
-
-
-## Concept
-TODO: The concept... combine image processing with ranges concept (functional programming / Java: streams)... -> Build intuitive, easy to understand processing pipelines...
-
+This project combines the power of the C++ CImg template library (https://cimg.eu/) (which is used
+to process images) with the famous range-v3 library from Eric Niebler (https://github.com/ericniebler/range-v3)
+to simplify the programatical processing of astronomical images by allowing the construction of intuitive and
+easy to understand image processing pipelines.
 
 ## Usage examples
-TODO: Add examples
+
+### Calculation of star metrics
+
+#### Input images
+TODO:...
+
+#### Code
+```cpp
+
+  ...
+  
+  auto star_metrics =
+      | files("my/image/directory", "(.*\\.fit\\.gz)")
+      | read()
+      | subtract_background(OtsuThresholder<float>(16 /*image bit depth*/))
+      | scale_up(3.0F /*scale up factor*/)
+      | center_on_star(IntensityWeightedCentroider<float>())
+      | scale_down(3.0F /*scale down factor*/)
+      | crop_from_center(Size<int>(61,61))
+      | ranges::view::transform(
+            [](const auto & img_ptr) {
+                return std::make_tuple(
+                    starmathpp::algorithm::snr(*img_ptr),
+                    starmathpp::algorithm::hfd(*img_ptr),
+                    starmathpp::algorithm::fwhm(*img_ptr).value()
+                );
+            })
+      | to<std::vector>();
+
+
+      for (const auto &m : star_metrics) {
+          std::cout << "SNR: " << std::get<0>(m)
+                    << ", HFD: " << std::get<1>(m)
+                    << ", FWHM: " << std::get<2>(m)
+                    << std::endl;
+      }
+```
+
+#### Output
+```bash
+SNR: 3.42481, HFD: 27.2951, FWHM: 7.02249
+SNR: 4.01684, HFD: 25.4318, FWHM: 3.2577
+SNR: 4.23981, HFD: 23.907, FWHM: 4.95197
+SNR: 4.51064, HFD: 21.7979, FWHM: 3.26535
+SNR: 5.93667, HFD: 18.6469, FWHM: 5.11132
+SNR: 5.92148, HFD: 15.9004, FWHM: 9.73768
+SNR: 7.20587, HFD: 12.0811, FWHM: 3.72651
+SNR: 6.72696, HFD: 9.18208, FWHM: 4.97865
+SNR: 7.42427, HFD: 6.29746, FWHM: 3.84221
+SNR: 5.27879, HFD: 3.84385, FWHM: 2.46015
+SNR: 4.14073, HFD: 3.44348, FWHM: 1.85491
+```
+
+
+TODO: Add further examples
+
+
 
 
 ## build
 
 ### Install required dependencies
-The following libraries are required to build FoFi on Ubuntu 20.04 LTS.
+The following libraries are required to build libstarmathpp on Ubuntu 20.04 LTS or Ubuntu 22.04.
 For other Linux distributions the package names may slightly vary.
 
 	sudo apt-get update
