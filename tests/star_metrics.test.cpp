@@ -135,13 +135,6 @@ BOOST_AUTO_TEST_CASE(pipeline_star_metrics_test, * boost::unit_test::tolerance(0
                 starmathpp::algorithm::fwhm(*img_ptr).value());
           }) | to<std::vector>();
 
-  for (const auto &m : star_metrics) {
-    std::cout << "SNR: " << std::get<0>(m)
-              << ", HFD: " << std::get<1>(m)
-              << ", FWHM: " << std::get<2>(m)
-              << std::endl;
-  }
-
   float tolerance = 0.001F;
 
   BOOST_REQUIRE_EQUAL(star_metrics.size(), expected_star_metrics.size());
