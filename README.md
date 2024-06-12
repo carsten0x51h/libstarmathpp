@@ -11,17 +11,24 @@ easy to understand image processing pipelines.
 
 ## Usage examples
 
-### Calculation of star metrics
+### 1. Calculation of star metrics
 In this example all files with extension "*.fit.gz" from directory "my/image/directory" are processed by the pipeline. The processing takes place one by one. Each image is opened and pushed through the processing pipeline. For each image the pipeline suntracts the background, scales the image, performs a centroiding algorithm, again scales down the image, crops the image from the center toa dimension of 61x61 pixels and then calculates the SNR (Signal-to-noise ratio), the HFD (Half-flux diameter) and the FWHM (Full-width half maximum) for each star.
 
 TODO/IDEA: Introduce filter: "has_star" / "has_single_star"...
 
 #### Input images
-TODO:...
+
+
+
+
+
+
+Star 1  |                                  Star 2                                   |                                 Star 3                                  |                                 Star 4                                  | Star 5
+:---------------------------:|:-------------------------------------------------------------------------:|:-----------------------------------------------------------------------:|:-----------------------------------------------------------------------:|:-------------------------:
+![input-star-1](doc/images/star_metrics/input_star1.jpg "input-star-1")  |  ![input-star-2](doc/images/star_metrics/input_star2.jpg "input-star-2")  | ![input-star-3](doc/images/star_metrics/input_star3.jpg "input-star-3") | ![input-star-4](doc/images/star_metrics/input_star4.jpg "input-star-4") | ![input-star-5](doc/images/star_metrics/input_star5.jpg "input-star-5")
 
 #### Code
 ```cpp
-
   ...
   
   auto star_metrics =
@@ -43,33 +50,32 @@ TODO:...
       | to<std::vector>();
 
 
-      for (const auto &m : star_metrics) {
-          std::cout << "SNR: " << std::get<0>(m)
-                    << ", HFD: " << std::get<1>(m)
-                    << ", FWHM: " << std::get<2>(m)
-                    << std::endl;
-      }
+  for (const auto &m : star_metrics) {
+      std::cout << std::setprecision(2)
+                << "SNR: " << std::get<0>(m)
+                << ", HFD: " << std::get<1>(m)
+                << ", FWHM: " << std::get<2>(m)
+                << std::endl;
+  }
 	  
-	  ...
+  ...
 ```
 
 #### Output
 ```bash
-SNR: 3.42481, HFD: 27.2951, FWHM: 7.02249
-SNR: 4.01684, HFD: 25.4318, FWHM: 3.2577
-SNR: 4.23981, HFD: 23.907, FWHM: 4.95197
-SNR: 4.51064, HFD: 21.7979, FWHM: 3.26535
-SNR: 5.93667, HFD: 18.6469, FWHM: 5.11132
-SNR: 5.92148, HFD: 15.9004, FWHM: 9.73768
-SNR: 7.20587, HFD: 12.0811, FWHM: 3.72651
-SNR: 6.72696, HFD: 9.18208, FWHM: 4.97865
-SNR: 7.42427, HFD: 6.29746, FWHM: 3.84221
-SNR: 5.27879, HFD: 3.84385, FWHM: 2.46015
-SNR: 4.14073, HFD: 3.44348, FWHM: 1.85491
+SNR: 3.42, HFD: 27.29, FWHM: 7.02
+SNR: 4.51, HFD: 21.79, FWHM: 3.26
+SNR: 5.92, HFD: 15.90, FWHM: 9.73
+SNR: 6.72, HFD: 9.18, FWHM: 4.97
+SNR: 4.14, HFD: 3.44, FWHM: 1.85
 ```
 
-
-TODO: Add further examples
+|                                                    Metric                  |                                   Star 1                                   |                                   Star 2                                   |                                   Star 3                                   |                                   Star 4                                   | Star 5
+:--------------------------------------------------------------------------:|:--------------------------------------------------------------------------:|:--------------------------------------------------------------------------:|:--------------------------------------------------------------------------:|:--------------------------------------------------------------------------:|:-------------------------:
+<B>Result</B>|![result-star-1](doc/images/star_metrics/result_star1.jpg "result-star-1") | ![result-star-2](doc/images/star_metrics/result_star2.jpg "result-star-2") | ![result-star-3](doc/images/star_metrics/result_star3.jpg "result-star-3") | ![result-star-4](doc/images/star_metrics/result_star4.jpg "result-star-4") | ![result-star-5](doc/images/star_metrics/result_star5.jpg "result-star-5")
+<B>SNR</B> |                    3.42                    |                                    4.51                                    |                                    5.92                                    |                                    6.72                                    |4.14
+<B>HFD</B> |                    27.29                    |                                   21.79                                    |                                   15.90                                    |                                    9.18                                    |3.44
+<B>FWHM</B> |                    7.02                    |                                    3.26                                    |                                    9.73                                    |                                    4.97                                    |1.85
 
 
 
