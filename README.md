@@ -86,11 +86,11 @@ SNR: 4.14, HFD: 3.44, FWHM: 1.85
 The following libraries are required to build libstarmathpp on Ubuntu 20.04 LTS or Ubuntu 22.04.
 For other Linux distributions the package names may slightly vary.
 
-	sudo apt-get update
-	sudo apt-get install zlib1g-dev cimg-dev libgsl-dev libccfits-dev libboost-dev \
-	                     libboost-log-dev libboost-regex-dev libboost-thread-dev \
-						 libboost-test-dev clang-tidy
-
+	sudo apt-get install librange-v3-dev zlib1g-dev cimg-dev libtiff-dev libccfits-dev \
+		                 libboost-dev libboost-regex-dev libboost-thread-dev \
+						 libboost-test-dev libgoogle-glog-dev libeigen3-dev \
+						 libceres-dev libunwind-dev
+						 
 ### Checkout repository
 
 	git clone https://github.com/carsten0x51h/libstarmath.git
