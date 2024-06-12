@@ -18,11 +18,6 @@ TODO/IDEA: Introduce filter: "has_star" / "has_single_star"...
 
 #### Input images
 
-
-
-
-
-
 Star 1  |                                  Star 2                                   |                                 Star 3                                  |                                 Star 4                                  | Star 5
 :---------------------------:|:-------------------------------------------------------------------------:|:-----------------------------------------------------------------------:|:-----------------------------------------------------------------------:|:-------------------------:
 ![input-star-1](doc/images/star_metrics/input_star1.jpg "input-star-1")  |  ![input-star-2](doc/images/star_metrics/input_star2.jpg "input-star-2")  | ![input-star-3](doc/images/star_metrics/input_star3.jpg "input-star-3") | ![input-star-4](doc/images/star_metrics/input_star4.jpg "input-star-4") | ![input-star-5](doc/images/star_metrics/input_star5.jpg "input-star-5")
@@ -76,6 +71,33 @@ SNR: 4.14, HFD: 3.44, FWHM: 1.85
 <B>SNR</B> |                    3.42                    |                                    4.51                                    |                                    5.92                                    |                                    6.72                                    |4.14
 <B>HFD</B> |                    27.29                    |                                   21.79                                    |                                   15.90                                    |                                    9.18                                    |3.44
 <B>FWHM</B> |                    7.02                    |                                    3.26                                    |                                    9.73                                    |                                    4.97                                    |1.85
+
+
+
+
+
+
+
+### 2. Image development
+In this example...
+
+
+#### Input images
+TODO
+
+#### Code
+```cpp
+  ...
+  
+	  
+  ...
+```
+
+#### Output
+```bash
+...
+```
+
 
 
 
