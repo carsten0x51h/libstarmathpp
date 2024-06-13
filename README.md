@@ -111,7 +111,7 @@ For other Linux distributions the package names may slightly vary.
 	sudo apt-get install librange-v3-dev zlib1g-dev cimg-dev libtiff-dev libccfits-dev \
 		libboost-dev libboost-regex-dev libboost-thread-dev \
 		libboost-test-dev libgoogle-glog-dev libeigen3-dev \
-		libceres-dev libunwind-dev
+		libceres-dev libunwind-dev libpng-dev libjpeg-dev
 						 
 ### Checkout repository
 
