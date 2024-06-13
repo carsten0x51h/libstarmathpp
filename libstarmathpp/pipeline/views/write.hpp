@@ -41,7 +41,7 @@
 #include <libstarmathpp/image.hpp>
 #include <libstarmathpp/io/image_writer.hpp>
 
-#define STARMATHPP_PIPELINE_WRITE_DEBUG 1
+#define STARMATHPP_PIPELINE_WRITE_DEBUG 0
 
 // TODO: Question: This can be an action or a view... If a view, it just stores
 //       the image "along the way" as one more step in the pipeline.
@@ -77,12 +77,12 @@ static std::string compose_filename_from_pattern(const std::string &pattern) {
  *              views::write() call can be useful to store a copy to a file in the middle of a pipeline.
  *              actions::write() must be used, as a final step to finish a pipeline.
  */
-template<typename ImageType = float>
+template<typename ImageType>
 auto write(const std::filesystem::path &directory,
            const std::string &image_filename_pattern = "img_%03d.fit",
            bool allow_override = true) {
   return ranges::views::transform(
-      [=](const std::shared_ptr<Image> &image) {
+      [=](const std::shared_ptr<cimg_library::CImg<ImageType>> &image) {
 
         DEBUG_IMAGE_DISPLAY(*image, "pipeline_write_in",
                             STARMATHPP_PIPELINE_WRITE_DEBUG);
