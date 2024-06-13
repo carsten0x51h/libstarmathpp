@@ -65,7 +65,8 @@ void check_filepath(const std::filesystem::path &filepath, bool override) {
  * @param filepath
  * @param image
  */
-void write_fits(const std::string &filepath, const cimg_library::CImg<uint16_t> &img, bool override) {
+void write_fits(const std::string &filepath,
+                const cimg_library::CImg<uint16_t> &img, bool override) {
 
   std::stringstream debugSs;
 
@@ -82,30 +83,60 @@ void write_fits(const std::string &filepath, const cimg_library::CImg<uint16_t> 
   }
 }
 
+namespace detail {
+
 /**
  *
  */
-void write(const Image &img, const std::filesystem::path &filepath,
-           bool override) {
+template<typename ImageType>
+void write_internal(const cimg_library::CImg<ImageType> &img, const std::filesystem::path &filepath,
+                    bool override) {
   check_filepath(filepath, override);
 
   const std::string filepath_lower = boost::algorithm::to_lower_copy(
       filepath.string());
 
+  if (starmathpp::io::fits::is_fits(filepath_lower)
+      || starmathpp::io::fits::is_fits_gz(filepath_lower)) {
+    write_fits(filepath.string(), img, override);
+  } else {
+    img.save(filepath.string().c_str());
+  }
+
+}
+}  // namespace detail
+
+/**
+ * TODO: Use template specialization here...
+ */
+void write(const Image &img, const std::filesystem::path &filepath,
+           bool override) {
   // NOTE: Storing a float image as TIFF or FITS image results in an
   // image which is probably correct, but which has a range from 0..1
   // and NO program (not even ImageJ) or ImageMagick can display it
   // correctly. Therefore, the float image is converted to a 16 bit
   // image before storing it.
-  cimg_library::CImg<uint16_t> uint16_image = img.get_normalize(0, 65535).quantize(65536);
+  //
+  cimg_library::CImg<uint16_t> uint16_image = img.get_normalize(0, 65535)
+      .quantize(65536);
 
+  detail::write_internal(uint16_image, filepath, override);
+}
 
-  if (starmathpp::io::fits::is_fits(filepath_lower)
-      || starmathpp::io::fits::is_fits_gz(filepath_lower)) {
-    write_fits(filepath.string(), uint16_image, override);
-  } else {
-    uint16_image.save(filepath.string().c_str());
-  }
+/**
+ *
+ */
+void write(const cimg_library::CImg<uint8_t> &img,
+           const std::filesystem::path &filepath, bool override) {
+  detail::write_internal(img, filepath, override);
+}
+
+/**
+ *
+ */
+void write(const cimg_library::CImg<uint16_t> &img,
+           const std::filesystem::path &filepath, bool override) {
+  detail::write_internal(img, filepath, override);
 }
 
 }
