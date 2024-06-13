@@ -140,6 +140,16 @@ include_directories(${CERES_INCLUDE_DIRS})
 include(FindTIFF)
 
 #
+# Find PNG library
+#
+find_package(PNG REQUIRED)
+
+#
+# Find JPEG library
+#
+find_package(JPEG REQUIRED)
+
+#
 # C++ std filesystem library
 #
 include(cmake/FindFilesystem.cmake)

@@ -64,6 +64,9 @@
  */
 #define cimg_use_tiff
 
+#define cimg_use_jpeg
+#define cimg_use_png
+
 #include <CImg.h>
 
 // The following undef is needed due to the following compiler problem:
