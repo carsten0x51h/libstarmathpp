@@ -29,7 +29,7 @@
 #include <libstarmathpp/algorithm/stretch/stretcher.hpp>
 #include <libstarmathpp/image.hpp>
 
-#define STARMATHPP_ALGORITHM_MIDTONE_BALANCE_STRETCHER_DEBUG 1
+#define STARMATHPP_ALGORITHM_MIDTONE_BALANCE_STRETCHER_DEBUG 0
 
 namespace starmathpp::algorithm {
 
@@ -115,10 +115,6 @@ class MidtoneBalanceStretcher : public Stretcher {
     float shadows = clip_to_zero(median + shadowsClipping * mad);
     float m = midtone_transfer_function(median - shadows, target_background,
                                         0.0F, 1.0F);
-
-    // TODO: Remove
-    std::cerr << "m=" << m << ", shadows: " << shadows << ", highlights: "
-        << 1.0F << std::endl;
 
     return {m, shadows, 1.0F};
   }
