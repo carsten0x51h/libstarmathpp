@@ -31,12 +31,13 @@ set(sources
 #
 add_library(${target} ${sources})
 
-message("* TIFF LIBS : ${TIFF_LIBRARIES}")
 
 # Other libraries the starmathpp library depends on
 target_link_libraries(${target}
 	INTERFACE
 	${TIFF_LIBRARIES}
+	${PNG_LIBRARIES}
+	${JPEG_LIBRARIES}
 	${CERES_LIBRARIES}
 	glog::glog
 	PRIVATE
