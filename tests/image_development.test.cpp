@@ -44,10 +44,12 @@
 #include <libstarmathpp/pipeline/views/subtract.hpp>
 #include <libstarmathpp/pipeline/views/divide_by.hpp>
 #include <libstarmathpp/pipeline/views/interpolate_bad_pixels.hpp>
+#include <libstarmathpp/pipeline/views/stretch.hpp>
 
 #include <libstarmathpp/io/filesystem_wrapper.hpp>
 
 #include <libstarmathpp/algorithm/average.hpp>
+#include <libstarmathpp/algorithm/stretch/midtone_balance_stretcher.hpp>
 
 #include <libstarmathpp/floating_point_equality.hpp>
 
@@ -60,18 +62,19 @@ using namespace starmathpp::algorithm;
 using namespace starmathpp::pipeline::views;
 
 /**
- * IDEA:
- *         AstroImageProcessingPipelineT
- *              .of("light-frames/*.fits")                                                  -> List<img>
- *              .subtract(ImageProcessingPipelineT.of("dark-frames/*.fits").average())      -> List<img>
- *              .divide(ImageProcessingPipelineT.of("flatfield-frames/*.fits").average())   -> List<img>
- *              .average()                                                                  -> img
- *              .stretch(StretcherT::-...)                                                  -> img
- *              .store/save("my-filename.png")
+ * IDEA: Develop an astronomical image by averaging the dark frames,
+ * averaging the flat-field frames, averaging the dark flat-field frames,
+ * subtracting the average dark flat-field frame from each flat-field frame,
+ * then average the resulting flat-field frames, subtract the average dark
+ * frame from each light frame and divide each light frame by the average
+ * flat-field frame. Then average all resulting light frames.
+ * In addition, for all frames the bad pixels are interpolated.
+ * In a final step the image is auto-stretched using the midtone balance
+ * algorithm.
  *
  * NOTE: This does no align the images.
  *
- * TODO: Add     | value_clip(ClippingAlgorithmT) after subtract?
+ * TODO / IDEA: Add     | value_clip(ClippingAlgorithmT) after subtract?
  */
 BOOST_AUTO_TEST_CASE(pipeline_standard_image_development_test, * boost::unit_test::tolerance(0.1))
 {
@@ -95,45 +98,55 @@ BOOST_AUTO_TEST_CASE(pipeline_standard_image_development_test, * boost::unit_tes
    * NAN == NAN is false. Therefore, remove_nans() is the last step which uses a median blur filter
    * to interpolate all NAN values using their surrounding neighbours.
    */
-  auto light_average_no_nans_range =
-  view::single(
-      average(
-          light_frame_files
-          | read()
-          | interpolate_bad_pixels(500 /*threshold*/, 3 /*filter size*/)
-          | subtract(
-              average(dark_files
-                  | read()
-                  | interpolate_bad_pixels(500 /*threshold*/, 3 /*filter size*/)
-              )
-          )
-          | divide_by(
-              average(
-                  flat_files
-                  | read()
-                  | interpolate_bad_pixels(500 /*threshold*/, 3 /*filter size*/)
-                  | subtract(
-                      average(dark_flat_files
-                          | read()
-                          | interpolate_bad_pixels(500 /*threshold*/, 3 /*filter size*/)
-                      )
-                  )
+  auto final_image_vec =
+      view::single(
+          average(
+             light_frame_files
+             | read()
+             | interpolate_bad_pixels(500 /*threshold*/, 3 /*filter size*/)
+             | subtract(
+                 average(dark_files
+                     | read()
+                     | interpolate_bad_pixels(500 /*threshold*/, 3 /*filter size*/)
+                 )
+             )
+             | divide_by(
+                 average(
+                     flat_files
+                     | read()
+                     | interpolate_bad_pixels(500 /*threshold*/, 3 /*filter size*/)
+                     | subtract(
+                         average(dark_flat_files
+                             | read()
+                             | interpolate_bad_pixels(500 /*threshold*/, 3 /*filter size*/)
+                         )
+                     )
+                 )
               )
           )
       )
-  );
+      | stretch(starmathpp::algorithm::MidtoneBalanceStretcher(0.06F))
+      | to<std::vector>();
 
   // This line initially generated the expected result.
   std::string expected_image_filename = base_path + "expected_result.tiff";
-  Image expected_result(expected_image_filename.c_str());
+  cimg_library::CImg<uint8_t> expected_result(expected_image_filename.c_str());
 
   // Just one image is expected as result from the processing pipeline
-  BOOST_TEST(size(light_average_no_nans_range) == 1);
+  BOOST_TEST(final_image_vec.size() == 1);
 
   // The ranges::front() call extracts the only image from the range (here a std::shared_ptr<ImageT>).
-  auto calculated_img = *ranges::front(light_average_no_nans_range);
+  cimg_library::CImg<uint8_t> calculated_img = *final_image_vec.front();
 
-  BOOST_TEST(is_almost_equal(calculated_img, expected_result, 0.00001));
+  // TODO / FIXME: When persisting the image and loading the image again
+  //               from disc (the expected result), some rounding causes
+  //               slight differences in the pixel values (+/-1).
+  //               Therefore, the comparison is done by subtracting.
+  //               The conversion to a float image is done because otherwise
+  //               the uint8_t type causes problems in case of negaitve values.
+  Image diff_image = (Image)calculated_img - (Image)expected_result;
+
+  BOOST_TEST(*diff_image.abs() < 2);
 }
 
 BOOST_AUTO_TEST_SUITE_END();
