@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_CASE(pipeline_write_images_test)
       { "img_002.fit", 184320 }, };
 
   auto written_images = images_to_write
-      | pipeline::views::write(".", "img_%03d.fit", true /*allowOverride*/)
+      | pipeline::views::write<float>(".", "img_%03d.fit", true /*allowOverride*/)
       | to<std::vector>();
 
   // TODO: Test allowOverride...
