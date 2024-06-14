@@ -136,6 +136,8 @@ TODO
 ...
 ```
 
+![result-image-1](doc/images/image_development/image_development_result.jpg "result-image-1")
+
 
 
 
