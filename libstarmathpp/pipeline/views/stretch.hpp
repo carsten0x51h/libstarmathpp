@@ -51,8 +51,9 @@ auto stretch(const starmathpp::algorithm::Stretcher &stretcher) {
         DEBUG_IMAGE_DISPLAY(input_image_ref, "pipeline_view_stretcher_in",
                             STARMATHPP_PIPELINE_STRETCHER_DEBUG);
 
-        auto stretched_image = std::make_shared < cimg_library::CImg
-            < uint8_t >> (stretcher.stretch(input_image_ref));
+        auto stretched_image = std::make_shared<
+            const cimg_library::CImg<uint8_t>>(
+            stretcher.stretch(input_image_ref));
 
         DEBUG_IMAGE_DISPLAY(*stretched_image, "pipeline_view_stretcher_out",
                             STARMATHPP_PIPELINE_STRETCHER_DEBUG);
