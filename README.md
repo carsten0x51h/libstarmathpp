@@ -88,8 +88,46 @@ TODO
 #### Code
 ```cpp
   ...
-  
-	  
+  const std::string base_path = "my/raw_image/base_directory/";
+
+  auto dark_files = files(base_path + "dark", "(.*\\.fit\\.gz)") | to<std::vector>();
+  auto dark_flat_files = files(base_path + "dark_flat", "(.*\\.fit\\.gz)") | to<std::vector>();
+  auto flat_files = files(base_path + "flat", "(.*\\.fit\\.gz)") | to<std::vector>();
+  auto light_frame_files = files(base_path + "light", "(.*\\.fit\\.gz)") | to<std::vector>();
+
+  float BAD_PIXEL_THRESHOLD = 500;
+  float FILTER_CORE_SIZE = 3;
+  float TARGET_BACKGROUND = 0.06F;
+
+  view::single(
+      average(
+         light_frame_files
+         | read()
+         | interpolate_bad_pixels(BAD_PIXEL_THRESHOLD, FILTER_CORE_SIZE)
+         | subtract(
+             average(dark_files
+                 | read()
+                 | interpolate_bad_pixels(BAD_PIXEL_THRESHOLD, FILTER_CORE_SIZE)
+             )
+         )
+         | divide_by(
+             average(
+                 flat_files
+                 | read()
+                 | interpolate_bad_pixels(BAD_PIXEL_THRESHOLD, FILTER_CORE_SIZE)
+                 | subtract(
+                     average(dark_flat_files
+                         | read()
+                         | interpolate_bad_pixels(BAD_PIXEL_THRESHOLD, FILTER_CORE_SIZE)
+                     )
+                 )
+             )
+          )
+      )
+  )
+  | stretch(starmathpp::algorithm::MidtoneBalanceStretcher(TARGET_BACKGROUND))
+  | write<uint8_t>(".", "final_image_%03d.tiff");
+		  
   ...
 ```
 
