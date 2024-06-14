@@ -39,6 +39,7 @@ DEF_Exception(ImageWriter);
 
 /**
  * TODO: Document...
+ * TODO: Use template specialization for float only...
  */
 void write(const Image &img, const std::filesystem::path &filepath,
            bool override = true);
