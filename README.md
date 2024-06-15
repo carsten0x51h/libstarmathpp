@@ -4,7 +4,7 @@ libstarmathpp - A C++ library to process astronomical images based on CImg and r
 ===========
 
 ## Status of this project
-![attention](doc/images/attention.webp "attention") **This project is work in progress. The project is new and therefore there are a lot of changes and for the moment the API cannot be considered as stable.**
+![attention](doc/images/attention.webp "attention") **This project is work in progress i.e. for the moment the API cannot be considered as stable.**
 
 
 ## Summary
