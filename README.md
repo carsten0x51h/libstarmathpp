@@ -13,7 +13,7 @@ to process images) with the famous range-v3 library from Eric Niebler (https://g
 to simplify the programatical processing of astronomical images by allowing the construction of intuitive and
 easy to understand image processing pipelines.
 
-<br><br>
+<br>
 
 ## Usage examples
 
@@ -81,7 +81,7 @@ SNR: 4.14, HFD: 3.44, FWHM: 1.85
 
 
 
-<br><br><br>
+<br><br>
 
 
 ### 2. Image development
@@ -143,15 +143,13 @@ In a last step the final frame is automatically stretched by using a midtone bal
 ```
 
 #### Output
-```bash
-...
-```
+The following image is the result of the processing pipeline above:
 
 ![result-image-1](doc/images/image_development/image_development_result.jpg "result-image-1")
 
 
 
-<br><br><br>
+<br><br>
 
 
 ## build
