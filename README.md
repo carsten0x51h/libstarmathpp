@@ -13,7 +13,7 @@ to process images) with the famous range-v3 library from Eric Niebler (https://g
 to simplify the programatical processing of astronomical images by allowing the construction of intuitive and
 easy to understand image processing pipelines.
 
-<br><br><br><br>
+<br><br>
 
 ## Usage examples
 
@@ -90,9 +90,9 @@ This example shows a more or less classical processing pipeline for astronomical
 ![image-devlopment-data-flow-1](doc/images/image_development/image_development_data_flow.png "image-devlopment-data-flow-1")
 
 The **light frames** are the most important images. They represent the photons which have been collected from the night sky by the CCD sensor through the telescope. In addition, multiple **dark frames** are recorded to measure the noise of the camera. The dark frames are averaged to a **master dark** frame to reduce the noise. This master dark frame is then subtracted from each light frame. In the next step all such light frames where the master dark was subtracted, are averaged to an **average light frame**.
-<br>
+<br><br>
 In addition, multiple **flatfield frames** are recorded. To do so the telescope is directed against an evenly distributed white light source. The resulting flatfield frames are then used to correct for variations in the sensitivity of the detector and the optical system. The flatfield frames also contain noise. To reduce the noise **flatfield dark frames** are recorded and then averaged. The resulting **flatfield master dark** frame is then subtracted from each flatfield frame. Finally, the resulting frames are averaged. This is the **average flatfield frame**. In the next step the **average light frame** is divided by this average flatfield frame.
-<br>
+<br><br>
 In a last step the final frame is automatically stretched by using a midtone balance algorithm. In this example only the stretched image is stored as 8 bit image to disc. The resulting image can be found further below.
 
 
