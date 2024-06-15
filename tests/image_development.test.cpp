@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_CASE(pipeline_standard_image_development_test, * boost::unit_tes
   float FILTER_CORE_SIZE = 3;
   float TARGET_BACKGROUND = 0.06F;
 
-  view::single(
+  auto final_image_vec = view::single(
       average(
          light_frame_files
          | read()
@@ -126,28 +126,28 @@ BOOST_AUTO_TEST_CASE(pipeline_standard_image_development_test, * boost::unit_tes
       )
   )
   | stretch(starmathpp::algorithm::MidtoneBalanceStretcher(TARGET_BACKGROUND))
-  | starmathpp::pipeline::actions::write<uint8_t>(".", "final_image_%03d.tiff");
+  | to<std::vector>();
 
 
   // This line initially generated the expected result.
-//  std::string expected_image_filename = base_path + "expected_result.tiff";
-//  cimg_library::CImg<uint8_t> expected_result(expected_image_filename.c_str());
-//
-//  // Just one image is expected as result from the processing pipeline
-//  BOOST_TEST(final_image_vec.size() == 1);
-//
-//  // The ranges::front() call extracts the only image from the range (here a std::shared_ptr<ImageT>).
-//  cimg_library::CImg<uint8_t> calculated_img = *final_image_vec.front();
-//
-//  // TODO / FIXME: When persisting the image and loading the image again
-//  //               from disc (the expected result), some rounding causes
-//  //               slight differences in the pixel values (+/-1).
-//  //               Therefore, the comparison is done by subtracting.
-//  //               The conversion to a float image is done because otherwise
-//  //               the uint8_t type causes problems in case of negaitve values.
-//  Image diff_image = (Image)calculated_img - (Image)expected_result;
-//
-//  BOOST_TEST(*diff_image.abs() < 2);
+  std::string expected_image_filename = base_path + "expected_result.tiff";
+  cimg_library::CImg<uint8_t> expected_result(expected_image_filename.c_str());
+
+  // Just one image is expected as result from the processing pipeline
+  BOOST_TEST(final_image_vec.size() == 1);
+
+  // The ranges::front() call extracts the only image from the range (here a std::shared_ptr<ImageT>).
+  cimg_library::CImg<uint8_t> calculated_img = *final_image_vec.front();
+
+  // TODO / FIXME: When persisting the image and loading the image again
+  //               from disc (the expected result), some rounding causes
+  //               slight differences in the pixel values (+/-1).
+  //               Therefore, the comparison is done by subtracting.
+  //               The conversion to a float image is done because otherwise
+  //               the uint8_t type causes problems in case of negaitve values.
+  Image diff_image = (Image)calculated_img - (Image)expected_result;
+
+  BOOST_TEST(*diff_image.abs() < 2);
 }
 
 BOOST_AUTO_TEST_SUITE_END();
