@@ -14,7 +14,6 @@ add_test_module(star_metrics_integration_tests star_metrics.test.cpp)
 add_test_module(star_recognizer_integration_tests star_recognizer.test.cpp)
 
 
-
 # # 
 # # Deployment
 # # 
