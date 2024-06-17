@@ -16,6 +16,9 @@ easy to understand image processing pipelines.
 
 <br>
 
+## API documentation
+An automatically generated API with doxygen can be found at: https://carsten0x51h.github.io/libstarmathpp/
+
 ## Usage examples
 
 ### 1. Calculation of star metrics
