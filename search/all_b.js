@@ -11,5 +11,6 @@ var searchData=
   ['moving_5faverage_113',['MOVING_AVERAGE',['../structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#ad2d43db3f1d1d30801525ad65c5e29c3a7792752ad99467c058fe54cff054adfd',1,'starmathpp::pipeline::views::InterpolationType']]],
   ['multiply_5fby_114',['multiply_by',['../namespacestarmathpp_1_1pipeline_1_1views.html#a0c9cab68b684e2ba17f9e720db5d67c2',1,'starmathpp::pipeline::views::multiply_by(const std::shared_ptr&lt; Image &gt; &amp;image_to_multiply_by_ptr)'],['../namespacestarmathpp_1_1pipeline_1_1views.html#ae7db8bf05839d5a5293554cbdf7d350f',1,'starmathpp::pipeline::views::multiply_by(ImageType scalar_to_multiply_by)']]],
   ['multiply_5fby_2ehpp_115',['multiply_by.hpp',['../multiply__by_8hpp.html',1,'']]],
-  ['multiplybytraits_116',['MultiplyByTraits',['../structstarmathpp_1_1pipeline_1_1views_1_1_multiply_by_traits.html',1,'starmathpp::pipeline::views']]]
+  ['multiplybytraits_116',['MultiplyByTraits',['../structstarmathpp_1_1pipeline_1_1views_1_1_multiply_by_traits.html',1,'starmathpp::pipeline::views']]],
+  ['my_20personal_20index_20page_117',['My Personal Index Page',['../index.html',1,'']]]
 ];
