@@ -23,10 +23,17 @@
  *
  ****************************************************************************/
 
-/**
- * @mainpage
+/*! \mainpage My Personal Index Page
  *
- * TODO: This comments go to the main page ...
+ * \section intro_sec Introduction
+ *
+ * This is the introduction.
+ *
+ * \section install_sec Installation
+ *
+ * \subsection step1 Step 1: Opening the box
+ *
+ * etc...
  */
 #ifndef LIBSTARMATHPP_ALL_HPP_
 #define LIBSTARMATHPP_ALL_HPP_
