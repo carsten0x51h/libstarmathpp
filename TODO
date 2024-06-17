@@ -1,5 +1,6 @@
 TODO
 ----
+-Document star detector in README file 
 -Add "detect stars" integration test 
 -IDEA: Add pipeline stretch(curve) function
 -IDEA: Add pipeline denoiser operation
