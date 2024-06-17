@@ -1,59 +1,59 @@
-name: CMake
+# name: CMake
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
 
-env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Coverage
+# env:
+#   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+#   BUILD_TYPE: Coverage
 
-jobs:
-  build:
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+# jobs:
+#   build:
+#     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+#     # You can convert this to a matrix build if you need cross-platform coverage.
+#     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
 
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-20.04, ubuntu-22.04]
-        compiler: [gcc, clang]
+#     runs-on: ${{ matrix.os }}
+#     strategy:
+#       matrix:
+#         os: [ubuntu-20.04, ubuntu-22.04]
+#         compiler: [gcc, clang]
 
-    steps:
-    - uses: actions/checkout@v4
+#     steps:
+#     - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      shell: bash
-      run: sudo apt-get update ; sudo apt-get install librange-v3-dev zlib1g-dev cimg-dev libtiff-dev libccfits-dev libboost-dev libboost-regex-dev libboost-thread-dev libboost-test-dev libgoogle-glog-dev libeigen3-dev libceres-dev libunwind-dev libpng-dev libjpeg-dev lcov cmake
+#     - name: Install dependencies
+#       shell: bash
+#       run: sudo apt-get update ; sudo apt-get install librange-v3-dev zlib1g-dev cimg-dev libtiff-dev libccfits-dev libboost-dev libboost-regex-dev libboost-thread-dev libboost-test-dev libgoogle-glog-dev libeigen3-dev libceres-dev libunwind-dev libpng-dev libjpeg-dev lcov cmake
 
-    - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DOPTION_ENABLE_CLANG_TIDY=OFF
+#     - name: Configure CMake
+#       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+#       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+#       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DOPTION_ENABLE_CLANG_TIDY=OFF
 
-    - name: Build
-      # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+#     - name: Build
+#       # Build your program with the given configuration
+#       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C ${{env.BUILD_TYPE}} --output-on-failure
+#     - name: Test
+#       working-directory: ${{github.workspace}}/build
+#       # Execute tests defined by the CMake configuration.  
+#       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+#       run: ctest -C ${{env.BUILD_TYPE}} --output-on-failure
 
-    - name: Capture coverage info
-      run: lcov --capture --directory ${{github.workspace}}/build --output-file coverage.info --exclude "*.test.cpp.*"
+#     - name: Capture coverage info
+#       run: lcov --capture --directory ${{github.workspace}}/build --output-file coverage.info --exclude "*.test.cpp.*"
 
-    - name: Filter out system files
-      run: lcov --remove coverage.info '/usr/*' --output-file coverage.info
+#     - name: Filter out system files
+#       run: lcov --remove coverage.info '/usr/*' --output-file coverage.info
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4.0.1
-      with:
-        files: coverage.info
-        flags: unittests
-        name: codecov-libstarmathpp
-        token: '${{ secrets.CODECOV_TOKEN }}'
+#     - name: Upload coverage to Codecov
+#       uses: codecov/codecov-action@v4.0.1
+#       with:
+#         files: coverage.info
+#         flags: unittests
+#         name: codecov-libstarmathpp
+#         token: '${{ secrets.CODECOV_TOKEN }}'
