@@ -212,10 +212,8 @@ The project mostly follows the C++ coding style guide from Google: https://googl
 Formatting rules e.g. for Eclipse CDT can be found here: https://github.com/google/styleguide/blob/gh-pages/eclipse-cpp-google-style.xml
 
 ## Roadmap
+Check the [TODO](TODO) list to see the open points, upcoming tasks and ideas.
 
-TODOs
-
-https://github.com/carsten0x51h/libstarmathpp/blob/main/TODO#L1-L6
 
 
 ## Further information
