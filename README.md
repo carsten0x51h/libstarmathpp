@@ -211,6 +211,9 @@ Also see https://stackoverflow.com/questions/2360734/whats-a-good-directory-stru
 The project mostly follows the C++ coding style guide from Google: https://google.github.io/styleguide/cppguide.html
 Formatting rules e.g. for Eclipse CDT can be found here: https://github.com/google/styleguide/blob/gh-pages/eclipse-cpp-google-style.xml
 
+## Roadmap
+[TODO](TODO)
+
 
 ## Further information
 Please visit my blog https://www.lost-infinity.com for further details.
