@@ -32,8 +32,8 @@
 #include <range/v3/view/transform.hpp>
 #include <range/v3/iterator_range.hpp>
 
-#include <libstarmathpp/pipeline/views/arithmetic_function_template.hpp>
 #include <libstarmathpp/io/filesystem_wrapper.hpp>
+#include <libstarmathpp/views/arithmetic_function_template.hpp>
 
 namespace starmathpp::pipeline::views {
 

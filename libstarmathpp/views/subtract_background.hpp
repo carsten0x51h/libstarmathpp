@@ -28,9 +28,9 @@
 
 #include <range/v3/view/transform.hpp>
 
-#include <libstarmathpp/pipeline/views/arithmetic_function_template.hpp>
 #include <libstarmathpp/image.hpp>
 #include <libstarmathpp/algorithm/threshold/thresholder.hpp>
+#include <libstarmathpp/views/arithmetic_function_template.hpp>
 
 #define STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG 0
 

@@ -38,7 +38,7 @@
 #include <range/v3/view/filter.hpp>
 #include <range/v3/algorithm/set_algorithm.hpp>
 
-#include <libstarmathpp/pipeline/views/files.hpp>
+#include <libstarmathpp/views/files.hpp>
 
 BOOST_AUTO_TEST_SUITE(pipeline_files_tests)
 

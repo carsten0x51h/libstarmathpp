@@ -41,14 +41,14 @@
 #include <range/v3/action/join.hpp>
 
 
-#include <libstarmathpp/pipeline/views/files.hpp>
-#include <libstarmathpp/pipeline/views/read.hpp>
-#include <libstarmathpp/pipeline/views/subtract.hpp>
-#include <libstarmathpp/pipeline/views/divide_by.hpp>
-#include <libstarmathpp/pipeline/views/interpolate_bad_pixels.hpp>
-#include <libstarmathpp/pipeline/views/stretch.hpp>
+#include <libstarmathpp/views/files.hpp>
+#include <libstarmathpp/views/read.hpp>
+#include <libstarmathpp/views/subtract.hpp>
+#include <libstarmathpp/views/divide_by.hpp>
+#include <libstarmathpp/views/interpolate_bad_pixels.hpp>
+#include <libstarmathpp/views/stretch.hpp>
 
-#include <libstarmathpp/pipeline/actions/write.hpp>
+#include <libstarmathpp/actions/write.hpp>
 
 #include <libstarmathpp/io/filesystem_wrapper.hpp>
 

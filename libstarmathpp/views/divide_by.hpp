@@ -26,7 +26,7 @@
 #ifndef STARMATHPP_PIPELINE_VIEW_DIVIDE_BY_H_
 #define STARMATHPP_PIPELINE_VIEW_DIVIDE_BY_H_ STARMATHPP_PIPELINE_VIEW_DIVIDE_BY_H_
 
-#include <libstarmathpp/pipeline/views/arithmetic_function_template.hpp>
+#include <libstarmathpp/views/arithmetic_function_template.hpp>
 
 namespace starmathpp::pipeline::views {
 

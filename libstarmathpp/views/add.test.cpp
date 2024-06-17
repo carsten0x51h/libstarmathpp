@@ -34,7 +34,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <libstarmathpp/pipeline/views/add.hpp>
+#include <libstarmathpp/views/add.hpp>
 #include <libstarmathpp/inconsistent_image_dimensions_exception.hpp>
 
 BOOST_AUTO_TEST_SUITE (pipeline_add_tests)

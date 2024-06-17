@@ -33,7 +33,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <libstarmathpp/pipeline/views/detect_stars.hpp>
+#include <libstarmathpp/views/detect_stars.hpp>
 #include <libstarmathpp/algorithm/threshold/otsu_thresholder.hpp>
 
 BOOST_AUTO_TEST_SUITE (pipeline_views_detect_stars_tests)

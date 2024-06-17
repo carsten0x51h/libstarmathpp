@@ -25,45 +25,48 @@
 
 // Shared lib
 // This is much faster than the header only variant
-#define BOOST_TEST_MODULE "pipeline view stretch unit test"
+#define BOOST_TEST_MODULE "pipeline view read unit test"
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_DYN_LINK
 
-#include <range/v3/range/conversion.hpp> // ranges::to<>
-#include <range/v3/view/single.hpp>
-
 #include <boost/test/unit_test.hpp>
 
-#include <libstarmathpp/pipeline/views/stretch.hpp>
-#include <libstarmathpp/algorithm/stretch/midtone_balance_stretcher.hpp>
+#include <range/v3/range/conversion.hpp>
 
-BOOST_AUTO_TEST_SUITE (pipeline_view_stretch_tests)
+#include <libstarmathpp/views/read.hpp>
 
-using namespace ranges;
+BOOST_AUTO_TEST_SUITE(pipeline_read_tests)
+
 using namespace starmathpp;
-using namespace starmathpp::pipeline::views;
-
-/**
- * TODO: Document...
- */
-BOOST_AUTO_TEST_CASE(pipeline_subtract_background_image_test) {
-  ImagePtr test_image_ptr = std::make_shared<Image>(100,100,1,1,50); // 100x100, bg=50
-
-  auto result_images = ranges::views::single(test_image_ptr)
-  | stretch(starmathpp::algorithm::MidtoneBalanceStretcher(0.25F))
-  | to<std::vector>();
+using namespace ranges;
 
 
-// TODO:...
-//  std::vector<Image> expected_result_images = {
-//      *generate_test_image(25, 25, 10, 10, 0, 450.5),  // threshold=549.5 -> 1000-549.5 = 450.5
-//      *generate_test_image(25, 25, 10, 10, 0, 50.5),   // threshold=49.5 -> 100-49.5 = 50.5
-//      *generate_test_image(25, 25, 10, 10, 0, 450.5)   // threshold=549.5 -> 1000-549.5 = 450.5
-//  };
-//
-//  BOOST_TEST(result_images.size() == 3);
-//  BOOST_CHECK_EQUAL_COLLECTIONS(result_images.begin(), result_images.end(),
-//      expected_result_images.begin(), expected_result_images.end());
+
+BOOST_AUTO_TEST_CASE(pipeline_read_images_test)
+{
+    const std::vector<std::string> image_filenames {
+        "test_data/pipeline/read/test_image_tiff_1_65x85.tiff",
+        "test_data/pipeline/read/test_image_tiff_2_65x85.tiff",
+        "test_data/pipeline/read/test_image_fits_1_45x47.fits",
+        "test_data/pipeline/read/test_image_fits_2_45x47.fits"
+    };
+
+    const std::vector< std::pair<int, int> > expected_image_dimensions {
+            std::make_pair(65, 85),
+            std::make_pair(65, 85),
+            std::make_pair(45, 47),
+            std::make_pair(45, 47)
+    };
+
+    auto img_dimensions = image_filenames
+                            | pipeline::views::read()
+                            | views::transform(
+                                    [](const auto & img_ptr) {
+                                        return std::make_pair(img_ptr->width(), img_ptr->height());
+                                    })
+                            | to<std::vector>();
+
+    BOOST_TEST(img_dimensions == expected_image_dimensions);
 }
 
 BOOST_AUTO_TEST_SUITE_END();

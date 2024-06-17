@@ -23,10 +23,10 @@
  *
  ****************************************************************************/
 
-#ifndef STARMATHPP_PIPELINE_VIEW_SUBTRACT_HPP_
-#define STARMATHPP_PIPELINE_VIEW_SUBTRACT_HPP_ STARMATHPP_PIPELINE_VIEW_SUBTRACT_HPP_
+#ifndef STARMATHPP_PIPELINE_VIEW_MULTIPLY_BY_H_
+#define STARMATHPP_PIPELINE_VIEW_MULTIPLY_BY_H_ STARMATHPP_PIPELINE_VIEW_MULTIPLY_BY_H_
 
-#include <libstarmathpp/pipeline/views/arithmetic_function_template.hpp>
+#include <libstarmathpp/views/arithmetic_function_template.hpp>
 
 namespace starmathpp::pipeline::views {
 
@@ -34,23 +34,23 @@ namespace starmathpp::pipeline::views {
  *
  */
 template<typename ImageType>
-struct SubtractTraits {
+struct MultiplyByTraits {
   static std::string operation_name() {
-    return "subtract";
+    return "multiply";
   }
 
   static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
       const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
       const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr2) {
     return std::make_shared < cimg_library::CImg
-        < ImageType >> (*img_ptr1 - *img_ptr2);
+        < ImageType >> (img_ptr1->get_mul(*img_ptr2));
   }
 
   static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
       const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
       ImageType scalar_value) {
     return std::make_shared < cimg_library::CImg
-        < ImageType >> (*img_ptr1 - scalar_value);
+        < ImageType >> (*img_ptr1 * scalar_value);
   }
 };
 
@@ -58,20 +58,20 @@ struct SubtractTraits {
  *
  */
 template<typename ImageType = float>
-auto subtract(const std::shared_ptr<Image> &image_to_subtract_ptr) {
-  return arithmetic_function_tmpl<SubtractTraits, ImageType>(
-      image_to_subtract_ptr);
+auto multiply_by(const std::shared_ptr<Image> &image_to_multiply_by_ptr) {
+  return arithmetic_function_tmpl<MultiplyByTraits, ImageType>(
+      image_to_multiply_by_ptr);
 }
 
 /**
  *
  */
 template<typename ImageType = float>
-auto subtract(ImageType scalar_value_to_subtract) {
-  return arithmetic_function_tmpl<SubtractTraits, ImageType>(
-      scalar_value_to_subtract);
+auto multiply_by(ImageType scalar_to_multiply_by) {
+  return arithmetic_function_tmpl<MultiplyByTraits, ImageType>(
+      scalar_to_multiply_by);
 }
 
 }  // namespace starmathpp::pipeline::views
 
-#endif // STARMATHPP_PIPELINE_VIEW_SUBTRACT_HPP_
+#endif // STARMATHPP_PIPELINE_VIEW_MULTIPLY_BY_H_

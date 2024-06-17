@@ -25,7 +25,7 @@
 
 // Shared lib
 // This is much faster than the header only variant
-#define BOOST_TEST_MODULE "pipeline view multiply_by unit test"
+#define BOOST_TEST_MODULE "pipeline view divide_by unit test"
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_DYN_LINK
 
@@ -34,10 +34,10 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <libstarmathpp/pipeline/views/multiply_by.hpp>
+#include <libstarmathpp/views/divide_by.hpp>
 #include <libstarmathpp/inconsistent_image_dimensions_exception.hpp>
 
-BOOST_AUTO_TEST_SUITE (pipeline_multiply_by_tests)
+BOOST_AUTO_TEST_SUITE (pipeline_divide_by_tests)
 
 using namespace starmathpp;
 using namespace ranges;
@@ -46,7 +46,7 @@ using namespace ranges;
  * Test if dividing an image by another image results in the
  * expected pixel values.
  */
-BOOST_AUTO_TEST_CASE(pipeline_multiply_by_image_test)
+BOOST_AUTO_TEST_CASE(pipeline_divide_by_image_test)
 {
   std::vector<ImagePtr> input_images = {
     std::make_shared<Image>(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
@@ -54,17 +54,17 @@ BOOST_AUTO_TEST_CASE(pipeline_multiply_by_image_test)
     std::make_shared<Image>(5, 5, 1, 1, -10)// 5x5 - All pixels have value -10
   };
 
-  std::vector<Image> expected_result_images = { Image(5, 5, 1, 1, 26),  // 5x5 - All pixels have value 26
-  Image(5, 5, 1, 1, 20),  // 5x5 - All pixels have value 20
-  Image(5, 5, 1, 1, -20)  // 5x5 - All pixels have value -20
+  std::vector<Image> expected_result_images = { Image(5, 5, 1, 1, 6.5F),  // 5x5 - All pixels have value 6.5F
+  Image(5, 5, 1, 1, 5),  // 5x5 - All pixels have value 5
+  Image(5, 5, 1, 1, -5)  // 5x5 - All pixels have value -5
       };
 
-  auto multiplier_image_5x5_value2_ptr1 = std::make_shared < Image
+  auto divisor_image_5x5_value2_ptr1 = std::make_shared < Image
       > (5, 5, 1, 1, 2);
 
   // NOTE: | views::indirect causes a segmentation fault
   auto result_images = input_images
-      | pipeline::views::multiply_by(multiplier_image_5x5_value2_ptr1)
+      | pipeline::views::divide_by(divisor_image_5x5_value2_ptr1)
       | views::transform([](const auto &img_ptr) {
         return *img_ptr;
       }) | to<std::vector>();
@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE(pipeline_multiply_by_image_test)
 /**
  * Test if dividing an image by a scalar value works.
  */
-BOOST_AUTO_TEST_CASE(pipeline_multiply_by_scalar_test)
+BOOST_AUTO_TEST_CASE(pipeline_divide_by_scalar_test)
 {
   std::vector<ImagePtr> input_images = {
     std::make_shared<Image>(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
@@ -85,12 +85,12 @@ BOOST_AUTO_TEST_CASE(pipeline_multiply_by_scalar_test)
     std::make_shared<Image>(5, 5, 1, 1, -10)// 5x5 - All pixels have value -10
   };
 
-  std::vector<Image> expected_result_images = { Image(5, 5, 1, 1, 26),  // 5x5 - All pixels have value 26
-  Image(5, 5, 1, 1, 20),  // 5x5 - All pixels have value 20
-  Image(5, 5, 1, 1, -20)  // 5x5 - All pixels have value -20
+  std::vector<Image> expected_result_images = { Image(5, 5, 1, 1, 6.5F),  // 5x5 - All pixels have value 513
+  Image(5, 5, 1, 1, 5),  // 5x5 - All pixels have value 510
+  Image(5, 5, 1, 1, -5)  // 5x5 - All pixels have value 510
       };
 
-  auto result_images = input_images | pipeline::views::multiply_by(2.0F)
+  auto result_images = input_images | pipeline::views::divide_by(2.0F)
       | views::transform([](const auto &img_ptr) {
         return *img_ptr;
       }) | to<std::vector>();
@@ -103,13 +103,14 @@ BOOST_AUTO_TEST_CASE(pipeline_multiply_by_scalar_test)
 /**
  * Test if dividing two images of different sizes fails with an exception.
  */
-BOOST_AUTO_TEST_CASE(pipeline_multiply_by_different_image_sizes_test)
+BOOST_AUTO_TEST_CASE(pipeline_divide_by_different_image_sizes_test)
 {
   auto image_5x5_value9_ptr1 = std::make_shared<Image>(5, 5, 1, 1, 9);
-  auto image_4x4_value9_ptr2 = std::make_shared < Image > (4, 4, 1, 1, 9);
+  auto image_4x4_value9_ptr2 = std::make_shared < Image
+      > (4, 4, 1, 1, 9);
 
   BOOST_CHECK_THROW(ranges::views::single(image_5x5_value9_ptr1)
-      | pipeline::views::multiply_by(image_4x4_value9_ptr2)
+      | pipeline::views::divide_by(image_4x4_value9_ptr2)
       | to<std::vector>(),
       starmathpp::InconsistentImageDimensionsException);
 }

@@ -43,13 +43,13 @@
 #include <range/v3/core.hpp>   // ranges::front()
 #include <range/v3/algorithm/for_each.hpp>
 
-#include <libstarmathpp/pipeline/views/files.hpp>
-#include <libstarmathpp/pipeline/views/read.hpp>
-#include <libstarmathpp/pipeline/views/write.hpp>
-#include <libstarmathpp/pipeline/views/subtract_background.hpp>
-#include <libstarmathpp/pipeline/views/scale.hpp>
-#include <libstarmathpp/pipeline/views/center_on_star.hpp>
-#include <libstarmathpp/pipeline/views/crop.hpp>
+#include <libstarmathpp/views/files.hpp>
+#include <libstarmathpp/views/read.hpp>
+#include <libstarmathpp/views/write.hpp>
+#include <libstarmathpp/views/subtract_background.hpp>
+#include <libstarmathpp/views/scale.hpp>
+#include <libstarmathpp/views/center_on_star.hpp>
+#include <libstarmathpp/views/crop.hpp>
 //#include <libstarmathpp/pipeline/views/interpolate_bad_pixels.hpp>
 
 #include <libstarmathpp/io/filesystem_wrapper.hpp>

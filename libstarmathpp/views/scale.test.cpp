@@ -36,7 +36,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <libstarmathpp/pipeline/views/scale.hpp>
+#include <libstarmathpp/views/scale.hpp>
 #include <libstarmathpp/floating_point_equality.hpp>
 
 BOOST_AUTO_TEST_SUITE (pipeline_scale_tests)

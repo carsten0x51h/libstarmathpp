@@ -42,14 +42,14 @@
 #include <libstarmathpp/algorithm/threshold/otsu_thresholder.hpp>
 #include <libstarmathpp/algorithm/centroid/intensity_weighted_centroider.hpp>
 
-#include <libstarmathpp/pipeline/views/files.hpp>
-#include <libstarmathpp/pipeline/views/read.hpp>
-#include <libstarmathpp/pipeline/views/write.hpp>
-#include <libstarmathpp/pipeline/views/interpolate_bad_pixels.hpp>
-#include <libstarmathpp/pipeline/views/detect_stars.hpp>
-#include <libstarmathpp/pipeline/views/scale.hpp>
-#include <libstarmathpp/pipeline/views/crop.hpp>
-#include <libstarmathpp/pipeline/views/center_on_star.hpp>
+#include <libstarmathpp/views/files.hpp>
+#include <libstarmathpp/views/read.hpp>
+#include <libstarmathpp/views/write.hpp>
+#include <libstarmathpp/views/interpolate_bad_pixels.hpp>
+#include <libstarmathpp/views/detect_stars.hpp>
+#include <libstarmathpp/views/scale.hpp>
+#include <libstarmathpp/views/crop.hpp>
+#include <libstarmathpp/views/center_on_star.hpp>
 
 //#include <libstarmathpp/io/filesystem_wrapper.hpp>
 

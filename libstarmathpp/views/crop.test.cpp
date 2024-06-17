@@ -36,7 +36,7 @@
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/view/single.hpp>
 
-#include <libstarmathpp/pipeline/views/crop.hpp>
+#include <libstarmathpp/views/crop.hpp>
 #include <libstarmathpp/image.hpp>
 #include <libstarmathpp/floating_point_equality.hpp>
 

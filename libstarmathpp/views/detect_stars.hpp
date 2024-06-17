@@ -26,8 +26,6 @@
 #ifndef STARMATHPP_PIPELINE_VIEW_DETECT_STARS_HPP_
 #define STARMATHPP_PIPELINE_VIEW_DETECT_STARS_HPP_ STARMATHPP_PIPELINE_VIEW_DETECT_STARS_HPP_
 
-#include <libstarmathpp/pipeline/views/arithmetic_function_template.hpp>
-
 #include <memory>
 #include <range/v3/view/transform.hpp>
 
@@ -35,6 +33,8 @@
 
 #include <libstarmathpp/algorithm/star_cluster_algorithm.hpp>
 #include <libstarmathpp/algorithm/threshold/thresholder.hpp>
+
+#include <libstarmathpp/views/arithmetic_function_template.hpp>
 
 #define STARMATHPP_PIPELINE_DETECT_STARS_DEBUG 0
 
