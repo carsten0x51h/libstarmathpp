@@ -45,7 +45,10 @@ jobs:
       run: ctest -C ${{env.BUILD_TYPE}} --output-on-failure
 
     - name: Capture coverage info
-      run: lcov --capture --directory ${{github.workspace}}/build --output-file coverage.info --exclude "*.test.cpp.*"
+      if: matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gcc'
+      run:|
+        echo "Running coverage..."
+        lcov --capture --directory ${{github.workspace}}/build --output-file coverage.info --exclude "*.test.cpp.*"
 
     - name: Filter out system files
       run: lcov --remove coverage.info '/usr/*' --output-file coverage.info

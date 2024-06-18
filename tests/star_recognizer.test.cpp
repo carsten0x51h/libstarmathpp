@@ -33,8 +33,8 @@
 
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/view/single.hpp>
-#include <range/v3/view/join.hpp>
-//#include <range/v3/action/join.hpp>
+//#include <range/v3/view/join.hpp>
+#include <range/v3/action/join.hpp>
 #include <range/v3/view/filter.hpp>
 #include <range/v3/core.hpp>   // ranges::front()
 #include <range/v3/algorithm/for_each.hpp>
@@ -50,8 +50,6 @@
 #include <libstarmathpp/views/scale.hpp>
 #include <libstarmathpp/views/crop.hpp>
 #include <libstarmathpp/views/center_on_star.hpp>
-
-//#include <libstarmathpp/io/filesystem_wrapper.hpp>
 
 #include <libstarmathpp/algorithm/average.hpp>
 
@@ -98,7 +96,7 @@ BOOST_AUTO_TEST_CASE(pipeline_star_recognizer_test) {
 //                    | write<float>(std::filesystem::current_path(), "img_%04d.fit")  // NOTE; path must exist, TODO: directory should change for each input image...
                     | to<std::vector>();
               })
-          | views::join | to<std::vector>();
+          | actions::join | to<std::vector>();
 
   BOOST_TEST(detected_star_images.size() == 92);// 216 detected stars (without hot-pixel removal)
 }
