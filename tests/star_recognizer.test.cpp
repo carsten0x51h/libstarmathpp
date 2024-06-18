@@ -93,12 +93,14 @@ BOOST_AUTO_TEST_CASE(pipeline_star_recognizer_test) {
                     | scale_up(3.0F)
                     | center_on_star(IntensityWeightedCentroider<float>())
                     | scale_down(3.0F)
-//                    | write<float>(std::filesystem::current_path(), "img_%04d.fit")  // NOTE; path must exist, TODO: directory should change for each input image...
+                    | write<float>(std::filesystem::current_path(), "img_%04d.fit")  // NOTE; path must exist, TODO: directory should change for each input image...
                     | to<std::vector>();
               })
           | actions::join | to<std::vector>();
 
-  BOOST_TEST(detected_star_images.size() == 92);// 216 detected stars (without hot-pixel removal)
+  // 2x216 detected stars without hot-pixel removal
+  // 2x92  detected stars with hot-pixel removal
+  BOOST_TEST(detected_star_images.size() == 184);
 }
 
 BOOST_AUTO_TEST_SUITE_END();
