@@ -51,9 +51,11 @@ jobs:
         lcov --capture --directory ${{github.workspace}}/build --output-file coverage.info --exclude "*.test.cpp.*"
 
     - name: Filter out system files
+      if: matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gcc'
       run: lcov --remove coverage.info '/usr/*' --output-file coverage.info
 
     - name: Upload coverage to Codecov
+      if: matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gcc'
       uses: codecov/codecov-action@v4.0.1
       with:
         files: coverage.info
@@ -62,6 +64,7 @@ jobs:
         token: '${{ secrets.CODECOV_TOKEN }}'
 
     - name: Deploy to GitHub Pages
+      if: matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gcc'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
