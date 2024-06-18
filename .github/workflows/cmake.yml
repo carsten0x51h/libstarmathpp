@@ -46,7 +46,7 @@ jobs:
 
     - name: Capture coverage info
       if: matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gcc'
-      run:|
+      run: |
         echo "Running coverage..."
         lcov --capture --directory ${{github.workspace}}/build --output-file coverage.info --exclude "*.test.cpp.*"
 
