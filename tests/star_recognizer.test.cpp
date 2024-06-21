@@ -32,8 +32,6 @@
 #include <boost/test/unit_test.hpp>
 
 #include <range/v3/range/conversion.hpp>
-#include <range/v3/view/single.hpp>
-//#include <range/v3/view/join.hpp>
 #include <range/v3/action/join.hpp>
 #include <range/v3/view/filter.hpp>
 #include <range/v3/core.hpp>   // ranges::front()
@@ -90,10 +88,11 @@ BOOST_AUTO_TEST_CASE(pipeline_star_recognizer_test) {
           | view::transform(
               [](const auto &detectedStars /*std::vector<cimg_library::CImg<ImageType>> */) {
                 return detectedStars
+                    | write<float>(std::filesystem::current_path(), "img_%04d.fit")  // NOTE; path must exist, TODO: directory should change for each input image...
                     | scale_up(3.0F)
                     | center_on_star(IntensityWeightedCentroider<float>())
                     | scale_down(3.0F)
-                    | write<float>(std::filesystem::current_path(), "img_%04d.fit")  // NOTE; path must exist, TODO: directory should change for each input image...
+                    | write<float>(std::filesystem::current_path(), "img_centered_%04d.fit")  // NOTE; path must exist, TODO: directory should change for each input image...
                     | to<std::vector>();
               })
           | actions::join | to<std::vector>();

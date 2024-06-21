@@ -156,6 +156,52 @@ The following image is the result of the processing pipeline above:
 <br><br>
 
 
+### 3. Star recognizer
+This example shows a more or less classical processing pipeline for astronomical images which is often used in astrophotography. To keep it simple the illustrated pipeline only processes the luminance channel an astronomical image (i.e. the input is a grayscale image). Firthermore, please note that in this example no alignment of the frames is performed. The interpolation of bad pixels is optional and not necessarily part of the classical processing flow of astronomial images. It helps to avoid atifacts and division by null / NAN problems. The following image illustrates the processing steps:
+
+![star-recognizer-data-flow-1](doc/images/star_recognizer/star_recognizer_data_flow.png "star-recognizer-data-flow-1")
+
+#### Input image
+The image below is the input for the processing pipeline:
+![star-recognizer-input-1](doc/images/star_recognizer/star_image_1.jpg "star-recognizer-input-1")
+
+
+
+#### Code
+```cpp
+  ...
+
+  auto detected_stars =
+      view::single("test_data/integration/star_recognizer/test_image_star_recognizer_1.fit.gz")
+          | read()
+          | interpolate_bad_pixels(500 /*threshold*/, 3 /*filter size*/)
+          | detect_stars(
+              2 /*cluster radius*/,
+              OtsuThresholder<float>(16), 30 /*border width*/
+            )
+          | crop()
+          | view::transform(
+              [](const auto &detectedStars /*std::vector<cimg_library::CImg<ImageType>> */) {
+                return detectedStars
+                    | scale_up(3.0F)
+                    | center_on_star(IntensityWeightedCentroider<float>())
+                    | scale_down(3.0F)
+                    | to<std::vector>();
+              })
+          | actions::join
+		  | to<std::vector>();
+	  
+  ...
+```
+
+#### Output
+TODO: ...
+
+
+
+<br><br>
+
+
 ## build
 
 ### Install required dependencies

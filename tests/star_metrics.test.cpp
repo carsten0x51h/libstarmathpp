@@ -37,7 +37,6 @@
 #include <boost/test/unit_test.hpp>
 
 #include <range/v3/range/conversion.hpp>
-#include <range/v3/view/single.hpp>
 #include <range/v3/view/join.hpp>
 #include <range/v3/view/filter.hpp>
 #include <range/v3/core.hpp>   // ranges::front()
