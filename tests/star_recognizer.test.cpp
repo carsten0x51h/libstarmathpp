@@ -34,6 +34,7 @@
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/action/join.hpp>
 #include <range/v3/view/filter.hpp>
+
 #include <range/v3/core.hpp>   // ranges::front()
 #include <range/v3/algorithm/for_each.hpp>
 
@@ -48,6 +49,7 @@
 #include <libstarmathpp/views/scale.hpp>
 #include <libstarmathpp/views/crop.hpp>
 #include <libstarmathpp/views/center_on_star.hpp>
+#include <libstarmathpp/views/crop.hpp>
 
 #include <libstarmathpp/algorithm/average.hpp>
 
@@ -62,19 +64,18 @@ using namespace starmathpp::algorithm;
 using namespace starmathpp::pipeline::views;
 
 /**
- * TODO: Why is pipeline processed twice? -> detect_stars() ... to<vector>()?...
- * TODO: Smaller input images with only 2-3 stars... but multiple ones...
- * TODO: Add hot-pixel removal before detection,,,, maybe also denoise()...
- * TODO / IDEA: Add example-program which generates an image where the detected stars are marked ... + HFD - like the original star-recognizer...
- * TODO: Add center_on_star() for each detected star image... then calc SnrT, HfdT and FwhmT....
+ * TODO / IDEA: Add example-program which generates an image where the detected
+ *              stars are marked ... + HFD - like the original star-recognizer...
+ *
+ * NOTE: The same image is processed twice to test with more than one image.
  */
 BOOST_AUTO_TEST_CASE(pipeline_star_recognizer_test) {
+
   std::vector<std::string> filenames = {
       "test_data/integration/star_recognizer/test_image_star_recognizer_1.fit.gz",
       "test_data/integration/star_recognizer/test_image_star_recognizer_1.fit.gz"
   };
 
-  // TODO: At least two files...
   auto detected_star_images =
       filenames
           | read()
@@ -84,22 +85,21 @@ BOOST_AUTO_TEST_CASE(pipeline_star_recognizer_test) {
               OtsuThresholder<float>(16), 30 /*border width*/
             )
           | crop()
-//        | views::join // crop() gives range<vector<img>, vector<img>, ...> This does not work with ubuntu 22.04 (older version of ranges v3),therefore, transform below...
           | view::transform(
-              [](const auto &detectedStars /*std::vector<cimg_library::CImg<ImageType>> */) {
+              [](const auto &detectedStars) {
                 return detectedStars
-                    | write<float>(std::filesystem::current_path(), "img_%04d.fit")  // NOTE; path must exist, TODO: directory should change for each input image...
                     | scale_up(3.0F)
                     | center_on_star(IntensityWeightedCentroider<float>())
                     | scale_down(3.0F)
-                    | write<float>(std::filesystem::current_path(), "img_centered_%04d.fit")  // NOTE; path must exist, TODO: directory should change for each input image...
+                    | crop_from_center(Size<int>(21,21))
+                    | ranges::views::filter([&](auto img) { return (img->max() < 65535); })
+                    | write<float>(std::filesystem::current_path(), "star_centered_%04d.fit")
                     | to<std::vector>();
               })
-          | actions::join | to<std::vector>();
+          | actions::join
+          | to<std::vector>();
 
-  // 2x216 detected stars without hot-pixel removal
-  // 2x92  detected stars with hot-pixel removal
-  BOOST_TEST(detected_star_images.size() == 184);
+  BOOST_TEST(detected_star_images.size() == 86);
 }
 
 BOOST_AUTO_TEST_SUITE_END();
