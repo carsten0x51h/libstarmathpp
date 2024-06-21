@@ -197,6 +197,8 @@ The image below is the input for the processing pipeline:
 ```
 
 #### Output
+Below are all detected unsaturated stars: 
+<br>
 ![](doc/images/star_recognizer/output/img_centered_0000.jpg)
 ![](doc/images/star_recognizer/output/img_centered_0001.jpg)
 ![](doc/images/star_recognizer/output/img_centered_0003.jpg)
