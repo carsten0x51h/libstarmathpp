@@ -44,16 +44,14 @@ Star 1  |                                  Star 2                               
       | center_on_star(IntensityWeightedCentroider<float>())
       | scale_down(3.0F /*scale down factor*/)
       | crop_from_center(Size<int>(61,61))
-      | ranges::view::transform(
-            [](const auto & img_ptr) {
-                return std::make_tuple(
-                    starmathpp::algorithm::snr(*img_ptr),
-                    starmathpp::algorithm::hfd(*img_ptr),
-                    starmathpp::algorithm::fwhm(*img_ptr).value()
-                );
-            })
-      | to<std::vector>();
-
+      | view::transform(
+           [](const auto &img) {
+             return std::make_tuple(
+                 starmathpp::algorithm::snr(img),
+                 starmathpp::algorithm::hfd(img),
+                 starmathpp::algorithm::fwhm(img).value());
+           })
+       | to<std::vector>();
 
   for (const auto &m : star_metrics) {
       std::cout << std::setprecision(2)
@@ -140,6 +138,7 @@ In a last step the final frame is automatically stretched by using a midtone bal
           )
       )
   )
+  | ranges::views::move
   | stretch(starmathpp::algorithm::MidtoneBalanceStretcher(TARGET_BACKGROUND))
   | write<uint8_t>(".", "final_image_%03d.tiff");
 		  
@@ -183,6 +182,7 @@ The image below is the input for the processing pipeline:
           | view::transform(
               [](const auto &detectedStars /*std::vector<cimg_library::CImg<ImageType>> */) {
                 return detectedStars
+                    | ranges::views::move
                     | scale_up(3.0F)
                     | center_on_star(IntensityWeightedCentroider<float>())
                     | scale_down(3.0F)

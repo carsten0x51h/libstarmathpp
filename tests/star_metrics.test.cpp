@@ -132,7 +132,8 @@ BOOST_AUTO_TEST_CASE(pipeline_star_metrics_test, * boost::unit_test::tolerance(0
                 starmathpp::algorithm::snr(img),
                 starmathpp::algorithm::hfd(img),
                 starmathpp::algorithm::fwhm(img).value());
-          }) | to<std::vector>();
+          })
+      | to<std::vector>();
 
   float tolerance = 0.001F;
 

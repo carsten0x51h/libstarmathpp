@@ -1,5 +1,7 @@
 TODO
 ----
+-In-code documentation of existing, public functions
+-Introduce template concept to restrict types of Rect, Size and Point to integral types
 -IDEA: Add pipeline stretch(curve) function
 -IDEA: Add pipeline denoiser operation
 -Add "filter" to remove saturated / non-saturated images to pipeline
@@ -7,5 +9,5 @@ TODO
 -Add find_cimg() to cmake file
 -IDEA: Extract test image generator function from unit tests - generate_test_image()
 -Make fits writer create specified directories if they do not exist
--Introduce template concept to restrict types of Rect, Size and Point to integral types
--Add star_align() function
+-IDEA: Integrate starnet++ for background subraction
+-IDEA: Add star_align() function - See https://pixinsight.com/doc/tools/StarAlignment/StarAlignment.html
