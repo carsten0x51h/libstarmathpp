@@ -65,9 +65,6 @@ using namespace starmathpp::algorithm;
 using namespace starmathpp::pipeline::views;
 
 /**
- * TODO / IDEA: Add example-program which generates an image where the detected
- *              stars are marked ... + HFD - like the original star-recognizer...
- *
  * NOTE: The same image is processed twice to test with more than one image.
  */
 BOOST_AUTO_TEST_CASE(pipeline_star_recognizer_test) {
