@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['y_251',['y',['../classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40',1,'starmathpp::Point::y()'],['../classstarmathpp_1_1_rect.html#a7d78f49bc0d19464dec9948b1ad7e7dd',1,'starmathpp::Rect::y()']]]
+  ['y_251',['y',['../classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa',1,'starmathpp::Point::y()'],['../classstarmathpp_1_1_rect.html#a4050774b08b3c85d563ae43de517b73d',1,'starmathpp::Rect::y()']]]
 ];

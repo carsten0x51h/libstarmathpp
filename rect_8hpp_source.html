@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.b00b94d8b03a</span>
+   &#160;<span id="projectnumber">1.0.0.ec03aacd002e</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -127,369 +127,373 @@ $(function() {
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;std::make_unsigned&lt;T&gt;,</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<a class="code" href="structstarmathpp_1_1identity.html">identity&lt;T&gt;</a></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;&gt;::type;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span><a class="code" href="classstarmathpp_1_1_rect.html">Rect</a>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">// pre-declare the template class itself</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                                              <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"> * Round differently depending on the specified return type.</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"> * TODO: This might go to a separate header file.</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">   68</a></span>&#160;<span class="keyword">typename</span> std::enable_if&lt;std::is_same&lt;R, unsigned int&gt;::value, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>&gt;::type <a class="code" href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">round</a>(</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">double</span> value) {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordflow">return</span> std::floor(value + 0.5);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#adbf508ca5767a92928990fd83cc74835">   74</a></span>&#160;<span class="keyword">typename</span> std::enable_if&lt;std::is_same&lt;R, int&gt;::value, <span class="keywordtype">int</span>&gt;::type <a class="code" href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">round</a>(</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">double</span> value) {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">return</span> (value &lt; 0 ? std::ceil(value - 0.5) : std::floor(value + 0.5));</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a1ca5b1ceff46cb59e92da8668dca9679">   80</a></span>&#160;<span class="keyword">typename</span> std::enable_if&lt;std::is_same&lt;R, float&gt;::value, <span class="keywordtype">float</span>&gt;::type <a class="code" href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">round</a>(</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">double</span> value) {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordflow">return</span> value;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a37c32049e31bc3da5df5714704e21b94">   86</a></span>&#160;<span class="keyword">typename</span> std::enable_if&lt;std::is_same&lt;R, double&gt;::value, <span class="keywordtype">double</span>&gt;::type <a class="code" href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">round</a>(</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">double</span> value) {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordflow">return</span> value;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment"> * Rect structure (X x Y x W x H).</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment"> * TODO: Is it a good idea to have an is_set_ state? Or better use std::optional of needed?</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment"> * TODO: Restrict this template to data types which make sense.</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment"> * TODO: is_set_ should be checked in all functions. If not set, and e.g. contains() is called, an exception should be thrown.</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment"> * TODO: IDEA: Add contains(Point) + inside(Size?) +  contains(Size)?</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html">  101</a></span>&#160;<span class="keyword">class </span><a class="code" href="classstarmathpp_1_1_rect.html">Rect</a> {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="comment">// Unsigned type, if possible</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keyword">using</span> UT = <span class="keyword">typename</span> <a class="code" href="namespacestarmathpp.html#acc059b5480a56aab429eec46ffa70a4f">try_make_unsigned&lt;T&gt;::type</a>;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  T x_;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  T y_;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  UT width_;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  UT height_;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <span class="keywordtype">bool</span> is_set_;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a41993960769a9f1b11d27516af134f97">  113</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html#a41993960769a9f1b11d27516af134f97">Rect</a>()</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      :</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      x_(),</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      y_(),</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      width_(),</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      height_(),</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      is_set_(false) {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  }</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment">   *</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a750b33ea88d026af6abd64f0fdb5f277">  125</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html#a750b33ea88d026af6abd64f0fdb5f277">Rect</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a9f7dd9ba2a90e08882003eb0f513663d">x</a>, <span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a7d78f49bc0d19464dec9948b1ad7e7dd">y</a>, <span class="keyword">const</span> UT &amp;w, <span class="keyword">const</span> UT &amp;h)</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      :</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      x_(<a class="code" href="classstarmathpp_1_1_rect.html#a9f7dd9ba2a90e08882003eb0f513663d">x</a>),</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      y_(<a class="code" href="classstarmathpp_1_1_rect.html#a7d78f49bc0d19464dec9948b1ad7e7dd">y</a>),</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      width_(w),</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      height_(h),</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      is_set_(true) {</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  }</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a9f7dd9ba2a90e08882003eb0f513663d">  134</a></span>&#160;  <span class="keyword">const</span> T&amp; <a class="code" href="classstarmathpp_1_1_rect.html#a9f7dd9ba2a90e08882003eb0f513663d">x</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <span class="keywordflow">return</span> x_;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment"> * Pre-declare the template class itself to be ale to declare operator&lt;&lt;.</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment"> * Allow only numeric types for Rect template.</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment"> * See https://stackoverflow.com/questions/14294267/class-template-for-numeric-types</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;template&lt;typename T, typename = typename std::enable_if&lt;std::is_arithmetic&lt;T&gt;::value, T&gt;::type&gt; <span class="keyword">class </span><a class="code" href="classstarmathpp_1_1_rect.html">Rect</a>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                                              <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment"> * Round differently depending on the specified return type.</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment"> * TODO: This might go to a separate header file.</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">   72</a></span>&#160;<span class="keyword">typename</span> std::enable_if&lt;std::is_same&lt;R, unsigned int&gt;::value, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>&gt;::type <a class="code" href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">round</a>(</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">double</span> value) {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">return</span> std::floor(value + 0.5);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#adbf508ca5767a92928990fd83cc74835">   78</a></span>&#160;<span class="keyword">typename</span> std::enable_if&lt;std::is_same&lt;R, int&gt;::value, <span class="keywordtype">int</span>&gt;::type <a class="code" href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">round</a>(</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">double</span> value) {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordflow">return</span> (value &lt; 0 ? std::ceil(value - 0.5) : std::floor(value + 0.5));</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a1ca5b1ceff46cb59e92da8668dca9679">   84</a></span>&#160;<span class="keyword">typename</span> std::enable_if&lt;std::is_same&lt;R, float&gt;::value, <span class="keywordtype">float</span>&gt;::type <a class="code" href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">round</a>(</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">double</span> value) {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordflow">return</span> value;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a37c32049e31bc3da5df5714704e21b94">   90</a></span>&#160;<span class="keyword">typename</span> std::enable_if&lt;std::is_same&lt;R, double&gt;::value, <span class="keywordtype">double</span>&gt;::type <a class="code" href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">round</a>(</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">double</span> value) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordflow">return</span> value;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment"> * Rect structure (X x Y x W x H).</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment"> * TODO: Is it a good idea to have an is_set_ state? Or better use std::optional of needed?</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment"> * TODO: Restrict this template to data types which make sense.</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment"> * TODO: is_set_ should be checked in all functions. If not set, and e.g. contains() is called, an exception should be thrown.</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment"> * TODO: IDEA: Add contains(Point) + inside(Size?) +  contains(Size)?</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">typename</span>&gt;</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html">  105</a></span>&#160;<span class="keyword">class </span><a class="code" href="classstarmathpp_1_1_rect.html">Rect</a> {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="comment">// Unsigned type, if possible</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keyword">using</span> UT = <span class="keyword">typename</span> <a class="code" href="namespacestarmathpp.html#acc059b5480a56aab429eec46ffa70a4f">try_make_unsigned&lt;T&gt;::type</a>;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  T x_;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  T y_;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  UT width_;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  UT height_;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <span class="keywordtype">bool</span> is_set_;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a150c5ddcb0a248092dc1fb6000fd379b">  117</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html#a150c5ddcb0a248092dc1fb6000fd379b">Rect</a>()</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      :</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      x_(),</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      y_(),</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      width_(),</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      height_(),</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      is_set_(false) {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  }</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">   *</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a5271fa13ded5db6e2c7bbd7ebeb2679f">  129</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html#a5271fa13ded5db6e2c7bbd7ebeb2679f">Rect</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a9f4b0d4877e0e8cac8ad65b13e674220">x</a>, <span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a4050774b08b3c85d563ae43de517b73d">y</a>, <span class="keyword">const</span> UT &amp;w, <span class="keyword">const</span> UT &amp;h)</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      :</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      x_(<a class="code" href="classstarmathpp_1_1_rect.html#a9f4b0d4877e0e8cac8ad65b13e674220">x</a>),</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      y_(<a class="code" href="classstarmathpp_1_1_rect.html#a4050774b08b3c85d563ae43de517b73d">y</a>),</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      width_(w),</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      height_(h),</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      is_set_(true) {</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  }</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a9e559741226fa875b5d2eef1df945f4b">  138</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_rect.html#a9e559741226fa875b5d2eef1df945f4b">set_x</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a9f7dd9ba2a90e08882003eb0f513663d">x</a>) {</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    x_ = <a class="code" href="classstarmathpp_1_1_rect.html#a9f7dd9ba2a90e08882003eb0f513663d">x</a>;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    is_set_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  }</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a7d78f49bc0d19464dec9948b1ad7e7dd">  143</a></span>&#160;  <span class="keyword">const</span> T&amp; <a class="code" href="classstarmathpp_1_1_rect.html#a7d78f49bc0d19464dec9948b1ad7e7dd">y</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordflow">return</span> y_;</div>
+<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a9f4b0d4877e0e8cac8ad65b13e674220">  138</a></span>&#160;  <span class="keyword">const</span> T&amp; <a class="code" href="classstarmathpp_1_1_rect.html#a9f4b0d4877e0e8cac8ad65b13e674220">x</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordflow">return</span> x_;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  }</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a88f61010664130a7a652ad8ce2a05038">  142</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_rect.html#a88f61010664130a7a652ad8ce2a05038">set_x</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a9f4b0d4877e0e8cac8ad65b13e674220">x</a>) {</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    x_ = <a class="code" href="classstarmathpp_1_1_rect.html#a9f4b0d4877e0e8cac8ad65b13e674220">x</a>;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    is_set_ = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  }</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a8e7363b1b8bd2c4a84c7058b17fa5fa7">  147</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_rect.html#a8e7363b1b8bd2c4a84c7058b17fa5fa7">set_y</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a7d78f49bc0d19464dec9948b1ad7e7dd">y</a>) {</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    y_ = <a class="code" href="classstarmathpp_1_1_rect.html#a7d78f49bc0d19464dec9948b1ad7e7dd">y</a>;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    is_set_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  }</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
-<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">  152</a></span>&#160;  <span class="keyword">const</span> UT&amp; <a class="code" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">width</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordflow">return</span> width_;</div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a4050774b08b3c85d563ae43de517b73d">  147</a></span>&#160;  <span class="keyword">const</span> T&amp; <a class="code" href="classstarmathpp_1_1_rect.html#a4050774b08b3c85d563ae43de517b73d">y</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordflow">return</span> y_;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  }</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#ae12580f05bc27f7881193398999e7ca0">  151</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_rect.html#ae12580f05bc27f7881193398999e7ca0">set_y</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a4050774b08b3c85d563ae43de517b73d">y</a>) {</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    y_ = <a class="code" href="classstarmathpp_1_1_rect.html#a4050774b08b3c85d563ae43de517b73d">y</a>;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    is_set_ = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  }</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">   *</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a676d3f3e76ce6b47331af9b931e4234d">  159</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_rect.html#a676d3f3e76ce6b47331af9b931e4234d">set_width</a>(<span class="keyword">const</span> UT &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">width</a>) {</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    width_ = <a class="code" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">width</a>;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    is_set_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  }</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
-<div class="line"><a name="l00164"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">  164</a></span>&#160;  <span class="keyword">const</span> UT&amp; <a class="code" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">height</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordflow">return</span> height_;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">  156</a></span>&#160;  <span class="keyword">const</span> UT&amp; <a class="code" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">width</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordflow">return</span> width_;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">   *</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#ab795c911b9e37e5db8b833916e404f34">  163</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_rect.html#ab795c911b9e37e5db8b833916e404f34">set_width</a>(<span class="keyword">const</span> UT &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">width</a>) {</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    width_ = <a class="code" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">width</a>;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    is_set_ = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  }</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="comment">   *</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a8c8ea274e405dc4be26452ce5686a0cd">  171</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_rect.html#a8c8ea274e405dc4be26452ce5686a0cd">set_height</a>(<span class="keyword">const</span> UT &amp;<a class="code" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">height</a>) {</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    height_ = <a class="code" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">height</a>;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    is_set_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  }</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
-<div class="line"><a name="l00176"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a7975e511a097acdde42a413612772db3">  176</a></span>&#160;  [[nodiscard]] <span class="keywordtype">bool</span> <a class="code" href="classstarmathpp_1_1_rect.html#a7975e511a097acdde42a413612772db3">is_set</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keywordflow">return</span> is_set_;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">  168</a></span>&#160;  <span class="keyword">const</span> UT&amp; <a class="code" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">height</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordflow">return</span> height_;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  }</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="comment">   *</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a598390903dcb20c38e78320fd9e64b9b">  175</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_rect.html#a598390903dcb20c38e78320fd9e64b9b">set_height</a>(<span class="keyword">const</span> UT &amp;<a class="code" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">height</a>) {</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    height_ = <a class="code" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">height</a>;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    is_set_ = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  }</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
-<div class="line"><a name="l00180"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a565eed81e3a880b18ad63214ee219ea5">  180</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_rect.html#a565eed81e3a880b18ad63214ee219ea5">clear</a>() {</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    *<span class="keyword">this</span> = { };</div>
+<div class="line"><a name="l00180"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a5ea77f8ae5ca4b425cecb59943891b40">  180</a></span>&#160;  [[nodiscard]] <span class="keywordtype">bool</span> <a class="code" href="classstarmathpp_1_1_rect.html#a5ea77f8ae5ca4b425cecb59943891b40">is_set</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordflow">return</span> is_set_;</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  }</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">class</span> U&gt;</div>
-<div class="line"><a name="l00185"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#ae43513026abc8e85f4ac1f3b4384df4e">  185</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;U&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#ae43513026abc8e85f4ac1f3b4384df4e">to</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;U&gt;</a>(x_, y_, width_, height_);</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  }</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="comment">   * Returns true, if the passed rect completely contained inside this rect.</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="comment">   * Of course both coordinates need to be in the same coordinate system.</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a6e72a375a27f1287ee4c10042ff019cc">  193</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classstarmathpp_1_1_rect.html#a6e72a375a27f1287ee4c10042ff019cc">contains</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect) {</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keywordflow">return</span> rect1_contains_rect2_internal(*<span class="keyword">this</span>, rect);</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  }</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="comment">   * Returns true, if this rect is completely inside the passed rect.</span></div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="comment">   * Of course both coordinates need to be in the same coordinate system.</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="comment">   *</span></div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="comment">   * IDEA: Rename to is_inside()</span></div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00203"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#ad9e90f9c2d251f95daa00c1f565b34d1">  203</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classstarmathpp_1_1_rect.html#ad9e90f9c2d251f95daa00c1f565b34d1">inside</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect) {</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keywordflow">return</span> rect1_contains_rect2_internal(rect, *<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  }</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P = T&gt;</div>
-<div class="line"><a name="l00208"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">  208</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;P&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keywordflow">return</span> calc_center_from_rect_internal&lt;P&gt;(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  }</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="comment">   * IDEA: Alternate name: make_square</span></div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00215"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a10bac4b0178691e84cb805ee791616e7">  215</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#a10bac4b0178691e84cb805ee791616e7">expand_to_square</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a> = calc_center_from_rect_internal&lt;double&gt;(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    T sideLength = std::max(width_, height_);</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordflow">return</span> from_center_point_internal&lt;double, T, T&gt;(<a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>, sideLength,</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;                                                    sideLength);</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  }</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="comment">   * Grow rectangle by growBy in each direction.</span></div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="comment">   * NOTE: A negative value actually shrinks the Rect.</span></div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> S&gt;</div>
-<div class="line"><a name="l00228"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#aaac939c51571d0938fa1c70cfc32aa7a">  228</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;S&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#aaac939c51571d0938fa1c70cfc32aa7a">grow</a>(S grow_by)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordflow">return</span> change_rect_size_internal(*<span class="keyword">this</span>, grow_by, <span class="keyword">true</span> <span class="comment">/*grow*/</span>);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  }</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="comment">   * Shrink rectangle by shrinkBy in each direction.</span></div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="comment">   * NOTE: A negative value actually grows the Rect.</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> S&gt;</div>
-<div class="line"><a name="l00237"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a3a20f6c9da5b095e268d2aafb08d5203">  237</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;S&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#a3a20f6c9da5b095e268d2aafb08d5203">shrink</a>(S shrink_by)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordflow">return</span> change_rect_size_internal&lt;S&gt;(*<span class="keyword">this</span>, shrink_by, <span class="keyword">false</span> <span class="comment">/*shrink*/</span>);</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  }</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="comment">   * Usage: Rect&lt;&gt;::from_center_point(point, width, height)</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P, <span class="keyword">typename</span> S&gt;</div>
-<div class="line"><a name="l00245"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#abc0c462c14f3b60efb2ed11ae3dd1f98">  245</a></span>&#160;  <span class="keyword">static</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#abc0c462c14f3b60efb2ed11ae3dd1f98">from_center_point</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;P&gt;</a> &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>, S <a class="code" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">width</a>, S <a class="code" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">height</a>) {</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keywordflow">return</span> from_center_point_internal&lt;P, S, T&gt;(<a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>, <a class="code" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">width</a>, <a class="code" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">height</a>);</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  }</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="comment">   *</span></div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P, <span class="keyword">typename</span> S&gt;</div>
-<div class="line"><a name="l00253"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#ae677b2542d027c30218b23ecc145b290">  253</a></span>&#160;  <span class="keyword">static</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#ae677b2542d027c30218b23ecc145b290">from_center_point</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;P&gt;</a> &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>, <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;S&gt;</a> region) {</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordflow">return</span> from_center_point_internal&lt;P, S, T&gt;(<a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>, region.<a class="code" href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">width</a>(),</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                                               region.<a class="code" href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">height</a>());</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  }</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="comment">   *</span></div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P, <span class="keyword">typename</span> S&gt;</div>
-<div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a3fb21c9e75416cf6c4a533d614273f87">  262</a></span>&#160;  <span class="keyword">static</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#a3fb21c9e75416cf6c4a533d614273f87">from_center_point</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;P&gt;</a> &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>,</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;                                   S window_size_square_edge) {</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keywordflow">return</span> from_center_point_internal&lt;P, S, T&gt;(<a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>, window_size_square_edge,</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;                                               window_size_square_edge);</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  }</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="comment">   *</span></div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P, <span class="keyword">typename</span> S, <span class="keyword">typename</span> R&gt;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  <span class="keyword">static</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;R&gt;</a> from_center_point_internal(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;P&gt;</a> &amp;<a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>, S <a class="code" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">width</a>,</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;                                            S <a class="code" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">height</a>) {</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordtype">double</span> delta_w = (double) <a class="code" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">width</a> / 2.0;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="keywordtype">double</span> delta_h = (double) <a class="code" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">height</a> / 2.0;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;R&gt;</a>(round&lt;R&gt;((<span class="keywordtype">double</span>) <a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>.x() - delta_w),</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;                   round&lt;R&gt;((<span class="keywordtype">double</span>) <a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>.y() - delta_h), <a class="code" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">width</a>, <a class="code" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">height</a>);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  }</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="comment">   * Internal helper function to clip a value to 0.</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> S&gt;</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  <span class="keyword">static</span> S clip_to_zero(S value) {</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    <span class="keywordflow">return</span> (value &lt; 0 ? 0 : value);</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  }</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="comment">   *</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> S&gt;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="keyword">static</span> Rect&lt;S&gt; change_rect_size_internal(Rect&lt;T&gt; rect, S change_by,</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                                           <span class="keywordtype">bool</span> <a class="code" href="classstarmathpp_1_1_rect.html#aaac939c51571d0938fa1c70cfc32aa7a">grow</a>) {</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a> = calc_center_from_rect_internal&lt;float&gt;(rect);</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    S border_both_sides = 2.0 * change_by;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160; </div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    S new_width = (</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        <a class="code" href="classstarmathpp_1_1_rect.html#aaac939c51571d0938fa1c70cfc32aa7a">grow</a> ?</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;            (S) (rect.width() + border_both_sides) :</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;            (S) clip_to_zero((S) rect.width() - border_both_sides));</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    S new_height = (</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <a class="code" href="classstarmathpp_1_1_rect.html#aaac939c51571d0938fa1c70cfc32aa7a">grow</a> ?</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;            (S) (rect.height() + border_both_sides) :</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;            (S) clip_to_zero((S) rect.height() - border_both_sides));</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160; </div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keywordflow">return</span> from_center_point_internal&lt;float, S, S&gt;(<a class="code" href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">center</a>, new_width,</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                                                   new_height);</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  }</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="comment">   *</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P&gt;</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  <span class="keyword">static</span> Point&lt;P&gt; calc_center_from_rect_internal(<span class="keyword">const</span> Rect&lt;T&gt; &amp;rect) {</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keywordflow">if</span> (!rect.is_set_) {</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;      <span class="keywordflow">throw</span> RectException(<span class="stringliteral">&quot;Cannot perform operation on empty Rect.&quot;</span>);</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    }</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160; </div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    P x_center = rect.x() + rect.width() / 2.0;</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    P y_center = rect.y() + rect.height() / 2.0;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160; </div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keywordflow">return</span> Point&lt;P&gt;(x_center, y_center);</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  }</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  <span class="comment">// TODO: Does not work in case of float!!!</span></div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">bool</span> is_even(<span class="keywordtype">int</span> n) {</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <span class="keywordflow">return</span> (n % 2 == 0);</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  }</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <span class="comment">// Is rect1 completely contained inside this rect2?</span></div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  <span class="comment">// Of course both coordinates need to be in the same coordinate system.</span></div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">bool</span> rect1_contains_rect2_internal(<span class="keyword">const</span> Rect&lt;T&gt; &amp;rect1,</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;                                            <span class="keyword">const</span> Rect&lt;T&gt; &amp;rect2) {</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160; </div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keywordflow">if</span> (!rect1.is_set_ || !rect2.is_set_) {</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    }</div>
+<div class="line"><a name="l00184"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a3bbcd195c265d6d40abc0c00871c6a99">  184</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_rect.html#a3bbcd195c265d6d40abc0c00871c6a99">clear</a>() {</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    *<span class="keyword">this</span> = { };</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  }</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">class</span> U&gt;</div>
+<div class="line"><a name="l00189"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a960fa43282dddbba286de1cb0d77cf0e">  189</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;U&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#a960fa43282dddbba286de1cb0d77cf0e">to</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;U&gt;</a>(x_, y_, width_, height_);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  }</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="comment">   * Returns true, if the passed rect completely contained inside this rect.</span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="comment">   * Of course both coordinates need to be in the same coordinate system.</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#ac0f7825104fa70c247d9b5d2726d06af">  197</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classstarmathpp_1_1_rect.html#ac0f7825104fa70c247d9b5d2726d06af">contains</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect) {</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordflow">return</span> rect1_contains_rect2_internal(*<span class="keyword">this</span>, rect);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  }</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="comment">   * Returns true, if this rect is completely inside the passed rect.</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="comment">   * Of course both coordinates need to be in the same coordinate system.</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="comment">   *</span></div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="comment">   * IDEA: Rename to is_inside()</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00207"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a95902f0cb59ff9b8c3974773328c7267">  207</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classstarmathpp_1_1_rect.html#a95902f0cb59ff9b8c3974773328c7267">inside</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect) {</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="keywordflow">return</span> rect1_contains_rect2_internal(rect, *<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  }</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P = T&gt;</div>
+<div class="line"><a name="l00212"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">  212</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;P&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="keywordflow">return</span> calc_center_from_rect_internal&lt;P&gt;(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  }</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="comment">   * IDEA: Alternate name: make_square</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#ace0d0247dfce18292f98929489906423">  219</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#ace0d0247dfce18292f98929489906423">expand_to_square</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a> = calc_center_from_rect_internal&lt;double&gt;(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    T sideLength = std::max(width_, height_);</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordflow">return</span> from_center_point_internal&lt;double, T, T&gt;(<a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>, sideLength,</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                                                    sideLength);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  }</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="comment">   * Grow rectangle by growBy in each direction.</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="comment">   * NOTE: A negative value actually shrinks the Rect.</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> S&gt;</div>
+<div class="line"><a name="l00232"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a4081cd275c255897b12d7b6e5315794a">  232</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;S&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#a4081cd275c255897b12d7b6e5315794a">grow</a>(S grow_by)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordflow">return</span> change_rect_size_internal(*<span class="keyword">this</span>, grow_by, <span class="keyword">true</span> <span class="comment">/*grow*/</span>);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  }</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="comment">   * Shrink rectangle by shrinkBy in each direction.</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="comment">   * NOTE: A negative value actually grows the Rect.</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> S&gt;</div>
+<div class="line"><a name="l00241"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#ac49453d6ea0a030c8bace4adae4570aa">  241</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;S&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#ac49453d6ea0a030c8bace4adae4570aa">shrink</a>(S shrink_by)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keywordflow">return</span> change_rect_size_internal&lt;S&gt;(*<span class="keyword">this</span>, shrink_by, <span class="keyword">false</span> <span class="comment">/*shrink*/</span>);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;  }</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="comment">   * Usage: Rect&lt;&gt;::from_center_point(point, width, height)</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P, <span class="keyword">typename</span> S&gt;</div>
+<div class="line"><a name="l00249"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a4f2dcf1ca1bd641b7e16a9ad1360b9fe">  249</a></span>&#160;  <span class="keyword">static</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#a4f2dcf1ca1bd641b7e16a9ad1360b9fe">from_center_point</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;P&gt;</a> &amp;<a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>, S <a class="code" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">width</a>, S <a class="code" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">height</a>) {</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    <span class="keywordflow">return</span> from_center_point_internal&lt;P, S, T&gt;(<a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>, <a class="code" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">width</a>, <a class="code" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">height</a>);</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  }</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="comment">   *</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P, <span class="keyword">typename</span> S&gt;</div>
+<div class="line"><a name="l00257"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#a5a44f099c6f1ce5cab8226344cd8ceef">  257</a></span>&#160;  <span class="keyword">static</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#a5a44f099c6f1ce5cab8226344cd8ceef">from_center_point</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;P&gt;</a> &amp;<a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>, <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;S&gt;</a> region) {</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordflow">return</span> from_center_point_internal&lt;P, S, T&gt;(<a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>, region.<a class="code" href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">width</a>(),</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;                                               region.<a class="code" href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">height</a>());</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  }</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="comment">   *</span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P, <span class="keyword">typename</span> S&gt;</div>
+<div class="line"><a name="l00266"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_rect.html#ae73871647199661396bd4eb47b2edc7b">  266</a></span>&#160;  <span class="keyword">static</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> <a class="code" href="classstarmathpp_1_1_rect.html#ae73871647199661396bd4eb47b2edc7b">from_center_point</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;P&gt;</a> &amp;<a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>,</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;                                   S window_size_square_edge) {</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <span class="keywordflow">return</span> from_center_point_internal&lt;P, S, T&gt;(<a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>, window_size_square_edge,</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;                                               window_size_square_edge);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  }</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160; </div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="comment">   *</span></div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P, <span class="keyword">typename</span> S, <span class="keyword">typename</span> R&gt;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  <span class="keyword">static</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;R&gt;</a> from_center_point_internal(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;P&gt;</a> &amp;<a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>, S <a class="code" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">width</a>,</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                                            S <a class="code" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">height</a>) {</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keywordtype">double</span> delta_w = (double) <a class="code" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">width</a> / 2.0;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keywordtype">double</span> delta_h = (double) <a class="code" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">height</a> / 2.0;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;R&gt;</a>(round&lt;R&gt;((<span class="keywordtype">double</span>) <a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>.x() - delta_w),</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                   round&lt;R&gt;((<span class="keywordtype">double</span>) <a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>.y() - delta_h), <a class="code" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">width</a>, <a class="code" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">height</a>);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  }</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="comment">   * Internal helper function to clip a value to 0.</span></div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> S&gt;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  <span class="keyword">static</span> S clip_to_zero(S value) {</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <span class="keywordflow">return</span> (value &lt; 0 ? 0 : value);</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  }</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="comment">   *</span></div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> S&gt;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <span class="keyword">static</span> Rect&lt;S&gt; change_rect_size_internal(Rect&lt;T&gt; rect, S change_by,</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;                                           <span class="keywordtype">bool</span> <a class="code" href="classstarmathpp_1_1_rect.html#a4081cd275c255897b12d7b6e5315794a">grow</a>) {</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a> = calc_center_from_rect_internal&lt;float&gt;(rect);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    S border_both_sides = 2.0 * change_by;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    S new_width = (</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        <a class="code" href="classstarmathpp_1_1_rect.html#a4081cd275c255897b12d7b6e5315794a">grow</a> ?</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;            (S) (rect.width() + border_both_sides) :</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;            (S) clip_to_zero((S) rect.width() - border_both_sides));</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    S new_height = (</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        <a class="code" href="classstarmathpp_1_1_rect.html#a4081cd275c255897b12d7b6e5315794a">grow</a> ?</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            (S) (rect.height() + border_both_sides) :</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;            (S) clip_to_zero((S) rect.height() - border_both_sides));</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keywordflow">return</span> from_center_point_internal&lt;float, S, S&gt;(<a class="code" href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">center</a>, new_width,</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                                                   new_height);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  }</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="comment">   *</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> P&gt;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <span class="keyword">static</span> Point&lt;P&gt; calc_center_from_rect_internal(<span class="keyword">const</span> Rect&lt;T&gt; &amp;rect) {</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <span class="keywordflow">if</span> (!rect.is_set_) {</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;      <span class="keywordflow">throw</span> RectException(<span class="stringliteral">&quot;Cannot perform operation on empty Rect.&quot;</span>);</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    }</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    P x_center = rect.x() + rect.width() / 2.0;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    P y_center = rect.y() + rect.height() / 2.0;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <span class="keywordflow">return</span> Point&lt;P&gt;(x_center, y_center);</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  }</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  <span class="comment">// TODO: Does not work in case of float!!!</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">bool</span> is_even(<span class="keywordtype">int</span> n) {</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="keywordflow">return</span> (n % 2 == 0);</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  }</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  <span class="comment">// Is rect1 completely contained inside this rect2?</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  <span class="comment">// Of course both coordinates need to be in the same coordinate system.</span></div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">bool</span> rect1_contains_rect2_internal(<span class="keyword">const</span> Rect&lt;T&gt; &amp;rect1,</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;                                            <span class="keyword">const</span> Rect&lt;T&gt; &amp;rect2) {</div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160; </div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classstarmathpp_1_1_rect.html#a6e72a375a27f1287ee4c10042ff019cc">contains</a> = rect2.x() &gt;= rect1.x() &amp;&amp; rect2.y() &gt;= rect1.y()</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        &amp;&amp; rect2.x() + rect2.width() &lt;= rect1.x() + rect1.width()</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        &amp;&amp; rect2.y() + rect2.height() &lt;= rect1.y() + rect1.height();</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordflow">if</span> (!rect1.is_set_ || !rect2.is_set_) {</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    }</div>
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160; </div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_rect.html#a6e72a375a27f1287ee4c10042ff019cc">contains</a>;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  }</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;};</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classstarmathpp_1_1_rect.html#ac0f7825104fa70c247d9b5d2726d06af">contains</a> = rect2.x() &gt;= rect1.x() &amp;&amp; rect2.y() &gt;= rect1.y()</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        &amp;&amp; rect2.x() + rect2.width() &lt;= rect1.x() + rect1.width()</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;        &amp;&amp; rect2.y() + rect2.height() &lt;= rect1.y() + rect1.height();</div>
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160; </div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00353"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a66bffa15bb81777da36f3abfb3b00548">  353</a></span>&#160;std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect) {</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160; </div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  os &lt;&lt; <span class="stringliteral">&quot;(x=&quot;</span> &lt;&lt; rect.<a class="code" href="classstarmathpp_1_1_rect.html#a9f7dd9ba2a90e08882003eb0f513663d">x</a>() &lt;&lt; <span class="stringliteral">&quot;, y=&quot;</span> &lt;&lt; rect.<a class="code" href="classstarmathpp_1_1_rect.html#a7d78f49bc0d19464dec9948b1ad7e7dd">y</a>() &lt;&lt; <span class="stringliteral">&quot;, width=&quot;</span> &lt;&lt; rect.<a class="code" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">width</a>()</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;      &lt;&lt; <span class="stringliteral">&quot;, height=&quot;</span> &lt;&lt; rect.<a class="code" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">height</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160; </div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  <span class="keywordflow">return</span> os;</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;}</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160; </div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00362"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a35f2f9269df4d600316599367b9cb10a">  362</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">operator==</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect2) {</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  <span class="keywordflow">return</span> rect1.<a class="code" href="classstarmathpp_1_1_rect.html#a9f7dd9ba2a90e08882003eb0f513663d">x</a>() == rect2.<a class="code" href="classstarmathpp_1_1_rect.html#a9f7dd9ba2a90e08882003eb0f513663d">x</a>() &amp;&amp; rect1.<a class="code" href="classstarmathpp_1_1_rect.html#a7d78f49bc0d19464dec9948b1ad7e7dd">y</a>() == rect2.<a class="code" href="classstarmathpp_1_1_rect.html#a7d78f49bc0d19464dec9948b1ad7e7dd">y</a>()</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;      &amp;&amp; rect1.<a class="code" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">width</a>() == rect2.<a class="code" href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">width</a>() &amp;&amp; rect1.<a class="code" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">height</a>() == rect2.<a class="code" href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">height</a>();</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;}</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160; </div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="comment">// Template specialization for float</span></div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00369"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a94851e08c1421c4402a7318e95d7d688">  369</a></span>&#160;<span class="keywordtype">bool</span> <span class="keyword">operator</span>==&lt;<span class="keywordtype">float</span>&gt;(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;float&gt;</a> &amp;rect1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;float&gt;</a> &amp;rect2);</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_rect.html#ac0f7825104fa70c247d9b5d2726d06af">contains</a>;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  }</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;};</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00357"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a66bffa15bb81777da36f3abfb3b00548">  357</a></span>&#160;std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect) {</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160; </div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  os &lt;&lt; <span class="stringliteral">&quot;(x=&quot;</span> &lt;&lt; rect.<a class="code" href="classstarmathpp_1_1_rect.html#a9f4b0d4877e0e8cac8ad65b13e674220">x</a>() &lt;&lt; <span class="stringliteral">&quot;, y=&quot;</span> &lt;&lt; rect.<a class="code" href="classstarmathpp_1_1_rect.html#a4050774b08b3c85d563ae43de517b73d">y</a>() &lt;&lt; <span class="stringliteral">&quot;, width=&quot;</span> &lt;&lt; rect.<a class="code" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">width</a>()</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;      &lt;&lt; <span class="stringliteral">&quot;, height=&quot;</span> &lt;&lt; rect.<a class="code" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">height</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160; </div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;  <span class="keywordflow">return</span> os;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;}</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160; </div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00366"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a35f2f9269df4d600316599367b9cb10a">  366</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">operator==</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect2) {</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;  <span class="keywordflow">return</span> rect1.<a class="code" href="classstarmathpp_1_1_rect.html#a9f4b0d4877e0e8cac8ad65b13e674220">x</a>() == rect2.<a class="code" href="classstarmathpp_1_1_rect.html#a9f4b0d4877e0e8cac8ad65b13e674220">x</a>() &amp;&amp; rect1.<a class="code" href="classstarmathpp_1_1_rect.html#a4050774b08b3c85d563ae43de517b73d">y</a>() == rect2.<a class="code" href="classstarmathpp_1_1_rect.html#a4050774b08b3c85d563ae43de517b73d">y</a>()</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;      &amp;&amp; rect1.<a class="code" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">width</a>() == rect2.<a class="code" href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">width</a>() &amp;&amp; rect1.<a class="code" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">height</a>() == rect2.<a class="code" href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">height</a>();</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;}</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160; </div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="comment">// Template specialization for double</span></div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="comment">// Template specialization for float</span></div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00373"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a27a8f1f8ca14ec751dcf5ecc202cda67">  373</a></span>&#160;<span class="keywordtype">bool</span> <span class="keyword">operator</span>==&lt;<span class="keywordtype">double</span>&gt;(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;double&gt;</a> &amp;rect1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;double&gt;</a> &amp;rect2);</div>
+<div class="line"><a name="l00373"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a94851e08c1421c4402a7318e95d7d688">  373</a></span>&#160;<span class="keywordtype">bool</span> <span class="keyword">operator</span>==&lt;<span class="keywordtype">float</span>&gt;(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;float&gt;</a> &amp;rect1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;float&gt;</a> &amp;rect2);</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00376"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a4a56b36cb3d2d734cb79bcd09387eb96">  376</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect2) {</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;  <span class="comment">// Use implementation of operator== and negate it.</span></div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;  <span class="keywordflow">return</span> !(rect1 == rect2);</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;}</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160; </div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;}  <span class="comment">// namespace starmathpp</span></div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160; </div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_RECT_HPP_</span></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html"><div class="ttname"><a href="classstarmathpp_1_1_point.html">starmathpp::Point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:45</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html"><div class="ttname"><a href="classstarmathpp_1_1_rect.html">starmathpp::Rect</a></div><div class="ttdef"><b>Definition:</b> rect.hpp:101</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a10bac4b0178691e84cb805ee791616e7"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a10bac4b0178691e84cb805ee791616e7">starmathpp::Rect::expand_to_square</a></div><div class="ttdeci">Rect&lt; T &gt; expand_to_square() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:215</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a3a20f6c9da5b095e268d2aafb08d5203"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a3a20f6c9da5b095e268d2aafb08d5203">starmathpp::Rect::shrink</a></div><div class="ttdeci">Rect&lt; S &gt; shrink(S shrink_by) const</div><div class="ttdef"><b>Definition:</b> rect.hpp:237</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a3ec7447bffc37a8a676cb07e6daee9a2"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a3ec7447bffc37a8a676cb07e6daee9a2">starmathpp::Rect::center</a></div><div class="ttdeci">Point&lt; P &gt; center() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:208</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a3fb21c9e75416cf6c4a533d614273f87"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a3fb21c9e75416cf6c4a533d614273f87">starmathpp::Rect::from_center_point</a></div><div class="ttdeci">static Rect&lt; T &gt; from_center_point(const Point&lt; P &gt; &amp;center, S window_size_square_edge)</div><div class="ttdef"><b>Definition:</b> rect.hpp:262</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a41993960769a9f1b11d27516af134f97"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a41993960769a9f1b11d27516af134f97">starmathpp::Rect::Rect</a></div><div class="ttdeci">Rect()</div><div class="ttdef"><b>Definition:</b> rect.hpp:113</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a496708dbe033c635afe76eda6586a2db"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a496708dbe033c635afe76eda6586a2db">starmathpp::Rect::width</a></div><div class="ttdeci">const UT &amp; width() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:152</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a565eed81e3a880b18ad63214ee219ea5"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a565eed81e3a880b18ad63214ee219ea5">starmathpp::Rect::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdef"><b>Definition:</b> rect.hpp:180</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a676d3f3e76ce6b47331af9b931e4234d"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a676d3f3e76ce6b47331af9b931e4234d">starmathpp::Rect::set_width</a></div><div class="ttdeci">void set_width(const UT &amp;width)</div><div class="ttdef"><b>Definition:</b> rect.hpp:159</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a6e72a375a27f1287ee4c10042ff019cc"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a6e72a375a27f1287ee4c10042ff019cc">starmathpp::Rect::contains</a></div><div class="ttdeci">bool contains(const Rect&lt; T &gt; &amp;rect)</div><div class="ttdef"><b>Definition:</b> rect.hpp:193</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a750b33ea88d026af6abd64f0fdb5f277"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a750b33ea88d026af6abd64f0fdb5f277">starmathpp::Rect::Rect</a></div><div class="ttdeci">Rect(const T &amp;x, const T &amp;y, const UT &amp;w, const UT &amp;h)</div><div class="ttdef"><b>Definition:</b> rect.hpp:125</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a7975e511a097acdde42a413612772db3"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a7975e511a097acdde42a413612772db3">starmathpp::Rect::is_set</a></div><div class="ttdeci">bool is_set() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:176</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a7d78f49bc0d19464dec9948b1ad7e7dd"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a7d78f49bc0d19464dec9948b1ad7e7dd">starmathpp::Rect::y</a></div><div class="ttdeci">const T &amp; y() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:143</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a8c8ea274e405dc4be26452ce5686a0cd"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a8c8ea274e405dc4be26452ce5686a0cd">starmathpp::Rect::set_height</a></div><div class="ttdeci">void set_height(const UT &amp;height)</div><div class="ttdef"><b>Definition:</b> rect.hpp:171</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a8e7363b1b8bd2c4a84c7058b17fa5fa7"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a8e7363b1b8bd2c4a84c7058b17fa5fa7">starmathpp::Rect::set_y</a></div><div class="ttdeci">void set_y(const T &amp;y)</div><div class="ttdef"><b>Definition:</b> rect.hpp:147</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a9e559741226fa875b5d2eef1df945f4b"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a9e559741226fa875b5d2eef1df945f4b">starmathpp::Rect::set_x</a></div><div class="ttdeci">void set_x(const T &amp;x)</div><div class="ttdef"><b>Definition:</b> rect.hpp:138</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a9f7dd9ba2a90e08882003eb0f513663d"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a9f7dd9ba2a90e08882003eb0f513663d">starmathpp::Rect::x</a></div><div class="ttdeci">const T &amp; x() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:134</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_aaac939c51571d0938fa1c70cfc32aa7a"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#aaac939c51571d0938fa1c70cfc32aa7a">starmathpp::Rect::grow</a></div><div class="ttdeci">Rect&lt; S &gt; grow(S grow_by) const</div><div class="ttdef"><b>Definition:</b> rect.hpp:228</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_abc0c462c14f3b60efb2ed11ae3dd1f98"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#abc0c462c14f3b60efb2ed11ae3dd1f98">starmathpp::Rect::from_center_point</a></div><div class="ttdeci">static Rect&lt; T &gt; from_center_point(const Point&lt; P &gt; &amp;center, S width, S height)</div><div class="ttdef"><b>Definition:</b> rect.hpp:245</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_ad9e90f9c2d251f95daa00c1f565b34d1"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#ad9e90f9c2d251f95daa00c1f565b34d1">starmathpp::Rect::inside</a></div><div class="ttdeci">bool inside(const Rect&lt; T &gt; &amp;rect)</div><div class="ttdef"><b>Definition:</b> rect.hpp:203</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_ae43513026abc8e85f4ac1f3b4384df4e"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#ae43513026abc8e85f4ac1f3b4384df4e">starmathpp::Rect::to</a></div><div class="ttdeci">Rect&lt; U &gt; to() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:185</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_ae677b2542d027c30218b23ecc145b290"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#ae677b2542d027c30218b23ecc145b290">starmathpp::Rect::from_center_point</a></div><div class="ttdeci">static Rect&lt; T &gt; from_center_point(const Point&lt; P &gt; &amp;center, Size&lt; S &gt; region)</div><div class="ttdef"><b>Definition:</b> rect.hpp:253</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_rect_html_aeafae191a2ce1eb7e36e80ada243244b"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b">starmathpp::Rect::height</a></div><div class="ttdeci">const UT &amp; height() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:164</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html"><div class="ttname"><a href="classstarmathpp_1_1_size.html">starmathpp::Size</a></div><div class="ttdef"><b>Definition:</b> size.hpp:50</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html_a4d6f5323ab7582c638be2e181675ed09"><div class="ttname"><a href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">starmathpp::Size::width</a></div><div class="ttdeci">T width() const</div><div class="ttdef"><b>Definition:</b> size.hpp:65</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html_ac94d410aea1cff482cd7fad4e91e2e9f"><div class="ttname"><a href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">starmathpp::Size::height</a></div><div class="ttdeci">T height() const</div><div class="ttdef"><b>Definition:</b> size.hpp:73</div></div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="comment">// Template specialization for double</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00377"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a27a8f1f8ca14ec751dcf5ecc202cda67">  377</a></span>&#160;<span class="keywordtype">bool</span> <span class="keyword">operator</span>==&lt;<span class="keywordtype">double</span>&gt;(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;double&gt;</a> &amp;rect1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;double&gt;</a> &amp;rect2);</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160; </div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00380"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a4a56b36cb3d2d734cb79bcd09387eb96">  380</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_rect.html">Rect&lt;T&gt;</a> &amp;rect2) {</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;  <span class="comment">// Use implementation of operator== and negate it.</span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;  <span class="keywordflow">return</span> !(rect1 == rect2);</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;}</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160; </div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;}  <span class="comment">// namespace starmathpp</span></div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160; </div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_RECT_HPP_</span></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html"><div class="ttname"><a href="classstarmathpp_1_1_point.html">starmathpp::Point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:52</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html"><div class="ttname"><a href="classstarmathpp_1_1_rect.html">starmathpp::Rect</a></div><div class="ttdef"><b>Definition:</b> rect.hpp:105</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a150c5ddcb0a248092dc1fb6000fd379b"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a150c5ddcb0a248092dc1fb6000fd379b">starmathpp::Rect::Rect</a></div><div class="ttdeci">Rect()</div><div class="ttdef"><b>Definition:</b> rect.hpp:117</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a3bbcd195c265d6d40abc0c00871c6a99"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a3bbcd195c265d6d40abc0c00871c6a99">starmathpp::Rect::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdef"><b>Definition:</b> rect.hpp:184</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a4050774b08b3c85d563ae43de517b73d"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a4050774b08b3c85d563ae43de517b73d">starmathpp::Rect::y</a></div><div class="ttdeci">const T &amp; y() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:147</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a4081cd275c255897b12d7b6e5315794a"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a4081cd275c255897b12d7b6e5315794a">starmathpp::Rect::grow</a></div><div class="ttdeci">Rect&lt; S &gt; grow(S grow_by) const</div><div class="ttdef"><b>Definition:</b> rect.hpp:232</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a4cbed0d5663bcf259ece043c8160b2f3"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a4cbed0d5663bcf259ece043c8160b2f3">starmathpp::Rect::width</a></div><div class="ttdeci">const UT &amp; width() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:156</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a4f2dcf1ca1bd641b7e16a9ad1360b9fe"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a4f2dcf1ca1bd641b7e16a9ad1360b9fe">starmathpp::Rect::from_center_point</a></div><div class="ttdeci">static Rect&lt; T &gt; from_center_point(const Point&lt; P &gt; &amp;center, S width, S height)</div><div class="ttdef"><b>Definition:</b> rect.hpp:249</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a5271fa13ded5db6e2c7bbd7ebeb2679f"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a5271fa13ded5db6e2c7bbd7ebeb2679f">starmathpp::Rect::Rect</a></div><div class="ttdeci">Rect(const T &amp;x, const T &amp;y, const UT &amp;w, const UT &amp;h)</div><div class="ttdef"><b>Definition:</b> rect.hpp:129</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a598390903dcb20c38e78320fd9e64b9b"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a598390903dcb20c38e78320fd9e64b9b">starmathpp::Rect::set_height</a></div><div class="ttdeci">void set_height(const UT &amp;height)</div><div class="ttdef"><b>Definition:</b> rect.hpp:175</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a5a44f099c6f1ce5cab8226344cd8ceef"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a5a44f099c6f1ce5cab8226344cd8ceef">starmathpp::Rect::from_center_point</a></div><div class="ttdeci">static Rect&lt; T &gt; from_center_point(const Point&lt; P &gt; &amp;center, Size&lt; S &gt; region)</div><div class="ttdef"><b>Definition:</b> rect.hpp:257</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a5ea77f8ae5ca4b425cecb59943891b40"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a5ea77f8ae5ca4b425cecb59943891b40">starmathpp::Rect::is_set</a></div><div class="ttdeci">bool is_set() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:180</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a88f61010664130a7a652ad8ce2a05038"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a88f61010664130a7a652ad8ce2a05038">starmathpp::Rect::set_x</a></div><div class="ttdeci">void set_x(const T &amp;x)</div><div class="ttdef"><b>Definition:</b> rect.hpp:142</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a95902f0cb59ff9b8c3974773328c7267"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a95902f0cb59ff9b8c3974773328c7267">starmathpp::Rect::inside</a></div><div class="ttdeci">bool inside(const Rect&lt; T &gt; &amp;rect)</div><div class="ttdef"><b>Definition:</b> rect.hpp:207</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a960fa43282dddbba286de1cb0d77cf0e"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a960fa43282dddbba286de1cb0d77cf0e">starmathpp::Rect::to</a></div><div class="ttdeci">Rect&lt; U &gt; to() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:189</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_a9f4b0d4877e0e8cac8ad65b13e674220"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#a9f4b0d4877e0e8cac8ad65b13e674220">starmathpp::Rect::x</a></div><div class="ttdeci">const T &amp; x() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:138</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_ab795c911b9e37e5db8b833916e404f34"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#ab795c911b9e37e5db8b833916e404f34">starmathpp::Rect::set_width</a></div><div class="ttdeci">void set_width(const UT &amp;width)</div><div class="ttdef"><b>Definition:</b> rect.hpp:163</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_ac0f7825104fa70c247d9b5d2726d06af"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#ac0f7825104fa70c247d9b5d2726d06af">starmathpp::Rect::contains</a></div><div class="ttdeci">bool contains(const Rect&lt; T &gt; &amp;rect)</div><div class="ttdef"><b>Definition:</b> rect.hpp:197</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_ac49453d6ea0a030c8bace4adae4570aa"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#ac49453d6ea0a030c8bace4adae4570aa">starmathpp::Rect::shrink</a></div><div class="ttdeci">Rect&lt; S &gt; shrink(S shrink_by) const</div><div class="ttdef"><b>Definition:</b> rect.hpp:241</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_ace0d0247dfce18292f98929489906423"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#ace0d0247dfce18292f98929489906423">starmathpp::Rect::expand_to_square</a></div><div class="ttdeci">Rect&lt; T &gt; expand_to_square() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:219</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_ad7c1c92e18833e60e47fb85eea357a82"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82">starmathpp::Rect::height</a></div><div class="ttdeci">const UT &amp; height() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:168</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_ae12580f05bc27f7881193398999e7ca0"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#ae12580f05bc27f7881193398999e7ca0">starmathpp::Rect::set_y</a></div><div class="ttdeci">void set_y(const T &amp;y)</div><div class="ttdef"><b>Definition:</b> rect.hpp:151</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_ae73871647199661396bd4eb47b2edc7b"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#ae73871647199661396bd4eb47b2edc7b">starmathpp::Rect::from_center_point</a></div><div class="ttdeci">static Rect&lt; T &gt; from_center_point(const Point&lt; P &gt; &amp;center, S window_size_square_edge)</div><div class="ttdef"><b>Definition:</b> rect.hpp:266</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_rect_html_aeed5d660b977f463b2608aa98367d628"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#aeed5d660b977f463b2608aa98367d628">starmathpp::Rect::center</a></div><div class="ttdeci">Point&lt; P &gt; center() const</div><div class="ttdef"><b>Definition:</b> rect.hpp:212</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html"><div class="ttname"><a href="classstarmathpp_1_1_size.html">starmathpp::Size</a></div><div class="ttdef"><b>Definition:</b> size.hpp:55</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html_a99a0c538967392738317c15bacfceb82"><div class="ttname"><a href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">starmathpp::Size::width</a></div><div class="ttdeci">T width() const</div><div class="ttdef"><b>Definition:</b> size.hpp:70</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html_ab9b48cbc1b3b20f8bab53603906765df"><div class="ttname"><a href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">starmathpp::Size::height</a></div><div class="ttdeci">T height() const</div><div class="ttdef"><b>Definition:</b> size.hpp:78</div></div>
 <div class="ttc" id="aexception_8hpp_html"><div class="ttname"><a href="exception_8hpp.html">exception.hpp</a></div></div>
 <div class="ttc" id="anamespacestarmathpp_html"><div class="ttname"><a href="namespacestarmathpp.html">starmathpp</a></div><div class="ttdef"><b>Definition:</b> actions/write.hpp:41</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_a0e72bc8377794e902af58dac301e61f4"><div class="ttname"><a href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">starmathpp::operator==</a></div><div class="ttdeci">bool operator==(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:92</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_aa324d78b242f4afc2ef1a0491fd45e0f"><div class="ttname"><a href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">starmathpp::operator!=</a></div><div class="ttdeci">bool operator!=(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:97</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_a0e72bc8377794e902af58dac301e61f4"><div class="ttname"><a href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">starmathpp::operator==</a></div><div class="ttdeci">bool operator==(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:99</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_aa324d78b242f4afc2ef1a0491fd45e0f"><div class="ttname"><a href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">starmathpp::operator!=</a></div><div class="ttdeci">bool operator!=(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:104</div></div>
 <div class="ttc" id="anamespacestarmathpp_html_aabf46316c927d906d5861aaad68309bd"><div class="ttname"><a href="namespacestarmathpp.html#aabf46316c927d906d5861aaad68309bd">starmathpp::DEF_Exception</a></div><div class="ttdeci">DEF_Exception(Histogram)</div></div>
 <div class="ttc" id="anamespacestarmathpp_html_acc059b5480a56aab429eec46ffa70a4f"><div class="ttname"><a href="namespacestarmathpp.html#acc059b5480a56aab429eec46ffa70a4f">starmathpp::try_make_unsigned</a></div><div class="ttdeci">typename std::conditional&lt; std::is_integral&lt; T &gt;::value, std::make_unsigned&lt; T &gt;, identity&lt; T &gt; &gt;::type try_make_unsigned</div><div class="ttdef"><b>Definition:</b> rect.hpp:55</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_ae056af0a8f21283cd6349eaa31054c51"><div class="ttname"><a href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">starmathpp::round</a></div><div class="ttdeci">std::enable_if&lt; std::is_same&lt; R, unsigned int &gt;::value, unsigned int &gt;::type round(double value)</div><div class="ttdef"><b>Definition:</b> rect.hpp:68</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_ae592e927396a72c202451a1f21d28ed1"><div class="ttname"><a href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">starmathpp::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const Point&lt; T &gt; &amp;p)</div><div class="ttdef"><b>Definition:</b> point.hpp:86</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_ae056af0a8f21283cd6349eaa31054c51"><div class="ttname"><a href="namespacestarmathpp.html#ae056af0a8f21283cd6349eaa31054c51">starmathpp::round</a></div><div class="ttdeci">std::enable_if&lt; std::is_same&lt; R, unsigned int &gt;::value, unsigned int &gt;::type round(double value)</div><div class="ttdef"><b>Definition:</b> rect.hpp:72</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_ae592e927396a72c202451a1f21d28ed1"><div class="ttname"><a href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">starmathpp::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const Point&lt; T &gt; &amp;p)</div><div class="ttdef"><b>Definition:</b> point.hpp:93</div></div>
 <div class="ttc" id="apoint_8hpp_html"><div class="ttname"><a href="point_8hpp.html">point.hpp</a></div></div>
 <div class="ttc" id="asize_8hpp_html"><div class="ttname"><a href="size_8hpp.html">size.hpp</a></div></div>
 <div class="ttc" id="astructstarmathpp_1_1identity_html"><div class="ttname"><a href="structstarmathpp_1_1identity.html">starmathpp::identity</a></div><div class="ttdef"><b>Definition:</b> rect.hpp:45</div></div>
@@ -497,7 +501,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jul 1 2024 10:28:24 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 13:21:41 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

@@ -9,5 +9,5 @@ var searchData=
   ['get_5fupper_5fboundary_378',['get_upper_boundary',['../classstarmathpp_1_1_histogram.html#a31c97b80d249a766ac33cf5c5a6264ea',1,'starmathpp::Histogram']]],
   ['get_5fvalue_379',['get_value',['../classstarmathpp_1_1_histogram.html#a2de9f13355219a78f6a83afa0589444d',1,'starmathpp::Histogram']]],
   ['getmaxhfdlimit_380',['getMaxHfdLimit',['../namespacestarmathpp_1_1algorithm.html#ad24884dcfeb390bb094ca1ae288f5bbe',1,'starmathpp::algorithm']]],
-  ['grow_381',['grow',['../classstarmathpp_1_1_rect.html#aaac939c51571d0938fa1c70cfc32aa7a',1,'starmathpp::Rect']]]
+  ['grow_381',['grow',['../classstarmathpp_1_1_rect.html#a4081cd275c255897b12d7b6e5315794a',1,'starmathpp::Rect']]]
 ];

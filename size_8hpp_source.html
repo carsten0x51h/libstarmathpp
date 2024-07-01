@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.b00b94d8b03a</span>
+   &#160;<span id="projectnumber">1.0.0.ec03aacd002e</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -106,112 +106,117 @@ $(function() {
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacestarmathpp.html">starmathpp</a> {</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a550d3826fa6abdfb428121d4b264395e">   34</a></span>&#160;<a class="code" href="namespacestarmathpp.html#aabf46316c927d906d5861aaad68309bd">DEF_Exception</a>(<a class="code" href="classstarmathpp_1_1_size.html">Size</a>);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span><a class="code" href="classstarmathpp_1_1_size.html">Size</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">// pre-declare the template class itself</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os,</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                                              <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"> * Size structure (W x H).</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"> * TODO: Introduce concept to allow only unsigned (positive) values for T.</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment"> * TODO: Proper rounding in to&lt;&gt;() function.</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment"> * TODO: shrink + grow? - Move functionality from Rect?</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html">   50</a></span>&#160;<span class="keyword">class </span><a class="code" href="classstarmathpp_1_1_size.html">Size</a> {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  T width_;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  T height_;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#a5a5ebfd79f9e2308ae90974bffb9bec9">   56</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_size.html#a5a5ebfd79f9e2308ae90974bffb9bec9">Size</a>() {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#abe09598bac969a2fb36d33839e39b92e">   59</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_size.html#abe09598bac969a2fb36d33839e39b92e">Size</a>(T <a class="code" href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">width</a>, T <a class="code" href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">height</a>)</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      :</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      width_(<a class="code" href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">width</a>),</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      height_(<a class="code" href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">height</a>) {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">   65</a></span>&#160;  T <a class="code" href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">width</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">return</span> width_;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#a90f5544ca88f82d45908600d8d6b03ab">   69</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_size.html#a90f5544ca88f82d45908600d8d6b03ab">set_width</a>(T <a class="code" href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">width</a>) {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    width_ = <a class="code" href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">width</a>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  }</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">   73</a></span>&#160;  T <a class="code" href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">height</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">return</span> height_;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#a03bd7f935ea28be071baa7a017a7541d">   77</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_size.html#a03bd7f935ea28be071baa7a017a7541d">set_height</a>(T <a class="code" href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">height</a>) {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    height_ = <a class="code" href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">height</a>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">class</span> U&gt;</div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#ab878742ffd853ee4108d4a4d4353ab86">   82</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;U&gt;</a> <a class="code" href="classstarmathpp_1_1_size.html#ab878742ffd853ee4108d4a4d4353ab86">to</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;U&gt;</a>(width_, height_);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> * Pre-declare the template class itself to be ale to declare operator&lt;&lt;.</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> * Allow only numeric types for Size template.</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> * See https://stackoverflow.com/questions/14294267/class-template-for-numeric-types</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;template&lt;typename T, typename = typename std::enable_if&lt;std::is_arithmetic&lt;T&gt;::value, T&gt;::type&gt; <span class="keyword">class </span><a class="code" href="classstarmathpp_1_1_size.html">Size</a>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                                              <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment"> * Size structure (W x H).</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment"> * TODO: Introduce concept to allow only unsigned (positive) values for T.</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment"> * TODO: Proper rounding in to&lt;&gt;() function.</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment"> * TODO: shrink + grow? - Move functionality from Rect?</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">typename</span>&gt;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html">   55</a></span>&#160;<span class="keyword">class </span><a class="code" href="classstarmathpp_1_1_size.html">Size</a> {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  T width_;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  T height_;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#a59d36bf017ef572ddcb300a7508b4226">   61</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_size.html#a59d36bf017ef572ddcb300a7508b4226">Size</a>() {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#ad9c1ab915e69cd74bd18147bbda7e140">   64</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_size.html#ad9c1ab915e69cd74bd18147bbda7e140">Size</a>(T <a class="code" href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">width</a>, T <a class="code" href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">height</a>)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      :</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      width_(<a class="code" href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">width</a>),</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      height_(<a class="code" href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">height</a>) {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">   70</a></span>&#160;  T <a class="code" href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">width</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">return</span> width_;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#aa7b0c4f12badbded29598a21652a25b5">   74</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_size.html#aa7b0c4f12badbded29598a21652a25b5">set_width</a>(T <a class="code" href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">width</a>) {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    width_ = <a class="code" href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">width</a>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">   78</a></span>&#160;  T <a class="code" href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">height</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">return</span> height_;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#a95d9a4b25f38cd3c50100186f3d0ffd0">   82</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_size.html#a95d9a4b25f38cd3c50100186f3d0ffd0">set_height</a>(T <a class="code" href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">height</a>) {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    height_ = <a class="code" href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">height</a>;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  }</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#acf4b1080f698b188b422783754034382">   86</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> <a class="code" href="classstarmathpp_1_1_size.html#acf4b1080f698b188b422783754034382">operator*</a>(T factor) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a>(width_ * factor, height_ * factor);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;};</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">class</span> U&gt;</div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#ac654601877221337429de274b2a97d4c">   87</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;U&gt;</a> <a class="code" href="classstarmathpp_1_1_size.html#ac654601877221337429de274b2a97d4c">to</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;U&gt;</a>(width_, height_);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  }</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a7e1fe981fcddb19e812a6b8ab996b109">   92</a></span>&#160;std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size) {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  os &lt;&lt; <span class="stringliteral">&quot;(width=&quot;</span> &lt;&lt; size.<a class="code" href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">width</a>() &lt;&lt; <span class="stringliteral">&quot;, height=&quot;</span> &lt;&lt; size.<a class="code" href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">height</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_size.html#a996548e0f0bbc1bc7cbb554fe6e1f697">   91</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> <a class="code" href="classstarmathpp_1_1_size.html#a996548e0f0bbc1bc7cbb554fe6e1f697">operator*</a>(T factor) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a>(width_ * factor, height_ * factor);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;};</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordflow">return</span> os;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a7e1fe981fcddb19e812a6b8ab996b109">   97</a></span>&#160;std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size) {</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#af79077738cfa9cd1984b60e94b599698">  100</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">operator==</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size2) {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keywordflow">return</span> (size1.<a class="code" href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">width</a>() == size2.<a class="code" href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">width</a>()) &amp;&amp; (size1.<a class="code" href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">height</a>() == size2.<a class="code" href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">height</a>());</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  os &lt;&lt; <span class="stringliteral">&quot;(width=&quot;</span> &lt;&lt; size.<a class="code" href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">width</a>() &lt;&lt; <span class="stringliteral">&quot;, height=&quot;</span> &lt;&lt; size.<a class="code" href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">height</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keywordflow">return</span> os;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">//// Template specialization for float</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment"></span><span class="comment">//template&lt;&gt;</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">//bool operator==&lt;float&gt;(const Rect&lt;float&gt; &amp;rect1, const Rect&lt;float&gt; &amp;rect2);</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">//</span><span class="comment"></span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment">//// Template specialization for double</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment"></span><span class="comment">//template&lt;&gt;</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">//bool operator==&lt;double&gt;(const Rect&lt;double&gt; &amp;rect1, const Rect&lt;double&gt; &amp;rect2);</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#aca597c60045fb1b0e022c073db6fe77c">  113</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size2) {</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <span class="comment">// Use implementation of operator== and negate it.</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="keywordflow">return</span> !(size1 == size2);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}  <span class="comment">// namespace starmathpp</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_SIZE_HPP_</span></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html"><div class="ttname"><a href="classstarmathpp_1_1_size.html">starmathpp::Size</a></div><div class="ttdef"><b>Definition:</b> size.hpp:50</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html_a03bd7f935ea28be071baa7a017a7541d"><div class="ttname"><a href="classstarmathpp_1_1_size.html#a03bd7f935ea28be071baa7a017a7541d">starmathpp::Size::set_height</a></div><div class="ttdeci">void set_height(T height)</div><div class="ttdef"><b>Definition:</b> size.hpp:77</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html_a4d6f5323ab7582c638be2e181675ed09"><div class="ttname"><a href="classstarmathpp_1_1_size.html#a4d6f5323ab7582c638be2e181675ed09">starmathpp::Size::width</a></div><div class="ttdeci">T width() const</div><div class="ttdef"><b>Definition:</b> size.hpp:65</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html_a5a5ebfd79f9e2308ae90974bffb9bec9"><div class="ttname"><a href="classstarmathpp_1_1_size.html#a5a5ebfd79f9e2308ae90974bffb9bec9">starmathpp::Size::Size</a></div><div class="ttdeci">Size()</div><div class="ttdef"><b>Definition:</b> size.hpp:56</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html_a90f5544ca88f82d45908600d8d6b03ab"><div class="ttname"><a href="classstarmathpp_1_1_size.html#a90f5544ca88f82d45908600d8d6b03ab">starmathpp::Size::set_width</a></div><div class="ttdeci">void set_width(T width)</div><div class="ttdef"><b>Definition:</b> size.hpp:69</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html_ab878742ffd853ee4108d4a4d4353ab86"><div class="ttname"><a href="classstarmathpp_1_1_size.html#ab878742ffd853ee4108d4a4d4353ab86">starmathpp::Size::to</a></div><div class="ttdeci">Size&lt; U &gt; to() const</div><div class="ttdef"><b>Definition:</b> size.hpp:82</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html_abe09598bac969a2fb36d33839e39b92e"><div class="ttname"><a href="classstarmathpp_1_1_size.html#abe09598bac969a2fb36d33839e39b92e">starmathpp::Size::Size</a></div><div class="ttdeci">Size(T width, T height)</div><div class="ttdef"><b>Definition:</b> size.hpp:59</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html_ac94d410aea1cff482cd7fad4e91e2e9f"><div class="ttname"><a href="classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f">starmathpp::Size::height</a></div><div class="ttdeci">T height() const</div><div class="ttdef"><b>Definition:</b> size.hpp:73</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_size_html_acf4b1080f698b188b422783754034382"><div class="ttname"><a href="classstarmathpp_1_1_size.html#acf4b1080f698b188b422783754034382">starmathpp::Size::operator*</a></div><div class="ttdeci">Size&lt; T &gt; operator*(T factor)</div><div class="ttdef"><b>Definition:</b> size.hpp:86</div></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#af79077738cfa9cd1984b60e94b599698">  105</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">operator==</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size2) {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordflow">return</span> (size1.<a class="code" href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">width</a>() == size2.<a class="code" href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">width</a>()) &amp;&amp; (size1.<a class="code" href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">height</a>() == size2.<a class="code" href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">height</a>());</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment">//// Template specialization for float</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment"></span><span class="comment">//template&lt;&gt;</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">//bool operator==&lt;float&gt;(const Rect&lt;float&gt; &amp;rect1, const Rect&lt;float&gt; &amp;rect2);</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">//</span><span class="comment"></span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">//// Template specialization for double</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment"></span><span class="comment">//template&lt;&gt;</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">//bool operator==&lt;double&gt;(const Rect&lt;double&gt; &amp;rect1, const Rect&lt;double&gt; &amp;rect2);</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#aca597c60045fb1b0e022c073db6fe77c">  118</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_size.html">Size&lt;T&gt;</a> &amp;size2) {</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="comment">// Use implementation of operator== and negate it.</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="keywordflow">return</span> !(size1 == size2);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}  <span class="comment">// namespace starmathpp</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_SIZE_HPP_</span></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html"><div class="ttname"><a href="classstarmathpp_1_1_size.html">starmathpp::Size</a></div><div class="ttdef"><b>Definition:</b> size.hpp:55</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html_a59d36bf017ef572ddcb300a7508b4226"><div class="ttname"><a href="classstarmathpp_1_1_size.html#a59d36bf017ef572ddcb300a7508b4226">starmathpp::Size::Size</a></div><div class="ttdeci">Size()</div><div class="ttdef"><b>Definition:</b> size.hpp:61</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html_a95d9a4b25f38cd3c50100186f3d0ffd0"><div class="ttname"><a href="classstarmathpp_1_1_size.html#a95d9a4b25f38cd3c50100186f3d0ffd0">starmathpp::Size::set_height</a></div><div class="ttdeci">void set_height(T height)</div><div class="ttdef"><b>Definition:</b> size.hpp:82</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html_a996548e0f0bbc1bc7cbb554fe6e1f697"><div class="ttname"><a href="classstarmathpp_1_1_size.html#a996548e0f0bbc1bc7cbb554fe6e1f697">starmathpp::Size::operator*</a></div><div class="ttdeci">Size&lt; T &gt; operator*(T factor)</div><div class="ttdef"><b>Definition:</b> size.hpp:91</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html_a99a0c538967392738317c15bacfceb82"><div class="ttname"><a href="classstarmathpp_1_1_size.html#a99a0c538967392738317c15bacfceb82">starmathpp::Size::width</a></div><div class="ttdeci">T width() const</div><div class="ttdef"><b>Definition:</b> size.hpp:70</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html_aa7b0c4f12badbded29598a21652a25b5"><div class="ttname"><a href="classstarmathpp_1_1_size.html#aa7b0c4f12badbded29598a21652a25b5">starmathpp::Size::set_width</a></div><div class="ttdeci">void set_width(T width)</div><div class="ttdef"><b>Definition:</b> size.hpp:74</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html_ab9b48cbc1b3b20f8bab53603906765df"><div class="ttname"><a href="classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df">starmathpp::Size::height</a></div><div class="ttdeci">T height() const</div><div class="ttdef"><b>Definition:</b> size.hpp:78</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html_ac654601877221337429de274b2a97d4c"><div class="ttname"><a href="classstarmathpp_1_1_size.html#ac654601877221337429de274b2a97d4c">starmathpp::Size::to</a></div><div class="ttdeci">Size&lt; U &gt; to() const</div><div class="ttdef"><b>Definition:</b> size.hpp:87</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_size_html_ad9c1ab915e69cd74bd18147bbda7e140"><div class="ttname"><a href="classstarmathpp_1_1_size.html#ad9c1ab915e69cd74bd18147bbda7e140">starmathpp::Size::Size</a></div><div class="ttdeci">Size(T width, T height)</div><div class="ttdef"><b>Definition:</b> size.hpp:64</div></div>
 <div class="ttc" id="aexception_8hpp_html"><div class="ttname"><a href="exception_8hpp.html">exception.hpp</a></div></div>
 <div class="ttc" id="anamespacestarmathpp_html"><div class="ttname"><a href="namespacestarmathpp.html">starmathpp</a></div><div class="ttdef"><b>Definition:</b> actions/write.hpp:41</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_a0e72bc8377794e902af58dac301e61f4"><div class="ttname"><a href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">starmathpp::operator==</a></div><div class="ttdeci">bool operator==(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:92</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_aa324d78b242f4afc2ef1a0491fd45e0f"><div class="ttname"><a href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">starmathpp::operator!=</a></div><div class="ttdeci">bool operator!=(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:97</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_a0e72bc8377794e902af58dac301e61f4"><div class="ttname"><a href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">starmathpp::operator==</a></div><div class="ttdeci">bool operator==(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:99</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_aa324d78b242f4afc2ef1a0491fd45e0f"><div class="ttname"><a href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">starmathpp::operator!=</a></div><div class="ttdeci">bool operator!=(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:104</div></div>
 <div class="ttc" id="anamespacestarmathpp_html_aabf46316c927d906d5861aaad68309bd"><div class="ttname"><a href="namespacestarmathpp.html#aabf46316c927d906d5861aaad68309bd">starmathpp::DEF_Exception</a></div><div class="ttdeci">DEF_Exception(Histogram)</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_ae592e927396a72c202451a1f21d28ed1"><div class="ttname"><a href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">starmathpp::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const Point&lt; T &gt; &amp;p)</div><div class="ttdef"><b>Definition:</b> point.hpp:86</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_ae592e927396a72c202451a1f21d28ed1"><div class="ttname"><a href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">starmathpp::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const Point&lt; T &gt; &amp;p)</div><div class="ttdef"><b>Definition:</b> point.hpp:93</div></div>
 <div class="ttc" id="apoint_8hpp_html"><div class="ttname"><a href="point_8hpp.html">point.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jul 1 2024 10:28:24 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 13:21:41 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

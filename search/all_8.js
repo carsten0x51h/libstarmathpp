@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['height_78',['height',['../classstarmathpp_1_1_rect.html#aeafae191a2ce1eb7e36e80ada243244b',1,'starmathpp::Rect::height()'],['../classstarmathpp_1_1_size.html#ac94d410aea1cff482cd7fad4e91e2e9f',1,'starmathpp::Size::height()']]],
+  ['height_78',['height',['../classstarmathpp_1_1_rect.html#ad7c1c92e18833e60e47fb85eea357a82',1,'starmathpp::Rect::height()'],['../classstarmathpp_1_1_size.html#ab9b48cbc1b3b20f8bab53603906765df',1,'starmathpp::Size::height()']]],
   ['hfd_79',['hfd',['../namespacestarmathpp_1_1algorithm.html#ae29618cd7a1605f8a9ae153e63741d0d',1,'starmathpp::algorithm::hfd(const cimg_library::CImg&lt; ImageType &gt; &amp;input_image, const Point&lt; float &gt; &amp;star_center, unsigned int outer_hfd_diameter_px, float scale_factor=1.0F)'],['../namespacestarmathpp_1_1algorithm.html#ab587d2ff6599cc24ad661913343fe4fa',1,'starmathpp::algorithm::hfd(const cimg_library::CImg&lt; ImageType &gt; &amp;input_image, unsigned int outer_hfd_diameter_px, float scale_factor=1.0F)'],['../namespacestarmathpp_1_1algorithm.html#a47c8cd8df9e71ce357996923ec2f0f6e',1,'starmathpp::algorithm::hfd(const cimg_library::CImg&lt; ImageType &gt; &amp;input_image, float scale_factor=1.0F)']]],
   ['hfd_2ehpp_80',['hfd.hpp',['../hfd_8hpp.html',1,'']]],
   ['hfd_5finternal_81',['hfd_internal',['../namespacestarmathpp_1_1algorithm_1_1detail.html#ac2e0aeac4427ed71443aae5856bd0d1e',1,'starmathpp::algorithm::detail']]],

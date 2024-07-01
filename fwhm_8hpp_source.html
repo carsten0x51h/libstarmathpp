@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.b00b94d8b03a</span>
+   &#160;<span id="projectnumber">1.0.0.ec03aacd002e</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -296,12 +296,12 @@ $(function() {
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="keyword">auto</span> fwhm_horizontal_opt = <a class="code" href="namespacestarmathpp_1_1algorithm_1_1detail.html#a56086af1f2c7eda4ac77a9651c5417bd">fwhm_1d_internal</a>(</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;      ranges::view::ints(0, input_image.width()),</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      <a class="code" href="namespacestarmathpp_1_1algorithm_1_1detail.html#a5ee7ef91980de85b0ead07fe3268091c">extract_row</a>(input_image, star_center.<a class="code" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">y</a>())  <span class="comment">// horizontal_slice</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      <a class="code" href="namespacestarmathpp_1_1algorithm_1_1detail.html#a5ee7ef91980de85b0ead07fe3268091c">extract_row</a>(input_image, star_center.<a class="code" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">y</a>())  <span class="comment">// horizontal_slice</span></div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;                  );</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  <span class="keyword">auto</span> fwhm_vertical_opt = <a class="code" href="namespacestarmathpp_1_1algorithm_1_1detail.html#a56086af1f2c7eda4ac77a9651c5417bd">fwhm_1d_internal</a>(</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      ranges::view::ints(0, input_image.height()),</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      <a class="code" href="namespacestarmathpp_1_1algorithm_1_1detail.html#ac84f57c41bdea00c80e9d2b0ab09c8d1">extract_col</a>(input_image, star_center.<a class="code" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">x</a>())  <span class="comment">// vertical_slice</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      <a class="code" href="namespacestarmathpp_1_1algorithm_1_1detail.html#ac84f57c41bdea00c80e9d2b0ab09c8d1">extract_col</a>(input_image, star_center.<a class="code" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">x</a>())  <span class="comment">// vertical_slice</span></div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;                  );</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  <span class="keywordtype">bool</span> valid_fwhm = (fwhm_horizontal_opt.has_value()</div>
@@ -343,9 +343,9 @@ $(function() {
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;}  <span class="comment">// namespace starmathpp::algorithm</span></div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_ALGORITHM_FWHM_HPP_</span></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html"><div class="ttname"><a href="classstarmathpp_1_1_point.html">starmathpp::Point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:45</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html_a46d760ca67d879f509f4e97e94df6b40"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">starmathpp::Point::y</a></div><div class="ttdeci">const T &amp; y() const</div><div class="ttdef"><b>Definition:</b> point.hpp:67</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html_a8940e817592639c468cedf3a2eda5ac4"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">starmathpp::Point::x</a></div><div class="ttdeci">const T &amp; x() const</div><div class="ttdef"><b>Definition:</b> point.hpp:59</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html"><div class="ttname"><a href="classstarmathpp_1_1_point.html">starmathpp::Point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:52</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html_a8e9f391e862bd282a6ce53d4ef968efa"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">starmathpp::Point::y</a></div><div class="ttdeci">const T &amp; y() const</div><div class="ttdef"><b>Definition:</b> point.hpp:74</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html_acec099a8719a316663c6e75d433c44dd"><div class="ttname"><a href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">starmathpp::Point::x</a></div><div class="ttdeci">const T &amp; x() const</div><div class="ttdef"><b>Definition:</b> point.hpp:66</div></div>
 <div class="ttc" id="aexception_8hpp_html"><div class="ttname"><a href="exception_8hpp.html">exception.hpp</a></div></div>
 <div class="ttc" id="aimage_8hpp_html"><div class="ttname"><a href="image_8hpp.html">image.hpp</a></div></div>
 <div class="ttc" id="anamespacestarmathpp_1_1algorithm_1_1detail_html_a56086af1f2c7eda4ac77a9651c5417bd"><div class="ttname"><a href="namespacestarmathpp_1_1algorithm_1_1detail.html#a56086af1f2c7eda4ac77a9651c5417bd">starmathpp::algorithm::detail::fwhm_1d_internal</a></div><div class="ttdeci">std::optional&lt; double &gt; fwhm_1d_internal(Rng x_data, const std::vector&lt; ImageType &gt; &amp;y_data)</div><div class="ttdef"><b>Definition:</b> fwhm.hpp:151</div></div>
@@ -364,7 +364,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jul 1 2024 10:28:24 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 13:21:41 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

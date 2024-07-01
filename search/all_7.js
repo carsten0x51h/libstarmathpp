@@ -10,5 +10,5 @@ var searchData=
   ['get_5fvalue_74',['get_value',['../classstarmathpp_1_1_histogram.html#a2de9f13355219a78f6a83afa0589444d',1,'starmathpp::Histogram']]],
   ['getmaxhfdlimit_75',['getMaxHfdLimit',['../namespacestarmathpp_1_1algorithm.html#ad24884dcfeb390bb094ca1ae288f5bbe',1,'starmathpp::algorithm']]],
   ['grid_76',['GRID',['../structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#ad2d43db3f1d1d30801525ad65c5e29c3a8a11b8e6d3c08876d1f1a5e3cb5f0712',1,'starmathpp::pipeline::views::InterpolationType']]],
-  ['grow_77',['grow',['../classstarmathpp_1_1_rect.html#aaac939c51571d0938fa1c70cfc32aa7a',1,'starmathpp::Rect']]]
+  ['grow_77',['grow',['../classstarmathpp_1_1_rect.html#a4081cd275c255897b12d7b6e5315794a',1,'starmathpp::Rect']]]
 ];

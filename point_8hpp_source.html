@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.b00b94d8b03a</span>
+   &#160;<span id="projectnumber">1.0.0.ec03aacd002e</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -100,123 +100,130 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#ifndef SOURCE_STARMATHPP_POINT_HPP_</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="point_8hpp.html#a0ae9dd4e147dd6bc29dc7118673939ad">   27</a></span>&#160;<span class="preprocessor">#define SOURCE_STARMATHPP_POINT_HPP_ SOURCE_STARMATHPP_POINT_HPP_</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;limits&gt;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;ostream&gt;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;tuple&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacestarmathpp.html">starmathpp</a> {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;limits&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;ostream&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;tuple&gt;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span>Point;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">// pre-declare the template class itself</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os,</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                                              <span class="keyword">const</span> Point&lt;T&gt; &amp;p);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"> * PointT structure (X x Y).</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html">   45</a></span>&#160;<span class="keyword">class </span><a class="code" href="classstarmathpp_1_1_point.html">Point</a> {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a572f01f34d20d9674b5c5a4b615a6267">   47</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_point.html#a572f01f34d20d9674b5c5a4b615a6267">Point</a>()</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      :</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      x_(0),</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      y_(0) {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a57e07e91e5a4c8e3af312cff64155909">   53</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_point.html#a57e07e91e5a4c8e3af312cff64155909">Point</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">x</a>, <span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">y</a>)</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      :</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      x_(<a class="code" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">x</a>),</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      y_(<a class="code" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">y</a>) {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">   59</a></span>&#160;  [[nodiscard]] <span class="keyword">const</span> T&amp; <a class="code" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">x</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">return</span> x_;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a167c56dbbdc497428872bf483aebc05b">   63</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_point.html#a167c56dbbdc497428872bf483aebc05b">set_x</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">x</a>) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    x_ = <a class="code" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">x</a>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">   67</a></span>&#160;  [[nodiscard]] <span class="keyword">const</span> T&amp; <a class="code" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">y</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">return</span> y_;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  }</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#abc7ab8d4fbfdb9af59123a3290db6f4b">   71</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_point.html#abc7ab8d4fbfdb9af59123a3290db6f4b">set_y</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">y</a>) {</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    y_ = <a class="code" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">y</a>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">class</span> U&gt;</div>
-<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a013cf1b1a1767c2877353bb3f5b11b2d">   76</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;U&gt;</a> <a class="code" href="classstarmathpp_1_1_point.html#a013cf1b1a1767c2877353bb3f5b11b2d">to</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;U&gt;</a>(x_, y_);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  T x_;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  T y_;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;};</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">   86</a></span>&#160;std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  os &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; p.<a class="code" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">x</a>() &lt;&lt; <span class="stringliteral">&quot;,&quot;</span> &lt;&lt; p.<a class="code" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">y</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordflow">return</span> os;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">   92</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">operator==</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p2) {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordflow">return</span> (p1.<a class="code" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">x</a>() == p2.<a class="code" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">x</a>() &amp;&amp; p1.<a class="code" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">y</a>() == p2.<a class="code" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">y</a>());</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">   97</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p2) {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="comment">// Use implementation of operator== and negate it.</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordflow">return</span> !(p1 == p2);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a2527f25a2d23010f266a4293682d6edb">  103</a></span>&#160;<span class="keywordtype">bool</span> <span class="keyword">operator</span>==&lt;<span class="keywordtype">float</span>&gt;(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;float&gt;</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;float&gt;</a> &amp;p2);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#aa28c3b2e652cf99da352a04b2f1935cb">  106</a></span>&#160;<span class="keywordtype">bool</span> <span class="keyword">operator</span>==&lt;<span class="keywordtype">double</span>&gt;(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;double&gt;</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;double&gt;</a> &amp;p2);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment"> * Definition: One point is &quot;bigger&quot; than another when the distance to (0,0) is bigger.</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment"> * NOTE: This might have a performance impact and may have to be changed...</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment"> * TODO: Revisit this definition... crosscheck with std::tie below...</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment"> * @tparam T</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment"> * @param p1</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment"> * @param p2</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment"> * @return</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a4b6d378df0bf98dc46b82eab9c572e33">  119</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#a4b6d378df0bf98dc46b82eab9c572e33">operator&lt;</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p2) {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="comment">// An idiomatic way to implement strict weak ordering for a structure is to use lexicographical comparison provided by std::tie.</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <span class="comment">// See https://en.cppreference.com/w/cpp/language/operators</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <span class="comment">// NOTE: This has a dependency to &lt;tuple&gt;</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <span class="keywordflow">return</span> (std::tie(p1.<a class="code" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">x</a>(), p1.<a class="code" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">y</a>()) &lt; std::tie(p2.<a class="code" href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">x</a>(), p2.<a class="code" href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">y</a>()));</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;}  <span class="comment">// end namespace starmathpp</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SOURCE_STARMATHPP_POINT_HPP_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html"><div class="ttname"><a href="classstarmathpp_1_1_point.html">starmathpp::Point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:45</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html_a013cf1b1a1767c2877353bb3f5b11b2d"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a013cf1b1a1767c2877353bb3f5b11b2d">starmathpp::Point::to</a></div><div class="ttdeci">Point&lt; U &gt; to() const</div><div class="ttdef"><b>Definition:</b> point.hpp:76</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html_a167c56dbbdc497428872bf483aebc05b"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a167c56dbbdc497428872bf483aebc05b">starmathpp::Point::set_x</a></div><div class="ttdeci">void set_x(const T &amp;x)</div><div class="ttdef"><b>Definition:</b> point.hpp:63</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html_a46d760ca67d879f509f4e97e94df6b40"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a46d760ca67d879f509f4e97e94df6b40">starmathpp::Point::y</a></div><div class="ttdeci">const T &amp; y() const</div><div class="ttdef"><b>Definition:</b> point.hpp:67</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html_a572f01f34d20d9674b5c5a4b615a6267"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a572f01f34d20d9674b5c5a4b615a6267">starmathpp::Point::Point</a></div><div class="ttdeci">Point()</div><div class="ttdef"><b>Definition:</b> point.hpp:47</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html_a57e07e91e5a4c8e3af312cff64155909"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a57e07e91e5a4c8e3af312cff64155909">starmathpp::Point::Point</a></div><div class="ttdeci">Point(const T &amp;x, const T &amp;y)</div><div class="ttdef"><b>Definition:</b> point.hpp:53</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html_a8940e817592639c468cedf3a2eda5ac4"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a8940e817592639c468cedf3a2eda5ac4">starmathpp::Point::x</a></div><div class="ttdeci">const T &amp; x() const</div><div class="ttdef"><b>Definition:</b> point.hpp:59</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1_point_html_abc7ab8d4fbfdb9af59123a3290db6f4b"><div class="ttname"><a href="classstarmathpp_1_1_point.html#abc7ab8d4fbfdb9af59123a3290db6f4b">starmathpp::Point::set_y</a></div><div class="ttdeci">void set_y(const T &amp;y)</div><div class="ttdef"><b>Definition:</b> point.hpp:71</div></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacestarmathpp.html">starmathpp</a> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> * Pre-declare the template class itself to be ale to declare operator&lt;&lt;.</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"> * Allow only numeric types for Point template.</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"> * See https://stackoverflow.com/questions/14294267/class-template-for-numeric-types</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;template&lt;typename T, typename = typename std::enable_if&lt;std::is_arithmetic&lt;T&gt;::value, T&gt;::type&gt; <span class="keyword">class </span>Point;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os,</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                                              <span class="keyword">const</span> Point&lt;T&gt; &amp;p);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment"> * PointT structure (X x Y).</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">typename</span>&gt;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html">   52</a></span>&#160;<span class="keyword">class </span><a class="code" href="classstarmathpp_1_1_point.html">Point</a> {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a93e8b934a06e2339aaf5a5de9d1d66b3">   54</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_point.html#a93e8b934a06e2339aaf5a5de9d1d66b3">Point</a>()</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      :</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      x_(0),</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      y_(0) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a53827311aef1df2f1d8041b930ba2297">   60</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_point.html#a53827311aef1df2f1d8041b930ba2297">Point</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">x</a>, <span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">y</a>)</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      :</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      x_(<a class="code" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">x</a>),</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      y_(<a class="code" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">y</a>) {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">   66</a></span>&#160;  [[nodiscard]] <span class="keyword">const</span> T&amp; <a class="code" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">x</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">return</span> x_;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a9f55360df9b1a08cb670dc17d9536314">   70</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_point.html#a9f55360df9b1a08cb670dc17d9536314">set_x</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">x</a>) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    x_ = <a class="code" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">x</a>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">   74</a></span>&#160;  [[nodiscard]] <span class="keyword">const</span> T&amp; <a class="code" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">y</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">return</span> y_;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a60075a2c86e9ec41d423a83af6f8a5d0">   78</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classstarmathpp_1_1_point.html#a60075a2c86e9ec41d423a83af6f8a5d0">set_y</a>(<span class="keyword">const</span> T &amp;<a class="code" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">y</a>) {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    y_ = <a class="code" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">y</a>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">class</span> U&gt;</div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="classstarmathpp_1_1_point.html#a75c764df34eae41208d1ae36e77bb4fb">   83</a></span>&#160;  <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;U&gt;</a> <a class="code" href="classstarmathpp_1_1_point.html#a75c764df34eae41208d1ae36e77bb4fb">to</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;U&gt;</a>(x_, y_);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  T x_;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  T y_;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;};</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">   93</a></span>&#160;std::ostream&amp; <a class="code" href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p) {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  os &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; p.<a class="code" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">x</a>() &lt;&lt; <span class="stringliteral">&quot;,&quot;</span> &lt;&lt; p.<a class="code" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">y</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordflow">return</span> os;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">   99</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">operator==</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p2) {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordflow">return</span> (p1.<a class="code" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">x</a>() == p2.<a class="code" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">x</a>() &amp;&amp; p1.<a class="code" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">y</a>() == p2.<a class="code" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">y</a>());</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">  104</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p2) {</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="comment">// Use implementation of operator== and negate it.</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordflow">return</span> !(p1 == p2);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a2527f25a2d23010f266a4293682d6edb">  110</a></span>&#160;<span class="keywordtype">bool</span> <span class="keyword">operator</span>==&lt;<span class="keywordtype">float</span>&gt;(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;float&gt;</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;float&gt;</a> &amp;p2);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#aa28c3b2e652cf99da352a04b2f1935cb">  113</a></span>&#160;<span class="keywordtype">bool</span> <span class="keyword">operator</span>==&lt;<span class="keywordtype">double</span>&gt;(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;double&gt;</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;double&gt;</a> &amp;p2);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment"> * Definition: One point is &quot;bigger&quot; than another when the distance to (0,0) is bigger.</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment"> * NOTE: This might have a performance impact and may have to be changed...</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment"> * TODO: Revisit this definition... crosscheck with std::tie below...</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment"> * @tparam T</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment"> * @param p1</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment"> * @param p2</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment"> * @return</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a4b6d378df0bf98dc46b82eab9c572e33">  126</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacestarmathpp.html#a4b6d378df0bf98dc46b82eab9c572e33">operator&lt;</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1_point.html">Point&lt;T&gt;</a> &amp;p2) {</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <span class="comment">// An idiomatic way to implement strict weak ordering for a structure is to use lexicographical comparison provided by std::tie.</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <span class="comment">// See https://en.cppreference.com/w/cpp/language/operators</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="comment">// NOTE: This has a dependency to &lt;tuple&gt;</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <span class="keywordflow">return</span> (std::tie(p1.<a class="code" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">x</a>(), p1.<a class="code" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">y</a>()) &lt; std::tie(p2.<a class="code" href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">x</a>(), p2.<a class="code" href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">y</a>()));</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}  <span class="comment">// end namespace starmathpp</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SOURCE_STARMATHPP_POINT_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html"><div class="ttname"><a href="classstarmathpp_1_1_point.html">starmathpp::Point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:52</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html_a53827311aef1df2f1d8041b930ba2297"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a53827311aef1df2f1d8041b930ba2297">starmathpp::Point::Point</a></div><div class="ttdeci">Point(const T &amp;x, const T &amp;y)</div><div class="ttdef"><b>Definition:</b> point.hpp:60</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html_a60075a2c86e9ec41d423a83af6f8a5d0"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a60075a2c86e9ec41d423a83af6f8a5d0">starmathpp::Point::set_y</a></div><div class="ttdeci">void set_y(const T &amp;y)</div><div class="ttdef"><b>Definition:</b> point.hpp:78</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html_a75c764df34eae41208d1ae36e77bb4fb"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a75c764df34eae41208d1ae36e77bb4fb">starmathpp::Point::to</a></div><div class="ttdeci">Point&lt; U &gt; to() const</div><div class="ttdef"><b>Definition:</b> point.hpp:83</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html_a8e9f391e862bd282a6ce53d4ef968efa"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a8e9f391e862bd282a6ce53d4ef968efa">starmathpp::Point::y</a></div><div class="ttdeci">const T &amp; y() const</div><div class="ttdef"><b>Definition:</b> point.hpp:74</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html_a93e8b934a06e2339aaf5a5de9d1d66b3"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a93e8b934a06e2339aaf5a5de9d1d66b3">starmathpp::Point::Point</a></div><div class="ttdeci">Point()</div><div class="ttdef"><b>Definition:</b> point.hpp:54</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html_a9f55360df9b1a08cb670dc17d9536314"><div class="ttname"><a href="classstarmathpp_1_1_point.html#a9f55360df9b1a08cb670dc17d9536314">starmathpp::Point::set_x</a></div><div class="ttdeci">void set_x(const T &amp;x)</div><div class="ttdef"><b>Definition:</b> point.hpp:70</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1_point_html_acec099a8719a316663c6e75d433c44dd"><div class="ttname"><a href="classstarmathpp_1_1_point.html#acec099a8719a316663c6e75d433c44dd">starmathpp::Point::x</a></div><div class="ttdeci">const T &amp; x() const</div><div class="ttdef"><b>Definition:</b> point.hpp:66</div></div>
 <div class="ttc" id="anamespacestarmathpp_html"><div class="ttname"><a href="namespacestarmathpp.html">starmathpp</a></div><div class="ttdef"><b>Definition:</b> actions/write.hpp:41</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_a0e72bc8377794e902af58dac301e61f4"><div class="ttname"><a href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">starmathpp::operator==</a></div><div class="ttdeci">bool operator==(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:92</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_a4b6d378df0bf98dc46b82eab9c572e33"><div class="ttname"><a href="namespacestarmathpp.html#a4b6d378df0bf98dc46b82eab9c572e33">starmathpp::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:119</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_aa324d78b242f4afc2ef1a0491fd45e0f"><div class="ttname"><a href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">starmathpp::operator!=</a></div><div class="ttdeci">bool operator!=(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:97</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_ae592e927396a72c202451a1f21d28ed1"><div class="ttname"><a href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">starmathpp::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const Point&lt; T &gt; &amp;p)</div><div class="ttdef"><b>Definition:</b> point.hpp:86</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_a0e72bc8377794e902af58dac301e61f4"><div class="ttname"><a href="namespacestarmathpp.html#a0e72bc8377794e902af58dac301e61f4">starmathpp::operator==</a></div><div class="ttdeci">bool operator==(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:99</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_a4b6d378df0bf98dc46b82eab9c572e33"><div class="ttname"><a href="namespacestarmathpp.html#a4b6d378df0bf98dc46b82eab9c572e33">starmathpp::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:126</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_aa324d78b242f4afc2ef1a0491fd45e0f"><div class="ttname"><a href="namespacestarmathpp.html#aa324d78b242f4afc2ef1a0491fd45e0f">starmathpp::operator!=</a></div><div class="ttdeci">bool operator!=(const Point&lt; T &gt; &amp;p1, const Point&lt; T &gt; &amp;p2)</div><div class="ttdef"><b>Definition:</b> point.hpp:104</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_ae592e927396a72c202451a1f21d28ed1"><div class="ttname"><a href="namespacestarmathpp.html#ae592e927396a72c202451a1f21d28ed1">starmathpp::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const Point&lt; T &gt; &amp;p)</div><div class="ttdef"><b>Definition:</b> point.hpp:93</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jul 1 2024 10:28:24 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 13:21:41 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
