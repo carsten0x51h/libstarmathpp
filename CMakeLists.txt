@@ -107,6 +107,17 @@ file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
 include(cmake/CompileOptions.cmake)
 
 #
+# Look for CImg
+#
+include(cmake/FindCimg.cmake)
+
+if(NOT CIMG_FOUND) 
+  message(FATAL_ERROR "Can't find CImg. Try 'sudo apt-get install cimg-dev'.")
+endif(NOT CIMG_FOUND) 
+
+
+
+#
 # Look for CCfits
 #
 include(cmake/FindCCFits.cmake)
@@ -290,7 +301,7 @@ SET(CFLAGS_COMMON "-std=c++1z")
 SET(CXXFLAGS_COMMON "-std=c++1z")
 
 # Add new build types
-message("* Adding build types...")
+message(STATUS "Adding build types...")
 
 
 
@@ -375,4 +386,4 @@ IF(NOT CMAKE_BUILD_TYPE)
     FORCE)
 ENDIF(NOT CMAKE_BUILD_TYPE)
    
-message("* Current build type is : ${CMAKE_BUILD_TYPE}")
+message(STATUS "Current build type is : ${CMAKE_BUILD_TYPE}")

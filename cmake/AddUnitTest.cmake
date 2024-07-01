@@ -1,5 +1,5 @@
 macro(add_test_module TEST_MODULE_NAME TEST_SOURCES)
-   message("* Adding test module ${TEST_MODULE_NAME}...")
+   message(STATUS "Adding test module ${TEST_MODULE_NAME}...")
    add_executable(${TEST_MODULE_NAME} ${TEST_SOURCES})
    target_link_libraries(${TEST_MODULE_NAME}
 	PRIVATE
