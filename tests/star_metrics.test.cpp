@@ -49,7 +49,7 @@
 #include <libstarmathpp/views/scale.hpp>
 #include <libstarmathpp/views/center_on_star.hpp>
 #include <libstarmathpp/views/crop.hpp>
-//#include <libstarmathpp/pipeline/views/interpolate_bad_pixels.hpp>
+#include <libstarmathpp/views/interpolate_bad_pixels.hpp>
 
 #include <libstarmathpp/io/filesystem_wrapper.hpp>
 
@@ -82,17 +82,13 @@ bool are_tuples_equal(const std::tuple<float, float, float> &t1,
 }
 
 /**
- * TODO: Add interpolate bad pixels...
  * TODO: saturated filter as function like add/sub, ...?
- * TODO: Implement simple crop().
  * TODO / PROBLEM: This way we lose the info which image we talk about... -> include path into ImageT structure...?!
  *                 -> This would also be helpful with a "store()/save()" function.
  *
- * TODO: Interesting observation: SNR gets worse again whens tar gets more into focus. Why? Is that expected?
- * TODO: Move HfdT to starmath::metrics::Hfd
- * TODO: To be changed to HfdT::calculate(...)? Or does the objet hold some valuable additional infos - like getOuterRadius()... which will now depend on the image input!
+ * TODO: Interesting observation: SNR gets worse again when star gets more in focus. Why? Is that expected?
+ * TODO: To be changed to HfdT::calculate(...)? Or does the object hold some valuable additional info - like getOuterRadius()... which will now depend on the image input!
  *       FwhmT fwhmObj(ImageSlicerT::slice<SliceDirectionT::VERT>(*result, result->width()/2));
- * TODO: Change: pass in entire image -> calculate mean of VERT + HORZ Fwhm and return this as value. FwhmT should provide functions to get both separately.
  */
 BOOST_AUTO_TEST_CASE(pipeline_star_metrics_test, * boost::unit_test::tolerance(0.5)) {
   std::vector<std::string> image_paths {
@@ -122,7 +118,7 @@ BOOST_AUTO_TEST_CASE(pipeline_star_metrics_test, * boost::unit_test::tolerance(0
       4.1407320775829746, 3.4434783057891602, 1.8549140611311068 } };
 
   auto star_metrics = image_paths | read()
-//  | view::filter(& metrics::is_not_saturated)
+      | interpolate_bad_pixels(10000 /*threshold*/, 3 /*filter size*/)
       | subtract_background(OtsuThresholder<float>(16)) | scale_up(3.0F)
       | center_on_star(IntensityWeightedCentroider<float>()) | scale_down(3.0F)
       | crop_from_center(Size<int>(61, 61))
