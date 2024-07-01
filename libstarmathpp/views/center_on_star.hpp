@@ -45,19 +45,17 @@ template<typename ImageType = float>
 auto center_on_star(
     const starmathpp::algorithm::Centroider<ImageType> &centroider) {
   return ranges::views::transform(
-      [&](const std::shared_ptr<cimg_library::CImg<ImageType>> &image) {
+      [&](const cimg_library::CImg<ImageType> &&input_image) {
 
-        const cimg_library::CImg<ImageType> &input_image_ref = *image;
+        auto opt_centroid = centroider.calculate_centroid(input_image);
 
-        auto opt_centroid = centroider.calculate_centroid(input_image_ref);
-
-        DEBUG_IMAGE_DISPLAY(input_image_ref, "center_on_star_in",
+        DEBUG_IMAGE_DISPLAY(input_image, "center_on_star_in",
                             STARMATHPP_PIPELINE_CENTER_ON_STAR_DEBUG);
 
         if (opt_centroid.has_value()) {
           auto outer_roi = Rect<float>::from_center_point(
-              opt_centroid.value(), (float) input_image_ref.width(),
-              (float) input_image_ref.height()).template to<int>();
+              opt_centroid.value(), (float) input_image.width(),
+              (float) input_image.height()).template to<int>();
 
           // get_crop() by default applies a dirichlet boundary_condition (=0). There are other
           // options as well. In this case, the desired behaviour is to assume that all pixel values
@@ -71,14 +69,13 @@ auto center_on_star(
           // - Mirror means "Mirrored image outside".
           //
           // See https://github.com/GreycLab/CImg/issues/110
-          auto centroid_sub_img =
-              std::make_shared<cimg_library::CImg<ImageType>>(
-                  input_image_ref.get_crop(
-                      outer_roi.x() /*x0*/, outer_roi.y() /*y0*/,
-                      outer_roi.x() + outer_roi.width() - 1/*x1*/,
-                      outer_roi.y() + outer_roi.height() - 1/*y1*/));
+          cimg_library::CImg<ImageType> centroid_sub_img(
+              input_image.get_crop(
+                  outer_roi.x() /*x0*/, outer_roi.y() /*y0*/,
+                  outer_roi.x() + outer_roi.width() - 1/*x1*/,
+                  outer_roi.y() + outer_roi.height() - 1/*y1*/));
 
-          DEBUG_IMAGE_DISPLAY(*centroid_sub_img, "center_on_star_out",
+          DEBUG_IMAGE_DISPLAY(centroid_sub_img, "center_on_star_out",
                               STARMATHPP_PIPELINE_CENTER_ON_STAR_DEBUG);
 
           return centroid_sub_img;

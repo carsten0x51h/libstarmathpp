@@ -31,7 +31,7 @@
 namespace starmathpp::pipeline::views {
 
 /**
- *
+ * TODO: Move to details namespace...
  */
 template<typename ImageType>
 struct AddTraits {
@@ -39,18 +39,15 @@ struct AddTraits {
     return "add";
   }
 
-  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
-      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
-      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr2) {
-    return std::make_shared < cimg_library::CImg
-        < ImageType >> (*img_ptr1 + *img_ptr2);
+  static auto calculate(
+      const cimg_library::CImg<ImageType>&& img1,
+      const cimg_library::CImg<ImageType>& img2) {
+    return img1 + img2;
   }
 
-  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
-      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
-      ImageType scalar_value) {
-    return std::make_shared < cimg_library::CImg
-        < ImageType >> (*img_ptr1 + scalar_value);
+  static auto calculate(
+      const cimg_library::CImg<ImageType>&& img1, ImageType scalar_value) {
+    return img1 + scalar_value;
   }
 };
 
@@ -58,8 +55,8 @@ struct AddTraits {
  *
  */
 template<typename ImageType = float>
-auto add(const std::shared_ptr<Image> &image_to_add_ptr) {
-  return arithmetic_function_tmpl<AddTraits, ImageType>(image_to_add_ptr);
+auto add(const Image& image_to_add) {
+  return arithmetic_function_tmpl<AddTraits, ImageType>(image_to_add);
 }
 
 /**

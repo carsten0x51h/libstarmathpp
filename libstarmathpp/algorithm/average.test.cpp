@@ -47,17 +47,16 @@ using namespace ranges;
  */
 BOOST_AUTO_TEST_CASE(algorithm_average_image_calculation_test)
 {
-  std::vector<ImagePtr> input_images = {
-    std::make_shared<Image>(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
-    std::make_shared<Image>(5, 5, 1, 1, 10),// 5x5 - All pixels have value 10
-    std::make_shared<Image>(5, 5, 1, 1, -5)// 5x5 - All pixels have value -5
-  };
+  std::vector<Image> input_images;
 
-  auto average_image_ptr = starmathpp::algorithm::average(input_images);
-  auto expected_image_ptr = std::make_shared < Image
-      > (5, 5, 1, 1, (13 + 10 - 5) / 3);  // 5x5 - All pixels have value 6
+  input_images.push_back(Image(5, 5, 1, 1, 13));  // 5x5 - All pixels have value 13
+  input_images.push_back(Image(5, 5, 1, 1, 10));// 5x5 - All pixels have value 10
+  input_images.push_back(Image(5, 5, 1, 1, -5));// 5x5 - All pixels have value -5
 
-  BOOST_TEST(is_almost_equal(*average_image_ptr, *expected_image_ptr, 0.00001));
+  auto average_image = starmathpp::algorithm::average(input_images);
+  Image expected_image(5, 5, 1, 1, (13 + 10 - 5) / 3);  // 5x5 - All pixels have value 6
+
+  BOOST_TEST(is_almost_equal(average_image, expected_image, 0.00001));
 }
 
 /**
@@ -65,14 +64,13 @@ BOOST_AUTO_TEST_CASE(algorithm_average_image_calculation_test)
  */
 BOOST_AUTO_TEST_CASE(algorithm_average_single_image_test)
 {
-  std::vector<ImagePtr> input_images = {
-    std::make_shared<Image>(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
-  };
+  std::vector<Image> input_images;
+  input_images.push_back(Image(5, 5, 1, 1, 13));  // 5x5 - All pixels have value 13
 
-  auto average_image_ptr = starmathpp::algorithm::average(input_images);
-  auto expected_image_ptr = std::make_shared < Image > (5, 5, 1, 1, 13);  // 5x5 - All pixels have value 13
+  auto average_image = starmathpp::algorithm::average(input_images);
+  Image expected_image(5, 5, 1, 1, 13);  // 5x5 - All pixels have value 13
 
-  BOOST_TEST(is_almost_equal(*average_image_ptr, *expected_image_ptr, 0.00001));
+  BOOST_TEST(is_almost_equal(average_image, expected_image, 0.00001));
 }
 
 /**
@@ -80,23 +78,23 @@ BOOST_AUTO_TEST_CASE(algorithm_average_single_image_test)
  */
 BOOST_AUTO_TEST_CASE(algorithm_average_different_image_sizes_exception_test)
 {
-  std::vector<ImagePtr> input_images = {
-    std::make_shared<Image>(4, 4, 1, 1, 13),  // 4x4 - All pixels have value 13
-    std::make_shared<Image>(5, 5, 1, 1, 10),// 5x5 - All pixels have value 10
+  std::vector<Image> input_images {
+    Image(4, 4, 1, 1, 13),  // 4x4 - All pixels have value 13
+    Image(5, 5, 1, 1, 10)   // 5x5 - All pixels have value 10
   };
 
-  BOOST_CHECK_THROW(auto average_image_ptr = starmathpp::algorithm::average(input_images), InconsistentImageDimensionsException);
-}
+    BOOST_CHECK_THROW(auto average_image_ptr = starmathpp::algorithm::average(input_images), InconsistentImageDimensionsException);
+  }
 
-/**
- *
- */
-BOOST_AUTO_TEST_CASE(algorithm_average_empty_range_test)
-{
-  std::vector<ImagePtr> empty_image_vector;
-  auto result_image = starmathpp::algorithm::average(empty_image_vector);
+  /**
+   *
+   */
+  BOOST_AUTO_TEST_CASE(algorithm_average_empty_range_test)
+  {
+    std::vector<Image> empty_image_vector;
+    auto result_image = starmathpp::algorithm::average(empty_image_vector);
 
-  BOOST_TEST(result_image == nullptr);
-}
+    BOOST_CHECK(result_image.is_empty());
+  }
 
-BOOST_AUTO_TEST_SUITE_END();
+  BOOST_AUTO_TEST_SUITE_END();

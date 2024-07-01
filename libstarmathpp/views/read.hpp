@@ -45,7 +45,7 @@ namespace starmathpp::pipeline::views {
 
           DEBUG_IMAGE_DISPLAY(*loadedImage, "images_out", STARMATHPP_PIPELINE_READ_DEBUG);
 
-          return loadedImage;
+          return std::move(loadedImage);
         }
     );
   }

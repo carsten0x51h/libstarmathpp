@@ -44,7 +44,7 @@ DEF_Exception(ImageReader);
  * @param filepath
  * @return
  */
-std::shared_ptr<Image> read(const std::filesystem::path &filepath);
+Image read(const std::filesystem::path &filepath);
 }  // namespace starmathpp
 
 #endif // STARMATHPP_IMAGE_READER_H

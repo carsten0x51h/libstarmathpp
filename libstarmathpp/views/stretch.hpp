@@ -39,23 +39,20 @@
 namespace starmathpp::pipeline::views {
 
 /**
- * TODO: Change shared_ptrs to unique_ptrs...?!! Because ownership is not shared.
+ * TODO: Change unique_ptrs to unique_ptrs...?!! Because ownership is not shared.
  * TODO: Stretcher currently only supports float images...
  */
 template<typename ImageType = float>
 auto stretch(const starmathpp::algorithm::Stretcher &stretcher) {
   return ranges::views::transform(
-      [&](const std::shared_ptr<const cimg_library::CImg<ImageType>> &image) {
-        const auto &input_image_ref = *image;
+      [&](const cimg_library::CImg<ImageType>&& input_image) {
 
-        DEBUG_IMAGE_DISPLAY(input_image_ref, "pipeline_view_stretcher_in",
+        DEBUG_IMAGE_DISPLAY(input_image, "pipeline_view_stretcher_in",
                             STARMATHPP_PIPELINE_STRETCHER_DEBUG);
 
-        auto stretched_image = std::make_shared<
-            const cimg_library::CImg<uint8_t>>(
-            stretcher.stretch(input_image_ref));
+        cimg_library::CImg<uint8_t> stretched_image(stretcher.stretch(input_image));
 
-        DEBUG_IMAGE_DISPLAY(*stretched_image, "pipeline_view_stretcher_out",
+        DEBUG_IMAGE_DISPLAY(stretched_image, "pipeline_view_stretcher_out",
                             STARMATHPP_PIPELINE_STRETCHER_DEBUG);
 
         return stretched_image;

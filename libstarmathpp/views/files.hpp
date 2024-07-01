@@ -33,7 +33,6 @@
 #include <range/v3/iterator_range.hpp>
 
 #include <libstarmathpp/io/filesystem_wrapper.hpp>
-#include <libstarmathpp/views/arithmetic_function_template.hpp>
 
 namespace starmathpp::pipeline::views {
 

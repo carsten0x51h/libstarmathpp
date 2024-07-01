@@ -35,6 +35,7 @@
 #include <range/v3/view/single.hpp>
 #include <range/v3/view/join.hpp>
 #include <range/v3/view/filter.hpp>
+#include <range/v3/view/move.hpp>
 #include <range/v3/core.hpp>   // ranges::front()
 #include <range/v3/algorithm/for_each.hpp>
 
@@ -125,6 +126,7 @@ BOOST_AUTO_TEST_CASE(pipeline_standard_image_development_test, * boost::unit_tes
           )
       )
   )
+  | ranges::views::move
   | stretch(starmathpp::algorithm::MidtoneBalanceStretcher(TARGET_BACKGROUND))
   | to<std::vector>();
 
@@ -136,8 +138,8 @@ BOOST_AUTO_TEST_CASE(pipeline_standard_image_development_test, * boost::unit_tes
   // Just one image is expected as result from the processing pipeline
   BOOST_TEST(final_image_vec.size() == 1);
 
-  // The ranges::front() call extracts the only image from the range (here a std::shared_ptr<ImageT>).
-  cimg_library::CImg<uint8_t> calculated_img = *final_image_vec.front();
+  // The ranges::front() call extracts the only image from the range (here a std::unique_ptr<ImageT>).
+  cimg_library::CImg<uint8_t> calculated_img = final_image_vec.front();
 
   // TODO / FIXME: When persisting the image and loading the image again
   //               from disc (the expected result), some rounding causes

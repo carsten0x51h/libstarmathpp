@@ -34,6 +34,7 @@
 
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/view/single.hpp>
+#include <range/v3/view/move.hpp>
 
 #include <boost/test/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
@@ -51,16 +52,15 @@ namespace bdata = boost::unit_test::data;
 /**
  * This function generates a CImg
  */
-static std::shared_ptr<Image> generate_bad_pixel_image(
+static Image generate_bad_pixel_image(
     unsigned int width, unsigned int height, unsigned int bad_pixel_pos_x,
     unsigned int bad_pixel_pos_y, float bg_pixel_value, float bad_pixel_value) {
 
-  auto bad_pixel_image_ptr = std::make_shared < Image
-      > (width, height, 1, 1, bg_pixel_value);
+  Image bad_pixel_image(width, height, 1, 1, bg_pixel_value);
 
-  (*bad_pixel_image_ptr)(bad_pixel_pos_x, bad_pixel_pos_y) = bad_pixel_value;
+  bad_pixel_image(bad_pixel_pos_x, bad_pixel_pos_y) = bad_pixel_value;
 
-  return bad_pixel_image_ptr;
+  return bad_pixel_image;
 }
 
 /**
@@ -113,11 +113,11 @@ BOOST_DATA_TEST_CASE(absolute_threshold_test,
 
   // Check, if the bad pixel was correctly interpolated with the median background value.
   BOOST_TEST(
-      (*bad_pixel_median_interpolator.interpolate(
+      bad_pixel_median_interpolator.interpolate(
               generate_bad_pixel_image(
                   25, 25, bad_pixel_pos_x, bad_pixel_pos_y, bg_pixel_value, bad_pixel_value)
           )
-      )(bad_pixel_pos_x, bad_pixel_pos_y) == expected_pixel_value
+      (bad_pixel_pos_x, bad_pixel_pos_y) == expected_pixel_value
   );
 
 }

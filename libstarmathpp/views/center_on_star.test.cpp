@@ -35,6 +35,7 @@
 
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/view/single.hpp>
+#include <range/v3/view/move.hpp>
 
 #include <libstarmathpp/algorithm/centroid/intensity_weighted_centroider.hpp>
 #include <libstarmathpp/views/center_on_star.hpp>
@@ -56,15 +57,16 @@ using namespace ranges;
  */
 BOOST_AUTO_TEST_CASE(pipeline_center_on_star_test)
 {
-  auto test_image_ptr = std::make_shared<Image>("test_data/pipeline/center_on_star/test_image_ideal_star_73x65.tiff");
+  Image test_image("test_data/pipeline/center_on_star/test_image_ideal_star_73x65.tiff");
 
-  auto result_images = ranges::views::single(test_image_ptr)
+  auto result_images = ranges::views::single(test_image)
+      | ranges::views::move
       | center_on_star(IntensityWeightedCentroider<float>())
       | to<std::vector>();
 
   BOOST_TEST(result_images.size() == 1);
 
-  const Image &result_image = *(result_images.at(0));
+  const Image &result_image = result_images.at(0);
 
   BOOST_TEST(result_image.width() == 73);
   BOOST_TEST(result_image.height() == 65);

@@ -57,7 +57,7 @@ auto read_fits(const std::string &filepath) {
 
   try {
     // NOTE: Throws FitsIOExceptionT
-    return io::fits::read(filepath, &debugSs);
+    return std::move(io::fits::read(filepath, &debugSs));
 
   } catch (fits::FitsIOException &exc) {
     std::stringstream ss;
@@ -70,7 +70,7 @@ auto read_fits(const std::string &filepath) {
 /**
  *
  */
-std::shared_ptr<Image> read(const std::filesystem::path &filepath) {
+Image read(const std::filesystem::path &filepath) {
 
   check_filepath(filepath);
 
@@ -81,10 +81,10 @@ std::shared_ptr<Image> read(const std::filesystem::path &filepath) {
   if (starmathpp::io::fits::is_fits(filepath_lower)
       || starmathpp::io::fits::is_fits_gz(filepath_lower)) {
 
-    return read_fits(filepath.string());
+    return std::move(read_fits(filepath.string()));
   } else {
     // TODO: Catch CImg exception and convert to ImageReaderException... -> Unit tests
-    return std::make_shared<Image>(filepath.string().c_str());
+    return std::move(Image(filepath.string().c_str()));
   }
 }
 }  // namespace starmathpp

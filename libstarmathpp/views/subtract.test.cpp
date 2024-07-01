@@ -31,6 +31,7 @@
 
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/view/single.hpp>
+#include <range/v3/view/move.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -49,10 +50,10 @@ using namespace ranges;
  */
 BOOST_AUTO_TEST_CASE(pipeline_subtract_image_test)
 {
-  std::vector<ImagePtr> input_images = {
-    std::make_shared<Image>(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
-    std::make_shared<Image>(5, 5, 1, 1, 10),// 5x5 - All pixels have value 10
-    std::make_shared<Image>(5, 5, 1, 1, -10)// 5x5 - All pixels have value -10
+  std::vector<Image> input_images = {
+    Image(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
+    Image(5, 5, 1, 1, 10),// 5x5 - All pixels have value 10
+    Image(5, 5, 1, 1, -10)// 5x5 - All pixels have value -10
   };
 
   std::vector<Image> expected_result_images = { Image(5, 5, 1, 1, 4),  // 5x5 - All pixels have value 22
@@ -60,15 +61,13 @@ BOOST_AUTO_TEST_CASE(pipeline_subtract_image_test)
   Image(5, 5, 1, 1, -19)  // 5x5 - All pixels have value -1
       };
 
-  auto image_to_subtract_5x5_value9_ptr1 = std::make_shared < Image
-      > (5, 5, 1, 1, 9);
+  Image image_to_subtract_5x5_value9_1(5, 5, 1, 1, 9);
 
   // NOTE: | views::indirect causes a segmentation fault
   auto result_images = input_images
-      | pipeline::views::subtract(image_to_subtract_5x5_value9_ptr1)
-      | views::transform([](const auto &img_ptr) {
-        return *img_ptr;
-      }) | to<std::vector>();
+      | ranges::views::move
+      | pipeline::views::subtract(image_to_subtract_5x5_value9_1)
+      | to<std::vector>();
 
   BOOST_TEST(result_images.size() == 3);
   BOOST_CHECK_EQUAL_COLLECTIONS(result_images.begin(), result_images.end(),
@@ -80,10 +79,10 @@ BOOST_AUTO_TEST_CASE(pipeline_subtract_image_test)
  */
 BOOST_AUTO_TEST_CASE(pipeline_subtract_scalar_test)
 {
-  std::vector<ImagePtr> input_images = {
-    std::make_shared<Image>(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
-    std::make_shared<Image>(5, 5, 1, 1, 10),// 5x5 - All pixels have value 10
-    std::make_shared<Image>(5, 5, 1, 1, -10)// 5x5 - All pixels have value -10
+  std::vector<Image> input_images = {
+    Image(5, 5, 1, 1, 13),  // 5x5 - All pixels have value 13
+    Image(5, 5, 1, 1, 10),// 5x5 - All pixels have value 10
+    Image(5, 5, 1, 1, -10)// 5x5 - All pixels have value -10
   };
 
   std::vector<Image> expected_result_images = { Image(5, 5, 1, 1, 8),  // 5x5 - All pixels have value 513
@@ -91,10 +90,10 @@ BOOST_AUTO_TEST_CASE(pipeline_subtract_scalar_test)
   Image(5, 5, 1, 1, -15)  // 5x5 - All pixels have value 510
       };
 
-  auto result_images = input_images | pipeline::views::subtract(5.0F)
-      | views::transform([](const auto &img_ptr) {
-        return *img_ptr;
-      }) | to<std::vector>();
+  auto result_images = input_images
+      | ranges::views::move
+      | pipeline::views::subtract(5.0F)
+      | to<std::vector>();
 
   BOOST_TEST(result_images.size() == 3);
   BOOST_CHECK_EQUAL_COLLECTIONS(result_images.begin(), result_images.end(),
@@ -106,12 +105,12 @@ BOOST_AUTO_TEST_CASE(pipeline_subtract_scalar_test)
  */
 BOOST_AUTO_TEST_CASE(pipeline_subtract_different_image_sizes_test)
 {
-  auto image_to_subtract_5x5_value9_ptr1 = std::make_shared<Image>(5, 5, 1, 1, 9);
-  auto image_to_subtract_4x4_value9_ptr2 = std::make_shared < Image
-      > (4, 4, 1, 1, 9);
+  Image image_to_subtract_5x5_value9_1(5, 5, 1, 1, 9);
+  Image image_to_subtract_4x4_value9_2(4, 4, 1, 1, 9);
 
-  BOOST_CHECK_THROW(ranges::views::single(image_to_subtract_5x5_value9_ptr1)
-      | pipeline::views::subtract(image_to_subtract_4x4_value9_ptr2)
+  BOOST_CHECK_THROW(ranges::views::single(image_to_subtract_5x5_value9_1)
+      | ranges::views::move
+      | pipeline::views::subtract(image_to_subtract_4x4_value9_2)
       | to<std::vector>(),
       starmathpp::InconsistentImageDimensionsException);
 }

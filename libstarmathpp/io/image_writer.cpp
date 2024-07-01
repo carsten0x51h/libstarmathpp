@@ -89,7 +89,7 @@ namespace detail {
  *
  */
 template<typename ImageType>
-void write_internal(const cimg_library::CImg<ImageType> &img, const std::filesystem::path &filepath,
+void write_internal(const cimg_library::CImg<ImageType> &&img, const std::filesystem::path &filepath,
                     bool override) {
   check_filepath(filepath, override);
 
@@ -109,7 +109,7 @@ void write_internal(const cimg_library::CImg<ImageType> &img, const std::filesys
 /**
  * TODO: Use template specialization here...
  */
-void write(const Image &img, const std::filesystem::path &filepath,
+void write(const Image &&img, const std::filesystem::path &filepath,
            bool override) {
   // NOTE: Storing a float image as TIFF or FITS image results in an
   // image which is probably correct, but which has a range from 0..1
@@ -120,23 +120,23 @@ void write(const Image &img, const std::filesystem::path &filepath,
   cimg_library::CImg<uint16_t> uint16_image = img.get_normalize(0, 65535)
       .quantize(65536);
 
-  detail::write_internal(uint16_image, filepath, override);
+  detail::write_internal(std::move(uint16_image), filepath, override);
 }
 
 /**
  *
  */
-void write(const cimg_library::CImg<uint8_t> &img,
+void write(const cimg_library::CImg<uint8_t> &&img,
            const std::filesystem::path &filepath, bool override) {
-  detail::write_internal(img, filepath, override);
+  detail::write_internal(std::move(img), filepath, override);
 }
 
 /**
  *
  */
-void write(const cimg_library::CImg<uint16_t> &img,
+void write(const cimg_library::CImg<uint16_t> &&img,
            const std::filesystem::path &filepath, bool override) {
-  detail::write_internal(img, filepath, override);
+  detail::write_internal(std::move(img), filepath, override);
 }
 
 }

@@ -31,7 +31,7 @@
 namespace starmathpp::pipeline::views {
 
 /**
- *
+ * TODO: Move to details namespace...
  */
 template<typename ImageType>
 struct SubtractTraits {
@@ -39,18 +39,16 @@ struct SubtractTraits {
     return "subtract";
   }
 
-  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
-      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
-      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr2) {
-    return std::make_shared < cimg_library::CImg
-        < ImageType >> (*img_ptr1 - *img_ptr2);
+  static auto calculate(
+      const cimg_library::CImg<ImageType> &&img1,
+      const cimg_library::CImg<ImageType> &img2) {
+    return img1 - img2;
   }
 
-  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
-      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
+  static auto calculate(
+      const cimg_library::CImg<ImageType> &&img1,
       ImageType scalar_value) {
-    return std::make_shared < cimg_library::CImg
-        < ImageType >> (*img_ptr1 - scalar_value);
+    return img1 - scalar_value;
   }
 };
 
@@ -58,9 +56,9 @@ struct SubtractTraits {
  *
  */
 template<typename ImageType = float>
-auto subtract(const std::shared_ptr<Image> &image_to_subtract_ptr) {
+auto subtract(const Image &image_to_subtract) {
   return arithmetic_function_tmpl<SubtractTraits, ImageType>(
-      image_to_subtract_ptr);
+      image_to_subtract);
 }
 
 /**

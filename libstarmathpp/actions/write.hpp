@@ -85,7 +85,7 @@ namespace starmathpp::pipeline::actions {
         return std::forward<decltype(range)>(range); // Ensure we forward the range correctly
     });
 //    return ranges::actions::transform(
-//        [=](const std::shared_ptr<cimg_library::CImg<ImageType>> &image) {
+//        [=](const std::unique_ptr<cimg_library::CImg<ImageType>> &image) {
 //
 //          DEBUG_IMAGE_DISPLAY(*image, "pipeline_action_write_in",
 //                              STARMATHPP_PIPELINE_ACTION_WRITE_DEBUG);

@@ -41,13 +41,13 @@ DEF_Exception(ImageWriter);
  * TODO: Document...
  * TODO: Use template specialization for float only...
  */
-void write(const Image &img, const std::filesystem::path &filepath,
+void write(const Image &&img, const std::filesystem::path &filepath,
            bool override = true);
 
-void write(const cimg_library::CImg<uint8_t> &img,
+void write(const cimg_library::CImg<uint8_t> &&img,
            const std::filesystem::path &filepath, bool override = true);
 
-void write(const cimg_library::CImg<uint16_t> &img,
+void write(const cimg_library::CImg<uint16_t> &&img,
            const std::filesystem::path &filepath, bool override = true);
 }
 

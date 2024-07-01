@@ -61,22 +61,24 @@ static std::string compose_filename_from_pattern(const std::string &pattern) {
 /**
  *
  */
-template<typename ImageType>
-auto write(const std::filesystem::path &directory,
+template<typename ImageType=float>
+auto
+write(const std::filesystem::path &directory,
            const std::string &image_filename_pattern = "img_%03d.fit",
            bool allow_override = true) {
   return ranges::views::transform(
-      [=](const std::shared_ptr<cimg_library::CImg<ImageType>> &image) {
+      [=](auto && image /*cimg_library::CImg<ImageType>*/) {
 
-        DEBUG_IMAGE_DISPLAY(*image, "pipeline_view_write_in",
+        DEBUG_IMAGE_DISPLAY(image, "pipeline_view_write_in",
                             STARMATHPP_PIPELINE_VIEW_WRITE_DEBUG);
 
         std::filesystem::path filepath = directory
             / compose_filename_from_pattern(image_filename_pattern);
 
-        starmathpp::io::write(*image, filepath, allow_override);
+        starmathpp::io::write(std::move(image), filepath, allow_override);
 
-        return image;
+
+        return std::move(image); // TODO / FIXME: Does this work? Dereferencing the unique_ptr is not what should b done...
       }
   );
 }

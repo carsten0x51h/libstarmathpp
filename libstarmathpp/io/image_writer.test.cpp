@@ -50,7 +50,7 @@ BOOST_DATA_TEST_CASE(fits_image_writer_test,
         }),
     image, image_filename, expected_file_size)
 {
-  starmathpp::io::write(image, image_filename, true /*override*/);
+  starmathpp::io::write(std::move(image), image_filename, true /*override*/);
 
   // TODO: Test for overide flag...
 

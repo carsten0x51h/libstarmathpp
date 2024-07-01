@@ -111,51 +111,48 @@ class BadPixelMedianInterpolator {
    *
    */
   template<typename ImageType>
-  std::shared_ptr<cimg_library::CImg<ImageType>> interpolate(
-      const std::shared_ptr<cimg_library::CImg<ImageType> > &input_image_ptr) {
-
-    const auto input_image_ref = *input_image_ptr;
+  auto interpolate(
+      const cimg_library::CImg<ImageType> &input_image) {
 
     // See https://cimg.eu/reference/loops_Using.html
     cimg_library::CImg<ImageType> neighbourhood(filter_core_size_,
                                                 filter_core_size_);
 
-    auto result_image = std::make_shared < cimg_library::CImg
-        < ImageType >> (input_image_ref);
+    auto result_image = cimg_library::CImg< ImageType > (input_image);
 
     switch (filter_core_size_) {
       case 3: {
-        cimg_for3x3(input_image_ref, x, y, 0, 0, neighbourhood, ImageType)
+        cimg_for3x3(input_image, x, y, 0, 0, neighbourhood, ImageType)
         {
-          (*result_image)(x, y) = interpolate_internal(
-              input_image_ref(x, y), neighbourhood,
+          result_image(x, y) = interpolate_internal(
+              input_image(x, y), neighbourhood,
               absolute_detection_threshold_, threshold_direction_);
         }
         break;
       }
       case 5: {
-        cimg_for5x5(input_image_ref, x, y, 0, 0, neighbourhood, ImageType)
+        cimg_for5x5(input_image, x, y, 0, 0, neighbourhood, ImageType)
         {
-          (*result_image)(x, y) = interpolate_internal(
-              input_image_ref(x, y), neighbourhood,
+          result_image(x, y) = interpolate_internal(
+              input_image(x, y), neighbourhood,
               absolute_detection_threshold_, threshold_direction_);
         }
         break;
       }
       case 7: {
-        cimg_for7x7(input_image_ref, x, y, 0, 0, neighbourhood, ImageType)
+        cimg_for7x7(input_image, x, y, 0, 0, neighbourhood, ImageType)
         {
-          (*result_image)(x, y) = interpolate_internal(
-              input_image_ref(x, y), neighbourhood,
+          result_image(x, y) = interpolate_internal(
+              input_image(x, y), neighbourhood,
               absolute_detection_threshold_, threshold_direction_);
         }
         break;
       }
       case 9: {
-        cimg_for9x9(input_image_ref, x, y, 0, 0, neighbourhood, ImageType)
+        cimg_for9x9(input_image, x, y, 0, 0, neighbourhood, ImageType)
         {
-          (*result_image)(x, y) = interpolate_internal(
-              input_image_ref(x, y), neighbourhood,
+          result_image(x, y) = interpolate_internal(
+              input_image(x, y), neighbourhood,
               absolute_detection_threshold_, threshold_direction_);
         }
         break;

@@ -30,6 +30,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <range/v3/range/conversion.hpp>
+#include <range/v3/view/move.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -46,12 +47,13 @@ using namespace ranges;
  */
 BOOST_AUTO_TEST_CASE(pipeline_views_detect_stars_test)
 {
-  std::vector<ImagePtr> input_images = {
-    std::make_shared<Image>("test_data/pipeline/detect_stars/test_two_stars.tiff"),
-    std::make_shared<Image>("test_data/pipeline/detect_stars/test_five_stars.tiff")
+  std::vector<Image> input_images = {
+    Image("test_data/pipeline/detect_stars/test_two_stars.tiff"),
+    Image("test_data/pipeline/detect_stars/test_five_stars.tiff")
   };
 
   auto results = input_images
+      | ranges::views::move
       | starmathpp::pipeline::views::detect_stars(
           2, /*cluster radius*/
           starmathpp::algorithm::OtsuThresholder<float>(16), 3 /*border*/)
@@ -69,11 +71,11 @@ BOOST_AUTO_TEST_CASE(pipeline_views_detect_stars_test)
       Rect<unsigned int>(102, 53, 13, 13), Rect<unsigned int>(117, 12, 8, 8),
       Rect<unsigned int>(125, 218, 12, 12), Rect<unsigned int>(300, 219, 9, 9) };
 
-  auto result_rects1 = results[0]->second;
+  auto result_rects1 = results[0].second;
   BOOST_CHECK_EQUAL_COLLECTIONS(result_rects1.begin(), result_rects1.end(),
       expected_rects1.begin(), expected_rects1.end());
 
-  auto result_rects2 = results[1]->second;
+  auto result_rects2 = results[1].second;
   BOOST_CHECK_EQUAL_COLLECTIONS(result_rects2.begin(), result_rects2.end(),
       expected_rects2.begin(), expected_rects2.end());
 }

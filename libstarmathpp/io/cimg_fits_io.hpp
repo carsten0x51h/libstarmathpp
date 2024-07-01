@@ -59,7 +59,7 @@ bool is_fits_gz(const std::string &filepath_lower);
  * TODO: Add/adapt unit tests? -> Load, save and load -> compare...
  * TODO: Improve error handling?
  */
-std::shared_ptr<Image>
+Image
 read(const std::string &filename, std::stringstream *ss = nullptr);
 
 /**
@@ -68,7 +68,7 @@ read(const std::string &filename, std::stringstream *ss = nullptr);
  *
  * TODO: Add/adapt unit tests? -> Load, save and load -> compare...
  * TODO: Improve error handling?
- * TODO: Add write(const std::shared_ptr<ImageT> ...) ?
+ * TODO: Add write(const std::unique_ptr<ImageT> ...) ?
  *
  */
 void

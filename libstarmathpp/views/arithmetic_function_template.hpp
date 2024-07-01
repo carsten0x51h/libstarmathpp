@@ -42,17 +42,17 @@ namespace detail {
 
 template<typename ImageType = float>
 void throw_if_inconsistent_image_dimensions(
-    const std::shared_ptr<cimg_library::CImg<ImageType> > &img_ptr1,
-    const std::shared_ptr<cimg_library::CImg<ImageType> > &img_ptr2) {
+    const cimg_library::CImg<ImageType> &&img1,
+    const cimg_library::CImg<ImageType> &img2) {
 
-  if (img_ptr1->width() != img_ptr2->width()
-      || img_ptr1->height() != img_ptr2->height()) {
+  if (img1.width() != img2.width()
+      || img1.height() != img2.height()) {
     std::stringstream ss;
 
     ss << "Inconsistent images dimensions. Initial image dimension: " << "("
-        << img_ptr1->width() << ", " << img_ptr1->height() << "), "
-        << "new image dimension: (" << img_ptr2->width() << ", "
-        << img_ptr2->height() << ").";
+        << img1.width() << ", " << img1.height() << "), "
+        << "new image dimension: (" << img2.width() << ", "
+        << img2.height() << ").";
 
     throw InconsistentImageDimensionsException(ss.str());
   }
@@ -63,22 +63,22 @@ void throw_if_inconsistent_image_dimensions(
 /**
  * Template for image on image operation.
  */
-template<template<typename ImageType> class ArithmeticFunctionTraits,
+template<template<typename ImageType = float> class ArithmeticFunctionTraits,
     typename ImageType = float>
-auto arithmetic_function_tmpl(const std::shared_ptr<Image> &image_to_add_ptr) {
+auto arithmetic_function_tmpl(const Image &image_op) {
   return ranges::views::transform(
-      [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
+      [=](const cimg_library::CImg<ImageType> &&image) {
 
         detail::throw_if_inconsistent_image_dimensions<ImageType>(
-            image, image_to_add_ptr);
+            std::move(image), image_op);
 
-        DEBUG_IMAGE_DISPLAY(*image, "add_image_in",
+        DEBUG_IMAGE_DISPLAY(image, "arithmetic_function_image_in",
                             STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG);
 
         auto result_image = ArithmeticFunctionTraits<ImageType>::calculate(
-            image, image_to_add_ptr);
+            std::move(image), image_op);
 
-        DEBUG_IMAGE_DISPLAY(*result_image, "add_image_out",
+        DEBUG_IMAGE_DISPLAY(result_image, "arithmetic_function_image_out",
                             STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG);
 
         return result_image;
@@ -91,17 +91,17 @@ auto arithmetic_function_tmpl(const std::shared_ptr<Image> &image_to_add_ptr) {
  */
 template<template<typename ImageType> class ArithmeticFunctionTraits,
     typename ImageType = float>
-auto arithmetic_function_tmpl(ImageType scalar_value_to_add) {
+auto arithmetic_function_tmpl(ImageType scalar_value) {
   return ranges::views::transform(
-      [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
+      [=](const cimg_library::CImg<ImageType> &&image) {
 
-        DEBUG_IMAGE_DISPLAY(*image, "add_scalar_in",
+        DEBUG_IMAGE_DISPLAY(*image, "arithmetic_function_scalar_in",
                             STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG);
 
         auto result_image = ArithmeticFunctionTraits<ImageType>::calculate(
-            image, scalar_value_to_add);
+            std::move(image), scalar_value);
 
-        DEBUG_IMAGE_DISPLAY(*result_image, "add_scalar_out",
+        DEBUG_IMAGE_DISPLAY(result_image, "arithmetic_function_scalar_out",
                             STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG);
 
         return result_image;

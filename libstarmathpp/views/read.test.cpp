@@ -61,8 +61,8 @@ BOOST_AUTO_TEST_CASE(pipeline_read_images_test)
     auto img_dimensions = image_filenames
                             | pipeline::views::read()
                             | views::transform(
-                                    [](const auto & img_ptr) {
-                                        return std::make_pair(img_ptr->width(), img_ptr->height());
+                                    [](const auto & img) {
+                                        return std::make_pair(img.width(), img.height());
                                     })
                             | to<std::vector>();
 

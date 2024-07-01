@@ -49,21 +49,18 @@ auto detect_stars(
     const starmathpp::algorithm::Thresholder<ImageType> &thresholder,
     unsigned int border) {
 
-  using SharedImage = std::shared_ptr<cimg_library::CImg<ImageType>>;
-
   return ranges::views::transform(
-      [=, &thresholder](const SharedImage &image) {
+      [=, &thresholder](const cimg_library::CImg<ImageType> &&image) {
 
-        const auto &image_ref = *image;
-
-        DEBUG_IMAGE_DISPLAY(image_ref, "detect_stars_in",
+        DEBUG_IMAGE_DISPLAY(image, "detect_stars_in",
                             STARMATHPP_PIPELINE_DETECT_STARS_DEBUG);
 
         // TODO: Do not hardcode bit depth 16.... make it part of ImageT?
-        float threshold = std::ceil(thresholder.calculate_threshold(image_ref));
+        float threshold = std::ceil(
+            thresholder.calculate_threshold(std::move(image)));
 
         // NOTE: CImg threshold function uses >=
-        auto binary_img = image_ref.get_threshold(threshold + 1.0F);
+        auto binary_img = image.get_threshold(threshold + 1.0F);
 
         DEBUG_IMAGE_DISPLAY(binary_img, "detect_stars_image",
                             STARMATHPP_PIPELINE_DETECT_STARS_DEBUG);
@@ -77,10 +74,7 @@ auto detect_stars(
               return pixel_cluster.get_bounds().expand_to_square().grow(border);
             }) | ranges::to<std::vector>();
 
-        // TODO: Make shred should not be required here...
-        return std::make_shared
-            < std::pair<const SharedImage, std::vector < Rect<unsigned int>>
-                >> (std::make_pair(image, rects_vec));
+        return std::make_pair(std::move(image), rects_vec);
       }
   );
 }

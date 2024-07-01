@@ -30,7 +30,6 @@
 
 #include <libstarmathpp/image.hpp>
 #include <libstarmathpp/algorithm/threshold/thresholder.hpp>
-#include <libstarmathpp/views/arithmetic_function_template.hpp>
 
 #define STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG 0
 
@@ -40,32 +39,28 @@
 namespace starmathpp::pipeline::views {
 
   /**
-   * TODO: Change shared_ptrs to unique_ptrs...?!! Because ownership is not shared.
+   *
    */
 template<typename ImageType = float>
 auto subtract_background(const starmathpp::algorithm::Thresholder<ImageType> &thresholder) {
   return ranges::views::transform(
-      [&](const std::shared_ptr<const cimg_library::CImg<ImageType>> &image) {
-        const auto &input_image_ref = *image;
+      [&](const cimg_library::CImg<ImageType>&& input_image) {
 
-        DEBUG_IMAGE_DISPLAY(input_image_ref, "subtract_background_in",
+        DEBUG_IMAGE_DISPLAY(input_image, "subtract_background_in",
                             STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG);
 
-        float threshold = thresholder.calculate_threshold(input_image_ref);
+        float threshold = thresholder.calculate_threshold(std::move(input_image));
 
-        auto sub_image = std::make_shared < cimg_library::CImg<ImageType>
-            > (input_image_ref, "xy");
+        cimg_library::CImg<ImageType> sub_image(input_image, "xy");
 
-        Image &sub_image_ref = (*sub_image);
-
-        cimg_forXY(input_image_ref, x, y)
+        cimg_forXY(input_image, x, y)
         {
-          sub_image_ref(x, y) = (
-              input_image_ref(x, y) < threshold ?
-                  0 : input_image_ref(x, y) - threshold);
+          sub_image(x, y) = (
+              input_image(x, y) < threshold ?
+                  0 : input_image(x, y) - threshold);
         }
 
-        DEBUG_IMAGE_DISPLAY(sub_image_ref, "subtract_background_out",
+        DEBUG_IMAGE_DISPLAY(sub_image, "subtract_background_out",
                             STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG);
 
         return sub_image;

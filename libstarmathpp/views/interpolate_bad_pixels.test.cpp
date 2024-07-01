@@ -30,6 +30,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <range/v3/range/conversion.hpp>
+#include <range/v3/view/move.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -43,18 +44,16 @@ using namespace ranges;
 /**
  * This function generates a CImg
  */
-static ImagePtr generate_test_image(unsigned int width, unsigned int height,
-                                    unsigned int bad_pixel_pos_x,
-                                    unsigned int bad_pixel_pos_y,
-                                    float bg_pixel_value,
-                                    float bad_pixel_value) {
+static Image generate_test_image(unsigned int width, unsigned int height,
+                                 unsigned int bad_pixel_pos_x,
+                                 unsigned int bad_pixel_pos_y,
+                                 float bg_pixel_value, float bad_pixel_value) {
 
-  auto bad_pixel_image_ptr = std::make_shared < Image
-      > (width, height, 1, 1, bg_pixel_value);
+  Image bad_pixel_image(width, height, 1, 1, bg_pixel_value);
 
-  (*bad_pixel_image_ptr)(bad_pixel_pos_x, bad_pixel_pos_y) = bad_pixel_value;
+  bad_pixel_image(bad_pixel_pos_x, bad_pixel_pos_y) = bad_pixel_value;
 
-  return bad_pixel_image_ptr;
+  return bad_pixel_image;
 }
 
 /**
@@ -62,29 +61,27 @@ static ImagePtr generate_test_image(unsigned int width, unsigned int height,
  */
 BOOST_AUTO_TEST_CASE(pipeline_interpolate_bad_test)
 {
-  std::vector<ImagePtr> input_images = {
+  std::vector<Image> input_images = {
     generate_test_image(25, 25, 10, 10, 100, 10000),  // Hot pixel at 10,10
     generate_test_image(25, 25, 10, 10, 10000, 100),// Cold pixel at 10,10
     generate_test_image(25, 25, 10, 10, 100, 115)// Normal pixel at 10,10
   };
 
-  std::vector<Image> expected_result_images = { *generate_test_image(25, 25,
-                                                                       10, 10,
-                                                                       100,
-                                                                       100),  // Hot pixel corrected at 10,10
-  *generate_test_image(25, 25, 10, 10, 10000, 10000),  // Cold pixel corrected at 10,10
-  *generate_test_image(25, 25, 10, 10, 100, 115)  // Normal pixel not corrected at 10,10
+  std::vector<Image> expected_result_images = { generate_test_image(25, 25, 10,
+                                                                    10, 100,
+                                                                    100),  // Hot pixel corrected at 10,10
+  generate_test_image(25, 25, 10, 10, 10000, 10000),  // Cold pixel corrected at 10,10
+  generate_test_image(25, 25, 10, 10, 100, 115)  // Normal pixel not corrected at 10,10
       };
 
   auto result_images =
       input_images
+          | ranges::views::move
           | starmathpp::pipeline::views::interpolate_bad_pixels(
               500 /*absolute threshold*/,
               3 /*filter core size*/,
               starmathpp::algorithm::BadPixelMedianInterpolator::ThresholdDirection::BOTH)
-          | ranges::views::transform([](const auto &img_ptr) {
-            return *img_ptr;
-          }) | to<std::vector>();
+          | to<std::vector>();
 
   BOOST_TEST(result_images.size() == 3);
   BOOST_CHECK_EQUAL_COLLECTIONS(result_images.begin(), result_images.end(),

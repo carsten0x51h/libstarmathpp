@@ -75,11 +75,11 @@ BOOST_DATA_TEST_CASE(fits_image_reader_test,
         }),
     image_filename, image_width, image_height, pos_x, pos_y, pixel_value)
 {
-  auto img_ptr = starmathpp::io::read(image_filename);
+  auto img = starmathpp::io::read(image_filename);
 
-  DEBUG_IMAGE_DISPLAY(*img_ptr, "image_reader_test", 0);
+  DEBUG_IMAGE_DISPLAY(img, "image_reader_test", 0);
 
-  BOOST_TEST(img_ptr->width() == image_width);
-  BOOST_TEST(img_ptr->height() == image_height);
-  BOOST_CHECK_CLOSE((*img_ptr)(pos_x, pos_y), pixel_value, 0.001F);
+  BOOST_TEST(img.width() == image_width);
+  BOOST_TEST(img.height() == image_height);
+  BOOST_CHECK_CLOSE(img(pos_x, pos_y), pixel_value, 0.001F);
 }

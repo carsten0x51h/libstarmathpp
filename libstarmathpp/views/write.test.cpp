@@ -49,18 +49,19 @@ using namespace ranges;
 
 BOOST_AUTO_TEST_CASE(pipeline_write_images_test)
 {
-  std::vector<starmathpp::ImagePtr> images_to_write {
-    std::make_shared<starmathpp::Image>(20 /*width*/, 20 /*height*/, 1, 3, 0),
-    std::make_shared<starmathpp::Image>(400 /*width*/, 400 /*height*/, 1, 3, 0),
-    std::make_shared<starmathpp::Image>(200 /*width*/, 450 /*height*/, 1, 3, 0)
+  std::vector<starmathpp::Image> images_to_write {
+    starmathpp::Image(20 /*width*/, 20 /*height*/, 1, 3, 0),
+    starmathpp::Image(400 /*width*/, 400 /*height*/, 1, 3, 0),
+    starmathpp::Image(200 /*width*/, 450 /*height*/, 1, 3, 0)
   };
 
   std::vector<std::tuple<std::string, std::uintmax_t>> expected_results = { {
       "img_000.fit", 5760 }, { "img_001.fit", 325440 },
-      { "img_002.fit", 184320 }, };
+      { "img_002.fit", 184320 } };
 
   auto written_images = images_to_write
-      | pipeline::views::write<float>(".", "img_%03d.fit", true /*allowOverride*/)
+      | pipeline::views::write<float>(".", "img_%03d.fit",
+                                      true /*allowOverride*/)
       | to<std::vector>();
 
   // TODO: Test allowOverride...

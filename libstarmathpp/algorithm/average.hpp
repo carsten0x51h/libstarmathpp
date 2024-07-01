@@ -65,28 +65,27 @@ void throw_if_inconsistent_image_dimensions(unsigned int current_width,
  * First image in range defines expected image size.
  */
 template<class Rng>
-std::shared_ptr<Image> average(const Rng &rng) {
+auto average(const Rng &rng) {
 
   if (ranges::empty(rng)) {
-    return nullptr;
+    return Image();
   }
 
-  auto sum_image_ptr = std::make_shared < Image
-      > (**ranges::begin(rng), "xy", 0);
+  Image sum_image(*ranges::begin(rng), "xy", 0);
 
   size_t image_count = 0;
 
   for (const auto &img : rng) {
-    detail::throw_if_inconsistent_image_dimensions(img->width(), img->height(),
-                                                   sum_image_ptr->width(),
-                                                   sum_image_ptr->height());
-    (*sum_image_ptr) += *img;
+    detail::throw_if_inconsistent_image_dimensions(img.width(), img.height(),
+                                                   sum_image.width(),
+                                                   sum_image.height());
+    sum_image += *img;
     ++image_count;
   }
 
-  (*sum_image_ptr) /= image_count;
+  sum_image /= image_count;
 
-  return sum_image_ptr;
+  return sum_image;
 }
 
 }  // namespace starmathpp::algorithm

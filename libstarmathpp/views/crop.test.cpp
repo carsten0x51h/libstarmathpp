@@ -35,6 +35,7 @@
 
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/view/single.hpp>
+#include <range/v3/view/move.hpp>
 
 #include <libstarmathpp/views/crop.hpp>
 #include <libstarmathpp/image.hpp>
@@ -53,19 +54,16 @@ using namespace ranges;
  * TODO: Add crop_from_center test for even sized regions.
  * TODO: Test specified region exceeding the image dimensions.
  */
-static ImagePtr generate_test_image(unsigned int width, unsigned int height,
-                                    unsigned int test_pixel_pos_x,
-                                    unsigned int test_pixel_pos_y,
-                                    float bg_pixel_value,
-                                    float test_pixel_value) {
+static Image generate_test_image(unsigned int width, unsigned int height,
+                                 unsigned int test_pixel_pos_x,
+                                 unsigned int test_pixel_pos_y,
+                                 float bg_pixel_value, float test_pixel_value) {
 
-  auto test_pixel_image_ptr = std::make_shared<Image>(width, height, 1, 1,
-                                                      bg_pixel_value);
+  Image test_pixel_image(width, height, 1, 1, bg_pixel_value);
 
-  (*test_pixel_image_ptr)(test_pixel_pos_x, test_pixel_pos_y) =
-      test_pixel_value;
+  test_pixel_image(test_pixel_pos_x, test_pixel_pos_y) = test_pixel_value;
 
-  return test_pixel_image_ptr;
+  return test_pixel_image;
 }
 
 /**
@@ -78,11 +76,12 @@ BOOST_AUTO_TEST_CASE(pipeline_crop_from_center_sub_region_test)
   auto expected_result_image = generate_test_image(3, 3, 1, 1, 250, 65535.0F);
 
   auto result_images = view::single(input_image)
+      | ranges::views::move
       | crop_from_center(Size<int>(3, 3)) | to<std::vector>();
 
   // NOTE: Exactly one image is expected
   BOOST_TEST(result_images.size() == 1);
-  BOOST_TEST(is_almost_equal(*(result_images.at(0)),*expected_result_image, 0.00001));
+  BOOST_TEST(is_almost_equal(result_images.at(0), expected_result_image, 0.00001));
 }
 
 /**
@@ -93,11 +92,13 @@ BOOST_AUTO_TEST_CASE(pipeline_crop_from_center_full_image_test)
 {
   auto input_image = generate_test_image(5, 5, 2, 2, 250, 65535.0F);
   auto result_images = view::single(input_image)
-      | crop_from_center(Size<int>(5, 5)) | to<std::vector>();
+      | ranges::views::move
+      | crop_from_center(Size<int>(5, 5))
+      | to<std::vector>();
 
   // NOTE: Exactly one image is expected
   BOOST_TEST(result_images.size() == 1);
-  BOOST_TEST(is_almost_equal(*(result_images.at(0)), *input_image, 0.00001));
+  BOOST_TEST(is_almost_equal(result_images.at(0), input_image, 0.00001));
 }
 
 /**
@@ -117,13 +118,15 @@ BOOST_AUTO_TEST_CASE(pipeline_multi_crop_on_image_test)
   auto expected_result_image_1 = generate_test_image(9, 9, 5, 5, 250, 65535.0F);
   auto expected_result_image_2 = generate_test_image(9, 9, 5, 5, 250, 250);
 
-  auto cropped_images = view::single(input_image) | crop(rects)
+  auto cropped_images = view::single(input_image)
+      | ranges::views::move
+      | crop(rects)
       | to<std::vector>();
 
   BOOST_TEST(cropped_images.size() == 1);  // One image goes in, one result is produced (which wraps a vector)
   BOOST_TEST(cropped_images.at(0).size() == 2);// Two rects as input produce two output images
-  BOOST_TEST(is_almost_equal(*(cropped_images.at(0).at(0)), *expected_result_image_1, 0.00001));
-  BOOST_TEST(is_almost_equal(*(cropped_images.at(0).at(1)), *expected_result_image_2, 0.00001));
+  BOOST_TEST(is_almost_equal(cropped_images.at(0).at(0), expected_result_image_1, 0.00001));
+  BOOST_TEST(is_almost_equal(cropped_images.at(0).at(1), expected_result_image_2, 0.00001));
 }
 
 /**
@@ -138,7 +141,7 @@ BOOST_AUTO_TEST_CASE(pipeline_crop_on_image_test)
 {
   auto rect = Rect<int>(5, 5, 10, 10);
 
-  std::vector<ImagePtr> input_images = { generate_test_image(25, 25, 8, 8, 250,
+  std::vector<Image> input_images = { generate_test_image(25, 25, 8, 8, 250,
                                                              65535.0F),
       generate_test_image(25, 25, 10, 10, 250, 65535.0F), generate_test_image(
           25, 25, 12, 12, 250, 65535.0F) };
@@ -150,12 +153,15 @@ BOOST_AUTO_TEST_CASE(pipeline_crop_on_image_test)
   auto expected_result_image_3 = generate_test_image(10, 10, 7, 7, 250,
                                                      65535.0F);
 
-  auto cropped_images = input_images | crop(rect) | to<std::vector>();
+  auto cropped_images = input_images
+      | ranges::views::move
+      | crop(rect)
+      | to<std::vector>();
 
   BOOST_TEST(cropped_images.size() == 3);
-  BOOST_TEST(is_almost_equal(*(cropped_images.at(0)), *expected_result_image_1, 0.00001));
-  BOOST_TEST(is_almost_equal(*(cropped_images.at(1)), *expected_result_image_2, 0.00001));
-  BOOST_TEST(is_almost_equal(*(cropped_images.at(2)), *expected_result_image_3, 0.00001));
+  BOOST_TEST(is_almost_equal(cropped_images.at(0), expected_result_image_1, 0.00001));
+  BOOST_TEST(is_almost_equal(cropped_images.at(1), expected_result_image_2, 0.00001));
+  BOOST_TEST(is_almost_equal(cropped_images.at(2), expected_result_image_3, 0.00001));
 }
 
 BOOST_AUTO_TEST_SUITE_END();

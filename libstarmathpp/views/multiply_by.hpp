@@ -39,18 +39,16 @@ struct MultiplyByTraits {
     return "multiply";
   }
 
-  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
-      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
-      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr2) {
-    return std::make_shared < cimg_library::CImg
-        < ImageType >> (img_ptr1->get_mul(*img_ptr2));
+  static auto calculate(
+      const cimg_library::CImg<ImageType>&& img1,
+      const cimg_library::CImg<ImageType>& img2) {
+    return img1.get_mul(img2);
   }
 
-  static std::shared_ptr<cimg_library::CImg<ImageType>> calculate(
-      const std::shared_ptr<cimg_library::CImg<ImageType>> &img_ptr1,
+  static auto calculate(
+      const cimg_library::CImg<ImageType> &img1,
       ImageType scalar_value) {
-    return std::make_shared < cimg_library::CImg
-        < ImageType >> (*img_ptr1 * scalar_value);
+    return img1 * scalar_value;
   }
 };
 
@@ -58,9 +56,9 @@ struct MultiplyByTraits {
  *
  */
 template<typename ImageType = float>
-auto multiply_by(const std::shared_ptr<Image> &image_to_multiply_by_ptr) {
+auto multiply_by(const Image& image_to_multiply_by) {
   return arithmetic_function_tmpl<MultiplyByTraits, ImageType>(
-      image_to_multiply_by_ptr);
+      image_to_multiply_by);
 }
 
 /**

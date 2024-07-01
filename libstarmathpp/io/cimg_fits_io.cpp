@@ -47,13 +47,12 @@ bool is_fits_gz(const std::string &filepath_lower) {
       || boost::algorithm::ends_with(filepath_lower, "fits.gz"));
 }
 
-std::shared_ptr<Image> read(const std::string &filename,
+Image read(const std::string &filename,
                             std::stringstream *ss) {
 
   CCfits::FITS::setVerboseMode(ss != nullptr);
 
   try {
-    // TODO: Memory leak? new....
     std::unique_ptr < CCfits::FITS
         > pInfile(new CCfits::FITS(filename, CCfits::Read, true));
     CCfits::PHDU &fits_img = pInfile->pHDU();
@@ -65,8 +64,7 @@ std::shared_ptr<Image> read(const std::string &filename,
       *ss << fits_img << std::endl;
     }
 
-    auto img = std::make_shared < Image
-        > ((int) fits_img.axis(0), (int) fits_img.axis(1));
+    Image img((int) fits_img.axis(0), (int) fits_img.axis(1));
 
     // TODO: Put a check here:   fitsImg.bitpix() <= sizeof(ImageT)
     // -> When provided image type does not fit, an exception is thrown? Or a warning logged?
@@ -80,25 +78,23 @@ std::shared_ptr<Image> read(const std::string &filename,
     fits_img.read(img_data);
 
     // For now we create a copy... maybe there is a better way to directly read data into CImg, later...
-    cimg_forXY(*img, x, y)
+    cimg_forXY(img, x, y)
     {
       // TODO: Should this be parameterized? Or is it possible to find out automatically?
       // Correct, when reading old, existing FITS files
       // NOTE: ImageJ and Gimp both work this way for normal files.
       //       -> For INDI/BLOB there must be a different solution.
-      (*img)(x, img->height() - 1 - y) = img_data[img->offset(x, y)];
+      img(x, img.height() - 1 - y) = img_data[img.offset(x, y)];
 
       // Correct when reading the image directly after storing the BLOB file with INDI.
       //(*outImg)(x, y) = imgData[outImg->offset(x, y)];
     }
 
-    return img;
+    return std::move(img);
 
   } catch (CCfits::FitsException &exc) {
     throw FitsIOException(exc.message());
   }
-
-  return nullptr;
 }
 
 /**

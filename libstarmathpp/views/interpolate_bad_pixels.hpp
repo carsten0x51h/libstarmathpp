@@ -44,7 +44,7 @@ namespace starmathpp::pipeline::views {
  * @param Filter core size (N x N), odd number > 1, allowed values are 3,5,7,9
  * @param absoluteDetectionThreshold
  *
- * @return Image with interpolated bad pixels (shared_ptr<cimg_library::CImg<ImageType>>)
+ * @return Image with interpolated bad pixels (unique_ptr<cimg_library::CImg<ImageType>>)
  *
  *
  * TODO: Move the actual algorithm out of this pipeline function to the "algorithms" and also write
@@ -60,16 +60,16 @@ auto interpolate_bad_pixels(
     starmathpp::algorithm::BadPixelMedianInterpolator::ThresholdDirection::TypeE threshold_direction =
         starmathpp::algorithm::BadPixelMedianInterpolator::ThresholdDirection::BOTH) {
   return ranges::views::transform(
-      [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
+      [=](const cimg_library::CImg<ImageType>&& image) {
 
-        DEBUG_IMAGE_DISPLAY(*image, "interpolate_bad_pixels_in",
+        DEBUG_IMAGE_DISPLAY(image, "interpolate_bad_pixels_in",
                             STARMATHPP_INTERPOLATE_BAD_PIXELS_DEBUG);
 
         starmathpp::algorithm::BadPixelMedianInterpolator bad_pixel_median_interpolator(
             absolute_detection_threshold, filter_core_size,
             threshold_direction);
 
-        auto result_image = bad_pixel_median_interpolator.interpolate(image);
+        auto result_image = bad_pixel_median_interpolator.interpolate(std::move(image));
 
         DEBUG_IMAGE_DISPLAY(*result_image, "interpolate_bad_pixels_out",
                             STARMATHPP_INTERPOLATE_BAD_PIXELS_DEBUG);

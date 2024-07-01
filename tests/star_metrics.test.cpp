@@ -127,11 +127,11 @@ BOOST_AUTO_TEST_CASE(pipeline_star_metrics_test, * boost::unit_test::tolerance(0
       | center_on_star(IntensityWeightedCentroider<float>()) | scale_down(3.0F)
       | crop_from_center(Size<int>(61, 61))
       | view::transform(
-          [](const auto &img_ptr) {
+          [](const auto &img) {
             return std::make_tuple(
-                starmathpp::algorithm::snr(*img_ptr),
-                starmathpp::algorithm::hfd(*img_ptr),
-                starmathpp::algorithm::fwhm(*img_ptr).value());
+                starmathpp::algorithm::snr(img),
+                starmathpp::algorithm::hfd(img),
+                starmathpp::algorithm::fwhm(img).value());
           }) | to<std::vector>();
 
   float tolerance = 0.001F;

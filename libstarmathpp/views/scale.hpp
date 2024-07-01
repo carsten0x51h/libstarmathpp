@@ -157,26 +157,21 @@ template<typename ImageType = float>
 auto scale(ScaleDirection::TypeE scale_type, float scale_factor,
            InterpolationType::TypeE interpolation_type) {
   return ranges::views::transform(
-      [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
+      [=](const cimg_library::CImg<ImageType> &&image) {
 
-        const cimg_library::CImg<ImageType> &input_image_ref = *image;
+        DEBUG_IMAGE_DISPLAY(image, "scale_in", STARMATHPP_PIPELINE_SCALE_DEBUG);
 
-        DEBUG_IMAGE_DISPLAY(input_image_ref, "scale_in",
-                            STARMATHPP_PIPELINE_SCALE_DEBUG);
-
-        auto scaled_image = std::make_shared < cimg_library::CImg<ImageType>
-            > (input_image_ref);
+        auto scaled_image = cimg_library::CImg<ImageType>(image);
 
         float factor = (
             scale_type == ScaleDirection::UP ?
                 scale_factor : 1.0F / scale_factor);
 
-        scaled_image->resize((int) (factor * (float) input_image_ref.width()),
-                             (int) (factor * (float) input_image_ref.height()),
-                             -100, -100,
-                             InterpolationType::asInt(interpolation_type));
+        scaled_image.resize((int) (factor * (float) image.width()),
+                            (int) (factor * (float) image.height()), -100, -100,
+                            InterpolationType::asInt(interpolation_type));
 
-        DEBUG_IMAGE_DISPLAY(input_image_ref, "scale_out",
+        DEBUG_IMAGE_DISPLAY(scaled_image, "scale_out",
                             STARMATHPP_PIPELINE_SCALE_DEBUG);
 
         return scaled_image;

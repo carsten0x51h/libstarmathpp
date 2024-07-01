@@ -37,7 +37,6 @@
 
 #define STARMATHPP_PIPELINE_CROP_DEBUG 0
 
-
 namespace starmathpp::pipeline::views {
 
 /**
@@ -46,51 +45,47 @@ namespace starmathpp::pipeline::views {
 namespace detail {
 template<typename CropRegionRng, typename ImageType = float>
 static auto
-//static std::vector<std::shared_ptr<cimg_library::CImg<ImageType>>>
 crop_internal(const CropRegionRng crop_regions,
-             const std::shared_ptr<cimg_library::CImg<ImageType>> &image) {
+              const cimg_library::CImg<ImageType> &&image) {
 
   return crop_regions
       | ranges::view::transform(
           [=](const auto &crop_region) {
 
             // See https://github.com/GreycLab/CImg/issues/110
-            return std::make_shared<cimg_library::CImg<ImageType>>(
-                image->get_crop(crop_region.x() /*x0*/, crop_region.y() /*y0*/,
-                                crop_region.x() + crop_region.width() - 1/*x1*/,
-                                crop_region.y() + crop_region.height() - 1/*y1*/
-                                ));
+            return image.get_crop(
+                crop_region.x() /*x0*/, crop_region.y() /*y0*/,
+                crop_region.x() + crop_region.width() - 1/*x1*/,
+                crop_region.y() + crop_region.height() - 1/*y1*/
+                );
           }
-      )
-	  | ranges::to<std::vector>();
+      ) | ranges::to<std::vector>();
 }
 }  // namespace detail
 
 template<typename ImageType = float>
 auto
-//std::vector<std::shared_ptr<cimg_library::CImg<ImageType>>>
 crop() {
   return ranges::view::transform(
       [=](const auto &imageRectsPair) {
-        auto img = imageRectsPair->first;
+        auto img = imageRectsPair.first;
         //const std::vector<RectT<int>> & cropRects = imageRectsPair->second;
 
         // TODO: Fix below...
-//	      				return cropInternal(cropRects, img); // std::vector<std::shared_ptr<cimg_library::CImg<ImageType>>>
+//	      				return cropInternal(cropRects, img); // std::vector<std::unique_ptr<cimg_library::CImg<ImageType>>>
 
-        return imageRectsPair->second
+        return imageRectsPair.second
             | ranges::view::transform(
                 [=](const auto &crop_region) {
 
                   //LOG(debug) << "Cropping region " << crop_region << std::endl;
 
                   // See https://github.com/GreycLab/CImg/issues/110
-                  return std::make_shared<cimg_library::CImg<ImageType>>(
-                      img->get_crop(
+                  return img.get_crop(
                           crop_region.x() /*x0*/, crop_region.y() /*y0*/,
                           crop_region.x() + crop_region.width() - 1/*x1*/,
                           crop_region.y() + crop_region.height() - 1/*y1*/
-                          ));
+                          );
                 }
             ) | ranges::to<std::vector>();
 
@@ -103,8 +98,8 @@ crop() {
 template<typename CropRegionRng, typename ImageType = float>
 auto crop(const CropRegionRng &crop_regions) {
   return ranges::view::transform(
-      [=](const std::shared_ptr<cimg_library::CImg<ImageType>> &image) {
-        return detail::crop_internal(crop_regions, image);
+      [=](const cimg_library::CImg<ImageType> &&image) {
+        return detail::crop_internal(crop_regions, std::move(image));
       });
 }
 
@@ -114,9 +109,10 @@ auto crop(const CropRegionRng &crop_regions) {
 template<typename ImageType = float>
 auto crop(const Rect<int> &crop_region) {
   return ranges::view::transform(
-      [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
-        return detail::crop_internal(ranges::view::single(crop_region), image).at(0);
-  });
+      [=](const cimg_library::CImg<ImageType> &&image) {
+        return detail::crop_internal(ranges::view::single(crop_region),
+                                     std::move(image)).at(0);
+      });
 }
 
 /**
@@ -125,16 +121,14 @@ auto crop(const Rect<int> &crop_region) {
 template<typename ImageType = float>
 auto crop_from_center(const Size<int> &crop_region) {
   return ranges::view::transform(
-      [=](const std::shared_ptr<cimg_library::CImg<ImageType> > &image) {
+      [&](const cimg_library::CImg<ImageType> &&image) {
 
-        const cimg_library::CImg<ImageType> &input_image_ref = *image;
-
-        DEBUG_IMAGE_DISPLAY(input_image_ref, "crop_from_center_in",
+        DEBUG_IMAGE_DISPLAY(image, "crop_from_center_in",
                             STARMATHPP_PIPELINE_CROP_DEBUG);
 
         // TODO: Maybe this calculation can be simplified...
-        Point<float> image_center((float) input_image_ref.width() / 2.0F,
-                                 (float) input_image_ref.height() / 2.0F);
+        Point<float> image_center((float) image.width() / 2.0F,
+                                  (float) image.height() / 2.0F);
 
         Rect<float> rect = Rect<float>::from_center_point(
             image_center, crop_region.to<float>());
@@ -151,12 +145,11 @@ auto crop_from_center(const Size<int> &crop_region) {
         // - Mirror means "Mirrored image outside".
         //
         // See https://github.com/GreycLab/CImg/issues/110
-        auto cropped_img = std::make_shared<cimg_library::CImg<ImageType>>(
-            input_image_ref.get_crop(rect.x() /*x0*/, rect.y() /*y0*/,
-                                   rect.x() + rect.width() - 1/*x1*/,
-                                   rect.y() + rect.height() - 1/*y1*/));
+        auto cropped_img = image.get_crop(rect.x() /*x0*/, rect.y() /*y0*/,
+                                          rect.x() + rect.width() - 1/*x1*/,
+                                          rect.y() + rect.height() - 1/*y1*/);
 
-        DEBUG_IMAGE_DISPLAY(*cropped_img, "crop_from_center_out",
+        DEBUG_IMAGE_DISPLAY(cropped_img, "crop_from_center_out",
                             STARMATHPP_PIPELINE_CROP_DEBUG);
 
         return cropped_img;

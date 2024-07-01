@@ -1,6 +1,5 @@
 TODO
 ----
--Think about use of shared_ptrs... -> Use const referenes where possible or unique_ptrs 
 -IDEA: Add pipeline stretch(curve) function
 -IDEA: Add pipeline denoiser operation
 -Add "filter" to remove saturated / non-saturated images to pipeline
@@ -9,3 +8,4 @@ TODO
 -IDEA: Extract test image generator function from unit tests - generate_test_image()
 -Make fits writer create specified directories if they do not exist
 -Introduce template concept to restrict types of Rect, Size and Point to integral types
+-Add star_align() function

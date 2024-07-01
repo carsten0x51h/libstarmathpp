@@ -33,6 +33,7 @@
 
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/action/join.hpp>
+#include <range/v3/view/move.hpp>
 #include <range/v3/view/filter.hpp>
 
 #include <range/v3/core.hpp>   // ranges::front()
@@ -88,11 +89,12 @@ BOOST_AUTO_TEST_CASE(pipeline_star_recognizer_test) {
           | view::transform(
               [](const auto &detectedStars) {
                 return detectedStars
+                    | ranges::views::move
                     | scale_up(3.0F)
                     | center_on_star(IntensityWeightedCentroider<float>())
                     | scale_down(3.0F)
                     | crop_from_center(Size<int>(21,21))
-                    | ranges::views::filter([&](auto img) { return (img->max() < 65535); })
+                    | ranges::views::filter([](const auto& img) { return (img.max() < 65535); })
                     | write<float>(std::filesystem::current_path(), "star_centered_%04d.fit")
                     | to<std::vector>();
               })

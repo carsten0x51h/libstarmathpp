@@ -30,6 +30,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <range/v3/range/conversion.hpp> // ranges::to<>
+#include <range/v3/view/move.hpp>
 #include <range/v3/view/single.hpp>
 
 #include <boost/test/unit_test.hpp>
@@ -47,11 +48,12 @@ using namespace starmathpp::pipeline::views;
  * TODO: Document...
  */
 BOOST_AUTO_TEST_CASE(pipeline_subtract_background_image_test) {
-  ImagePtr test_image_ptr = std::make_shared<Image>(100,100,1,1,50); // 100x100, bg=50
+  Image test_image(100,100,1,1,50); // 100x100, bg=50
 
-  auto result_images = ranges::views::single(test_image_ptr)
-  | stretch(starmathpp::algorithm::MidtoneBalanceStretcher(0.25F))
-  | to<std::vector>();
+  auto result_images = ranges::views::single(test_image)
+      | ranges::views::move
+      | stretch(starmathpp::algorithm::MidtoneBalanceStretcher(0.25F))
+      | to<std::vector>();
 
 
 // TODO:...
