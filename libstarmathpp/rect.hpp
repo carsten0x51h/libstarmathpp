@@ -54,8 +54,12 @@ std::make_unsigned<T>,
 identity<T>
 >::type;
 
-template<typename T> class Rect;
-// pre-declare the template class itself
+/**
+ * Pre-declare the template class itself to be ale to declare operator<<.
+ * Allow only numeric types for Rect template.
+ * See https://stackoverflow.com/questions/14294267/class-template-for-numeric-types
+ */
+template<typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type> class Rect;
 template<typename T> std::ostream& operator<<(std::ostream &os,
                                               const Rect<T> &rect);
 
@@ -97,7 +101,7 @@ typename std::enable_if<std::is_same<R, double>::value, double>::type round(
  * TODO: IDEA: Add contains(Point) + inside(Size?) +  contains(Size)?
  *
  */
-template<class T>
+template<class T, typename>
 class Rect {
  private:
   // Unsigned type, if possible

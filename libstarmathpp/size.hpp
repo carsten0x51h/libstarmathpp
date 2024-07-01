@@ -33,8 +33,13 @@ namespace starmathpp {
 
 DEF_Exception(Size);
 
-template<typename T> class Size;
-// pre-declare the template class itself
+/**
+ * Pre-declare the template class itself to be ale to declare operator<<.
+ * Allow only numeric types for Size template.
+ * See https://stackoverflow.com/questions/14294267/class-template-for-numeric-types
+ */
+template<typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type> class Size;
+
 template<typename T> std::ostream& operator<<(std::ostream &os,
                                               const Size<T> &size);
 
@@ -46,7 +51,7 @@ template<typename T> std::ostream& operator<<(std::ostream &os,
  * TODO: shrink + grow? - Move functionality from Rect?
  *
  */
-template<class T>
+template<class T, typename>
 class Size {
  private:
   T width_;

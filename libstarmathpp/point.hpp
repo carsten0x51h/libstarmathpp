@@ -26,6 +26,8 @@
 #ifndef SOURCE_STARMATHPP_POINT_HPP_
 #define SOURCE_STARMATHPP_POINT_HPP_ SOURCE_STARMATHPP_POINT_HPP_
 
+#include <type_traits>
+
 #include <limits>
 #include <cmath>
 #include <ostream>
@@ -33,15 +35,20 @@
 
 namespace starmathpp {
 
-template<typename T> class Point;
-// pre-declare the template class itself
+/**
+ * Pre-declare the template class itself to be ale to declare operator<<.
+ * Allow only numeric types for Point template.
+ * See https://stackoverflow.com/questions/14294267/class-template-for-numeric-types
+ */
+template<typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type> class Point;
+
 template<typename T> std::ostream& operator<<(std::ostream &os,
                                               const Point<T> &p);
 
 /**
  * PointT structure (X x Y).
  */
-template<class T>
+template<class T, typename>
 class Point {
  public:
   Point()

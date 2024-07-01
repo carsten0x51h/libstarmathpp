@@ -1,7 +1,6 @@
 TODO
 ----
 -In-code documentation of existing, public functions
--Introduce template concept to restrict types of Rect, Size and Point to integral types
 -IDEA: Add pipeline stretch(curve) function
 -IDEA: Add pipeline denoiser operation
 -Add "filter" to remove saturated / non-saturated images to pipeline

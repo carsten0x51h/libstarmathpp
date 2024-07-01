@@ -255,5 +255,4 @@ BOOST_AUTO_TEST_CASE(point_compare_double_points_test, * boost::unit_test::toler
   BOOST_TEST((p3 != p4) == true);
 }
 
-
 BOOST_AUTO_TEST_SUITE_END();

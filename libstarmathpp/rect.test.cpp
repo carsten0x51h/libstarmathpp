@@ -364,6 +364,8 @@ BOOST_AUTO_TEST_CASE(rect_to_test) {
   // TODO: Add more unit tests
 }
 
+// TODO: Add more unit tests
+
 BOOST_AUTO_TEST_SUITE_END();
 
 // TODO: namespace!
