@@ -92,44 +92,45 @@ bool are_tuples_equal(const std::tuple<float, float, float> &t1,
  */
 BOOST_AUTO_TEST_CASE(pipeline_star_metrics_test, * boost::unit_test::tolerance(0.5)) {
   std::vector<std::string> image_paths {
-      "test_data/integration/star_metrics/newton_focus_star1.tiff",
-      "test_data/integration/star_metrics/newton_focus_star2.tiff",
-      "test_data/integration/star_metrics/newton_focus_star3.tiff",
-      "test_data/integration/star_metrics/newton_focus_star4.tiff",
-      "test_data/integration/star_metrics/newton_focus_star5.tiff",
-      "test_data/integration/star_metrics/newton_focus_star6.tiff",
-      "test_data/integration/star_metrics/newton_focus_star7.tiff",
-      "test_data/integration/star_metrics/newton_focus_star8.tiff",
-      "test_data/integration/star_metrics/newton_focus_star9.tiff",
-      "test_data/integration/star_metrics/newton_focus_star10.tiff",
-      "test_data/integration/star_metrics/newton_focus_star11.tiff" };
+    "test_data/integration/star_metrics/newton_focus_star1.tiff",
+    "test_data/integration/star_metrics/newton_focus_star2.tiff",
+    "test_data/integration/star_metrics/newton_focus_star3.tiff",
+    "test_data/integration/star_metrics/newton_focus_star4.tiff",
+    "test_data/integration/star_metrics/newton_focus_star5.tiff",
+    "test_data/integration/star_metrics/newton_focus_star6.tiff",
+    "test_data/integration/star_metrics/newton_focus_star7.tiff",
+    "test_data/integration/star_metrics/newton_focus_star8.tiff",
+    "test_data/integration/star_metrics/newton_focus_star9.tiff",
+    "test_data/integration/star_metrics/newton_focus_star10.tiff",
+    "test_data/integration/star_metrics/newton_focus_star11.tiff"};
 
   std::vector<std::tuple<double, double, double>> expected_star_metrics = { {
-      3.4248103734966566, 27.295144884427497, 7.0224903119455284 }, {
-      4.0168380799027004, 25.431775505128925, 3.2577025906038513 }, {
-      4.2398086088788904, 23.906962737212321, 4.9519681972932634 }, {
-      4.5106426505897472, 21.797925759551219, 3.2653476572926494 }, {
-      5.9366687230635415, 18.646887642682195, 5.1113245564233942 }, {
-      5.9214817393646637, 15.900437967399453, 9.7376782809402265 }, {
-      7.2058655558692744, 12.081075787803762, 3.7265062056625 }, {
-      6.7269579863995439, 9.182079739644923, 4.978652931246689 }, {
-      7.4242741594713344, 6.2974607834559153, 3.842207327064898 }, {
-      5.278791273812149, 3.8438485006311049, 2.4601451100132845 }, {
-      4.1407320775829746, 3.4434783057891602, 1.8549140611311068 } };
+      3.4248103734966566, 27.295144884427497, 7.0224903119455284}, {
+      4.0168380799027004, 25.431775505128925, 3.2577025906038513}, {
+      4.2398086088788904, 23.906962737212321, 4.9519681972932634}, {
+      4.5106426505897472, 21.797925759551219, 3.2653476572926494}, {
+      5.9366687230635415, 18.646887642682195, 5.1113245564233942}, {
+      5.9214817393646637, 15.900437967399453, 9.7376782809402265}, {
+      7.2058655558692744, 12.081075787803762, 3.7265062056625}, {
+      6.7269579863995439, 9.182079739644923, 4.978652931246689}, {
+      7.4242741594713344, 6.2974607834559153, 3.842207327064898}, {
+      5.278791273812149, 3.8438485006311049, 2.4601451100132845}, {
+      4.1407320775829746, 3.4434783057891602, 1.8549140611311068}};
 
-  auto star_metrics = image_paths | read()
-      | interpolate_bad_pixels(10000 /*threshold*/, 3 /*filter size*/)
-      | subtract_background(OtsuThresholder<float>(16)) | scale_up(3.0F)
-      | center_on_star(IntensityWeightedCentroider<float>()) | scale_down(3.0F)
-      | crop_from_center(Size<int>(61, 61))
-      | view::transform(
-          [](const auto &img) {
-            return std::make_tuple(
-                starmathpp::algorithm::snr(img),
-                starmathpp::algorithm::hfd(img),
-                starmathpp::algorithm::fwhm(img).value());
-          })
-      | to<std::vector>();
+  auto star_metrics = image_paths
+  | read()
+  | interpolate_bad_pixels(10000 /*threshold*/, 3 /*filter size*/)
+  | subtract_background(OtsuThresholder<float>(16)) | scale_up(3.0F)
+  | center_on_star(IntensityWeightedCentroider<float>()) | scale_down(3.0F)
+  | crop_from_center(Size<int>(61, 61))
+  | view::transform(
+      [](const auto &img) {
+        return std::make_tuple(
+            starmathpp::algorithm::snr(img),
+            starmathpp::algorithm::hfd(img),
+            starmathpp::algorithm::fwhm(img).value());
+      })
+  | to<std::vector>();
 
   float tolerance = 0.001F;
 
