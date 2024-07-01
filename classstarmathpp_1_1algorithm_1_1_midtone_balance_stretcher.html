@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.686a419f8c48</span>
+   &#160;<span id="projectnumber">1.0.0.07b18f437aee</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -103,7 +103,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>IDEA:</p>
-<p>auto result_images = files("*.fit.gz") | <a class="el" href="namespacestarmathpp_1_1io_1_1fits.html#a19b010ea753afd241b86c3e7b5b797e6">read()</a> | stretch/map_luminosity() / map(Mapper &amp; mapper) / stretch(curve) -&gt; curve = MidtoneStretcher&lt;unsigned char&gt;(0.25F) -&gt; mapper = MidtoneStretcher&lt;unsigned char&gt;(0.25F)</p>
+<p>auto result_images = files("*.fit.gz") | <a class="el" href="namespacestarmathpp_1_1io_1_1fits.html#a1986c92a9635e29ce0771ae84ffa1df7">read()</a> | stretch/map_luminosity() / map(Mapper &amp; mapper) / stretch(curve) -&gt; curve = MidtoneStretcher&lt;unsigned char&gt;(0.25F) -&gt; mapper = MidtoneStretcher&lt;unsigned char&gt;(0.25F)</p>
 <p>-&gt; map is too generic...</p>
 <p>-&gt; stretch(curve) // &lt;- If curve which is to be used does not depend on input image -&gt; stretch(const Stretcher &amp;)// &lt;- Image stretching algorithm which can potentially depend on the input image -&gt; | stretch(starmathpp::algorithm::MidtoneStretcher(0.25F))</p>
 <p>-&gt; TODO: What will stretch do for an RBG image? -&gt; apply stretch per channel -&gt; TODO: What will <a class="el" href="classstarmathpp_1_1algorithm_1_1_thresholder.html">Thresholder</a> do for an RGB image? -&gt; Only makes sense for a gray image </p>
@@ -198,7 +198,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 21 2024 18:38:44 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 09:21:51 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

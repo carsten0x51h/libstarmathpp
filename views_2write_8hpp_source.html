@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.686a419f8c48</span>
+   &#160;<span id="projectnumber">1.0.0.07b18f437aee</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -135,41 +135,43 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType&gt;</div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#ab5cedf08580d9ed09cbad36936a8a923">   65</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#ab5cedf08580d9ed09cbad36936a8a923">write</a>(<span class="keyword">const</span> std::filesystem::path &amp;directory,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;           <span class="keyword">const</span> std::string &amp;image_filename_pattern = <span class="stringliteral">&quot;img_%03d.fit&quot;</span>,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;           <span class="keywordtype">bool</span> allow_override = <span class="keyword">true</span>) {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">return</span> ranges::views::transform(</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      [=](<span class="keyword">const</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt;&gt; &amp;image) {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(*image, <span class="stringliteral">&quot;pipeline_view_write_in&quot;</span>,</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                            <a class="code" href="views_2write_8hpp.html#a43a82760fb2e97ea9d70c025259d33ee">STARMATHPP_PIPELINE_VIEW_WRITE_DEBUG</a>);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        std::filesystem::path filepath = directory</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            / <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#aff29c4be8c8f14976811c998b61205b9">compose_filename_from_pattern</a>(image_filename_pattern);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="namespacestarmathpp_1_1io.html#a97e21d2e7cac8b07b34913195ee8ad94">starmathpp::io::write</a>(*image, filepath, allow_override);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">return</span> image;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  );</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;} <span class="comment">// namespace starmathpp::pipeline::views</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_PIPELINE_VIEW_WRITE_H_</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType=<span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">auto</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#ab5cedf08580d9ed09cbad36936a8a923">   66</a></span>&#160;<a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#ab5cedf08580d9ed09cbad36936a8a923">write</a>(<span class="keyword">const</span> std::filesystem::path &amp;directory,</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;           <span class="keyword">const</span> std::string &amp;image_filename_pattern = <span class="stringliteral">&quot;img_%03d.fit&quot;</span>,</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;           <span class="keywordtype">bool</span> allow_override = <span class="keyword">true</span>) {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordflow">return</span> ranges::views::transform(</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      [=](<span class="keyword">auto</span> &amp;&amp; image <span class="comment">/*cimg_library::CImg&lt;ImageType&gt;*/</span>) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(image, <span class="stringliteral">&quot;pipeline_view_write_in&quot;</span>,</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                            <a class="code" href="views_2write_8hpp.html#a43a82760fb2e97ea9d70c025259d33ee">STARMATHPP_PIPELINE_VIEW_WRITE_DEBUG</a>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        std::filesystem::path filepath = directory</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            / <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#aff29c4be8c8f14976811c998b61205b9">compose_filename_from_pattern</a>(image_filename_pattern);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <a class="code" href="namespacestarmathpp_1_1io.html#ac364d5a9f330f7d16b17ab37cbb0fedb">starmathpp::io::write</a>(std::move(image), filepath, allow_override);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">return</span> std::move(image); <span class="comment">// TODO / FIXME: Does this work? Dereferencing the unique_ptr is not what should b done...</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  );</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;} <span class="comment">// namespace starmathpp::pipeline::views</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_PIPELINE_VIEW_WRITE_H_</span></div>
 <div class="ttc" id="aimage_8hpp_html"><div class="ttname"><a href="image_8hpp.html">image.hpp</a></div></div>
 <div class="ttc" id="aimage_8hpp_html_a924fa69ef2099305a175c4a07a91caa9"><div class="ttname"><a href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a></div><div class="ttdeci">#define DEBUG_IMAGE_DISPLAY(imageRef, title, enable)</div><div class="ttdef"><b>Definition:</b> image.hpp:50</div></div>
 <div class="ttc" id="aimage__writer_8hpp_html"><div class="ttname"><a href="image__writer_8hpp.html">image_writer.hpp</a></div></div>
-<div class="ttc" id="anamespacestarmathpp_1_1io_html_a97e21d2e7cac8b07b34913195ee8ad94"><div class="ttname"><a href="namespacestarmathpp_1_1io.html#a97e21d2e7cac8b07b34913195ee8ad94">starmathpp::io::write</a></div><div class="ttdeci">void write(const Image &amp;img, const std::filesystem::path &amp;filepath, bool override=true)</div></div>
+<div class="ttc" id="anamespacestarmathpp_1_1io_html_ac364d5a9f330f7d16b17ab37cbb0fedb"><div class="ttname"><a href="namespacestarmathpp_1_1io.html#ac364d5a9f330f7d16b17ab37cbb0fedb">starmathpp::io::write</a></div><div class="ttdeci">void write(const Image &amp;&amp;img, const std::filesystem::path &amp;filepath, bool override=true)</div></div>
 <div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html">starmathpp::pipeline::views</a></div><div class="ttdef"><b>Definition:</b> add.hpp:31</div></div>
-<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_ab5cedf08580d9ed09cbad36936a8a923"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#ab5cedf08580d9ed09cbad36936a8a923">starmathpp::pipeline::views::write</a></div><div class="ttdeci">auto write(const std::filesystem::path &amp;directory, const std::string &amp;image_filename_pattern=&quot;img_%03d.fit&quot;, bool allow_override=true)</div><div class="ttdef"><b>Definition:</b> views/write.hpp:65</div></div>
+<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_ab5cedf08580d9ed09cbad36936a8a923"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#ab5cedf08580d9ed09cbad36936a8a923">starmathpp::pipeline::views::write</a></div><div class="ttdeci">auto write(const std::filesystem::path &amp;directory, const std::string &amp;image_filename_pattern=&quot;img_%03d.fit&quot;, bool allow_override=true)</div><div class="ttdef"><b>Definition:</b> views/write.hpp:66</div></div>
 <div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_aff29c4be8c8f14976811c998b61205b9"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#aff29c4be8c8f14976811c998b61205b9">starmathpp::pipeline::views::compose_filename_from_pattern</a></div><div class="ttdeci">static std::string compose_filename_from_pattern(const std::string &amp;pattern)</div><div class="ttdef"><b>Definition:</b> views/write.hpp:51</div></div>
 <div class="ttc" id="aviews_2write_8hpp_html_a43a82760fb2e97ea9d70c025259d33ee"><div class="ttname"><a href="views_2write_8hpp.html#a43a82760fb2e97ea9d70c025259d33ee">STARMATHPP_PIPELINE_VIEW_WRITE_DEBUG</a></div><div class="ttdeci">#define STARMATHPP_PIPELINE_VIEW_WRITE_DEBUG</div><div class="ttdef"><b>Definition:</b> views/write.hpp:37</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 21 2024 18:38:44 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 09:21:51 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

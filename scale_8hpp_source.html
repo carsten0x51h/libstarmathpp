@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.686a419f8c48</span>
+   &#160;<span id="projectnumber">1.0.0.07b18f437aee</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -231,71 +231,66 @@ $(function() {
 <div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a5e78b13c4e5caa393097e7dfd2635e47">  157</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a5e78b13c4e5caa393097e7dfd2635e47">scale</a>(<a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_scale_direction.html#af82636677054d4056d7159a042ce4948">ScaleDirection::TypeE</a> scale_type, <span class="keywordtype">float</span> scale_factor,</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;           <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#ad2d43db3f1d1d30801525ad65c5e29c3">InterpolationType::TypeE</a> interpolation_type) {</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  <span class="keywordflow">return</span> ranges::views::transform(</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      [=](<span class="keyword">const</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt; &gt; &amp;image) {</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      [=](<span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt; &amp;&amp;image) {</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt; &amp;input_image_ref = *image;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(image, <span class="stringliteral">&quot;scale_in&quot;</span>, <a class="code" href="scale_8hpp.html#a42ed33850a09af977fa2e901aab0fd5f">STARMATHPP_PIPELINE_SCALE_DEBUG</a>);</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(input_image_ref, <span class="stringliteral">&quot;scale_in&quot;</span>,</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                            <a class="code" href="scale_8hpp.html#a42ed33850a09af977fa2e901aab0fd5f">STARMATHPP_PIPELINE_SCALE_DEBUG</a>);</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="keyword">auto</span> scaled_image = std::make_shared &lt; cimg_library::CImg&lt;ImageType&gt;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            &gt; (input_image_ref);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keyword">auto</span> scaled_image = cimg_library::CImg&lt;ImageType&gt;(image);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        <span class="keywordtype">float</span> factor = (</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            scale_type == <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_scale_direction.html#af82636677054d4056d7159a042ce4948a9f48aef55aaf6affea60a6eaa87d28d9">ScaleDirection::UP</a> ?</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;                scale_factor : 1.0F / scale_factor);</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <span class="keywordtype">float</span> factor = (</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            scale_type == <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_scale_direction.html#af82636677054d4056d7159a042ce4948a9f48aef55aaf6affea60a6eaa87d28d9">ScaleDirection::UP</a> ?</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                scale_factor : 1.0F / scale_factor);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        scaled_image.resize((<span class="keywordtype">int</span>) (factor * (float) image.width()),</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;                            (<span class="keywordtype">int</span>) (factor * (float) image.height()), -100, -100,</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                            <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#a81c95ba65f48e58ac9af0c6bcb0052a3">InterpolationType::asInt</a>(interpolation_type));</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        scaled_image-&gt;resize((<span class="keywordtype">int</span>) (factor * (float) input_image_ref.width()),</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                             (<span class="keywordtype">int</span>) (factor * (float) input_image_ref.height()),</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                             -100, -100,</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                             <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#a81c95ba65f48e58ac9af0c6bcb0052a3">InterpolationType::asInt</a>(interpolation_type));</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(input_image_ref, <span class="stringliteral">&quot;scale_out&quot;</span>,</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;                            <a class="code" href="scale_8hpp.html#a42ed33850a09af977fa2e901aab0fd5f">STARMATHPP_PIPELINE_SCALE_DEBUG</a>);</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        <span class="keywordflow">return</span> scaled_image;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      }</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  );</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="comment"> * @tparam ImageType</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="comment"> * @param scaleFactor</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="comment"> * @param interpolation_type</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="comment"> * @return</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00195"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a21b73021742da504e1512c4836e510ae">  195</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a21b73021742da504e1512c4836e510ae">scale_up</a>(<span class="keywordtype">float</span> scale_factor, <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#ad2d43db3f1d1d30801525ad65c5e29c3">InterpolationType::TypeE</a> interpolation_type =</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;                  <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#ad2d43db3f1d1d30801525ad65c5e29c3a5339456450286f9c4a763aae339596c0">InterpolationType::NEAREST_NEIGHBOR</a>) {</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <span class="keywordflow">return</span> scale&lt;ImageType&gt;(<a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_scale_direction.html#af82636677054d4056d7159a042ce4948a9f48aef55aaf6affea60a6eaa87d28d9">ScaleDirection::UP</a>, scale_factor, interpolation_type);</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;}</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="comment"> * @tparam ImageType</span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="comment"> * @param scaleFactor</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="comment"> * @param interpolation_type</span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="comment"> * @return</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00208"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a8bac94dfea863f27d9a203cfbe23099d">  208</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a8bac94dfea863f27d9a203cfbe23099d">scale_down</a>(<span class="keywordtype">float</span> scale_factor,</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#ad2d43db3f1d1d30801525ad65c5e29c3">InterpolationType::TypeE</a> interpolation_type =</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;                    <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#ad2d43db3f1d1d30801525ad65c5e29c3a5339456450286f9c4a763aae339596c0">InterpolationType::NEAREST_NEIGHBOR</a>) {</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <span class="keywordflow">return</span> scale&lt;ImageType&gt;(<a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_scale_direction.html#af82636677054d4056d7159a042ce4948ac991d4460dc33204e005d56c293dcfd8">ScaleDirection::DOWN</a>, scale_factor,</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                          interpolation_type);</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;}</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;}  <span class="comment">// namespace starmathpp::pipeline::views</span></div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_PIPELINE_VIEW_SCALE_HPP_</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(scaled_image, <span class="stringliteral">&quot;scale_out&quot;</span>,</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                            <a class="code" href="scale_8hpp.html#a42ed33850a09af977fa2e901aab0fd5f">STARMATHPP_PIPELINE_SCALE_DEBUG</a>);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordflow">return</span> scaled_image;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      }</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  );</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;}</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="comment"> * @tparam ImageType</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="comment"> * @param scaleFactor</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="comment"> * @param interpolation_type</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="comment"> * @return</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00190"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a21b73021742da504e1512c4836e510ae">  190</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a21b73021742da504e1512c4836e510ae">scale_up</a>(<span class="keywordtype">float</span> scale_factor, <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#ad2d43db3f1d1d30801525ad65c5e29c3">InterpolationType::TypeE</a> interpolation_type =</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                  <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#ad2d43db3f1d1d30801525ad65c5e29c3a5339456450286f9c4a763aae339596c0">InterpolationType::NEAREST_NEIGHBOR</a>) {</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  <span class="keywordflow">return</span> scale&lt;ImageType&gt;(<a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_scale_direction.html#af82636677054d4056d7159a042ce4948a9f48aef55aaf6affea60a6eaa87d28d9">ScaleDirection::UP</a>, scale_factor, interpolation_type);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;}</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="comment"> * @tparam ImageType</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="comment"> * @param scaleFactor</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="comment"> * @param interpolation_type</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="comment"> * @return</span></div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00203"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a8bac94dfea863f27d9a203cfbe23099d">  203</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a8bac94dfea863f27d9a203cfbe23099d">scale_down</a>(<span class="keywordtype">float</span> scale_factor,</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;                <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#ad2d43db3f1d1d30801525ad65c5e29c3">InterpolationType::TypeE</a> interpolation_type =</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;                    <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#ad2d43db3f1d1d30801525ad65c5e29c3a5339456450286f9c4a763aae339596c0">InterpolationType::NEAREST_NEIGHBOR</a>) {</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordflow">return</span> scale&lt;ImageType&gt;(<a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_scale_direction.html#af82636677054d4056d7159a042ce4948ac991d4460dc33204e005d56c293dcfd8">ScaleDirection::DOWN</a>, scale_factor,</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                          interpolation_type);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;}</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;}  <span class="comment">// namespace starmathpp::pipeline::views</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_PIPELINE_VIEW_SCALE_HPP_</span></div>
 <div class="ttc" id="aenum__helper_8hpp_html"><div class="ttname"><a href="enum__helper_8hpp.html">enum_helper.hpp</a></div></div>
 <div class="ttc" id="aenum__helper_8hpp_html_a272a4f2c27ed6f6e325fc7961f7df9de"><div class="ttname"><a href="enum__helper_8hpp.html#a272a4f2c27ed6f6e325fc7961f7df9de">MAC_AS_TYPE</a></div><div class="ttdeci">#define MAC_AS_TYPE(Type, E, Count)</div><div class="ttdef"><b>Definition:</b> enum_helper.hpp:35</div></div>
 <div class="ttc" id="aimage_8hpp_html"><div class="ttname"><a href="image_8hpp.html">image.hpp</a></div></div>
 <div class="ttc" id="aimage_8hpp_html_a924fa69ef2099305a175c4a07a91caa9"><div class="ttname"><a href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a></div><div class="ttdeci">#define DEBUG_IMAGE_DISPLAY(imageRef, title, enable)</div><div class="ttdef"><b>Definition:</b> image.hpp:50</div></div>
 <div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html">starmathpp::pipeline::views</a></div><div class="ttdef"><b>Definition:</b> add.hpp:31</div></div>
-<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_a21b73021742da504e1512c4836e510ae"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#a21b73021742da504e1512c4836e510ae">starmathpp::pipeline::views::scale_up</a></div><div class="ttdeci">auto scale_up(float scale_factor, InterpolationType::TypeE interpolation_type=InterpolationType::NEAREST_NEIGHBOR)</div><div class="ttdef"><b>Definition:</b> scale.hpp:195</div></div>
+<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_a21b73021742da504e1512c4836e510ae"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#a21b73021742da504e1512c4836e510ae">starmathpp::pipeline::views::scale_up</a></div><div class="ttdeci">auto scale_up(float scale_factor, InterpolationType::TypeE interpolation_type=InterpolationType::NEAREST_NEIGHBOR)</div><div class="ttdef"><b>Definition:</b> scale.hpp:190</div></div>
 <div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_a5e78b13c4e5caa393097e7dfd2635e47"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#a5e78b13c4e5caa393097e7dfd2635e47">starmathpp::pipeline::views::scale</a></div><div class="ttdeci">auto scale(ScaleDirection::TypeE scale_type, float scale_factor, InterpolationType::TypeE interpolation_type)</div><div class="ttdef"><b>Definition:</b> scale.hpp:157</div></div>
-<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_a8bac94dfea863f27d9a203cfbe23099d"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#a8bac94dfea863f27d9a203cfbe23099d">starmathpp::pipeline::views::scale_down</a></div><div class="ttdeci">auto scale_down(float scale_factor, InterpolationType::TypeE interpolation_type=InterpolationType::NEAREST_NEIGHBOR)</div><div class="ttdef"><b>Definition:</b> scale.hpp:208</div></div>
+<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_a8bac94dfea863f27d9a203cfbe23099d"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#a8bac94dfea863f27d9a203cfbe23099d">starmathpp::pipeline::views::scale_down</a></div><div class="ttdeci">auto scale_down(float scale_factor, InterpolationType::TypeE interpolation_type=InterpolationType::NEAREST_NEIGHBOR)</div><div class="ttdef"><b>Definition:</b> scale.hpp:203</div></div>
 <div class="ttc" id="ascale_8hpp_html_a42ed33850a09af977fa2e901aab0fd5f"><div class="ttname"><a href="scale_8hpp.html#a42ed33850a09af977fa2e901aab0fd5f">STARMATHPP_PIPELINE_SCALE_DEBUG</a></div><div class="ttdeci">#define STARMATHPP_PIPELINE_SCALE_DEBUG</div><div class="ttdef"><b>Definition:</b> scale.hpp:34</div></div>
 <div class="ttc" id="astructstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type_html"><div class="ttname"><a href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html">starmathpp::pipeline::views::InterpolationType</a></div><div class="ttdef"><b>Definition:</b> scale.hpp:86</div></div>
 <div class="ttc" id="astructstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type_html_a657a3f4dba871391483719c828d01529"><div class="ttname"><a href="structstarmathpp_1_1pipeline_1_1views_1_1_interpolation_type.html#a657a3f4dba871391483719c828d01529">starmathpp::pipeline::views::InterpolationType::asStr</a></div><div class="ttdeci">static const char * asStr(const TypeE &amp;inType)</div><div class="ttdef"><b>Definition:</b> scale.hpp:99</div></div>
@@ -319,7 +314,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 21 2024 18:38:44 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 09:21:51 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

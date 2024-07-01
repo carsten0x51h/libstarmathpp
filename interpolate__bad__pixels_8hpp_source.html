@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.686a419f8c48</span>
+   &#160;<span id="projectnumber">1.0.0.07b18f437aee</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -118,7 +118,7 @@ $(function() {
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"> * @param Filter core size (N x N), odd number &gt; 1, allowed values are 3,5,7,9</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment"> * @param absoluteDetectionThreshold</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment"> * @return Image with interpolated bad pixels (shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt;&gt;)</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment"> * @return Image with interpolated bad pixels (unique_ptr&lt;cimg_library::CImg&lt;ImageType&gt;&gt;)</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment"> * TODO: Move the actual algorithm out of this pipeline function to the &quot;algorithms&quot; and also write</span></div>
@@ -134,16 +134,16 @@ $(function() {
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="structstarmathpp_1_1algorithm_1_1_bad_pixel_median_interpolator_1_1_threshold_direction.html#aea43402fd2491bd0f36ffd5509ff137a">starmathpp::algorithm::BadPixelMedianInterpolator::ThresholdDirection::TypeE</a> threshold_direction =</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <a class="code" href="structstarmathpp_1_1algorithm_1_1_bad_pixel_median_interpolator_1_1_threshold_direction.html#aea43402fd2491bd0f36ffd5509ff137aa90fa6ad70f104895bf8e1362937f7124">starmathpp::algorithm::BadPixelMedianInterpolator::ThresholdDirection::BOTH</a>) {</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">return</span> ranges::views::transform(</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      [=](<span class="keyword">const</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt; &gt; &amp;image) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      [=](<span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt;&amp;&amp; image) {</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(*image, <span class="stringliteral">&quot;interpolate_bad_pixels_in&quot;</span>,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(image, <span class="stringliteral">&quot;interpolate_bad_pixels_in&quot;</span>,</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                            <a class="code" href="interpolate__bad__pixels_8hpp.html#a7b67dbdf3d3eb2d2e261ce9d29938c5a">STARMATHPP_INTERPOLATE_BAD_PIXELS_DEBUG</a>);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="classstarmathpp_1_1algorithm_1_1_bad_pixel_median_interpolator.html">starmathpp::algorithm::BadPixelMedianInterpolator</a> bad_pixel_median_interpolator(</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            absolute_detection_threshold, filter_core_size,</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            threshold_direction);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">auto</span> result_image = bad_pixel_median_interpolator.<a class="code" href="classstarmathpp_1_1algorithm_1_1_bad_pixel_median_interpolator.html#a3c912291499f36beeb2fc6c0036b7288">interpolate</a>(image);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">auto</span> result_image = bad_pixel_median_interpolator.<a class="code" href="classstarmathpp_1_1algorithm_1_1_bad_pixel_median_interpolator.html#ae8d1f0c9025b9a80771b100ea747b5e6">interpolate</a>(std::move(image));</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(*result_image, <span class="stringliteral">&quot;interpolate_bad_pixels_out&quot;</span>,</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                            <a class="code" href="interpolate__bad__pixels_8hpp.html#a7b67dbdf3d3eb2d2e261ce9d29938c5a">STARMATHPP_INTERPOLATE_BAD_PIXELS_DEBUG</a>);</div>
@@ -158,7 +158,7 @@ $(function() {
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_INTERPOLATE_BAD_PIXELS_HPP_</span></div>
 <div class="ttc" id="abad__pixel__median__interpolator_8hpp_html"><div class="ttname"><a href="bad__pixel__median__interpolator_8hpp.html">bad_pixel_median_interpolator.hpp</a></div></div>
 <div class="ttc" id="aclassstarmathpp_1_1algorithm_1_1_bad_pixel_median_interpolator_html"><div class="ttname"><a href="classstarmathpp_1_1algorithm_1_1_bad_pixel_median_interpolator.html">starmathpp::algorithm::BadPixelMedianInterpolator</a></div><div class="ttdef"><b>Definition:</b> bad_pixel_median_interpolator.hpp:46</div></div>
-<div class="ttc" id="aclassstarmathpp_1_1algorithm_1_1_bad_pixel_median_interpolator_html_a3c912291499f36beeb2fc6c0036b7288"><div class="ttname"><a href="classstarmathpp_1_1algorithm_1_1_bad_pixel_median_interpolator.html#a3c912291499f36beeb2fc6c0036b7288">starmathpp::algorithm::BadPixelMedianInterpolator::interpolate</a></div><div class="ttdeci">std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt; &gt; interpolate(const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt; &gt; &amp;input_image_ptr)</div><div class="ttdef"><b>Definition:</b> bad_pixel_median_interpolator.hpp:114</div></div>
+<div class="ttc" id="aclassstarmathpp_1_1algorithm_1_1_bad_pixel_median_interpolator_html_ae8d1f0c9025b9a80771b100ea747b5e6"><div class="ttname"><a href="classstarmathpp_1_1algorithm_1_1_bad_pixel_median_interpolator.html#ae8d1f0c9025b9a80771b100ea747b5e6">starmathpp::algorithm::BadPixelMedianInterpolator::interpolate</a></div><div class="ttdeci">auto interpolate(const cimg_library::CImg&lt; ImageType &gt; &amp;input_image)</div><div class="ttdef"><b>Definition:</b> bad_pixel_median_interpolator.hpp:114</div></div>
 <div class="ttc" id="aimage_8hpp_html"><div class="ttname"><a href="image_8hpp.html">image.hpp</a></div></div>
 <div class="ttc" id="aimage_8hpp_html_a924fa69ef2099305a175c4a07a91caa9"><div class="ttname"><a href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a></div><div class="ttdeci">#define DEBUG_IMAGE_DISPLAY(imageRef, title, enable)</div><div class="ttdef"><b>Definition:</b> image.hpp:50</div></div>
 <div class="ttc" id="ainterpolate__bad__pixels_8hpp_html_a7b67dbdf3d3eb2d2e261ce9d29938c5a"><div class="ttname"><a href="interpolate__bad__pixels_8hpp.html#a7b67dbdf3d3eb2d2e261ce9d29938c5a">STARMATHPP_INTERPOLATE_BAD_PIXELS_DEBUG</a></div><div class="ttdeci">#define STARMATHPP_INTERPOLATE_BAD_PIXELS_DEBUG</div><div class="ttdef"><b>Definition:</b> interpolate_bad_pixels.hpp:34</div></div>
@@ -169,7 +169,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 21 2024 18:38:44 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 09:21:51 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

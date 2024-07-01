@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.686a419f8c48</span>
+   &#160;<span id="projectnumber">1.0.0.07b18f437aee</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -105,7 +105,7 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html">   31</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html">starmathpp::pipeline::views</a> {</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> * TODO: Move to details namespace...</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType&gt;</div>
 <div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html">   37</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html">AddTraits</a> {</div>
@@ -113,51 +113,49 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">return</span> <span class="stringliteral">&quot;add&quot;</span>;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  }</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#a24867bc3ca2217c0ecafaea55eb8f23b">   42</a></span>&#160;  <span class="keyword">static</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt;&gt; <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#a24867bc3ca2217c0ecafaea55eb8f23b">calculate</a>(</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      <span class="keyword">const</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt;&gt; &amp;img_ptr1,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      <span class="keyword">const</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt;&gt; &amp;img_ptr2) {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> std::make_shared &lt; cimg_library::CImg</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        &lt; ImageType &gt;&gt; (*img_ptr1 + *img_ptr2);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  }</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#afa37a85d1de521042cf1da5f679e4131">   49</a></span>&#160;  <span class="keyword">static</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt;&gt; <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#afa37a85d1de521042cf1da5f679e4131">calculate</a>(</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      <span class="keyword">const</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt;&gt; &amp;img_ptr1,</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      ImageType scalar_value) {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span> std::make_shared &lt; cimg_library::CImg</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        &lt; ImageType &gt;&gt; (*img_ptr1 + scalar_value);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;};</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a02961b2577f5a7b0a15e4d78d4d7ad02">   61</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a02961b2577f5a7b0a15e4d78d4d7ad02">add</a>(<span class="keyword">const</span> std::shared_ptr&lt;Image&gt; &amp;image_to_add_ptr) {</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">return</span> arithmetic_function_tmpl&lt;AddTraits, ImageType&gt;(image_to_add_ptr);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#af211f272bd6af637f88c3ac52582de70">   69</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a02961b2577f5a7b0a15e4d78d4d7ad02">add</a>(ImageType scalar_value_to_add) {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordflow">return</span> arithmetic_function_tmpl&lt;AddTraits, ImageType&gt;(scalar_value_to_add);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}  <span class="comment">// namespace starmathpp::pipeline::views</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_PIPELINE_VIEW_ADD_H_</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#a1b1a54ed36a2f53fc68224e2eaacb114">   42</a></span>&#160;  <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#a1b1a54ed36a2f53fc68224e2eaacb114">calculate</a>(</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      <span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt;&amp;&amp; img1,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      <span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt;&amp; img2) {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> img1 + img2;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#aa9793723c2e8291ba6151447dae8c3f5">   48</a></span>&#160;  <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#aa9793723c2e8291ba6151447dae8c3f5">calculate</a>(</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      <span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt;&amp;&amp; img1, ImageType scalar_value) {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span> img1 + scalar_value;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;};</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#ae49b3081b18fb1ab978939035cff26ef">   58</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#ae49b3081b18fb1ab978939035cff26ef">add</a>(<span class="keyword">const</span> <a class="code" href="namespacestarmathpp.html#a1d63b30ede93151db2ab3b587052f725">Image</a>&amp; image_to_add) {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keywordflow">return</span> arithmetic_function_tmpl&lt;AddTraits, ImageType&gt;(image_to_add);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#af211f272bd6af637f88c3ac52582de70">   66</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#ae49b3081b18fb1ab978939035cff26ef">add</a>(ImageType scalar_value_to_add) {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordflow">return</span> arithmetic_function_tmpl&lt;AddTraits, ImageType&gt;(scalar_value_to_add);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}  <span class="comment">// namespace starmathpp::pipeline::views</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_PIPELINE_VIEW_ADD_H_</span></div>
 <div class="ttc" id="aarithmetic__function__template_8hpp_html"><div class="ttname"><a href="arithmetic__function__template_8hpp.html">arithmetic_function_template.hpp</a></div></div>
 <div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html">starmathpp::pipeline::views</a></div><div class="ttdef"><b>Definition:</b> add.hpp:31</div></div>
-<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_a02961b2577f5a7b0a15e4d78d4d7ad02"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#a02961b2577f5a7b0a15e4d78d4d7ad02">starmathpp::pipeline::views::add</a></div><div class="ttdeci">auto add(const std::shared_ptr&lt; Image &gt; &amp;image_to_add_ptr)</div><div class="ttdef"><b>Definition:</b> add.hpp:61</div></div>
+<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_ae49b3081b18fb1ab978939035cff26ef"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#ae49b3081b18fb1ab978939035cff26ef">starmathpp::pipeline::views::add</a></div><div class="ttdeci">auto add(const Image &amp;image_to_add)</div><div class="ttdef"><b>Definition:</b> add.hpp:58</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_a1d63b30ede93151db2ab3b587052f725"><div class="ttname"><a href="namespacestarmathpp.html#a1d63b30ede93151db2ab3b587052f725">starmathpp::Image</a></div><div class="ttdeci">cimg_library::CImg&lt; float &gt; Image</div><div class="ttdef"><b>Definition:</b> image.hpp:93</div></div>
 <div class="ttc" id="astructstarmathpp_1_1pipeline_1_1views_1_1_add_traits_html"><div class="ttname"><a href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html">starmathpp::pipeline::views::AddTraits</a></div><div class="ttdef"><b>Definition:</b> add.hpp:37</div></div>
-<div class="ttc" id="astructstarmathpp_1_1pipeline_1_1views_1_1_add_traits_html_a24867bc3ca2217c0ecafaea55eb8f23b"><div class="ttname"><a href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#a24867bc3ca2217c0ecafaea55eb8f23b">starmathpp::pipeline::views::AddTraits::calculate</a></div><div class="ttdeci">static std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt; &gt; calculate(const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt;&gt; &amp;img_ptr1, const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt;&gt; &amp;img_ptr2)</div><div class="ttdef"><b>Definition:</b> add.hpp:42</div></div>
+<div class="ttc" id="astructstarmathpp_1_1pipeline_1_1views_1_1_add_traits_html_a1b1a54ed36a2f53fc68224e2eaacb114"><div class="ttname"><a href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#a1b1a54ed36a2f53fc68224e2eaacb114">starmathpp::pipeline::views::AddTraits::calculate</a></div><div class="ttdeci">static auto calculate(const cimg_library::CImg&lt; ImageType &gt; &amp;&amp;img1, const cimg_library::CImg&lt; ImageType &gt; &amp;img2)</div><div class="ttdef"><b>Definition:</b> add.hpp:42</div></div>
 <div class="ttc" id="astructstarmathpp_1_1pipeline_1_1views_1_1_add_traits_html_a37506429c6f51a56e068f0bb8dde8ab5"><div class="ttname"><a href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#a37506429c6f51a56e068f0bb8dde8ab5">starmathpp::pipeline::views::AddTraits::operation_name</a></div><div class="ttdeci">static std::string operation_name()</div><div class="ttdef"><b>Definition:</b> add.hpp:38</div></div>
-<div class="ttc" id="astructstarmathpp_1_1pipeline_1_1views_1_1_add_traits_html_afa37a85d1de521042cf1da5f679e4131"><div class="ttname"><a href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#afa37a85d1de521042cf1da5f679e4131">starmathpp::pipeline::views::AddTraits::calculate</a></div><div class="ttdeci">static std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt; &gt; calculate(const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt;&gt; &amp;img_ptr1, ImageType scalar_value)</div><div class="ttdef"><b>Definition:</b> add.hpp:49</div></div>
+<div class="ttc" id="astructstarmathpp_1_1pipeline_1_1views_1_1_add_traits_html_aa9793723c2e8291ba6151447dae8c3f5"><div class="ttname"><a href="structstarmathpp_1_1pipeline_1_1views_1_1_add_traits.html#aa9793723c2e8291ba6151447dae8c3f5">starmathpp::pipeline::views::AddTraits::calculate</a></div><div class="ttdeci">static auto calculate(const cimg_library::CImg&lt; ImageType &gt; &amp;&amp;img1, ImageType scalar_value)</div><div class="ttdef"><b>Definition:</b> add.hpp:48</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 21 2024 18:38:43 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 09:21:51 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

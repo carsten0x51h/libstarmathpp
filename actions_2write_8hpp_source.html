@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.686a419f8c48</span>
+   &#160;<span id="projectnumber">1.0.0.07b18f437aee</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -153,13 +153,13 @@ $(function() {
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                    std::filesystem::path filepath = directory</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                        / <a class="code" href="namespacestarmathpp_1_1pipeline_1_1actions.html#a7618379fe8f4db469f20b4463ebdd90c">compose_filename_from_pattern</a>(image_filename_pattern);</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                    <a class="code" href="namespacestarmathpp_1_1io.html#a97e21d2e7cac8b07b34913195ee8ad94">starmathpp::io::write</a>(*image, filepath, allow_override);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                    <a class="code" href="namespacestarmathpp_1_1io.html#ac364d5a9f330f7d16b17ab37cbb0fedb">starmathpp::io::write</a>(*image, filepath, allow_override);</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        }</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">return</span> std::forward&lt;decltype(range)&gt;(range); <span class="comment">// Ensure we forward the range correctly</span></div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    });</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">//    return ranges::actions::transform(</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">//        [=](const std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt;&gt; &amp;image) {</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">//        [=](const std::unique_ptr&lt;cimg_library::CImg&lt;ImageType&gt;&gt; &amp;image) {</span></div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">//          DEBUG_IMAGE_DISPLAY(*image, &quot;pipeline_action_write_in&quot;,</span></div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">//                              STARMATHPP_PIPELINE_ACTION_WRITE_DEBUG);</span></div>
@@ -181,14 +181,14 @@ $(function() {
 <div class="ttc" id="aimage_8hpp_html"><div class="ttname"><a href="image_8hpp.html">image.hpp</a></div></div>
 <div class="ttc" id="aimage_8hpp_html_a924fa69ef2099305a175c4a07a91caa9"><div class="ttname"><a href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a></div><div class="ttdeci">#define DEBUG_IMAGE_DISPLAY(imageRef, title, enable)</div><div class="ttdef"><b>Definition:</b> image.hpp:50</div></div>
 <div class="ttc" id="aimage__writer_8hpp_html"><div class="ttname"><a href="image__writer_8hpp.html">image_writer.hpp</a></div></div>
-<div class="ttc" id="anamespacestarmathpp_1_1io_html_a97e21d2e7cac8b07b34913195ee8ad94"><div class="ttname"><a href="namespacestarmathpp_1_1io.html#a97e21d2e7cac8b07b34913195ee8ad94">starmathpp::io::write</a></div><div class="ttdeci">void write(const Image &amp;img, const std::filesystem::path &amp;filepath, bool override=true)</div></div>
+<div class="ttc" id="anamespacestarmathpp_1_1io_html_ac364d5a9f330f7d16b17ab37cbb0fedb"><div class="ttname"><a href="namespacestarmathpp_1_1io.html#ac364d5a9f330f7d16b17ab37cbb0fedb">starmathpp::io::write</a></div><div class="ttdeci">void write(const Image &amp;&amp;img, const std::filesystem::path &amp;filepath, bool override=true)</div></div>
 <div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1actions_html"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1actions.html">starmathpp::pipeline::actions</a></div><div class="ttdef"><b>Definition:</b> actions/write.hpp:41</div></div>
 <div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1actions_html_a7618379fe8f4db469f20b4463ebdd90c"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1actions.html#a7618379fe8f4db469f20b4463ebdd90c">starmathpp::pipeline::actions::compose_filename_from_pattern</a></div><div class="ttdeci">static std::string compose_filename_from_pattern(const std::string &amp;pattern)</div><div class="ttdef"><b>Definition:</b> actions/write.hpp:52</div></div>
 <div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1actions_html_af5232dc43248304e753d2a9e79084090"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1actions.html#af5232dc43248304e753d2a9e79084090">starmathpp::pipeline::actions::write</a></div><div class="ttdeci">auto write(const std::filesystem::path &amp;directory, const std::string &amp;image_filename_pattern=&quot;img_%03d.fit&quot;, bool allow_override=true)</div><div class="ttdef"><b>Definition:</b> actions/write.hpp:66</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 21 2024 18:38:44 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 09:21:51 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.686a419f8c48</span>
+   &#160;<span id="projectnumber">1.0.0.07b18f437aee</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -119,53 +119,50 @@ $(function() {
 <div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a82d2495d6f266cf3a75791e8641dc425">   45</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a82d2495d6f266cf3a75791e8641dc425">center_on_star</a>(</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1algorithm_1_1_centroider.html">starmathpp::algorithm::Centroider&lt;ImageType&gt;</a> &amp;centroider) {</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">return</span> ranges::views::transform(</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      [&amp;](<span class="keyword">const</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt;&gt; &amp;image) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      [&amp;](<span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt; &amp;&amp;input_image) {</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt; &amp;input_image_ref = *image;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">auto</span> opt_centroid = centroider.<a class="code" href="classstarmathpp_1_1algorithm_1_1_centroider.html#a38e2f7a17ce3bd75f889d4e1cfac7379">calculate_centroid</a>(input_image);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">auto</span> opt_centroid = centroider.<a class="code" href="classstarmathpp_1_1algorithm_1_1_centroider.html#a38e2f7a17ce3bd75f889d4e1cfac7379">calculate_centroid</a>(input_image_ref);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(input_image_ref, <span class="stringliteral">&quot;center_on_star_in&quot;</span>,</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                            <a class="code" href="center__on__star_8hpp.html#af4ffa51328319069031c502c5f2b27d3">STARMATHPP_PIPELINE_CENTER_ON_STAR_DEBUG</a>);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">if</span> (opt_centroid.has_value()) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;          <span class="keyword">auto</span> outer_roi = <a class="code" href="classstarmathpp_1_1_rect.html#abc0c462c14f3b60efb2ed11ae3dd1f98">Rect&lt;float&gt;::from_center_point</a>(</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;              opt_centroid.value(), (<span class="keywordtype">float</span>) input_image_ref.width(),</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;              (<span class="keywordtype">float</span>) input_image_ref.height()).template to&lt;int&gt;();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;          <span class="comment">// get_crop() by default applies a dirichlet boundary_condition (=0). There are other</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;          <span class="comment">// options as well. In this case, the desired behaviour is to assume that all pixel values</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;          <span class="comment">// where the defined sub-frame exceeds the image boundary are assumed to be 0.</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(input_image, <span class="stringliteral">&quot;center_on_star_in&quot;</span>,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                            <a class="code" href="center__on__star_8hpp.html#af4ffa51328319069031c502c5f2b27d3">STARMATHPP_PIPELINE_CENTER_ON_STAR_DEBUG</a>);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordflow">if</span> (opt_centroid.has_value()) {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;          <span class="keyword">auto</span> outer_roi = <a class="code" href="classstarmathpp_1_1_rect.html#abc0c462c14f3b60efb2ed11ae3dd1f98">Rect&lt;float&gt;::from_center_point</a>(</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;              opt_centroid.value(), (<span class="keywordtype">float</span>) input_image.width(),</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;              (<span class="keywordtype">float</span>) input_image.height()).template to&lt;int&gt;();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;          <span class="comment">// get_crop() by default applies a dirichlet boundary_condition (=0). There are other</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;          <span class="comment">// options as well. In this case, the desired behaviour is to assume that all pixel values</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;          <span class="comment">// where the defined sub-frame exceeds the image boundary are assumed to be 0.</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;          <span class="comment">//</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;          <span class="comment">// boundary_conditions    = Can be { 0=dirichlet | 1=neumann | 2=periodic | 3=mirror }</span></div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;          <span class="comment">//</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;          <span class="comment">// boundary_conditions    = Can be { 0=dirichlet | 1=neumann | 2=periodic | 3=mirror }</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;          <span class="comment">//</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;          <span class="comment">// - Dirichlet means &quot;0 outside image&quot;.</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;          <span class="comment">// - Neumann means &quot;Nearest neighbor outside image&quot; (i.e. null derivative)</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;          <span class="comment">// - Periodic means &quot;Periodic&quot;</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;          <span class="comment">// - Mirror means &quot;Mirrored image outside&quot;.</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;          <span class="comment">//</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;          <span class="comment">// See https://github.com/GreycLab/CImg/issues/110</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;          <span class="keyword">auto</span> centroid_sub_img =</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;              std::make_shared&lt;cimg_library::CImg&lt;ImageType&gt;&gt;(</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                  input_image_ref.get_crop(</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                      outer_roi.x() <span class="comment">/*x0*/</span>, outer_roi.y() <span class="comment">/*y0*/</span>,</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                      outer_roi.x() + outer_roi.width() - 1<span class="comment">/*x1*/</span>,</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                      outer_roi.y() + outer_roi.height() - 1<span class="comment">/*y1*/</span>));</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;          <span class="comment">// - Dirichlet means &quot;0 outside image&quot;.</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;          <span class="comment">// - Neumann means &quot;Nearest neighbor outside image&quot; (i.e. null derivative)</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;          <span class="comment">// - Periodic means &quot;Periodic&quot;</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;          <span class="comment">// - Mirror means &quot;Mirrored image outside&quot;.</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;          <span class="comment">//</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;          <span class="comment">// See https://github.com/GreycLab/CImg/issues/110</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;          cimg_library::CImg&lt;ImageType&gt; centroid_sub_img(</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;              input_image.get_crop(</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                  outer_roi.x() <span class="comment">/*x0*/</span>, outer_roi.y() <span class="comment">/*y0*/</span>,</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                  outer_roi.x() + outer_roi.width() - 1<span class="comment">/*x1*/</span>,</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                  outer_roi.y() + outer_roi.height() - 1<span class="comment">/*y1*/</span>));</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;          <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(centroid_sub_img, <span class="stringliteral">&quot;center_on_star_out&quot;</span>,</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                              <a class="code" href="center__on__star_8hpp.html#af4ffa51328319069031c502c5f2b27d3">STARMATHPP_PIPELINE_CENTER_ON_STAR_DEBUG</a>);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;          <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(*centroid_sub_img, <span class="stringliteral">&quot;center_on_star_out&quot;</span>,</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                              <a class="code" href="center__on__star_8hpp.html#af4ffa51328319069031c502c5f2b27d3">STARMATHPP_PIPELINE_CENTER_ON_STAR_DEBUG</a>);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;          <span class="keywordflow">return</span> centroid_sub_img;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;          <span class="keywordflow">throw</span> starmathpp::algorithm::CentroiderException(</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;              <span class="stringliteral">&quot;Unable to determine centroid.&quot;</span>);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  );</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_PIPELINE_VIEW_CENTER_ON_STAR_HPP_</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;          <span class="keywordflow">return</span> centroid_sub_img;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;          <span class="keywordflow">throw</span> starmathpp::algorithm::CentroiderException(</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;              <span class="stringliteral">&quot;Unable to determine centroid.&quot;</span>);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  );</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_PIPELINE_VIEW_CENTER_ON_STAR_HPP_</span></div>
 <div class="ttc" id="acenter__on__star_8hpp_html_af4ffa51328319069031c502c5f2b27d3"><div class="ttname"><a href="center__on__star_8hpp.html#af4ffa51328319069031c502c5f2b27d3">STARMATHPP_PIPELINE_CENTER_ON_STAR_DEBUG</a></div><div class="ttdeci">#define STARMATHPP_PIPELINE_CENTER_ON_STAR_DEBUG</div><div class="ttdef"><b>Definition:</b> center_on_star.hpp:36</div></div>
 <div class="ttc" id="acentroider_8hpp_html"><div class="ttname"><a href="centroider_8hpp.html">centroider.hpp</a></div></div>
 <div class="ttc" id="aclassstarmathpp_1_1_rect_html_abc0c462c14f3b60efb2ed11ae3dd1f98"><div class="ttname"><a href="classstarmathpp_1_1_rect.html#abc0c462c14f3b60efb2ed11ae3dd1f98">starmathpp::Rect::from_center_point</a></div><div class="ttdeci">static Rect&lt; T &gt; from_center_point(const Point&lt; P &gt; &amp;center, S width, S height)</div><div class="ttdef"><b>Definition:</b> rect.hpp:245</div></div>
@@ -179,7 +176,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 21 2024 18:38:43 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 09:21:51 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

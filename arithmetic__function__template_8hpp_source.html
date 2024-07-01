@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.686a419f8c48</span>
+   &#160;<span id="projectnumber">1.0.0.07b18f437aee</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -115,18 +115,18 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views_1_1detail.html">   41</a></span>&#160;<span class="keyword">namespace </span>detail {</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views_1_1detail.html#a2031ea445be2b7e5f3531b3ed2ae6328">   44</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views_1_1detail.html#a2031ea445be2b7e5f3531b3ed2ae6328">throw_if_inconsistent_image_dimensions</a>(</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">const</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt; &gt; &amp;img_ptr1,</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">const</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt; &gt; &amp;img_ptr2) {</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views_1_1detail.html#a8a5b8e800918184a76939570ad19e96d">   44</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views_1_1detail.html#a8a5b8e800918184a76939570ad19e96d">throw_if_inconsistent_image_dimensions</a>(</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt; &amp;&amp;img1,</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt; &amp;img2) {</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">if</span> (img_ptr1-&gt;width() != img_ptr2-&gt;width()</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      || img_ptr1-&gt;height() != img_ptr2-&gt;height()) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">if</span> (img1.width() != img2.width()</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      || img1.height() != img2.height()) {</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    std::stringstream ss;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    ss &lt;&lt; <span class="stringliteral">&quot;Inconsistent images dimensions. Initial image dimension: &quot;</span> &lt;&lt; <span class="stringliteral">&quot;(&quot;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        &lt;&lt; img_ptr1-&gt;width() &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; img_ptr1-&gt;height() &lt;&lt; <span class="stringliteral">&quot;), &quot;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        &lt;&lt; <span class="stringliteral">&quot;new image dimension: (&quot;</span> &lt;&lt; img_ptr2-&gt;width() &lt;&lt; <span class="stringliteral">&quot;, &quot;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        &lt;&lt; img_ptr2-&gt;height() &lt;&lt; <span class="stringliteral">&quot;).&quot;</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        &lt;&lt; img1.width() &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; img1.height() &lt;&lt; <span class="stringliteral">&quot;), &quot;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        &lt;&lt; <span class="stringliteral">&quot;new image dimension: (&quot;</span> &lt;&lt; img2.width() &lt;&lt; <span class="stringliteral">&quot;, &quot;</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        &lt;&lt; img2.height() &lt;&lt; <span class="stringliteral">&quot;).&quot;</span>;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">throw</span> InconsistentImageDimensionsException(ss.str());</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }</div>
@@ -137,22 +137,22 @@ $(function() {
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment"> * Template for image on image operation.</span></div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType&gt; <span class="keyword">class </span>ArithmeticFunctionTraits,</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt; <span class="keyword">class </span>ArithmeticFunctionTraits,</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a1bb360b4966c1b6e59c6eda5f7a7fdd7">   68</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a1bb360b4966c1b6e59c6eda5f7a7fdd7">arithmetic_function_tmpl</a>(<span class="keyword">const</span> std::shared_ptr&lt;Image&gt; &amp;image_to_add_ptr) {</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a57f39a660d28a5d047b90aa6fc500c44">   68</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a57f39a660d28a5d047b90aa6fc500c44">arithmetic_function_tmpl</a>(<span class="keyword">const</span> <a class="code" href="namespacestarmathpp.html#a1d63b30ede93151db2ab3b587052f725">Image</a> &amp;image_op) {</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordflow">return</span> ranges::views::transform(</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      [=](<span class="keyword">const</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt; &gt; &amp;image) {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      [=](<span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt; &amp;&amp;image) {</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        detail::throw_if_inconsistent_image_dimensions&lt;ImageType&gt;(</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            image, image_to_add_ptr);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            std::move(image), image_op);</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(*image, <span class="stringliteral">&quot;add_image_in&quot;</span>,</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(image, <span class="stringliteral">&quot;arithmetic_function_image_in&quot;</span>,</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                            <a class="code" href="arithmetic__function__template_8hpp.html#af04d642ca7d4ad787ba5c57abd938989">STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG</a>);</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keyword">auto</span> result_image = ArithmeticFunctionTraits&lt;ImageType&gt;::calculate(</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            image, image_to_add_ptr);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            std::move(image), image_op);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(*result_image, <span class="stringliteral">&quot;add_image_out&quot;</span>,</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(result_image, <span class="stringliteral">&quot;arithmetic_function_image_out&quot;</span>,</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                            <a class="code" href="arithmetic__function__template_8hpp.html#af04d642ca7d4ad787ba5c57abd938989">STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG</a>);</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordflow">return</span> result_image;</div>
@@ -165,17 +165,17 @@ $(function() {
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType&gt; <span class="keyword">class </span>ArithmeticFunctionTraits,</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#ac7d8e69aa4c5580627027eb1ec806bdc">   94</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a1bb360b4966c1b6e59c6eda5f7a7fdd7">arithmetic_function_tmpl</a>(ImageType scalar_value_to_add) {</div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a535d39619f345cfa0ac04bfa7c62ca2b">   94</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a57f39a660d28a5d047b90aa6fc500c44">arithmetic_function_tmpl</a>(ImageType scalar_value) {</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordflow">return</span> ranges::views::transform(</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      [=](<span class="keyword">const</span> std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt; &gt; &amp;image) {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      [=](<span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt; &amp;&amp;image) {</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(*image, <span class="stringliteral">&quot;add_scalar_in&quot;</span>,</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(*image, <span class="stringliteral">&quot;arithmetic_function_scalar_in&quot;</span>,</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                            <a class="code" href="arithmetic__function__template_8hpp.html#af04d642ca7d4ad787ba5c57abd938989">STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG</a>);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keyword">auto</span> result_image = ArithmeticFunctionTraits&lt;ImageType&gt;::calculate(</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            image, scalar_value_to_add);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            std::move(image), scalar_value);</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(*result_image, <span class="stringliteral">&quot;add_scalar_out&quot;</span>,</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(result_image, <span class="stringliteral">&quot;arithmetic_function_scalar_out&quot;</span>,</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                            <a class="code" href="arithmetic__function__template_8hpp.html#af04d642ca7d4ad787ba5c57abd938989">STARMATHPP_PIPELINE_ARITHMETIC_FUNCTION_DEBUG</a>);</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordflow">return</span> result_image;</div>
@@ -190,13 +190,14 @@ $(function() {
 <div class="ttc" id="aimage_8hpp_html"><div class="ttname"><a href="image_8hpp.html">image.hpp</a></div></div>
 <div class="ttc" id="aimage_8hpp_html_a924fa69ef2099305a175c4a07a91caa9"><div class="ttname"><a href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a></div><div class="ttdeci">#define DEBUG_IMAGE_DISPLAY(imageRef, title, enable)</div><div class="ttdef"><b>Definition:</b> image.hpp:50</div></div>
 <div class="ttc" id="ainconsistent__image__dimensions__exception_8hpp_html"><div class="ttname"><a href="inconsistent__image__dimensions__exception_8hpp.html">inconsistent_image_dimensions_exception.hpp</a></div></div>
-<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_1_1detail_html_a2031ea445be2b7e5f3531b3ed2ae6328"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views_1_1detail.html#a2031ea445be2b7e5f3531b3ed2ae6328">starmathpp::pipeline::views::detail::throw_if_inconsistent_image_dimensions</a></div><div class="ttdeci">void throw_if_inconsistent_image_dimensions(const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt; &gt; &amp;img_ptr1, const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt; &gt; &amp;img_ptr2)</div><div class="ttdef"><b>Definition:</b> arithmetic_function_template.hpp:44</div></div>
+<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_1_1detail_html_a8a5b8e800918184a76939570ad19e96d"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views_1_1detail.html#a8a5b8e800918184a76939570ad19e96d">starmathpp::pipeline::views::detail::throw_if_inconsistent_image_dimensions</a></div><div class="ttdeci">void throw_if_inconsistent_image_dimensions(const cimg_library::CImg&lt; ImageType &gt; &amp;&amp;img1, const cimg_library::CImg&lt; ImageType &gt; &amp;img2)</div><div class="ttdef"><b>Definition:</b> arithmetic_function_template.hpp:44</div></div>
 <div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html">starmathpp::pipeline::views</a></div><div class="ttdef"><b>Definition:</b> add.hpp:31</div></div>
-<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_a1bb360b4966c1b6e59c6eda5f7a7fdd7"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#a1bb360b4966c1b6e59c6eda5f7a7fdd7">starmathpp::pipeline::views::arithmetic_function_tmpl</a></div><div class="ttdeci">auto arithmetic_function_tmpl(const std::shared_ptr&lt; Image &gt; &amp;image_to_add_ptr)</div><div class="ttdef"><b>Definition:</b> arithmetic_function_template.hpp:68</div></div>
+<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_a57f39a660d28a5d047b90aa6fc500c44"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#a57f39a660d28a5d047b90aa6fc500c44">starmathpp::pipeline::views::arithmetic_function_tmpl</a></div><div class="ttdeci">auto arithmetic_function_tmpl(const Image &amp;image_op)</div><div class="ttdef"><b>Definition:</b> arithmetic_function_template.hpp:68</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_a1d63b30ede93151db2ab3b587052f725"><div class="ttname"><a href="namespacestarmathpp.html#a1d63b30ede93151db2ab3b587052f725">starmathpp::Image</a></div><div class="ttdeci">cimg_library::CImg&lt; float &gt; Image</div><div class="ttdef"><b>Definition:</b> image.hpp:93</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 21 2024 18:38:43 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 09:21:51 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

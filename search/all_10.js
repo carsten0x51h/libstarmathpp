@@ -85,7 +85,7 @@ var searchData=
   ['stretch_2ehpp_227',['stretch.hpp',['../stretch_8hpp.html',1,'']]],
   ['stretcher_228',['Stretcher',['../classstarmathpp_1_1algorithm_1_1_stretcher.html',1,'starmathpp::algorithm']]],
   ['stretcher_2ehpp_229',['stretcher.hpp',['../stretcher_8hpp.html',1,'']]],
-  ['subtract_230',['subtract',['../namespacestarmathpp_1_1pipeline_1_1views.html#a763215175b8badda1ec0a0effbf0ca7a',1,'starmathpp::pipeline::views::subtract(const std::shared_ptr&lt; Image &gt; &amp;image_to_subtract_ptr)'],['../namespacestarmathpp_1_1pipeline_1_1views.html#a136ab2a2f9448704e12da8fbf70f66b4',1,'starmathpp::pipeline::views::subtract(ImageType scalar_value_to_subtract)']]],
+  ['subtract_230',['subtract',['../namespacestarmathpp_1_1pipeline_1_1views.html#a01b076f83920827e5dbe6385824308dc',1,'starmathpp::pipeline::views::subtract(const Image &amp;image_to_subtract)'],['../namespacestarmathpp_1_1pipeline_1_1views.html#a136ab2a2f9448704e12da8fbf70f66b4',1,'starmathpp::pipeline::views::subtract(ImageType scalar_value_to_subtract)']]],
   ['subtract_2ehpp_231',['subtract.hpp',['../subtract_8hpp.html',1,'']]],
   ['subtract_5fbackground_232',['subtract_background',['../namespacestarmathpp_1_1pipeline_1_1views.html#a9678e7f5691c1ab7e4cac96a3ded8972',1,'starmathpp::pipeline::views']]],
   ['subtract_5fbackground_2ehpp_233',['subtract_background.hpp',['../subtract__background_8hpp.html',1,'']]],

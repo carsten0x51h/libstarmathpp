@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.686a419f8c48</span>
+   &#160;<span id="projectnumber">1.0.0.07b18f437aee</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -165,7 +165,7 @@ $(function() {
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment"> * Boost variant: https://www.boost.org/doc/libs/1_54_0/doc/html/variant.html</span></div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a1d63b30ede93151db2ab3b587052f725">   93</a></span>&#160;<span class="keyword">using</span> <a class="code" href="namespacestarmathpp.html#a1d63b30ede93151db2ab3b587052f725">Image</a> = cimg_library::CImg&lt;float&gt;;</div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#a205c3e4764926c8e2929cd185c75623a">   94</a></span>&#160;<span class="keyword">using</span> <a class="code" href="namespacestarmathpp.html#a205c3e4764926c8e2929cd185c75623a">ImagePtr</a> = std::shared_ptr&lt;Image&gt;;</div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="namespacestarmathpp.html#abd2d8c96a2559ffe2a30d9b5f65e9514">   94</a></span>&#160;<span class="keyword">using</span> <a class="code" href="namespacestarmathpp.html#abd2d8c96a2559ffe2a30d9b5f65e9514">ImagePtr</a> = std::unique_ptr&lt;Image&gt;;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}  <span class="comment">// end namespace starmathpp</span></div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
@@ -173,11 +173,11 @@ $(function() {
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
 <div class="ttc" id="anamespacestarmathpp_html"><div class="ttname"><a href="namespacestarmathpp.html">starmathpp</a></div><div class="ttdef"><b>Definition:</b> actions/write.hpp:41</div></div>
 <div class="ttc" id="anamespacestarmathpp_html_a1d63b30ede93151db2ab3b587052f725"><div class="ttname"><a href="namespacestarmathpp.html#a1d63b30ede93151db2ab3b587052f725">starmathpp::Image</a></div><div class="ttdeci">cimg_library::CImg&lt; float &gt; Image</div><div class="ttdef"><b>Definition:</b> image.hpp:93</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_a205c3e4764926c8e2929cd185c75623a"><div class="ttname"><a href="namespacestarmathpp.html#a205c3e4764926c8e2929cd185c75623a">starmathpp::ImagePtr</a></div><div class="ttdeci">std::shared_ptr&lt; Image &gt; ImagePtr</div><div class="ttdef"><b>Definition:</b> image.hpp:94</div></div>
+<div class="ttc" id="anamespacestarmathpp_html_abd2d8c96a2559ffe2a30d9b5f65e9514"><div class="ttname"><a href="namespacestarmathpp.html#abd2d8c96a2559ffe2a30d9b5f65e9514">starmathpp::ImagePtr</a></div><div class="ttdeci">std::unique_ptr&lt; Image &gt; ImagePtr</div><div class="ttdef"><b>Definition:</b> image.hpp:94</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 21 2024 18:38:44 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 09:21:51 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

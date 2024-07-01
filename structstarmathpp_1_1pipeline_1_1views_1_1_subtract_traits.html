@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.686a419f8c48</span>
+   &#160;<span id="projectnumber">1.0.0.07b18f437aee</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -82,12 +82,17 @@ $(function() {
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a91971765164f4aa0033ec2f74c81a1fe"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstarmathpp_1_1pipeline_1_1views_1_1_subtract_traits.html#a91971765164f4aa0033ec2f74c81a1fe">operation_name</a> ()</td></tr>
 <tr class="separator:a91971765164f4aa0033ec2f74c81a1fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fb39768a2d42831e9dab0282ca314ae"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstarmathpp_1_1pipeline_1_1views_1_1_subtract_traits.html#a4fb39768a2d42831e9dab0282ca314ae">calculate</a> (const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt;&gt; &amp;img_ptr1, const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt;&gt; &amp;img_ptr2)</td></tr>
-<tr class="separator:a4fb39768a2d42831e9dab0282ca314ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f00ab57c69139708038623846f72890"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstarmathpp_1_1pipeline_1_1views_1_1_subtract_traits.html#a8f00ab57c69139708038623846f72890">calculate</a> (const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt;&gt; &amp;img_ptr1, ImageType scalar_value)</td></tr>
-<tr class="separator:a8f00ab57c69139708038623846f72890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af62c6701f5b3592482c16d342e878f07"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstarmathpp_1_1pipeline_1_1views_1_1_subtract_traits.html#af62c6701f5b3592482c16d342e878f07">calculate</a> (const cimg_library::CImg&lt; ImageType &gt; &amp;&amp;img1, const cimg_library::CImg&lt; ImageType &gt; &amp;img2)</td></tr>
+<tr class="separator:af62c6701f5b3592482c16d342e878f07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e2184cc5355ff5739195cbb5945c4be"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstarmathpp_1_1pipeline_1_1views_1_1_subtract_traits.html#a7e2184cc5355ff5739195cbb5945c4be">calculate</a> (const cimg_library::CImg&lt; ImageType &gt; &amp;&amp;img1, ImageType scalar_value)</td></tr>
+<tr class="separator:a7e2184cc5355ff5739195cbb5945c4be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename ImageType&gt;<br />
+struct starmathpp::pipeline::views::SubtractTraits&lt; ImageType &gt;</h3>
+
+<p>TODO: Move to details namespace... </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a91971765164f4aa0033ec2f74c81a1fe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a91971765164f4aa0033ec2f74c81a1fe">&#9670;&nbsp;</a></span>operation_name()</h2>
 
@@ -115,8 +120,8 @@ template&lt;typename ImageType &gt; </div>
 
 </div>
 </div>
-<a id="a4fb39768a2d42831e9dab0282ca314ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fb39768a2d42831e9dab0282ca314ae">&#9670;&nbsp;</a></span>calculate() <span class="overload">[1/2]</span></h2>
+<a id="af62c6701f5b3592482c16d342e878f07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af62c6701f5b3592482c16d342e878f07">&#9670;&nbsp;</a></span>calculate() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,16 +132,16 @@ template&lt;typename ImageType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt; &gt; <a class="el" href="structstarmathpp_1_1pipeline_1_1views_1_1_subtract_traits.html">starmathpp::pipeline::views::SubtractTraits</a>&lt; ImageType &gt;::calculate </td>
+          <td class="memname">static auto <a class="el" href="structstarmathpp_1_1pipeline_1_1views_1_1_subtract_traits.html">starmathpp::pipeline::views::SubtractTraits</a>&lt; ImageType &gt;::calculate </td>
           <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>img_ptr1</em>, </td>
+          <td class="paramtype">const cimg_library::CImg&lt; ImageType &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>img1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>img_ptr2</em>&#160;</td>
+          <td class="paramtype">const cimg_library::CImg&lt; ImageType &gt; &amp;&#160;</td>
+          <td class="paramname"><em>img2</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -153,8 +158,8 @@ template&lt;typename ImageType &gt; </div>
 
 </div>
 </div>
-<a id="a8f00ab57c69139708038623846f72890"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f00ab57c69139708038623846f72890">&#9670;&nbsp;</a></span>calculate() <span class="overload">[2/2]</span></h2>
+<a id="a7e2184cc5355ff5739195cbb5945c4be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e2184cc5355ff5739195cbb5945c4be">&#9670;&nbsp;</a></span>calculate() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -165,10 +170,10 @@ template&lt;typename ImageType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::shared_ptr&lt;cimg_library::CImg&lt;ImageType&gt; &gt; <a class="el" href="structstarmathpp_1_1pipeline_1_1views_1_1_subtract_traits.html">starmathpp::pipeline::views::SubtractTraits</a>&lt; ImageType &gt;::calculate </td>
+          <td class="memname">static auto <a class="el" href="structstarmathpp_1_1pipeline_1_1views_1_1_subtract_traits.html">starmathpp::pipeline::views::SubtractTraits</a>&lt; ImageType &gt;::calculate </td>
           <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; cimg_library::CImg&lt; ImageType &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>img_ptr1</em>, </td>
+          <td class="paramtype">const cimg_library::CImg&lt; ImageType &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>img1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -197,7 +202,7 @@ template&lt;typename ImageType &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 21 2024 18:38:44 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 09:21:51 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

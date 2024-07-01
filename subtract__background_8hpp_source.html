@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libstarmathpp
-   &#160;<span id="projectnumber">1.0.0.686a419f8c48</span>
+   &#160;<span id="projectnumber">1.0.0.07b18f437aee</span>
    </div>
    <div id="projectbrief">A C++ library to process astronomical images which is based on CImg and the range v3 library.</div>
   </td>
@@ -104,65 +104,58 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="image_8hpp.html">libstarmathpp/image.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="thresholder_8hpp.html">libstarmathpp/algorithm/threshold/thresholder.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="arithmetic__function__template_8hpp.html">libstarmathpp/views/arithmetic_function_template.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="subtract__background_8hpp.html#a5aa2052636dad733298107115d28883a">   35</a></span>&#160;<span class="preprocessor">#define STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG 0</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html">starmathpp::pipeline::views</a> {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">  /**</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">   * TODO: Change shared_ptrs to unique_ptrs...?!! Because ownership is not shared.</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a9678e7f5691c1ab7e4cac96a3ded8972">   46</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a9678e7f5691c1ab7e4cac96a3ded8972">subtract_background</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1algorithm_1_1_thresholder.html">starmathpp::algorithm::Thresholder&lt;ImageType&gt;</a> &amp;thresholder) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">return</span> ranges::views::transform(</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      [&amp;](<span class="keyword">const</span> std::shared_ptr&lt;<span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt;&gt; &amp;image) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> &amp;input_image_ref = *image;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(input_image_ref, <span class="stringliteral">&quot;subtract_background_in&quot;</span>,</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                            <a class="code" href="subtract__background_8hpp.html#a5aa2052636dad733298107115d28883a">STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG</a>);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="subtract__background_8hpp.html#a5aa2052636dad733298107115d28883a">   34</a></span>&#160;<span class="preprocessor">#define STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG 0</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html">starmathpp::pipeline::views</a> {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">  /**</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">   *</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType = <span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="namespacestarmathpp_1_1pipeline_1_1views.html#a9678e7f5691c1ab7e4cac96a3ded8972">   45</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacestarmathpp_1_1pipeline_1_1views.html#a9678e7f5691c1ab7e4cac96a3ded8972">subtract_background</a>(<span class="keyword">const</span> <a class="code" href="classstarmathpp_1_1algorithm_1_1_thresholder.html">starmathpp::algorithm::Thresholder&lt;ImageType&gt;</a> &amp;thresholder) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">return</span> ranges::views::transform(</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      [&amp;](<span class="keyword">const</span> cimg_library::CImg&lt;ImageType&gt;&amp;&amp; input_image) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(input_image, <span class="stringliteral">&quot;subtract_background_in&quot;</span>,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                            <a class="code" href="subtract__background_8hpp.html#a5aa2052636dad733298107115d28883a">STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG</a>);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">float</span> threshold = thresholder.<a class="code" href="classstarmathpp_1_1algorithm_1_1_thresholder.html#a3e52ddff9d4dbe2dd29e6ff71597fa3e">calculate_threshold</a>(std::move(input_image));</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">float</span> threshold = thresholder.<a class="code" href="classstarmathpp_1_1algorithm_1_1_thresholder.html#a3e52ddff9d4dbe2dd29e6ff71597fa3e">calculate_threshold</a>(input_image_ref);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        cimg_library::CImg&lt;ImageType&gt; sub_image(input_image, <span class="stringliteral">&quot;xy&quot;</span>);</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">auto</span> sub_image = std::make_shared &lt; cimg_library::CImg&lt;ImageType&gt;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            &gt; (input_image_ref, <span class="stringliteral">&quot;xy&quot;</span>);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <a class="code" href="namespacestarmathpp.html#a1d63b30ede93151db2ab3b587052f725">Image</a> &amp;sub_image_ref = (*sub_image);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        cimg_forXY(input_image_ref, x, y)</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;          sub_image_ref(x, y) = (</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;              input_image_ref(x, y) &lt; threshold ?</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                  0 : input_image_ref(x, y) - threshold);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(sub_image_ref, <span class="stringliteral">&quot;subtract_background_out&quot;</span>,</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                            <a class="code" href="subtract__background_8hpp.html#a5aa2052636dad733298107115d28883a">STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG</a>);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">return</span> sub_image;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      }</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  );</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}  <span class="comment">// namespace starmathpp::pipeline::views</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_PIPELINE_VIEW_SUBTRACT_BACKGROUND_HPP_</span></div>
-<div class="ttc" id="aarithmetic__function__template_8hpp_html"><div class="ttname"><a href="arithmetic__function__template_8hpp.html">arithmetic_function_template.hpp</a></div></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        cimg_forXY(input_image, x, y)</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;          sub_image(x, y) = (</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;              input_image(x, y) &lt; threshold ?</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                  0 : input_image(x, y) - threshold);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <a class="code" href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a>(sub_image, <span class="stringliteral">&quot;subtract_background_out&quot;</span>,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                            <a class="code" href="subtract__background_8hpp.html#a5aa2052636dad733298107115d28883a">STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG</a>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">return</span> sub_image;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  );</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}  <span class="comment">// namespace starmathpp::pipeline::views</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// STARMATHPP_PIPELINE_VIEW_SUBTRACT_BACKGROUND_HPP_</span></div>
 <div class="ttc" id="aclassstarmathpp_1_1algorithm_1_1_thresholder_html"><div class="ttname"><a href="classstarmathpp_1_1algorithm_1_1_thresholder.html">starmathpp::algorithm::Thresholder</a></div><div class="ttdef"><b>Definition:</b> thresholder.hpp:39</div></div>
 <div class="ttc" id="aclassstarmathpp_1_1algorithm_1_1_thresholder_html_a3e52ddff9d4dbe2dd29e6ff71597fa3e"><div class="ttname"><a href="classstarmathpp_1_1algorithm_1_1_thresholder.html#a3e52ddff9d4dbe2dd29e6ff71597fa3e">starmathpp::algorithm::Thresholder::calculate_threshold</a></div><div class="ttdeci">virtual float calculate_threshold(const cimg_library::CImg&lt; ImageType &gt; &amp;input_image) const =0</div></div>
 <div class="ttc" id="aimage_8hpp_html"><div class="ttname"><a href="image_8hpp.html">image.hpp</a></div></div>
 <div class="ttc" id="aimage_8hpp_html_a924fa69ef2099305a175c4a07a91caa9"><div class="ttname"><a href="image_8hpp.html#a924fa69ef2099305a175c4a07a91caa9">DEBUG_IMAGE_DISPLAY</a></div><div class="ttdeci">#define DEBUG_IMAGE_DISPLAY(imageRef, title, enable)</div><div class="ttdef"><b>Definition:</b> image.hpp:50</div></div>
 <div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html">starmathpp::pipeline::views</a></div><div class="ttdef"><b>Definition:</b> add.hpp:31</div></div>
-<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_a9678e7f5691c1ab7e4cac96a3ded8972"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#a9678e7f5691c1ab7e4cac96a3ded8972">starmathpp::pipeline::views::subtract_background</a></div><div class="ttdeci">auto subtract_background(const starmathpp::algorithm::Thresholder&lt; ImageType &gt; &amp;thresholder)</div><div class="ttdef"><b>Definition:</b> subtract_background.hpp:46</div></div>
-<div class="ttc" id="anamespacestarmathpp_html_a1d63b30ede93151db2ab3b587052f725"><div class="ttname"><a href="namespacestarmathpp.html#a1d63b30ede93151db2ab3b587052f725">starmathpp::Image</a></div><div class="ttdeci">cimg_library::CImg&lt; float &gt; Image</div><div class="ttdef"><b>Definition:</b> image.hpp:93</div></div>
-<div class="ttc" id="asubtract__background_8hpp_html_a5aa2052636dad733298107115d28883a"><div class="ttname"><a href="subtract__background_8hpp.html#a5aa2052636dad733298107115d28883a">STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG</a></div><div class="ttdeci">#define STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG</div><div class="ttdef"><b>Definition:</b> subtract_background.hpp:35</div></div>
+<div class="ttc" id="anamespacestarmathpp_1_1pipeline_1_1views_html_a9678e7f5691c1ab7e4cac96a3ded8972"><div class="ttname"><a href="namespacestarmathpp_1_1pipeline_1_1views.html#a9678e7f5691c1ab7e4cac96a3ded8972">starmathpp::pipeline::views::subtract_background</a></div><div class="ttdeci">auto subtract_background(const starmathpp::algorithm::Thresholder&lt; ImageType &gt; &amp;thresholder)</div><div class="ttdef"><b>Definition:</b> subtract_background.hpp:45</div></div>
+<div class="ttc" id="asubtract__background_8hpp_html_a5aa2052636dad733298107115d28883a"><div class="ttname"><a href="subtract__background_8hpp.html#a5aa2052636dad733298107115d28883a">STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG</a></div><div class="ttdeci">#define STARMATHPP_PIPELINE_SUBTRACT_BACKGROUND_DEBUG</div><div class="ttdef"><b>Definition:</b> subtract_background.hpp:34</div></div>
 <div class="ttc" id="athresholder_8hpp_html"><div class="ttname"><a href="thresholder_8hpp.html">thresholder.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jun 21 2024 18:38:44 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Jul 1 2024 09:21:51 for libstarmathpp by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
