@@ -37,8 +37,8 @@ Star 1  |                                  Star 2                               
 ```cpp
   ...
   
-  auto star_metrics =
-      | files("my/image/directory", "(.*\\.fit\\.gz)")
+  auto star_metrics =         
+      files("my/image/directory", "(.*\\.fit\\.gz)")
       | read()
       | subtract_background(OtsuThresholder<float>(16 /*image bit depth*/))
       | scale_up(3.0F /*scale up factor*/)
