@@ -23,9 +23,9 @@ An automatically generated API with doxygen can be found at: https://carsten0x51
 ## Usage examples
 
 ### 1. Calculation of star metrics
-In this example all files with extension "*.fit.gz" from directory "my/image/directory" are processed by the pipeline. The processing takes place one by one. Each image is opened and pushed through the processing pipeline. For each image the pipeline suntracts the background, scales the image, performs a centroiding algorithm, again scales down the image, crops the image from the center toa dimension of 61x61 pixels and then calculates the SNR (Signal-to-noise ratio), the HFD (Half-flux diameter) and the FWHM (Full-width half maximum) for each star.
+In this example all files with extension "*.fit.gz" from directory "my/image/directory" are processed by the pipeline. The processing takes place one by one. Each image is opened and pushed through the processing pipeline. For each image the pipeline suntracts the background, scales the image, performs a centroiding algorithm, again scales down the image, crops the image from the center toa dimension of 61x61 pixels and then calculates the SNR (Signal-to-noise ratio), the HFD (Half-flux diameter) and the FWHM (Full-width half maximum) for each star. The following image illustrates the processing steps:
 
-TODO/IDEA: Introduce filter: "has_star" / "has_single_star"...
+![star-metrics-data-flow-1](doc/images/star_metrics/star_metrics_data_flow.png "star-metrics-data-flow-1")
 
 #### Input images
 
